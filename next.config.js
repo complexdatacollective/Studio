@@ -3,6 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     reactRoot: true,
+    concurrentFeatures: true,
+    serverComponents: true,
+    runtime: true,
   },
 }
 
