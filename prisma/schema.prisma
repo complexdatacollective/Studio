@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "postgresql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Organization {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  description String?
+  image       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  studies     Study[]
+}
+
+model Study {
+  id           String       @id @default(cuid())
+  name         String       @unique
+  description  String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  organization Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  users        StudyUser[]  @relation
+  protocols    Protocol[]
+}
+
+model StudyUser {
+  id            String         @id @default(cuid())
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String
+  study         Study          @relation(fields: [studyId], references: [id])
+  studyId       String
+  sessions      Session[]
+  role          Role           @default(PARTICIPANT)
+}
+
+model User {
+  id         String      @id @default(cuid())
+  name       String?
+  email      String?     @unique
+  password   String
+  image      String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  studyUsers StudyUser[]
+}
+
+model Protocol {
+  id          String    @id @default(cuid())
+  name        String?
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  stages      Stage[]
+  sessions    Session[]
+  study       Study     @relation(fields: [studyId], references: [id])
+  studyId     String
+}
+
+model Session {
+  id           String    @id @default(cuid())
+  network      Json?
+  protocol     Protocol  @relation(fields: [protocolId], references: [id])
+  protocolId   String
+  user         StudyUser @relation(fields: [userId], references: [id])
+  userId       String
+}
+
+
+model Stage {
+  id       String     @id @default(cuid())
+  name     String
+  type     StageTypes
+  protocol Protocol   @relation(fields: [protocolId], references: [id], onDelete: Cascade)
+  protocolId String
+}
+
+enum StageTypes {
+  CategoricalBin
+  NameGenerator
+  NameGeneratorQuickAdd
+  NameGeneratorRoster
+  DyadCensus
+  TieStrengthCensus
+  Narrative
+  Information
+  OrdinalBin
+  Sociogram
+  AlterForm
+  AlterEdgeForm
+  EgoForm
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  DATA_MANAGER
+  INTERVIEWER
+  PARTICIPANT
+}
