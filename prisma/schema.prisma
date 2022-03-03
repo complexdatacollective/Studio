@@ -13,92 +13,217 @@ datasource db {
 }
 
 model Organization {
-  id          String      @id @default(cuid())
-  name        String      @unique
-  description String?
-  image       String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  studies     Study[]
+  id                String        @id @default(cuid())
+  name              String        @unique
+  description       String?
+  image             String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  studies           Study[]
 }
 
 model Study {
-  id           String       @id @default(cuid())
-  name         String       @unique
-  description  String?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  organization Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
-  users        StudyUser[]  @relation
-  protocols    Protocol[]
+  id                String        @id @default(cuid())
+  name              String        @unique
+  description       String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  organization      Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId    String
+  users             StudyUser[]   @relation
+  protocols         Protocol[]
 }
 
 model StudyUser {
-  id            String         @id @default(cuid())
-  user          User           @relation(fields: [userId], references: [id])
-  userId        String
-  study         Study          @relation(fields: [studyId], references: [id])
-  studyId       String
-  interviews    Interview[]
-  role          Role           @default(PARTICIPANT)
+  id                String        @id @default(cuid())
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId            String
+  study             Study         @relation(fields: [studyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  studyId           String
+  interviews        Interview[]
+  role              Role          @default(PARTICIPANT)
 }
 
 model User {
-  id         String      @id @default(cuid())
-  name       String?
-  email      String?     @unique
-  password   String
-  image      String?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  studyUsers StudyUser[]
+  id                String        @id @default(cuid())
+  name              String?
+  email             String?       @unique
+  password          String
+  image             String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  studyUsers        StudyUser[]
 }
 
 model Protocol {
-  id          String    @id @default(cuid())
-  name        String?
-  description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  stages      Stage[]
-  interviews    Interview[]
-  study       Study     @relation(fields: [studyId], references: [id])
-  studyId     String
-  // publicVersion Int       @default(0)
-  // draftVersion Int       @default(0)
+  id                String              @id @default(cuid())
+  study             Study               @relation(fields: [studyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  studyId           String
+  revisions         ProtocolRevision[]
 }
 
-// // Cool thing about this is that sessions become versioned, and export
-// // can use the correct version of the codebook
-// model ProtocolRevision {
-//   id          String    @id @default(cuid())
-//   revision    Int       @id @default(autoincrement())
-//   name        String?
-//   description String?
-//   createdAt   DateTime  @default(now())
-//   updatedAt   DateTime  @updatedAt
-//   codebook    Codebook  @relation(fields: [codebookId], references: [id])
-//   stages    Stage[]
-//   interviews    Interview[]
-// }
-
-model Interview {
-  id           String    @id @default(cuid())
-  network      Json?
-  protocol     Protocol  @relation(fields: [protocolId], references: [id])
-  protocolId   String
-  user         StudyUser @relation(fields: [userId], references: [id])
-  userId       String
+model ProtocolRevision {
+  id                String              @id @default(cuid())
+  revision          Int                 @unique @default(autoincrement())
+  protocol          Protocol            @relation(fields: [protocolId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  protocolId        String
+  name              String?
+  description       String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  stages            Stage[]
+  interviews        Interview[]
+  entities          ProtocolEntity[]
+  ego               ProtocolEgoEntity?
 }
-
 
 model Stage {
-  id       String     @id @default(cuid())
-  name     String
-  type     StageTypes
-  protocol Protocol   @relation(fields: [protocolId], references: [id], onDelete: Cascade)
-  protocolId String
+  id                  String              @id @default(cuid())
+  name                String
+  type                StageTypes
+  protocolRevision    ProtocolRevision    @relation(fields: [protocolRevisionId], references: [revision], onDelete: Cascade, onUpdate: Cascade)
+  protocolRevisionId  Int
+}
+
+model ProtocolEntity {
+  id                        String                  @id @default(cuid())
+  type                      EntityType
+  attributes                ProtocolAttribute[]
+  name                      String
+  description               String?
+  color                     Colors?
+  protocolRevision         ProtocolRevision        @relation(fields: [protocolRevisionId], references: [revision], onDelete: Cascade, onUpdate: Cascade)
+  protocolRevisionId       Int
+  instances                InterviewEntity[]
+}
+
+model ProtocolEgoEntity {
+  id                        String                  @id @default(cuid())
+  attributes               ProtocolEgoAttribute[]
+  protocolRevision         ProtocolRevision        @relation(fields: [protocolRevisionId], references: [revision], onDelete: Cascade, onUpdate: Cascade)
+  protocolRevisionId       Int
+}
+
+
+// Instance of node/edge
+model InterviewEntity {
+  id                        String                  @id @default(cuid())
+  type                      ProtocolEntity        @relation(fields: [protocolEntityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  protocolEntityId          String
+  attributes                InterviewAttribute[]
+  interview    Interview              @relation(fields: [interviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  interviewId  String
+}
+
+model ProtocolAttribute {
+  id                        String                    @id @default(cuid())
+  name                      String
+  type                      AttributeTypes
+  validation                Json?                     @default("{}")
+  component                 InputComponents?
+  definedWithin             ProtocolEntity            @relation(fields: [definedWithinId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  definedWithinId           String
+  usedIn                    InterviewAttribute[]
+}
+
+model ProtocolEgoAttribute {
+  id                        String                    @id @default(cuid())
+  name                      String
+  type                      AttributeTypes
+  validation                Json?                     @default("{}")
+  component                 InputComponents?
+  definedWithin             ProtocolEgoEntity         @relation(fields: [definedWithinId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  definedWithinId           String
+  usedIn                    InterviewEgoAttribute[]
+}
+
+model InterviewAttribute {
+  id                        String                    @id @default(cuid())
+  attributeDefinition       ProtocolAttribute         @relation(fields: [attributeDefinitionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeDefinitionId     String
+  value                     String
+
+  interviewEntity          InterviewEntity           @relation(fields: [interviewEntityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  interviewEntityId        String
+
+  @@unique([attributeDefinitionId, interviewEntityId])
+}
+
+model InterviewEgoAttribute {
+  id                        String                    @id @default(cuid())
+  attributeDefinition       ProtocolEgoAttribute      @relation(fields: [attributeDefinitionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeDefinitionId     String                    @unique
+  value                     String
+
+  interview    Interview?   @relation(fields: [interviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  interviewId  String
+}
+
+model Interview {
+  id                        String                    @id @default(cuid())
+  startedAt                 DateTime                  @default(now())
+  endedAt                   DateTime?
+  lastUpdated               DateTime                  @updatedAt
+  entities                  InterviewEntity[]
+  egoAttributes             InterviewEgoAttribute[]
+  protocolRevision          ProtocolRevision          @relation(fields: [protocolRevisionId], references: [revision], onDelete: Cascade, onUpdate: Cascade)
+  protocolRevisionId        Int
+  user                      StudyUser                 @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId                    String
+}
+
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  DATA_MANAGER
+  INTERVIEWER
+  PARTICIPANT
+}
+
+enum EntityType {
+  NODE
+  EDGE
+}
+
+enum Colors { // map these to semantic tokens to allow for theming
+  COLOR_1
+  COLOR_2
+  COLOR_3
+  COLOR_4
+  COLOR_5
+  COLOR_6
+  COLOR_7
+  COLOR_8
+  COLOR_9
+  COLOR_10
+}
+
+enum InputComponents {
+  CheckboxGroup
+  RadioGroup
+  TextInput
+  TextArea
+  NumberInput
+  Toggle
+  ToggleButtonGroup
+  DatePicker
+  RelativeDatePicker
+  LikertScale
+  VisualAnalogScale
+  BooleanChoice
+}
+
+enum AttributeTypes {
+  number
+  text
+  boolean
+  ordinal
+  categorical
+  scalar
+  datetime
+  layout
+  location
 }
 
 enum StageTypes {
@@ -115,12 +240,4 @@ enum StageTypes {
   AlterForm
   AlterEdgeForm
   EgoForm
-}
-
-enum Role {
-  SUPERADMIN
-  ADMIN
-  DATA_MANAGER
-  INTERVIEWER
-  PARTICIPANT
 }

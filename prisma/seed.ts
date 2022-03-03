@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, StageTypes } from '@prisma/client'
+import { AttributeTypes, Colors, EntityType, InputComponents, Prisma, PrismaClient, StageTypes } from '@prisma/client'
 import { generateRandomOrganizations, OrganizationWithId } from './seeds/organizations';
 import { generateRandomStudies, StudyWithId } from './seeds/studies';
 import { generateRandomUsers, UserWithId } from './seeds/users';
@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 async function main() {
 
   console.log('Seeding organizations...');
-  const organizations: OrganizationWithId[] = generateRandomOrganizations(10);
+  const organizations: OrganizationWithId[] = generateRandomOrganizations(1);
   const organizationIds: string[] = organizations.map(organization => organization.id);
 
   await prisma.organization.createMany({
@@ -18,10 +18,8 @@ async function main() {
     skipDuplicates: true, // Just incase randomOrganization() generates the same name
   });
 
-  console.log(organizationIds);
-
   console.log('Seeding studies...');
-  const studies: StudyWithId[] = generateRandomStudies(100, organizationIds);
+  const studies: StudyWithId[] = generateRandomStudies(1, organizationIds);
   const studyIds: string[] = studies.map(study  => study.id);
 
   await prisma.study.createMany({
@@ -33,32 +31,65 @@ async function main() {
   studyIds.forEach(async (studyId) => {
     const protocolId = cuid();
 
-    const stages = [];
-
-    for (let i = 0; i < 10; i++) {
-      stages.push({
-        name: `Stage ${i}`,
-        type: StageTypes.Information,
-        protocolId: protocolId,
-      })
-    }
-
+    console.log(`Seeding protocol ${protocolId} for study ${studyId}`);
     await prisma.protocol.create({
       data: {
         id: protocolId,
         studyId,
-        name: 'Protocol 1',
-        description: 'This is protocol 1',
       }
     });
 
+    console.log("Seeding protocol revisions...");
+    const protocolRevisionId = cuid();
+    await prisma.protocolRevision.create({
+      data: {
+        id: protocolRevisionId,
+        name: 'My Protocol',
+        description: 'This is my protocol',
+        protocolId,
+      }
+    })
+
+    console.log('Seeding stages...');
     await prisma.stage.createMany({
-      data: stages,
+      data: [
+        {
+          id: cuid(),
+          name: 'Pre-study',
+          type: StageTypes.Information,
+          protocolRevisionId: 1,
+        },
+      ]
+    });
+
+    console.log("Seeding entity definitions...");
+    const nodeId = cuid();
+    const edgeId = cuid();
+    const egoId = cuid();
+    await prisma.protocolEntity.create({
+      data: {
+        name: 'Person',
+        description: 'Node type representing a person',
+        color: Colors.COLOR_1,
+        type: EntityType.NODE,
+        protocolRevisionId: 1,
+        attributes: {
+          create: [
+            {
+              id: cuid(),
+              name: 'name',
+              type: AttributeTypes.text,
+              validation: {},
+              component: InputComponents.TextInput,
+            }
+          ]
+        },
+      },
     });
   });
 
   console.log('Seeding Users...');
-  const users: UserWithId[] = generateRandomUsers(1000);
+  const users: UserWithId[] = generateRandomUsers(1);
   const userIds = users.map(user => user.id);
 
   await prisma.user.createMany({
