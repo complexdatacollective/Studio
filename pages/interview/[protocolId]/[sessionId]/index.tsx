@@ -8,6 +8,7 @@ import { Container, Heading } from '@chakra-ui/react';
 
 const InterviewSession = () => {
   const router = useRouter();
+  const { protocolId, sessionId } = router.query;
   console.log(router);
 
   // const { data, isLoading }  = useQuery('session', async () => {

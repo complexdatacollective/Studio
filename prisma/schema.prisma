@@ -40,7 +40,7 @@ model StudyUser {
   userId        String
   study         Study          @relation(fields: [studyId], references: [id])
   studyId       String
-  sessions      Session[]
+  interviews    Interview[]
   role          Role           @default(PARTICIPANT)
 }
 
@@ -62,12 +62,28 @@ model Protocol {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   stages      Stage[]
-  sessions    Session[]
+  interviews    Interview[]
   study       Study     @relation(fields: [studyId], references: [id])
   studyId     String
+  // publicVersion Int       @default(0)
+  // draftVersion Int       @default(0)
 }
 
-model Session {
+// // Cool thing about this is that sessions become versioned, and export
+// // can use the correct version of the codebook
+// model ProtocolRevision {
+//   id          String    @id @default(cuid())
+//   revision    Int       @id @default(autoincrement())
+//   name        String?
+//   description String?
+//   createdAt   DateTime  @default(now())
+//   updatedAt   DateTime  @updatedAt
+//   codebook    Codebook  @relation(fields: [codebookId], references: [id])
+//   stages    Stage[]
+//   interviews    Interview[]
+// }
+
+model Interview {
   id           String    @id @default(cuid())
   network      Json?
   protocol     Protocol  @relation(fields: [protocolId], references: [id])

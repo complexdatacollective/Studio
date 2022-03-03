@@ -1,8 +1,9 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient, StageTypes } from '@prisma/client'
 import { generateRandomOrganizations, OrganizationWithId } from './seeds/organizations';
 import { generateRandomStudies, StudyWithId } from './seeds/studies';
 import { generateRandomUsers, UserWithId } from './seeds/users';
 import { generateRandomStudyMembership } from './seeds/study-users';
+import cuid from 'cuid';
 
 const prisma = new PrismaClient();
 
@@ -28,6 +29,34 @@ async function main() {
     skipDuplicates: true, // Just incase randomStudy() generates the same name
   });
 
+  console.log('Seeding protocols...');
+  studyIds.forEach(async (studyId) => {
+    const protocolId = cuid();
+
+    const stages = [];
+
+    for (let i = 0; i < 10; i++) {
+      stages.push({
+        name: `Stage ${i}`,
+        type: StageTypes.Information,
+        protocolId: protocolId,
+      })
+    }
+
+    await prisma.protocol.create({
+      data: {
+        id: protocolId,
+        studyId,
+        name: 'Protocol 1',
+        description: 'This is protocol 1',
+      }
+    });
+
+    await prisma.stage.createMany({
+      data: stages,
+    });
+  });
+
   console.log('Seeding Users...');
   const users: UserWithId[] = generateRandomUsers(1000);
   const userIds = users.map(user => user.id);
@@ -44,6 +73,7 @@ async function main() {
     data: studyUsers,
     skipDuplicates: true,
   });
+
 }
 
 main()
