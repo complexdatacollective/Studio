@@ -74,7 +74,7 @@ model ProtocolRevision {
   stages            Stage[]
   interviews        Interview[]
   entities          ProtocolEntity[]
-  ego               ProtocolEgoEntity?
+  egoAttributes     ProtocolEgoAttribute[]
 }
 
 model Stage {
@@ -91,19 +91,11 @@ model ProtocolEntity {
   attributes                ProtocolAttribute[]
   name                      String
   description               String?
-  color                     Colors?
+  color                     Colors
   protocolRevision         ProtocolRevision        @relation(fields: [protocolRevisionId], references: [revision], onDelete: Cascade, onUpdate: Cascade)
   protocolRevisionId       Int
   instances                InterviewEntity[]
 }
-
-model ProtocolEgoEntity {
-  id                        String                  @id @default(cuid())
-  attributes               ProtocolEgoAttribute[]
-  protocolRevision         ProtocolRevision        @relation(fields: [protocolRevisionId], references: [revision], onDelete: Cascade, onUpdate: Cascade)
-  protocolRevisionId       Int
-}
-
 
 // Instance of node/edge
 model InterviewEntity {
@@ -132,7 +124,7 @@ model ProtocolEgoAttribute {
   type                      AttributeTypes
   validation                Json?                     @default("{}")
   component                 InputComponents?
-  definedWithin             ProtocolEgoEntity         @relation(fields: [definedWithinId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  definedWithin             ProtocolRevision         @relation(fields: [definedWithinId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   definedWithinId           String
   usedIn                    InterviewEgoAttribute[]
 }

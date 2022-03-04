@@ -47,6 +47,42 @@ async function main() {
         name: 'My Protocol',
         description: 'This is my protocol',
         protocolId,
+        entities: {
+          create: [
+            {
+              name: 'Person',
+              description: 'Node type representing a person',
+              color: Colors.COLOR_1,
+              type: EntityType.NODE,
+              attributes: {
+                create: [
+                  {
+                    id: cuid(),
+                    name: 'name',
+                    type: AttributeTypes.text,
+                    validation: {},
+                    component: InputComponents.TextInput,
+                  },
+                  {
+                    id: cuid(),
+                    name: 'age',
+                    type: AttributeTypes.number,
+                    validation: {},
+                    component: InputComponents.NumberInput,
+                  }
+                ]
+              },
+            },
+          ]
+        },
+        egoAttributes: {
+          create: {
+            id: cuid(),
+            name: 'name',
+            type: AttributeTypes.text,
+            component: InputComponents.TextInput,
+          },
+        }
       }
     })
 
@@ -59,32 +95,13 @@ async function main() {
           type: StageTypes.Information,
           protocolRevisionId: 1,
         },
-      ]
-    });
-
-    console.log("Seeding entity definitions...");
-    const nodeId = cuid();
-    const edgeId = cuid();
-    const egoId = cuid();
-    await prisma.protocolEntity.create({
-      data: {
-        name: 'Person',
-        description: 'Node type representing a person',
-        color: Colors.COLOR_1,
-        type: EntityType.NODE,
-        protocolRevisionId: 1,
-        attributes: {
-          create: [
-            {
-              id: cuid(),
-              name: 'name',
-              type: AttributeTypes.text,
-              validation: {},
-              component: InputComponents.TextInput,
-            }
-          ]
+        {
+          id: cuid(),
+          name: 'Post-study',
+          type: StageTypes.Information,
+          protocolRevisionId: 1,
         },
-      },
+      ]
     });
   });
 
@@ -105,6 +122,7 @@ async function main() {
     skipDuplicates: true,
   });
 
+  console.log('Seeding ')
 }
 
 main()
