@@ -1,6 +1,0 @@
-{
-  "presets": ["next/babel"],
-  "plugins": [
-    "superjson-next" // https://github.com/blitz-js/superjson - used to allow us to work with Date in JSON
-  ]
-}
