@@ -17,11 +17,11 @@ const tags: Record<Variant, ElementType> = {
 };
 
 const sizes: Record<Variant, string> = {
-  h1: 'text-3xl font-medium contrast-more:font-bold contrast-less:font-thin dark:text-gray-100',
-  h2: 'text-2xl font-medium contrast-more:font-bold contrast-less:font-thin dark:text-gray-100',
-  h3: 'text-xl font-medium contrast-more:font-bold contrast-less:font-thin dark:text-gray-100',
-  h4: 'text-md font-medium contrast-more:font-bold contrast-less:font-thin dark:text-gray-100',
-  body: 'text-sm contrast-more:font-bold contrast-less:font-thin dark:text-gray-100',
+  h1: 'text-3xl font-medium contrast-more:font-bold contrast-less:font-thin',
+  h2: 'text-2xl font-medium contrast-more:font-bold contrast-less:font-thin',
+  h3: 'text-xl font-medium contrast-more:font-bold contrast-less:font-thin',
+  h4: 'text-md font-medium contrast-more:font-bold contrast-less:font-thin',
+  body: 'text-sm contrast-more:font-bold contrast-less:font-thin',
 };
 
 export const Typography = ({ variant, children, className }: Props) => {
