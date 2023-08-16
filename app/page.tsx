@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { Typography } from '~/components/Typography';
 
 export default function Home() {
   return (
@@ -15,16 +16,16 @@ export default function Home() {
         lg:flex
         '
       >
-        <p
+        <Typography
+          variant='body'
           className='
           fixed left-0  top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl 
           dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit 
           lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30
           '
         >
-          Get started by editing&nbsp;
-          <code className='font-mono font-bold'>app/page.tsx</code>
-        </p>
+          Get started by editing app/page.tsx
+        </Typography>
         <div
           className='
             fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white 
@@ -68,15 +69,15 @@ export default function Home() {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <Typography variant='h2'>
             Docs{' '}
             <span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
               -&gt;
             </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          </Typography>
+          <Typography variant='body'>
             Find in-depth information about Next.js features and API.
-          </p>
+          </Typography>
         </a>
 
         <a
@@ -85,15 +86,15 @@ export default function Home() {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <Typography variant='h2'>
             Learn{' '}
             <span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
               -&gt;
             </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          </Typography>
+          <Typography variant='body'>
             Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
+          </Typography>
         </a>
 
         <a
@@ -102,15 +103,15 @@ export default function Home() {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <Typography variant='h2'>
             Templates{' '}
             <span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
               -&gt;
             </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          </Typography>
+          <Typography variant='body'>
             Explore the Next.js 13 playground.
-          </p>
+          </Typography>
         </a>
 
         <a
@@ -119,15 +120,15 @@ export default function Home() {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
+          <Typography variant='h2'>
             Deploy{' '}
             <span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
               -&gt;
             </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+          </Typography>
+          <Typography variant='body'>
             Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
+          </Typography>
         </a>
       </div>
     </main>
