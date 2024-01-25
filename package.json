@@ -39,7 +39,7 @@
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
     "eslint-plugin-storybook": "^0.6.12",
-    "postcss": "8.4.24",
+    "postcss": "8.4.31",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "sass": "^1.63.5",
