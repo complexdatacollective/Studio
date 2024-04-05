@@ -1,7 +1,7 @@
 'use client';
 
 import { Typography } from '~/components/Typography';
-import { SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignInButton, UserButton } from '@clerk/nextjs';
 
 export default function Home() {
   return (

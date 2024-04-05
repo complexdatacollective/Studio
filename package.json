@@ -13,7 +13,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@clerk/clerk-react": "^4.30.9",
+    "@clerk/nextjs": "^4.29.11",
     "convex": "^1.11.0",
     "next": "13.5.1",
     "react": "18.2.0",
