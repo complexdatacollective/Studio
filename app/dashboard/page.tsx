@@ -3,7 +3,7 @@
 import { UserButton } from '@clerk/nextjs';
 import { useConvexAuth } from 'convex/react';
 
-export default function App() {
+export default function Dashboard() {
   const { isLoading, isAuthenticated } = useConvexAuth();
 
   return (
