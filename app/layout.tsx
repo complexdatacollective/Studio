@@ -1,5 +1,6 @@
 import './globals.css';
 import { Quicksand } from 'next/font/google';
+import ConvexClientProvider from './ConvexClientProvider';
 
 const quicksand = Quicksand({ subsets: ['latin'] });
 
@@ -15,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={quicksand.className}>{children}</body>
+      <body className={quicksand.className}>
+        <ConvexClientProvider>{children}</ConvexClientProvider>
+      </body>
     </html>
   );
 }
