@@ -9,6 +9,7 @@ import { CreateOrganization } from './CreateOrganization';
 import { useQueryWithAuth } from '@convex-dev/convex-lucia-auth/react';
 import { useQuery } from 'convex/react';
 import { api } from '~/convex/_generated/api';
+import { useRouter, useParams } from 'next/navigation';
 
 export function OrganizationSwitcher() {
   const user = useQueryWithAuth(api.users.get, {});
@@ -20,10 +21,22 @@ export function OrganizationSwitcher() {
     userId: user._id,
   });
 
+  const router = useRouter();
+
+  const selectOrg = (organizationId: string) => {
+    router.push(`/${organizationId}`);
+  };
+
+  const params = useParams();
+  const placeholderText = params.organization
+    ? params.organization
+    : 'Select an Organization';
+
   return (
-    <Select>
+    // route to organization page on select
+    <Select onValueChange={selectOrg}>
       <SelectTrigger className='w-64'>
-        <SelectValue placeholder='Select Organization' />
+        <SelectValue placeholder={placeholderText} />
       </SelectTrigger>
       <SelectContent>
         {organizations?.map((org) => (

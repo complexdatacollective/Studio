@@ -13,4 +13,8 @@ export default defineSchema({
     name: v.string(),
     administrator: v.id('users'),
   }),
+  projects: defineTable({
+    name: v.string(),
+    organization: v.id('organizations'),
+  }),
 });
