@@ -5,21 +5,33 @@ import {
   SelectContent,
   SelectItem,
 } from '~/components/ui/select';
-import { Button } from './ui/button';
-import { Plus } from 'lucide-react';
+import { CreateOrganization } from './CreateOrganization';
+import { useQueryWithAuth } from '@convex-dev/convex-lucia-auth/react';
+import { useQuery } from 'convex/react';
+import { api } from '~/convex/_generated/api';
 
 export function OrganizationSwitcher() {
+  const user = useQueryWithAuth(api.users.get, {});
+  if (!user) {
+    return null;
+  }
+
+  const organizations = useQuery(api.organizations.get, {
+    userId: user._id,
+  });
+
   return (
     <Select>
       <SelectTrigger className='w-64'>
-        <SelectValue placeholder='Organization' />
+        <SelectValue placeholder='Select Organization' />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value='light'>Light</SelectItem>
-        <SelectItem value='dark'>Dark</SelectItem>
-        <Button variant='ghost'>
-          <Plus className='w-4' /> Create New Organization
-        </Button>
+        {organizations?.map((org) => (
+          <SelectItem key={org._id} value={org._id}>
+            {org.name}
+          </SelectItem>
+        ))}
+        <CreateOrganization />
       </SelectContent>
     </Select>
   );
