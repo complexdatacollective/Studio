@@ -1,14 +1,16 @@
 'use client';
-
-import { UserButton } from '@clerk/nextjs';
-import { useConvexAuth } from 'convex/react';
+import {
+  SignOutButton,
+  useQueryWithAuth,
+} from '@convex-dev/convex-lucia-auth/react';
+import { api } from '~/convex/_generated/api';
 
 export default function Dashboard() {
-  const { isLoading, isAuthenticated } = useConvexAuth();
+  const user = useQueryWithAuth(api.users.get, {});
 
   return (
     <div className='flex h-screen items-center justify-center'>
-      {isAuthenticated ? <UserButton /> : 'Logged out or still loading'}
+      {user ? <SignOutButton /> : 'Logged out'}
     </div>
   );
 }
