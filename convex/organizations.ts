@@ -1,7 +1,7 @@
 import { mutation } from './_generated/server';
 import { v } from 'convex/values';
 
-export const createOrganization = mutation({
+export const create = mutation({
   args: {
     name: v.string(),
     administrator: v.id('users'),

@@ -7,6 +7,7 @@ import {
 } from '@convex-dev/convex-lucia-auth/react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 
 export function AuthForm() {
   const { flow, toggleFlow, error, onSubmit } = useSignUpSignIn({
@@ -25,9 +26,9 @@ export function AuthForm() {
           void onSubmit(event);
         }}
       >
-        <label htmlFor='username'>Email</label>
+        <Label>Email</Label>
         <Input name='email' id='email' className='mb-4' />
-        <label htmlFor='password'>Password</label>
+        <Label>Password</Label>
         <Input
           type='password'
           name='password'
