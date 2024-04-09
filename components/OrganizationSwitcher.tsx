@@ -29,6 +29,10 @@ export function OrganizationSwitcher() {
     router.push(`/${organizationSlug}`);
   };
 
+  if (!params.organization || typeof params.organization !== 'string') {
+    return null;
+  }
+
   const selectedOrg: string = params.organization;
 
   return (

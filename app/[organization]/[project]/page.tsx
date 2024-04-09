@@ -10,6 +10,10 @@ export default function ProjectDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
 
+  if (!params.project || typeof params.project !== 'string') {
+    return null;
+  }
+
   const project = useQuery(api.projects.getBySlug, {
     projectSlug: params.project,
   });
