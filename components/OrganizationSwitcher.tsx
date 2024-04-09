@@ -12,6 +12,8 @@ import { api } from '~/convex/_generated/api';
 import { useRouter, useParams } from 'next/navigation';
 
 export function OrganizationSwitcher() {
+  const params = useParams();
+
   const user = useQueryWithAuth(api.users.get, {});
   if (!user) {
     return null;
@@ -23,24 +25,21 @@ export function OrganizationSwitcher() {
 
   const router = useRouter();
 
-  const selectOrg = (organizationId: string) => {
-    router.push(`/${organizationId}`);
+  const selectOrg = (organizationName: string) => {
+    router.push(`/${organizationName}`);
   };
 
-  const params = useParams();
-  const placeholderText = params.organization
-    ? params.organization
-    : 'Select an Organization';
+  const selectedOrg: string = params.organization;
 
   return (
     // route to organization page on select
-    <Select onValueChange={selectOrg}>
+    <Select onValueChange={selectOrg} defaultValue={selectedOrg}>
       <SelectTrigger className='w-64'>
-        <SelectValue placeholder={placeholderText} />
+        <SelectValue placeholder='Select an Organization' />
       </SelectTrigger>
       <SelectContent>
         {organizations?.map((org) => (
-          <SelectItem key={org._id} value={org._id}>
+          <SelectItem key={org._id} value={org.name}>
             {org.name}
           </SelectItem>
         ))}
