@@ -1,5 +1,5 @@
 'use client';
-import { useQueryWithAuth } from '~/lib/withAuthWrappers';
+import { useQueryWithAuth } from '~/hooks/useAuth';
 import { api } from '~/convex/_generated/api';
 import { Typography } from './Typography';
 import { SignOutButton } from './auth/SignOutButton';

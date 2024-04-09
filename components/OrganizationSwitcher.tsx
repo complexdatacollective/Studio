@@ -6,7 +6,7 @@ import {
   SelectItem,
 } from '~/components/ui/select';
 import { CreateOrganization } from './CreateOrganization';
-import { useQueryWithAuth } from '~/lib/withAuthWrappers';
+import { useQueryWithAuth } from '~/hooks/useAuth';
 import { useQuery } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useRouter, useParams } from 'next/navigation';

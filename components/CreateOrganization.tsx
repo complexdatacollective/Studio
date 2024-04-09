@@ -13,7 +13,7 @@ import { Label } from '@radix-ui/react-label';
 import { useMutation } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useState } from 'react';
-import { useQueryWithAuth } from '~/lib/withAuthWrappers';
+import { useQueryWithAuth } from '~/hooks/useAuth';
 
 export function CreateOrganization() {
   const createOrg = useMutation(api.organizations.create);

@@ -2,7 +2,7 @@
 
 import { api } from '~/convex/_generated/api';
 import { useSetSessionId } from '~/providers/SessionProvider';
-import { useMutationWithAuth } from '../../lib/withAuthWrappers';
+import { useMutationWithAuth } from '../../hooks/useAuth';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
