@@ -11,10 +11,13 @@ export default defineSchema({
   }),
   organizations: defineTable({
     name: v.string(),
-    administrator: v.id('users'),
+    slug: v.string(),
+    administratorId: v.id('users'),
   }),
   projects: defineTable({
     name: v.string(),
-    organization: v.id('organizations'),
+    slug: v.string(),
+    description: v.string(),
+    organizationId: v.id('organizations'),
   }),
 });

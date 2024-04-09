@@ -1,18 +1,23 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from './ui/card';
+import { Card, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { useRouter, useParams } from 'next/navigation';
 
-export function ProjectCard({ projectName }: { projectName: string }) {
+import { Doc } from '../convex/_generated/dataModel';
+
+export function ProjectCard({ project }: { project: Doc<'projects'> }) {
+  const router = useRouter();
+
+  const params = useParams();
+
+  const organizationSlug = params.organization;
+
+  const handleClick = () => {
+    router.push(`/${organizationSlug}/${project.slug}`);
+  };
   return (
-    <Card>
+    <Card onClick={handleClick}>
       <CardHeader>
-        <CardTitle>{projectName}</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardTitle>{project.name}</CardTitle>
+        <CardDescription>{project.description}</CardDescription>
       </CardHeader>
     </Card>
   );

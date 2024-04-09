@@ -44,7 +44,7 @@ export function CreateOrganization() {
             e.preventDefault();
             void createOrg({
               name: orgName,
-              administrator: user._id,
+              administratorId: user._id,
             });
             setOpen(false);
           }}

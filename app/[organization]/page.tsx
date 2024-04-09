@@ -5,18 +5,56 @@ import { Typography } from '~/components/Typography';
 import { Button } from '~/components/ui/button';
 import { api } from '~/convex/_generated/api';
 import { useParams } from 'next/navigation';
+import { ProjectCard } from '~/components/ProjectCard';
+import { CreateProject } from '~/components/CreateProject';
+import { useEffect, useState } from 'react';
 
-export default function Home() {
-  //   const projects = useQuery(api.projects.get, {
-  //     organizationId: 'organizationId',
-  //   });
+export default function OrganizationDashboard() {
   const params = useParams();
-  console.log(params.organization);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // get the organization by name
+  if (!params.organization || typeof params.organization !== 'string') {
+    return null;
+  }
+  const data = useQuery(api.organizations.get, {
+    organizationSlug: params.organization,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setIsLoading(false);
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <div>Loading organization dashboard...</div>;
+  }
+
+  if ((!isLoading && !data) || !data?.organization) {
+    return (
+      <div className='flex flex-col p-12'>
+        <Typography variant='h2'>Organization Not Found</Typography>
+        <Typography variant='h4'>
+          Select an organization to view projects.
+        </Typography>
+      </div>
+    );
+  }
 
   return (
-    <div className='flex p-12'>
-      <Typography variant='h2'>Projects</Typography>
-      <Button> Create Project </Button>
+    <div className='p-12'>
+      <div className='flex justify-between'>
+        <Typography variant='h2'>
+          {data?.organization?.name} Projects
+        </Typography>
+        <CreateProject organization={data?.organization} />
+      </div>
+      <div className='grid grid-cols-4 space-x-4 space-y-4'>
+        {data?.projects?.map((project) => (
+          <ProjectCard key={project._id} project={project} />
+        ))}
+      </div>
     </div>
   );
 }

@@ -7,44 +7,34 @@ import {
   DialogTitle,
 } from '~/components/ui/dialog';
 import { Button } from './ui/button';
-import { Plus } from 'lucide-react';
 import { Input } from './ui/input';
 import { Label } from '@radix-ui/react-label';
 import { useMutation } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useState } from 'react';
-import { useQueryWithAuth } from '@convex-dev/convex-lucia-auth/react';
-import { useParams } from 'next/navigation';
+import { Doc } from '../convex/_generated/dataModel';
 
-export function CreateProject() {
+export function CreateProject({
+  organization,
+}: {
+  organization: Doc<'organizations'>;
+}) {
   const createProject = useMutation(api.projects.create);
+
   const [projectName, setProjectName] = useState('');
-  const user = useQueryWithAuth(api.users.get, {});
+  const [projectDescription, setProjectDescription] = useState('');
   const [open, setOpen] = useState(false);
-
-  if (!user) {
-    return null;
-  }
-
-  const organization = {
-    id: 'organizationId',
-    name: 'organizationName',
-  };
-
-  const params = useParams();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button variant='ghost'>
-          <Plus className='w-4' /> Create New Project
-        </Button>
+        <Button variant='outline'>+ Create Project</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Project</DialogTitle>
           <DialogDescription>
-            Create a new project in {organization.name}.
+            Create a new project in {organization?.name}
           </DialogDescription>
         </DialogHeader>
         <form
@@ -52,8 +42,10 @@ export function CreateProject() {
             e.preventDefault();
             void createProject({
               name: projectName,
-              organization: params.organization,
+              description: projectDescription,
+              organizationId: organization._id,
             });
+
             setOpen(false);
           }}
         >
@@ -62,6 +54,12 @@ export function CreateProject() {
             placeholder='Project Name'
             className='mb-4'
             onChange={(e) => setProjectName(e.target.value)}
+          />
+          <Label>Project Description</Label>
+          <Input
+            placeholder='Project Description'
+            className='mb-4'
+            onChange={(e) => setProjectDescription(e.target.value)}
           />
           <Button type='submit'>Create</Button>
         </form>

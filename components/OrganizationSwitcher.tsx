@@ -19,14 +19,14 @@ export function OrganizationSwitcher() {
     return null;
   }
 
-  const organizations = useQuery(api.organizations.get, {
+  const organizations = useQuery(api.organizations.getAll, {
     userId: user._id,
   });
 
   const router = useRouter();
 
-  const selectOrg = (organizationName: string) => {
-    router.push(`/${organizationName}`);
+  const selectOrg = (organizationSlug: string) => {
+    router.push(`/${organizationSlug}`);
   };
 
   const selectedOrg: string = params.organization;
@@ -39,7 +39,7 @@ export function OrganizationSwitcher() {
       </SelectTrigger>
       <SelectContent>
         {organizations?.map((org) => (
-          <SelectItem key={org._id} value={org.name}>
+          <SelectItem key={org._id} value={org.slug}>
             {org.name}
           </SelectItem>
         ))}
