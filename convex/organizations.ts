@@ -1,5 +1,5 @@
 import { mutation, query } from './_generated/server';
-import { v } from 'convex/values';
+import { ConvexError, v } from 'convex/values';
 
 export const create = mutation({
   args: {
@@ -7,10 +7,27 @@ export const create = mutation({
     administratorId: v.id('users'),
   },
   handler: async (ctx, args) => {
-    await ctx.db.insert('organizations', {
+    const organizationId = await ctx.db.insert('organizations', {
       name: args.name,
       slug: args.name.toLowerCase().replace(/\s/g, '-'),
       administratorId: args.administratorId,
+    });
+
+    // add the organization to the user as administrator
+
+    const user = await ctx.db.get(args.administratorId);
+
+    if (!user) {
+      throw new ConvexError('User not found');
+    }
+
+    const existingOrgs = user.organizationIds || [];
+
+    await ctx.db.patch(user._id, {
+      organizationIds: [
+        ...existingOrgs,
+        { id: organizationId, role: 'Administrator' },
+      ],
     });
   },
 });

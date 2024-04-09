@@ -14,6 +14,7 @@ import { useMutation } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useState } from 'react';
 import { useQueryWithAuth } from '~/hooks/useAuth';
+import { addOrganizationToUser } from '~/convex/users';
 
 export function CreateOrganization() {
   const createOrg = useMutation(api.organizations.create);
@@ -46,6 +47,7 @@ export function CreateOrganization() {
               name: orgName,
               administratorId: user._id,
             });
+
             setOpen(false);
           }}
         >

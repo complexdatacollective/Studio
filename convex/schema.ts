@@ -5,6 +5,14 @@ export default defineSchema({
   ...authTables({
     user: {
       email: v.string(),
+      organizationIds: v.optional(
+        v.array(
+          v.object({
+            id: v.id('organizations'),
+            role: v.string(),
+          })
+        )
+      ),
     },
     session: {},
   }),
