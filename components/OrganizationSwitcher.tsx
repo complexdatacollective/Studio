@@ -10,7 +10,7 @@ import { useQueryWithAuth } from '~/hooks/useAuth';
 import { useQuery } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useRouter, useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export function OrganizationSwitcher() {
   const params = useParams();
