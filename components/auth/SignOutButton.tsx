@@ -1,6 +1,7 @@
-import { useSignOut } from '@convex-dev/convex-lucia-auth/react';
+import { useSetSessionId } from '~/providers/SessionProvider';
 import { Button } from '../ui/button';
 
 export function SignOutButton() {
-  return <Button onClick={useSignOut()}>Sign Out</Button>;
+  const setSessionId = useSetSessionId();
+  return <Button onClick={() => setSessionId(null)}>Sign Out</Button>;
 }

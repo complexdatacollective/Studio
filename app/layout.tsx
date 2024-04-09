@@ -1,6 +1,6 @@
 import './globals.css';
 import { Quicksand } from 'next/font/google';
-import ConvexClientProvider from './ConvexClientProvider';
+import ConvexClientProvider from '../providers/ConvexClientProvider';
 import { Header } from '~/components/Header';
 
 const quicksand = Quicksand({ subsets: ['latin'] });

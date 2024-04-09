@@ -1,7 +1,7 @@
 'use client';
 import { ReactNode } from 'react';
 import { ConvexReactClient, ConvexProvider } from 'convex/react';
-import { SessionProvider } from '@convex-dev/convex-lucia-auth/react';
+import { SessionProvider } from '~/providers/SessionProvider';
 
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 

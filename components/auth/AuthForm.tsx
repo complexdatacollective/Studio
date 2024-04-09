@@ -1,29 +1,42 @@
 'use client';
 
 import { api } from '~/convex/_generated/api';
-import {
-  useMutationWithAuth,
-  useSignUpSignIn,
-} from '@convex-dev/convex-lucia-auth/react';
+import { useSetSessionId } from '~/providers/SessionProvider';
+import { useMutationWithAuth } from '../../lib/withAuthWrappers';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
+import { useState } from 'react';
 
 export function AuthForm() {
-  const { flow, toggleFlow, error, onSubmit } = useSignUpSignIn({
-    signIn: useMutationWithAuth(api.users.signIn),
-    signUp: useMutationWithAuth(api.users.signUp),
-  });
+  const setSessionId = useSetSessionId();
 
-  if (error !== undefined) {
-    console.error(error);
-  }
+  const [flow, setFlow] = useState<'signIn' | 'signUp'>('signIn');
+  const signIn = useMutationWithAuth(api.users.signIn);
+  const signUp = useMutationWithAuth(api.users.signUp);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    try {
+      const sessionId = await (flow === 'signIn' ? signIn : signUp)({
+        email: (data.get('email') as string | null) ?? '',
+        password: (data.get('password') as string | null) ?? '',
+      });
+      setSessionId(sessionId);
+    } catch {
+      alert(
+        flow === 'signIn' ? 'Invalid email or password' : 'Email already in use'
+      );
+    }
+  };
+
   return (
     <div className='flex flex-col items-center gap-4 px-20'>
       <form
         className='flex w-[18rem] flex-col'
         onSubmit={(event) => {
-          void onSubmit(event);
+          void handleSubmit(event);
         }}
       >
         <Label>Email</Label>
@@ -39,18 +52,16 @@ export function AuthForm() {
           {flow === 'signIn' ? 'Sign in' : 'Sign up'}
         </Button>
       </form>
-      <Button variant='link' onClick={toggleFlow}>
+      <Button
+        variant='link'
+        onClick={() => {
+          setFlow(flow === 'signIn' ? 'signUp' : 'signIn');
+        }}
+      >
         {flow === 'signIn'
           ? "Don't have an account? Sign up"
           : 'Already have an account? Sign in'}
       </Button>
-      <div className='text-sm font-medium text-red-500'>
-        {error !== undefined
-          ? flow === 'signIn'
-            ? 'Could not sign in, did you mean to sign up?'
-            : 'Could not sign up, did you mean to sign in?'
-          : null}
-      </div>
     </div>
   );
 }

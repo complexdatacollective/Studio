@@ -1,5 +1,5 @@
 'use client';
-import { useQueryWithAuth } from '@convex-dev/convex-lucia-auth/react';
+import { useQueryWithAuth } from '~/lib/withAuthWrappers';
 import { api } from '~/convex/_generated/api';
 import { Typography } from './Typography';
 import { SignOutButton } from './auth/SignOutButton';

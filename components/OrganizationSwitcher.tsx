@@ -6,7 +6,7 @@ import {
   SelectItem,
 } from '~/components/ui/select';
 import { CreateOrganization } from './CreateOrganization';
-import { useQueryWithAuth } from '@convex-dev/convex-lucia-auth/react';
+import { useQueryWithAuth } from '~/lib/withAuthWrappers';
 import { useQuery } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useRouter, useParams } from 'next/navigation';
@@ -25,6 +25,7 @@ export function OrganizationSwitcher() {
 
   const router = useRouter();
 
+  // route to organization page on select
   const selectOrg = (organizationSlug: string) => {
     router.push(`/${organizationSlug}`);
   };
@@ -36,7 +37,6 @@ export function OrganizationSwitcher() {
   const selectedOrg: string = params.organization;
 
   return (
-    // route to organization page on select
     <Select onValueChange={selectOrg} defaultValue={selectedOrg}>
       <SelectTrigger className='w-64'>
         <SelectValue placeholder='Select an Organization' />
