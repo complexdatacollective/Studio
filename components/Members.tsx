@@ -1,6 +1,6 @@
 import { Separator } from './ui/separator';
 import { Badge } from './ui/badge';
-import type { UserWithRole } from '~/shared/types';
+import type { UserWithRole } from '~/convex/helpers';
 
 export function Members({ members }: { members: UserWithRole[] }) {
   return (

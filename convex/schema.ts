@@ -1,5 +1,6 @@
 import { defineSchema, defineTable } from 'convex/server';
 import { Validator, v } from 'convex/values';
+import { roleValidator } from './helpers';
 
 export default defineSchema({
   ...authTables({
@@ -15,7 +16,7 @@ export default defineSchema({
   organizationUsers: defineTable({
     organizationId: v.id('organizations'),
     userId: v.id('users'),
-    role: v.string(),
+    role: roleValidator,
   })
     .index('byOrganizationId', ['organizationId']) // Get users in an organization
     .index('byUserId', ['userId']), // Get organizations a user is in
@@ -30,7 +31,7 @@ export default defineSchema({
   projectUsers: defineTable({
     projectId: v.id('projects'),
     userId: v.id('users'),
-    role: v.string(),
+    role: roleValidator,
   })
     .index('byProjectId', ['projectId']) // Get users in a project
     .index('byUserId', ['userId']), // Get projects a user is in

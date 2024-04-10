@@ -14,6 +14,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as helpers from "../helpers.js";
 import type * as lucia from "../lucia.js";
 import type * as organizations from "../organizations.js";
 import type * as projects from "../projects.js";
@@ -29,6 +30,7 @@ import type * as withAuth from "../withAuth.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  helpers: typeof helpers;
   lucia: typeof lucia;
   organizations: typeof organizations;
   projects: typeof projects;
