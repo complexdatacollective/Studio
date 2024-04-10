@@ -9,12 +9,12 @@ import { Members } from '~/components/Members';
 export default function OrganizationSettingsPage() {
   const params = useParams();
 
-  if (!params.organization || typeof params.organization !== 'string') {
+  if (!params.project || typeof params.project !== 'string') {
     return null;
   }
 
-  const members = useQuery(api.organizations.getMembers, {
-    organizationSlug: params.organization,
+  const members = useQuery(api.projects.getMembers, {
+    projectSlug: params.project,
   });
 
   if (!members) {
@@ -23,8 +23,8 @@ export default function OrganizationSettingsPage() {
 
   return (
     <div className='p-12'>
-      <Typography variant='h2'>Organization Settings Page</Typography>
-      <Typography variant='h4'>Organization Members</Typography>
+      <Typography variant='h2'>Project Settings Page</Typography>
+      <Typography variant='h4'>Project Members</Typography>
       <Members members={members} />
     </div>
   );

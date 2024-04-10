@@ -9,12 +9,11 @@ import { ProjectCard } from '~/components/ProjectCard';
 import { CreateProject } from '~/components/CreateProject';
 import { useEffect, useState } from 'react';
 import { Settings } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function OrganizationDashboard() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   // get the organization by name
   if (!params.organization || typeof params.organization !== 'string') {
@@ -53,13 +52,11 @@ export default function OrganizationDashboard() {
         </Typography>
         <div className='flex flex-row space-x-2'>
           <CreateProject organization={data?.organization} />
-          <Button
-            variant='outline'
-            size='icon'
-            onClick={() => router.push(`/${params.organization}/settings`)}
-          >
-            <Settings className='h-4 w-4' />
-          </Button>
+          <Link href={`/${params.organization}/settings`}>
+            <Button variant='outline' size='icon'>
+              <Settings className='h-4 w-4' />
+            </Button>
+          </Link>
         </div>
       </div>
       <div className='grid grid-cols-4 space-x-4 space-y-4'>

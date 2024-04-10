@@ -26,6 +26,14 @@ export default defineSchema({
     description: v.string(),
     organizationId: v.id('organizations'),
   }),
+
+  projectUsers: defineTable({
+    projectId: v.id('projects'),
+    userId: v.id('users'),
+    role: v.string(),
+  })
+    .index('byProjectId', ['projectId']) // Get users in a project
+    .index('byUserId', ['userId']), // Get projects a user is in
 });
 
 function authTables<

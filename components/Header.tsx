@@ -6,17 +6,18 @@ import { SignOutButton } from './auth/SignOutButton';
 import { SignInButton } from './auth/SignInButton';
 import { Avatar, AvatarFallback } from '~/components/ui/avatar';
 import { OrganizationSwitcher } from './OrganizationSwitcher';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export function Header() {
   const user = useQueryWithAuth(api.users.get, {});
-  const router = useRouter();
   return (
     <div className='flex flex-row items-center justify-between bg-slate-200 p-2'>
-      <div className='flex flex-col' onClick={() => router.push('/')}>
-        <Typography variant='h2'>Studio MVP</Typography>
-        <Typography variant='h4'>Convex + Lucia</Typography>
-      </div>
+      <Link href='/'>
+        <div className='flex flex-col'>
+          <Typography variant='h2'>Studio MVP</Typography>
+          <Typography variant='h4'>Convex + Lucia</Typography>
+        </div>
+      </Link>
       <div className='p-2'>
         {user ? (
           <div className='flex flex-row space-x-4'>
