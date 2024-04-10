@@ -1,6 +1,6 @@
 import { mutation, query } from './_generated/server';
 import { ConvexError, v } from 'convex/values';
-import { getAll, getManyVia } from 'convex-helpers/server/relationships';
+import { getManyVia } from 'convex-helpers/server/relationships';
 
 export const create = mutation({
   args: {
@@ -31,11 +31,11 @@ export const getUserOrgs = query({
   handler: async (ctx, args) => {
     const organizations = await getManyVia(
       ctx.db,
-      'organizationUsers',
-      'organizationId',
-      'byUserId',
-      args.userId,
-      'userId'
+      'organizationUsers', // table
+      'organizationId', // toField
+      'byUserId', // index
+      args.userId, // value
+      'userId' // fromField - optional if index is named after field. In this case, it is not.
     );
 
     return organizations;
