@@ -6,8 +6,6 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Typography } from '~/components/Typography';
 import { api } from '~/convex/_generated/api';
-import { Button } from '~/components/ui/button';
-import Link from 'next/link';
 
 export default function ProjectDashboard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,13 +30,9 @@ export default function ProjectDashboard() {
   }
 
   return (
-    <div className='flex justify-between p-12'>
+    <div className='flex flex-col p-12'>
       <Typography variant='h2'>Project Dashboard: {project?.name}</Typography>
-      <Link href={`/${params.organization}/${params.project}/settings`}>
-        <Button variant='outline' size='icon'>
-          <Settings className='h-4 w-4' />
-        </Button>
-      </Link>
+      <Typography variant='h4'>Description: {project?.description}</Typography>
     </div>
   );
 }
