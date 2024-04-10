@@ -12,7 +12,7 @@ export default function ConvexClientProvider({
 }) {
   return (
     <SessionProvider>
-      <ConvexProvider client={convex}>{children}</ConvexProvider>;
+      <ConvexProvider client={convex}>{children}</ConvexProvider>
     </SessionProvider>
   );
 }

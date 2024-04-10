@@ -8,9 +8,7 @@ export function OrgRoles() {
       <Typography variant='body'>
         Administrator: R/W projects, R/W org settings.
       </Typography>
-      <Typography variant='body'>
-        Member: R projects, R org settings.
-      </Typography>
+      <Typography variant='body'>Member: R projects.</Typography>
     </SettingsSection>
   );
 }

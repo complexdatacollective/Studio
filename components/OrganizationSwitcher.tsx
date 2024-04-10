@@ -25,7 +25,7 @@ export function OrganizationSwitcher() {
     return null;
   }
 
-  const organizations = useQuery(api.organizations.getUserOrgs, {
+  const organizations = useQuery(api.organizations.getAllUserOrgs, {
     userId: user._id,
   });
 

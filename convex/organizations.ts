@@ -1,4 +1,4 @@
-import { mutation, query } from './_generated/server';
+import { MutationCtx, QueryCtx, mutation, query } from './_generated/server';
 import { ConvexError, v } from 'convex/values';
 import {
   getManyVia,
@@ -28,7 +28,8 @@ export const create = mutation({
   },
 });
 
-export const getUserOrgs = query({
+// gets all organizations a user is in
+export const getAllUserOrgs = query({
   args: {
     userId: v.id('users'),
   },
@@ -46,20 +47,36 @@ export const getUserOrgs = query({
   },
 });
 
+// get UserOrganization by organization slug and userId
+export const getUserOrganization = query({
+  args: {
+    organizationSlug: v.string(),
+    userId: v.id('users'),
+  },
+  handler: async (ctx, args) => {
+    const organization = await getOrgBySlug(ctx, args.organizationSlug);
+
+    const userOrganization = await ctx.db
+      .query('organizationUsers')
+      .withIndex('byUserId')
+      .filter((q) => q.eq(q.field('userId'), args.userId))
+      .filter((q) => q.eq(q.field('organizationId'), organization._id))
+      .unique();
+
+    if (!userOrganization) {
+      return {};
+    }
+
+    return userOrganization;
+  },
+});
+
 export const getMembers = query({
   args: {
     organizationSlug: v.string(),
   },
   handler: async (ctx, args) => {
-    // get org id by slug
-    const organization = await ctx.db
-      .query('organizations')
-      .filter((q) => q.eq(q.field('slug'), args.organizationSlug))
-      .unique();
-
-    if (!organization) {
-      throw new ConvexError('Organization not found');
-    }
+    const organization = await getOrgBySlug(ctx, args.organizationSlug);
 
     // using this pattern instead of getManyVia because we want to return the role
     // otherwise we would have to do another query for the organizationUser to get role
@@ -105,14 +122,7 @@ export const getOrgWithProjects = query({
     organizationSlug: v.string(),
   },
   handler: async (ctx, args) => {
-    const organization = await ctx.db
-      .query('organizations')
-      .filter((q) => q.eq(q.field('slug'), args.organizationSlug))
-      .unique();
-
-    if (!organization) {
-      throw new Error('Organization not found');
-    }
+    const organization = await getOrgBySlug(ctx, args.organizationSlug);
 
     const projects = await ctx.db
       .query('projects')
@@ -164,3 +174,18 @@ export const addMember = mutation({
     });
   },
 });
+
+// Helper Functions
+
+async function getOrgBySlug(ctx: QueryCtx | MutationCtx, slug: string) {
+  // get org id by slug
+  const organization = await ctx.db
+    .query('organizations')
+    .filter((q) => q.eq(q.field('slug'), slug))
+    .unique();
+
+  if (!organization) {
+    throw new ConvexError('Organization not found');
+  }
+  return organization;
+}
