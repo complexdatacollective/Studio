@@ -5,22 +5,21 @@ export default defineSchema({
   ...authTables({
     user: {
       email: v.string(),
-      organizationIds: v.optional(
-        v.array(
-          v.object({
-            id: v.id('organizations'),
-            role: v.string(),
-          })
-        )
-      ),
     },
     session: {},
   }),
   organizations: defineTable({
     name: v.string(),
     slug: v.string(),
-    administratorId: v.id('users'),
   }),
+  organizationUsers: defineTable({
+    organizationId: v.id('organizations'),
+    userId: v.id('users'),
+    role: v.string(),
+  })
+    .index('byOrganizationId', ['organizationId']) // Get users in an organization
+    .index('byUserId', ['userId']), // Get organizations a user is in
+
   projects: defineTable({
     name: v.string(),
     slug: v.string(),

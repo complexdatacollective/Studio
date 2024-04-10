@@ -1,7 +1,6 @@
+import { Doc } from '~/convex/_generated/dataModel';
 import { Card, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { useRouter, useParams } from 'next/navigation';
-
-import { Doc } from '../convex/_generated/dataModel';
 
 export function ProjectCard({ project }: { project: Doc<'projects'> }) {
   const router = useRouter();
@@ -14,7 +13,7 @@ export function ProjectCard({ project }: { project: Doc<'projects'> }) {
     router.push(`/${organizationSlug}/${project.slug}`);
   };
   return (
-    <Card onClick={handleClick}>
+    <Card onClick={handleClick} className='hover:bg-secondary'>
       <CardHeader>
         <CardTitle>{project.name}</CardTitle>
         <CardDescription>{project.description}</CardDescription>

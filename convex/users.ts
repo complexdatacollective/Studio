@@ -59,27 +59,3 @@ export const signUp = mutationWithAuth({
     return session.sessionId;
   },
 });
-
-export const addOrganizationToUser = mutationWithAuth({
-  args: {
-    userId: v.id('users'),
-    organizationId: v.id('organizations'),
-    role: v.string(),
-  },
-  handler: async (ctx, args) => {
-    const user = await ctx.db.get(args.userId);
-
-    if (!user) {
-      throw new ConvexError('User not found');
-    }
-
-    const existingOrgs = user.organizationIds || [];
-
-    await ctx.db.patch(user._id, {
-      organizationIds: [
-        ...existingOrgs,
-        { id: args.organizationId, role: args.role },
-      ],
-    });
-  },
-});

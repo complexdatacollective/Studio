@@ -15,7 +15,7 @@ export function Header() {
     <div className='flex flex-row items-center justify-between bg-slate-200 p-2'>
       <div className='flex flex-col' onClick={() => router.push('/')}>
         <Typography variant='h2'>Studio MVP</Typography>
-        <Typography variant='h4'>Convex and Lucia</Typography>
+        <Typography variant='h4'>Convex + Lucia</Typography>
       </div>
       <div className='p-2'>
         {user ? (

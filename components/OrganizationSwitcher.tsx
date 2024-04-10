@@ -25,7 +25,7 @@ export function OrganizationSwitcher() {
     return null;
   }
 
-  const organizations = useQuery(api.organizations.getAll, {
+  const organizations = useQuery(api.organizations.getUserOrgs, {
     userId: user._id,
   });
 
@@ -41,8 +41,8 @@ export function OrganizationSwitcher() {
       </SelectTrigger>
       <SelectContent>
         {organizations?.map((org) => (
-          <SelectItem key={org._id} value={org.slug}>
-            {org.name}
+          <SelectItem key={org?._id} value={org?.slug}>
+            {org?.name}
           </SelectItem>
         ))}
         <CreateOrganization />
