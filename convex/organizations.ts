@@ -1,6 +1,10 @@
 import { mutation, query } from './_generated/server';
 import { ConvexError, v } from 'convex/values';
-import { getManyVia } from 'convex-helpers/server/relationships';
+import {
+  getManyVia,
+  getManyFrom,
+  getAll,
+} from 'convex-helpers/server/relationships';
 
 export const create = mutation({
   args: {
@@ -57,14 +61,40 @@ export const getMembers = query({
       throw new ConvexError('Organization not found');
     }
 
-    const members = await getManyVia(
+    // using this pattern instead of getManyVia because we want to return the role
+    // otherwise we would have to do another query for the organizationUser to get role
+    const organizationUsers = await getManyFrom(
       ctx.db,
       'organizationUsers',
-      'userId',
       'byOrganizationId',
       organization._id,
       'organizationId'
     );
+    const userIds = organizationUsers.map((ou) => ou.userId);
+    const users = await getAll(ctx.db, userIds);
+
+    if (!users) {
+      return [];
+    }
+
+    // add role to each user
+    const members = users.map((user) => {
+      if (!user) {
+        return null;
+      }
+      const organizationUser = organizationUsers.find(
+        (ou) => ou.userId === user._id
+      );
+
+      if (!organizationUser) {
+        throw new ConvexError('Organization user not found');
+      }
+
+      return {
+        ...user,
+        role: organizationUser.role,
+      };
+    });
 
     return members;
   },
