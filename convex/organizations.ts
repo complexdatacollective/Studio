@@ -102,3 +102,35 @@ export const getOrgWithProjects = query({
     };
   },
 });
+
+export const addMember = mutation({
+  args: {
+    email: v.string(),
+    organizationSlug: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const organization = await ctx.db
+      .query('organizations')
+      .filter((q) => q.eq(q.field('slug'), args.organizationSlug))
+      .unique();
+
+    if (!organization) {
+      throw new ConvexError('Organization not found');
+    }
+
+    const user = await ctx.db
+      .query('users')
+      .filter((q) => q.eq(q.field('email'), args.email))
+      .unique();
+
+    if (!user) {
+      throw new ConvexError('User not found');
+    }
+
+    await ctx.db.insert('organizationUsers', {
+      organizationId: organization._id,
+      userId: user._id,
+      role: 'Member',
+    });
+  },
+});
