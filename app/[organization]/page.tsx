@@ -11,12 +11,10 @@ import { useEffect, useState } from 'react';
 import { Settings } from 'lucide-react';
 import Link from 'next/link';
 import { useQueryWithAuth } from '~/hooks/useAuth';
-import { useRouter } from 'next/navigation';
 
 export default function OrganizationDashboard() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   if (!params.organization || typeof params.organization !== 'string') {
     return null;
@@ -28,8 +26,6 @@ export default function OrganizationDashboard() {
     organizationSlug: params.organization,
     userId: user._id,
   });
-
-  // if no user Organization, user is not in the org
 
   const data = useQuery(api.organizations.getOrgWithProjects, {
     organizationSlug: params.organization,

@@ -1,7 +1,8 @@
-import { mutation, query } from './_generated/server';
-import { v } from 'convex/values';
+import { MutationCtx, QueryCtx, mutation, query } from './_generated/server';
+import { ConvexError, v } from 'convex/values';
 import { getManyVia } from 'convex-helpers/server/relationships';
 
+// for now, we are only allowing org admins to create projects
 export const create = mutation({
   args: {
     name: v.string(),
@@ -10,6 +11,18 @@ export const create = mutation({
     creatorId: v.id('users'),
   },
   handler: async (ctx, args) => {
+    // check if user is an admin of the organization
+    const role = await roleOnOrganization(
+      ctx,
+      args.organizationId,
+      args.creatorId
+    );
+
+    if (!role || role !== 'Administrator') {
+      throw new ConvexError(
+        'User does not have permission to create projects.'
+      );
+    }
     // create the project
     const projectId = await ctx.db.insert('projects', {
       name: args.name,
@@ -87,3 +100,23 @@ export const getMembers = query({
     return members;
   },
 });
+
+// Helper Functions
+async function roleOnOrganization(
+  ctx: QueryCtx | MutationCtx,
+  organizationId: string,
+  userId: string
+) {
+  const organizationUser = await ctx.db
+    .query('organizationUsers')
+    .withIndex('byUserId')
+    .filter((q) => q.eq(q.field('userId'), userId))
+    .filter((q) => q.eq(q.field('organizationId'), organizationId))
+    .unique();
+
+  if (!organizationUser) {
+    throw new ConvexError('User not in organization');
+  }
+
+  return organizationUser.role;
+}
