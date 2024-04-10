@@ -1,11 +1,6 @@
 import { mutation, query } from './_generated/server';
-import { v } from 'convex/values';
-import {
-  getAll,
-  getOneFrom,
-  getManyFrom,
-  getManyVia,
-} from 'convex-helpers/server/relationships';
+import { ConvexError, v } from 'convex/values';
+import { getAll, getManyVia } from 'convex-helpers/server/relationships';
 
 export const create = mutation({
   args: {
@@ -34,15 +29,44 @@ export const getUserOrgs = query({
     userId: v.id('users'),
   },
   handler: async (ctx, args) => {
-    // these steps could be replaced with using getManyVia
-    const organizationUsers = await ctx.db
-      .query('organizationUsers')
-      .filter((q) => q.eq(q.field('userId'), args.userId))
-      .collect();
+    const organizations = await getManyVia(
+      ctx.db,
+      'organizationUsers',
+      'organizationId',
+      'byUserId',
+      args.userId,
+      'userId'
+    );
 
-    const organizationIds = organizationUsers.map((ou) => ou.organizationId);
-    const organizations = await getAll(ctx.db, organizationIds);
     return organizations;
+  },
+});
+
+export const getMembers = query({
+  args: {
+    organizationSlug: v.string(),
+  },
+  handler: async (ctx, args) => {
+    // get org id by slug
+    const organization = await ctx.db
+      .query('organizations')
+      .filter((q) => q.eq(q.field('slug'), args.organizationSlug))
+      .unique();
+
+    if (!organization) {
+      throw new ConvexError('Organization not found');
+    }
+
+    const members = await getManyVia(
+      ctx.db,
+      'organizationUsers',
+      'userId',
+      'byOrganizationId',
+      organization._id,
+      'organizationId'
+    );
+
+    return members;
   },
 });
 
