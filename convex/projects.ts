@@ -55,7 +55,7 @@ export const getAll = query({
   },
 });
 
-export const getBySlug = query({
+export const getProjectBySlug = query({
   args: {
     projectSlug: v.string(),
   },
@@ -98,6 +98,28 @@ export const getMembers = query({
     );
 
     return members;
+  },
+});
+
+// get UserOrganization by organization slug and userId
+export const getUserProject = query({
+  args: {
+    projectSlug: v.string(),
+    userId: v.id('users'),
+  },
+  handler: async (ctx, args) => {
+    const project = await getProjectBySlug(ctx, {
+      projectSlug: args.projectSlug,
+    });
+
+    const userProject = await ctx.db
+      .query('projectUsers')
+      .withIndex('byUserId')
+      .filter((q) => q.eq(q.field('userId'), args.userId))
+      .filter((q) => q.eq(q.field('projectId'), project._id))
+      .unique();
+
+    return userProject;
   },
 });
 

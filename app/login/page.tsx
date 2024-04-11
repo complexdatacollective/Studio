@@ -5,7 +5,7 @@ import { api } from '~/convex/_generated/api';
 import { useQueryWithAuth } from '~/hooks/useAuth';
 import authHelper from '~/utils/authHelper';
 
-export default function Home() {
+export default function Login() {
   const user = useQueryWithAuth(api.users.get, {});
 
   // convex suggests using undefined to check if the user is still loading
@@ -13,17 +13,14 @@ export default function Home() {
   if (user === undefined) {
     return <div>Loading...</div>;
   }
-
   authHelper({
-    user: user,
+    user,
   });
 
   return (
     <div className='flex flex-col p-12'>
-      <Typography variant='h2'>Home Page</Typography>
-      <Typography variant='h4'>
-        Select an organization to view projects.
-      </Typography>
+      <Typography variant='h2'>Login Page</Typography>
+      <Typography variant='h4'>Login or create an account!</Typography>
     </div>
   );
 }

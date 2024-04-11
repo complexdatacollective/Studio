@@ -13,14 +13,13 @@ import Link from 'next/link';
 import { useQueryWithAuth } from '~/hooks/useAuth';
 
 export default function OrganizationDashboard() {
-  const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const user = useQueryWithAuth(api.users.get, {});
+  const params = useParams();
 
   if (!params.organization || typeof params.organization !== 'string') {
     return null;
   }
-
-  const user = useQueryWithAuth(api.users.get, {});
 
   const userOrganization = useQuery(api.organizations.getUserOrganization, {
     organizationSlug: params.organization,
@@ -39,6 +38,10 @@ export default function OrganizationDashboard() {
 
   if (isLoading) {
     return <div>Loading organization dashboard...</div>;
+  }
+
+  if (user === undefined) {
+    return <div>Loading...</div>;
   }
 
   if ((!isLoading && !data) || !data?.organization) {

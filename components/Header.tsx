@@ -19,7 +19,7 @@ export function Header() {
             <Typography variant='h4'>Convex + Lucia</Typography>
           </div>
         </Link>
-        <Navigation />
+        {user && <Navigation />}
       </div>
       <div className='p-2'>
         {user ? (

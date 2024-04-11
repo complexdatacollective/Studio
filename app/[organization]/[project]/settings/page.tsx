@@ -5,11 +5,8 @@ import { Typography } from '~/components/Typography';
 import { api } from '~/convex/_generated/api';
 import { useParams } from 'next/navigation';
 import { Members } from '~/components/Members';
-import { OrgRoles, ProjectRoles } from '~/components/RoleDescriptions';
+import { ProjectRoles } from '~/components/RoleDescriptions';
 import { SettingsSection } from '~/components/SettingsSection';
-import { Input } from '~/components/ui/input';
-import { addMember } from '~/convex/organizations';
-import { Button } from '~/stories/Button';
 
 export default function ProjectSettingsPage() {
   const params = useParams();
@@ -30,7 +27,7 @@ export default function ProjectSettingsPage() {
     <div className='p-12'>
       <Typography variant='h1'>Project Settings Page</Typography>
       <div className='space-y-4'>
-        <OrgRoles />
+        <ProjectRoles />
 
         <SettingsSection title='Project Members'>
           <Members members={members} />

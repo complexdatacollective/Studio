@@ -2,7 +2,6 @@ import './globals.css';
 import { Quicksand } from 'next/font/google';
 import ConvexClientProvider from '../providers/ConvexClientProvider';
 import { Header } from '~/components/Header';
-import RedirectWrapper from '~/components/RedirectWrapper';
 
 const quicksand = Quicksand({ subsets: ['latin'] });
 
@@ -20,10 +19,8 @@ export default async function RootLayout({
     <html lang='en'>
       <body className={quicksand.className}>
         <ConvexClientProvider>
-          <RedirectWrapper>
-            <Header />
-            {children}
-          </RedirectWrapper>
+          <Header />
+          {children}
         </ConvexClientProvider>
       </body>
     </html>

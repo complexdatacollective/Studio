@@ -63,10 +63,6 @@ export const getUserOrganization = query({
       .filter((q) => q.eq(q.field('organizationId'), organization._id))
       .unique();
 
-    if (!userOrganization) {
-      return {};
-    }
-
     return userOrganization;
   },
 });
