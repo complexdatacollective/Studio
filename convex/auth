@@ -1,0 +1,72 @@
+import { queryWithAuth } from './withAuth';
+import { roleValidator } from './helpers';
+import { getOrgBySlug } from './organizations';
+import { getProjectBySlug } from './projects';
+import { v } from 'convex/values';
+
+export const isAuthorizedForOrganization = queryWithAuth({
+  args: {
+    organizationSlug: v.string(),
+    requiredOrganizationRoles: v.optional(v.array(roleValidator)),
+  },
+  handler: async (ctx, args) => {
+    const session = ctx.session;
+    if (!session) {
+      return false;
+    }
+
+    const project = await getOrgBySlug(ctx, args.organizationSlug);
+
+    const userOrganization = await ctx.db
+      .query('organizationUsers')
+      .withIndex('byUserId')
+      .filter((q) => q.eq(q.field('userId'), session.user._id))
+      .filter((q) => q.eq(q.field('organizationId'), project._id))
+      .unique();
+
+    if (!userOrganization) {
+      return false;
+    }
+
+    // check if user has required roles
+    if (
+      args.requiredOrganizationRoles &&
+      !args.requiredOrganizationRoles.includes(userOrganization.role)
+    ) {
+      return false;
+    }
+  },
+});
+export const isAuthorizedForProject = queryWithAuth({
+  args: {
+    projectSlug: v.string(),
+    requiredProjectRoles: v.optional(v.array(roleValidator)),
+  },
+  handler: async (ctx, args) => {
+    const session = ctx.session;
+    if (!session) {
+      return false;
+    }
+
+    const project = await getProjectBySlug(ctx, args.projectSlug);
+
+    const userProject = await ctx.db
+      .query('projectUsers')
+      .withIndex('byUserId')
+      .filter((q) => q.eq(q.field('userId'), session.user._id))
+      .filter((q) => q.eq(q.field('projectId'), project._id))
+      .unique();
+
+    if (!userProject) {
+      return false;
+    }
+
+    // check if user has required roles
+    if (
+      args.requiredProjectRoles &&
+      !args.requiredProjectRoles.includes(userProject.role)
+    ) {
+      return false;
+    }
+  },
+});

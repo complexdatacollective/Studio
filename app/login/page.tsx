@@ -3,7 +3,7 @@
 import { Typography } from '~/components/Typography';
 import { api } from '~/convex/_generated/api';
 import { useQueryWithAuth } from '~/hooks/useAuth';
-import authHelper from '~/utils/authHelper';
+import authHelper from '~/utils/redirectHelper';
 
 export default function Login() {
   const user = useQueryWithAuth(api.users.get, {});

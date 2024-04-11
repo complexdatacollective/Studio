@@ -3,7 +3,7 @@
 import { Typography } from '~/components/Typography';
 import { api } from '~/convex/_generated/api';
 import { useQueryWithAuth } from '~/hooks/useAuth';
-import authHelper from '~/utils/authHelper';
+import authHelper from '~/utils/redirectHelper';
 
 export default function Home() {
   const user = useQueryWithAuth(api.users.get, {});
@@ -14,9 +14,7 @@ export default function Home() {
     return <div>Loading...</div>;
   }
 
-  authHelper({
-    user: user,
-  });
+  authHelper({ user });
 
   return (
     <div className='flex flex-col p-12'>

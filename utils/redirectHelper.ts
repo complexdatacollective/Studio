@@ -1,5 +1,5 @@
 import { User } from 'lucia';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
 export default function authHelper({ user }: { user: User | null }) {

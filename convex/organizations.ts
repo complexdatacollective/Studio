@@ -52,7 +52,7 @@ export const getAllUserOrgs = queryWithAuth({
   },
 });
 
-/// get UserOrganization by organization slug and userId
+/// get UserOrganization by organization slug
 export const getUserOrganization = queryWithAuth({
   args: {
     organizationSlug: v.string(),
@@ -185,7 +185,7 @@ export const addMember = mutationWithAuth({
 
 // Helper Functions
 
-async function getOrgBySlug(
+export async function getOrgBySlug(
   ctx: QueryCtx | MutationCtx | WithAuthCtx,
   slug: string
 ) {

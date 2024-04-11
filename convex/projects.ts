@@ -128,7 +128,7 @@ async function roleOnOrganization(
   return organizationUser.role;
 }
 
-async function getProjectBySlug(
+export async function getProjectBySlug(
   ctx: QueryCtx | MutationCtx | WithAuthCtx,
   slug: string
 ) {
