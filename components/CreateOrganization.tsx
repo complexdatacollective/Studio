@@ -10,20 +10,14 @@ import { Button } from './ui/button';
 import { Plus } from 'lucide-react';
 import { Input } from './ui/input';
 import { Label } from '@radix-ui/react-label';
-import { useMutation } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useState } from 'react';
-import { useQueryWithAuth } from '~/hooks/useAuth';
+import { useMutationWithAuth, useQueryWithAuth } from '~/hooks/useAuth';
 
 export function CreateOrganization() {
-  const createOrg = useMutation(api.organizations.create);
+  const createOrg = useMutationWithAuth(api.organizations.create);
   const [orgName, setOrgName] = useState('');
-  const user = useQueryWithAuth(api.users.get, {});
   const [open, setOpen] = useState(false);
-
-  if (!user) {
-    return null;
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -44,7 +38,6 @@ export function CreateOrganization() {
             e.preventDefault();
             void createOrg({
               name: orgName,
-              creatorId: user._id,
             });
 
             setOpen(false);

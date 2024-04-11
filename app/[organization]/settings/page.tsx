@@ -1,6 +1,5 @@
 'use client';
 
-import { useMutation, useQuery } from 'convex/react';
 import { Typography } from '~/components/Typography';
 import { api } from '~/convex/_generated/api';
 import { useParams } from 'next/navigation';
@@ -10,6 +9,7 @@ import { SettingsSection } from '~/components/SettingsSection';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { useState } from 'react';
+import { useMutationWithAuth, useQueryWithAuth } from '~/hooks/useAuth';
 
 export default function OrganizationSettingsPage() {
   const params = useParams();
@@ -19,11 +19,11 @@ export default function OrganizationSettingsPage() {
     return null;
   }
 
-  const members = useQuery(api.organizations.getMembers, {
+  const members = useQueryWithAuth(api.organizations.getMembers, {
     organizationSlug: params.organization,
   });
 
-  const addMember = useMutation(api.organizations.addMember);
+  const addMember = useMutationWithAuth(api.organizations.addMember);
 
   if (!members) {
     return <div>Loading organization members...</div>;

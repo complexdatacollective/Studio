@@ -1,21 +1,25 @@
 import { MutationCtx, QueryCtx, mutation, query } from './_generated/server';
 import { ConvexError, v } from 'convex/values';
 import { getManyVia } from 'convex-helpers/server/relationships';
+import { mutationWithAuth, queryWithAuth } from './withAuth';
+import type { WithAuthCtx } from './withAuth';
 
 // for now, we are only allowing org admins to create projects
-export const create = mutation({
+export const create = mutationWithAuth({
   args: {
     name: v.string(),
     description: v.string(),
     organizationId: v.id('organizations'),
-    creatorId: v.id('users'),
   },
   handler: async (ctx, args) => {
+    if (!ctx.session) {
+      throw new ConvexError('Session not found');
+    }
     // check if user is an admin of the organization
     const role = await roleOnOrganization(
       ctx,
       args.organizationId,
-      args.creatorId
+      ctx.session.user._id
     );
 
     if (!role || role !== 'Administrator') {
@@ -35,49 +39,20 @@ export const create = mutation({
     // role is 'Administrator' by default for the creator
     await ctx.db.insert('projectUsers', {
       projectId: projectId,
-      userId: args.creatorId,
+      userId: ctx.session.user._id,
       role: 'Administrator',
     });
   },
 });
 
-export const getAll = query({
-  args: {
-    organizationId: v.id('organizations'),
-  },
-  handler: async (ctx, args) => {
-    const projects = await ctx.db
-      .query('projects')
-      .filter((q) => q.eq(q.field('organizationId'), args.organizationId))
-      .collect();
-
-    return projects;
-  },
-});
-
-export const getProjectBySlug = query({
+export const getMembers = queryWithAuth({
   args: {
     projectSlug: v.string(),
   },
   handler: async (ctx, args) => {
-    const project = await ctx.db
-      .query('projects')
-      .filter((q) => q.eq(q.field('slug'), args.projectSlug))
-      .unique();
-
-    if (!project) {
-      throw new Error('Project not found');
+    if (!ctx.session) {
+      throw new ConvexError('Session not found');
     }
-
-    return project;
-  },
-});
-
-export const getMembers = query({
-  args: {
-    projectSlug: v.string(),
-  },
-  handler: async (ctx, args) => {
     // get project id by slug
     const project = await ctx.db
       .query('projects')
@@ -90,7 +65,7 @@ export const getMembers = query({
 
     const members = await getManyVia(
       ctx.db,
-      'projectUsers', // able
+      'projectUsers', // table
       'userId', // toField
       'byProjectId', // index
       project._id, // value
@@ -101,21 +76,22 @@ export const getMembers = query({
   },
 });
 
-// get UserOrganization by organization slug and userId
-export const getUserProject = query({
+// get ProjectUser by project slug
+export const getUserProject = queryWithAuth({
   args: {
     projectSlug: v.string(),
-    userId: v.id('users'),
   },
   handler: async (ctx, args) => {
-    const project = await getProjectBySlug(ctx, {
-      projectSlug: args.projectSlug,
-    });
+    const session = ctx.session;
+    if (!session) {
+      throw new ConvexError('Session not found');
+    }
+    const project = await getProjectBySlug(ctx, args.projectSlug);
 
     const userProject = await ctx.db
       .query('projectUsers')
       .withIndex('byUserId')
-      .filter((q) => q.eq(q.field('userId'), args.userId))
+      .filter((q) => q.eq(q.field('userId'), session.user._id))
       .filter((q) => q.eq(q.field('projectId'), project._id))
       .unique();
 
@@ -123,9 +99,18 @@ export const getUserProject = query({
   },
 });
 
+export const getProject = queryWithAuth({
+  args: {
+    projectSlug: v.string(),
+  },
+  handler: async (ctx, args) => {
+    return getProjectBySlug(ctx, args.projectSlug);
+  },
+});
+
 // Helper Functions
 async function roleOnOrganization(
-  ctx: QueryCtx | MutationCtx,
+  ctx: QueryCtx | MutationCtx | WithAuthCtx,
   organizationId: string,
   userId: string
 ) {
@@ -141,4 +126,20 @@ async function roleOnOrganization(
   }
 
   return organizationUser.role;
+}
+
+async function getProjectBySlug(
+  ctx: QueryCtx | MutationCtx | WithAuthCtx,
+  slug: string
+) {
+  const project = await ctx.db
+    .query('projects')
+    .filter((q) => q.eq(q.field('slug'), slug))
+    .unique();
+
+  if (!project) {
+    throw new Error('Project not found');
+  }
+
+  return project;
 }

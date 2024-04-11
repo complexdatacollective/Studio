@@ -7,7 +7,6 @@ import {
 } from '~/components/ui/select';
 import { CreateOrganization } from './CreateOrganization';
 import { useQueryWithAuth } from '~/hooks/useAuth';
-import { useQuery } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useRouter, useParams } from 'next/navigation';
 import { useMemo } from 'react';
@@ -22,14 +21,7 @@ export function OrganizationSwitcher() {
       : '';
   }, [params.organization]);
 
-  const user = useQueryWithAuth(api.users.get, {});
-  if (!user) {
-    return null;
-  }
-
-  const organizations = useQuery(api.organizations.getAllUserOrgs, {
-    userId: user._id,
-  });
+  const organizations = useQueryWithAuth(api.organizations.getAllUserOrgs, {});
 
   // route to organization page on select
   const selectOrg = (organizationSlug: string) => {

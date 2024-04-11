@@ -1,6 +1,5 @@
 'use client';
 
-import { useQuery } from 'convex/react';
 import { Typography } from '~/components/Typography';
 import { Button } from '~/components/ui/button';
 import { api } from '~/convex/_generated/api';
@@ -14,19 +13,20 @@ import { useQueryWithAuth } from '~/hooks/useAuth';
 
 export default function OrganizationDashboard() {
   const [isLoading, setIsLoading] = useState(true);
-  const user = useQueryWithAuth(api.users.get, {});
   const params = useParams();
 
   if (!params.organization || typeof params.organization !== 'string') {
     return null;
   }
 
-  const userOrganization = useQuery(api.organizations.getUserOrganization, {
-    organizationSlug: params.organization,
-    userId: user._id,
-  });
+  const userOrganization = useQueryWithAuth(
+    api.organizations.getUserOrganization,
+    {
+      organizationSlug: params.organization,
+    }
+  );
 
-  const data = useQuery(api.organizations.getOrgWithProjects, {
+  const data = useQueryWithAuth(api.organizations.getOrgWithProjects, {
     organizationSlug: params.organization,
   });
 
@@ -38,10 +38,6 @@ export default function OrganizationDashboard() {
 
   if (isLoading) {
     return <div>Loading organization dashboard...</div>;
-  }
-
-  if (user === undefined) {
-    return <div>Loading...</div>;
   }
 
   if ((!isLoading && !data) || !data?.organization) {

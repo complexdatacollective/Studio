@@ -1,17 +1,20 @@
-import { MutationCtx, QueryCtx, mutation, query } from './_generated/server';
+import { MutationCtx, QueryCtx } from './_generated/server';
 import { ConvexError, v } from 'convex/values';
 import {
   getManyVia,
   getManyFrom,
   getAll,
 } from 'convex-helpers/server/relationships';
+import { type WithAuthCtx, queryWithAuth, mutationWithAuth } from './withAuth';
 
-export const create = mutation({
+export const create = mutationWithAuth({
   args: {
     name: v.string(),
-    creatorId: v.id('users'),
   },
   handler: async (ctx, args) => {
+    if (!ctx.session) {
+      throw new ConvexError('Session not found');
+    }
     // create the organization
     const organizationId = await ctx.db.insert('organizations', {
       name: args.name,
@@ -22,24 +25,26 @@ export const create = mutation({
     // role is 'Administrator' by default for the creator
     await ctx.db.insert('organizationUsers', {
       organizationId,
-      userId: args.creatorId,
+      userId: ctx.session.user._id,
       role: 'Administrator',
     });
   },
 });
 
 // gets all organizations a user is in
-export const getAllUserOrgs = query({
-  args: {
-    userId: v.id('users'),
-  },
-  handler: async (ctx, args) => {
+export const getAllUserOrgs = queryWithAuth({
+  args: {},
+  handler: async (ctx) => {
+    if (!ctx.session) {
+      throw new ConvexError('Session not found');
+    }
+
     const organizations = await getManyVia(
       ctx.db,
       'organizationUsers', // table
       'organizationId', // toField
       'byUserId', // index
-      args.userId, // value
+      ctx.session.user._id, // value
       'userId' // fromField - optional if index is named after field. In this case, it is not.
     );
 
@@ -47,31 +52,35 @@ export const getAllUserOrgs = query({
   },
 });
 
-// get UserOrganization by organization slug and userId
-export const getUserOrganization = query({
+/// get UserOrganization by organization slug and userId
+export const getUserOrganization = queryWithAuth({
   args: {
     organizationSlug: v.string(),
-    userId: v.id('users'),
   },
   handler: async (ctx, args) => {
+    const session = ctx.session;
+    if (!session) {
+      throw new ConvexError('Session not found');
+    }
     const organization = await getOrgBySlug(ctx, args.organizationSlug);
-
     const userOrganization = await ctx.db
       .query('organizationUsers')
       .withIndex('byUserId')
-      .filter((q) => q.eq(q.field('userId'), args.userId))
+      .filter((q) => q.eq(q.field('userId'), session.user._id))
       .filter((q) => q.eq(q.field('organizationId'), organization._id))
       .unique();
-
     return userOrganization;
   },
 });
 
-export const getMembers = query({
+export const getMembers = queryWithAuth({
   args: {
     organizationSlug: v.string(),
   },
   handler: async (ctx, args) => {
+    if (!ctx.session) {
+      throw new ConvexError('Session not found');
+    }
     const organization = await getOrgBySlug(ctx, args.organizationSlug);
 
     // using this pattern instead of getManyVia because we want to return the role
@@ -113,7 +122,7 @@ export const getMembers = query({
   },
 });
 
-export const getOrgWithProjects = query({
+export const getOrgWithProjects = queryWithAuth({
   args: {
     organizationSlug: v.string(),
   },
@@ -139,12 +148,15 @@ export const getOrgWithProjects = query({
   },
 });
 
-export const addMember = mutation({
+export const addMember = mutationWithAuth({
   args: {
     email: v.string(),
     organizationSlug: v.string(),
   },
   handler: async (ctx, args) => {
+    if (!ctx.session) {
+      throw new ConvexError('Session not found');
+    }
     const organization = await ctx.db
       .query('organizations')
       .filter((q) => q.eq(q.field('slug'), args.organizationSlug))
@@ -173,7 +185,10 @@ export const addMember = mutation({
 
 // Helper Functions
 
-async function getOrgBySlug(ctx: QueryCtx | MutationCtx, slug: string) {
+async function getOrgBySlug(
+  ctx: QueryCtx | MutationCtx | WithAuthCtx,
+  slug: string
+) {
   // get org id by slug
   const organization = await ctx.db
     .query('organizations')

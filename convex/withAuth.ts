@@ -11,6 +11,8 @@ import {
 } from './_generated/server';
 import { Auth, getAuth } from './lucia';
 
+export type WithAuthCtx = Omit<QueryCtx, 'auth'>;
+
 export function queryWithAuth<
   ArgsValidator extends PropertyValidators,
   Output

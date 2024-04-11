@@ -1,12 +1,12 @@
 'use client';
 
-import { useQuery } from 'convex/react';
 import { Typography } from '~/components/Typography';
 import { api } from '~/convex/_generated/api';
 import { useParams } from 'next/navigation';
 import { Members } from '~/components/Members';
 import { ProjectRoles } from '~/components/RoleDescriptions';
 import { SettingsSection } from '~/components/SettingsSection';
+import { useQueryWithAuth } from '~/hooks/useAuth';
 
 export default function ProjectSettingsPage() {
   const params = useParams();
@@ -15,7 +15,7 @@ export default function ProjectSettingsPage() {
     return null;
   }
 
-  const members = useQuery(api.projects.getMembers, {
+  const members = useQueryWithAuth(api.projects.getMembers, {
     projectSlug: params.project,
   });
 

@@ -13,19 +13,14 @@ import { useMutation } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useState } from 'react';
 import { Doc } from '../convex/_generated/dataModel';
-import { useQueryWithAuth } from '~/hooks/useAuth';
+import { useMutationWithAuth } from '~/hooks/useAuth';
 
 export function CreateProject({
   organization,
 }: {
   organization: Doc<'organizations'>;
 }) {
-  const user = useQueryWithAuth(api.users.get, {});
-
-  if (!user) {
-    return null;
-  }
-  const createProject = useMutation(api.projects.create);
+  const createProject = useMutationWithAuth(api.projects.create);
 
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
@@ -50,7 +45,6 @@ export function CreateProject({
               name: projectName,
               description: projectDescription,
               organizationId: organization._id,
-              creatorId: user._id,
             });
 
             setOpen(false);
