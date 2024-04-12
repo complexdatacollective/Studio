@@ -25,10 +25,7 @@ export const createUser = internalMutation({
   },
 });
 
-export async function getUser(
-  ctx: QueryCtx | MutationCtx,
-  tokenIdentifier: string
-) {
+async function getUser(ctx: QueryCtx | MutationCtx, tokenIdentifier: string) {
   const user = await ctx.db
     .query('users')
     .withIndex('by_token', (q) => q.eq('tokenIdentifier', tokenIdentifier))
