@@ -17,6 +17,7 @@ export default function OrganizationDashboard() {
   For multiple convex queries that rely on one another, you can alternatively use the useQueries hook
   https://docs.convex.dev/api/modules/react#usequeries
   */
+
   const projects = useQuery(
     api.projects.getOrganizationProjects,
     organization?.id ? { organizationId: organization.id } : 'skip'

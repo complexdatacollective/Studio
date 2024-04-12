@@ -10,7 +10,7 @@ export default defineSchema({
     tokenIdentifier: v.string(),
     organizationIds: v.array(
       v.object({
-        orgId: v.string(),
+        organizationId: v.string(),
         role: roleValidator,
       })
     ),

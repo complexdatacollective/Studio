@@ -15,18 +15,11 @@ export const create = mutation({
       throw new Error('Unauthenticated call to mutation');
     }
 
-    // const userId = await getIdByEmail(ctx, { email: identity.email });
-    // if (!userId) {
-    //   throw new ConvexError('User not found!!!!');
-    // }
-    // // check if user is an admin of the organization
-    // const role = await roleOnOrganization(ctx, args.organizationId, userId);
+    const hasAccess = await hasAccessToOrganization(ctx, args.organizationId);
+    if (!hasAccess) {
+      throw new ConvexError('User does not have access to this organization.');
+    }
 
-    // if (!role || role !== 'Administrator') {
-    //   throw new ConvexError(
-    //     'User does not have permission to create projects.'
-    //   );
-    // }
     // create the project
     const projectId = await ctx.db.insert('projects', {
       name: args.name,
@@ -35,13 +28,13 @@ export const create = mutation({
       organizationId: args.organizationId,
     });
 
-    // // create the projectUser
-    // // role is 'Administrator' by default for the creator
-    // await ctx.db.insert('projectUsers', {
-    //   projectId: projectId,
-    //   userId: userId,
-    //   role: 'Administrator',
-    // });
+    // create the projectUser
+    // role is 'admin' by default for the creator
+    await ctx.db.insert('projectUsers', {
+      projectId: projectId,
+      userId: hasAccess.user._id,
+      role: 'admin',
+    });
   },
 });
 
@@ -128,7 +121,7 @@ export const getOrganizationProjects = query({
     const projects = await ctx.db
       .query('projects')
       .withIndex('byOrganizationId')
-      .filter((q) => q.eq('organizationId', args.organizationId))
+      .filter((q) => q.eq(q.field('organizationId'), args.organizationId))
       .collect();
 
     return projects;
@@ -151,4 +144,55 @@ export async function getProjectBySlug(
   }
 
   return project;
+}
+export async function hasAccessToOrganization(
+  ctx: QueryCtx | MutationCtx,
+  organizationId: string
+) {
+  const identity = await ctx.auth.getUserIdentity();
+
+  if (!identity) {
+    return null;
+  }
+
+  const user = await ctx.db
+    .query('users')
+    .withIndex('by_token', (q) =>
+      q.eq('tokenIdentifier', identity.tokenIdentifier)
+    )
+    .first();
+
+  if (!user) {
+    return null;
+  }
+
+  const hasAccess =
+    user.organizationIds.some(
+      (item) => item.organizationId === organizationId
+    ) || user.tokenIdentifier.includes(organizationId);
+
+  if (!hasAccess) {
+    return null;
+  }
+
+  return { user };
+}
+
+export async function roleOnProject(
+  ctx: QueryCtx | MutationCtx,
+  projectId: string,
+  userId: string
+) {
+  const projectUser = await ctx.db
+    .query('projectUsers')
+    .withIndex('byUserId')
+    .filter((q) => q.eq('userId', userId))
+    .filter((q) => q.eq('projectId', projectId))
+    .unique();
+
+  if (!projectUser) {
+    return null;
+  }
+
+  return projectUser.role;
 }

@@ -41,27 +41,35 @@ export async function getUser(
   return user;
 }
 
-export const addOrgIdToUser = internalMutation({
-  args: { tokenIdentifier: v.string(), orgId: v.string(), role: roleValidator },
+export const addOrganizationIdToUser = internalMutation({
+  args: {
+    tokenIdentifier: v.string(),
+    organizationId: v.string(),
+    role: roleValidator,
+  },
   async handler(ctx, args) {
     const user = await getUser(ctx, args.tokenIdentifier);
 
     await ctx.db.patch(user._id, {
       organizationIds: [
         ...user.organizationIds,
-        { orgId: args.orgId, role: args.role },
+        { organizationId: args.organizationId, role: args.role },
       ],
     });
   },
 });
 
-export const updateRoleInOrgForUser = internalMutation({
-  args: { tokenIdentifier: v.string(), orgId: v.string(), role: roleValidator },
+export const updateRoleInOrganizationForUser = internalMutation({
+  args: {
+    tokenIdentifier: v.string(),
+    organizationId: v.string(),
+    role: roleValidator,
+  },
   async handler(ctx, args) {
     const user = await getUser(ctx, args.tokenIdentifier);
 
     const organization = user.organizationIds.find(
-      (org) => org.orgId === args.orgId
+      (org) => org.organizationId === args.organizationId
     );
 
     if (!organization) {
