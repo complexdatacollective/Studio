@@ -22,15 +22,11 @@ export function Navigation() {
           <Button variant='ghost'>Projects</Button>
         </Link>
       )}
-      <Link
-        href={
-          params.project
-            ? `/${params.organization}/${params.project}/settings`
-            : `/${params.organization}/settings`
-        }
-      >
-        <Button variant='ghost'>Settings</Button>
-      </Link>
+      {params.project && (
+        <Link href={`/${params.organization}/${params.project}/settings`}>
+          <Button variant='ghost'>Settings</Button>
+        </Link>
+      )}
     </div>
   );
 }

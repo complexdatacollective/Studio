@@ -2,12 +2,10 @@
 
 import { useQuery } from 'convex/react';
 import { useParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import { Typography } from '~/components/Typography';
 import { api } from '~/convex/_generated/api';
 
 export default function ProjectDashboard() {
-  const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
 
   if (!params.project || typeof params.project !== 'string') {
@@ -18,13 +16,7 @@ export default function ProjectDashboard() {
     projectSlug: params.project,
   });
 
-  useEffect(() => {
-    if (project) {
-      setIsLoading(false);
-    }
-  }, [project]);
-
-  if (isLoading) {
+  if (!project) {
     return <div>Loading project dashboard...</div>;
   }
 

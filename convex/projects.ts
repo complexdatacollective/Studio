@@ -58,6 +58,14 @@ export const getMembers = query({
       throw new Error('Project not found');
     }
 
+    const hasAccess = await hasAccessToOrganization(
+      ctx,
+      project.organizationId
+    );
+    if (!hasAccess) {
+      throw new ConvexError('User does not have access to this organization.');
+    }
+
     const members = await getManyVia(
       ctx.db,
       'projectUsers', // table
@@ -71,34 +79,6 @@ export const getMembers = query({
   },
 });
 
-// get ProjectUser by project slug
-export const getUserProject = query({
-  args: {
-    projectSlug: v.string(),
-  },
-  handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (identity === null || !identity.email) {
-      throw new Error('Unauthenticated call to mutation');
-    }
-
-    // const userId = await getIdByEmail(ctx, { email: identity.email });
-    // if (!userId) {
-    //   throw new ConvexError('User not found');
-    // }
-    const project = await getProjectBySlug(ctx, args.projectSlug);
-
-    // const userProject = await ctx.db
-    //   .query('projectUsers')
-    //   .withIndex('byUserId')
-    //   .filter((q) => q.eq(q.field('userId'), userId))
-    //   .filter((q) => q.eq(q.field('projectId'), project._id))
-    //   .unique();
-
-    // return userProject;
-  },
-});
-
 export const getProject = query({
   args: {
     projectSlug: v.string(),
@@ -109,7 +89,21 @@ export const getProject = query({
       throw new Error('Unauthenticated call to mutation');
     }
 
-    return getProjectBySlug(ctx, args.projectSlug);
+    const project = await getProjectBySlug(ctx, args.projectSlug);
+
+    if (!project) {
+      throw new Error('Project not found');
+    }
+
+    const hasAccess = await hasAccessToOrganization(
+      ctx,
+      project.organizationId
+    );
+    if (!hasAccess) {
+      throw new ConvexError('User does not have access to this organization.');
+    }
+
+    return project;
   },
 });
 
@@ -118,6 +112,16 @@ export const getOrganizationProjects = query({
     organizationId: v.string(),
   },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
+    }
+
+    const hasAccess = await hasAccessToOrganization(ctx, args.organizationId);
+    if (!hasAccess) {
+      throw new ConvexError('User does not have access to this organization.');
+    }
+
     const projects = await ctx.db
       .query('projects')
       .withIndex('byOrganizationId')
