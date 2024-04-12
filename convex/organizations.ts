@@ -1,20 +1,27 @@
-import { MutationCtx, QueryCtx } from './_generated/server';
+import { MutationCtx, QueryCtx, mutation, query } from './_generated/server';
 import { ConvexError, v } from 'convex/values';
 import {
   getManyVia,
   getManyFrom,
   getAll,
 } from 'convex-helpers/server/relationships';
-import { type WithAuthCtx, queryWithAuth, mutationWithAuth } from './withAuth';
+import { getIdByEmail } from './users';
 
-export const create = mutationWithAuth({
+export const create = mutation({
   args: {
     name: v.string(),
   },
   handler: async (ctx, args) => {
-    if (!ctx.session) {
-      throw new ConvexError('Session not found');
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
     }
+
+    const userId = await getIdByEmail(ctx, { email: identity.email });
+    if (!userId) {
+      throw new ConvexError('User not found');
+    }
+
     // create the organization
     const organizationId = await ctx.db.insert('organizations', {
       name: args.name,
@@ -25,18 +32,24 @@ export const create = mutationWithAuth({
     // role is 'Administrator' by default for the creator
     await ctx.db.insert('organizationUsers', {
       organizationId,
-      userId: ctx.session.user._id,
+      userId: userId,
       role: 'Administrator',
     });
   },
 });
 
 // gets all organizations a user is in
-export const getAllUserOrgs = queryWithAuth({
+export const getAllUserOrgs = query({
   args: {},
   handler: async (ctx) => {
-    if (!ctx.session) {
-      throw new ConvexError('Session not found');
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
+    }
+
+    const userId = await getIdByEmail(ctx, { email: identity.email });
+    if (!userId) {
+      throw new ConvexError('User not found');
     }
 
     const organizations = await getManyVia(
@@ -44,7 +57,7 @@ export const getAllUserOrgs = queryWithAuth({
       'organizationUsers', // table
       'organizationId', // toField
       'byUserId', // index
-      ctx.session.user._id, // value
+      userId, // value
       'userId' // fromField - optional if index is named after field. In this case, it is not.
     );
 
@@ -53,34 +66,42 @@ export const getAllUserOrgs = queryWithAuth({
 });
 
 /// get UserOrganization by organization slug
-export const getUserOrganization = queryWithAuth({
+export const getUserOrganization = query({
   args: {
     organizationSlug: v.string(),
   },
   handler: async (ctx, args) => {
-    const session = ctx.session;
-    if (!session) {
-      throw new ConvexError('Session not found');
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
     }
+
+    const userId = await getIdByEmail(ctx, { email: identity.email });
+    if (!userId) {
+      throw new ConvexError('User not found');
+    }
+
     const organization = await getOrgBySlug(ctx, args.organizationSlug);
     const userOrganization = await ctx.db
       .query('organizationUsers')
       .withIndex('byUserId')
-      .filter((q) => q.eq(q.field('userId'), session.user._id))
+      .filter((q) => q.eq(q.field('userId'), userId))
       .filter((q) => q.eq(q.field('organizationId'), organization._id))
       .unique();
     return userOrganization;
   },
 });
 
-export const getMembers = queryWithAuth({
+export const getMembers = query({
   args: {
     organizationSlug: v.string(),
   },
   handler: async (ctx, args) => {
-    if (!ctx.session) {
-      throw new ConvexError('Session not found');
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
     }
+
     const organization = await getOrgBySlug(ctx, args.organizationSlug);
 
     // using this pattern instead of getManyVia because we want to return the role
@@ -122,11 +143,16 @@ export const getMembers = queryWithAuth({
   },
 });
 
-export const getOrgWithProjects = queryWithAuth({
+export const getOrgWithProjects = query({
   args: {
     organizationSlug: v.string(),
   },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
+    }
+
     const organization = await getOrgBySlug(ctx, args.organizationSlug);
 
     const projects = await ctx.db
@@ -148,15 +174,22 @@ export const getOrgWithProjects = queryWithAuth({
   },
 });
 
-export const addMember = mutationWithAuth({
+export const addMember = mutation({
   args: {
     email: v.string(),
     organizationSlug: v.string(),
   },
   handler: async (ctx, args) => {
-    if (!ctx.session) {
-      throw new ConvexError('Session not found');
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
     }
+
+    const newMemberUserId = await getIdByEmail(ctx, { email: args.email });
+    if (!newMemberUserId) {
+      throw new ConvexError('User not found');
+    }
+
     const organization = await ctx.db
       .query('organizations')
       .filter((q) => q.eq(q.field('slug'), args.organizationSlug))
@@ -166,18 +199,9 @@ export const addMember = mutationWithAuth({
       throw new ConvexError('Organization not found');
     }
 
-    const user = await ctx.db
-      .query('users')
-      .filter((q) => q.eq(q.field('email'), args.email))
-      .unique();
-
-    if (!user) {
-      throw new ConvexError('User not found');
-    }
-
     await ctx.db.insert('organizationUsers', {
       organizationId: organization._id,
-      userId: user._id,
+      userId: newMemberUserId,
       role: 'Member',
     });
   },
@@ -185,10 +209,7 @@ export const addMember = mutationWithAuth({
 
 // Helper Functions
 
-export async function getOrgBySlug(
-  ctx: QueryCtx | MutationCtx | WithAuthCtx,
-  slug: string
-) {
+export async function getOrgBySlug(ctx: QueryCtx | MutationCtx, slug: string) {
   // get org id by slug
   const organization = await ctx.db
     .query('organizations')

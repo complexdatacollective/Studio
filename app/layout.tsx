@@ -7,7 +7,7 @@ const quicksand = Quicksand({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Studio MVP',
-  description: 'Studio MVP Using Convex and Lucia',
+  description: 'Studio MVP Using Convex and Clerk',
 };
 
 export default async function RootLayout({

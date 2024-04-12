@@ -9,7 +9,7 @@ import { CreateProject } from '~/components/CreateProject';
 import { useEffect, useState } from 'react';
 import { Settings } from 'lucide-react';
 import Link from 'next/link';
-import { useQueryWithAuth } from '~/hooks/useAuth';
+import { useQuery } from 'convex/react';
 
 export default function OrganizationDashboard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,14 +19,11 @@ export default function OrganizationDashboard() {
     return null;
   }
 
-  const userOrganization = useQueryWithAuth(
-    api.organizations.getUserOrganization,
-    {
-      organizationSlug: params.organization,
-    }
-  );
+  const userOrganization = useQuery(api.organizations.getUserOrganization, {
+    organizationSlug: params.organization,
+  });
 
-  const data = useQueryWithAuth(api.organizations.getOrgWithProjects, {
+  const data = useQuery(api.organizations.getOrgWithProjects, {
     organizationSlug: params.organization,
   });
 

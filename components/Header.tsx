@@ -1,33 +1,27 @@
 'use client';
-import { useQueryWithAuth } from '~/hooks/useAuth';
-import { api } from '~/convex/_generated/api';
 import { Typography } from './Typography';
-import { SignOutButton } from './auth/SignOutButton';
-import { SignInButton } from './auth/SignInButton';
-import { Avatar, AvatarFallback } from '~/components/ui/avatar';
+import { SignInButton, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { Navigation } from './Navigation';
+import { useConvexAuth } from 'convex/react';
 
 export function Header() {
-  const user = useQueryWithAuth(api.users.get, {});
+  const { isLoading, isAuthenticated } = useConvexAuth();
   return (
     <div className='flex flex-row items-center justify-between bg-slate-200 p-2'>
       <div className='flex flex-row items-center space-x-2'>
         <Link href='/'>
           <div className='flex flex-col'>
             <Typography variant='h4'>Studio MVP</Typography>
-            <Typography variant='h4'>Convex + Lucia</Typography>
+            <Typography variant='h4'>Convex + Clerk</Typography>
           </div>
         </Link>
-        {user && <Navigation />}
+        {isAuthenticated && <Navigation />}
       </div>
       <div className='p-2'>
-        {user ? (
+        {isAuthenticated ? (
           <div className='flex flex-row space-x-4'>
-            <Avatar>
-              <AvatarFallback>{user?.email[0]?.toUpperCase()}</AvatarFallback>
-            </Avatar>
-            <SignOutButton />
+            <UserButton />
           </div>
         ) : (
           <SignInButton />

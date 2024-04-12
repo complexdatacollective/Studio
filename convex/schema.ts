@@ -3,12 +3,10 @@ import { Validator, v } from 'convex/values';
 import { roleValidator } from './helpers';
 
 export default defineSchema({
-  ...authTables({
-    user: {
-      email: v.string(),
-    },
-    session: {},
-  }),
+  users: defineTable({
+    email: v.string(),
+    tokenIdentifier: v.string(),
+  }).index('by_token', ['tokenIdentifier']),
   organizations: defineTable({
     name: v.string(),
     slug: v.string(),

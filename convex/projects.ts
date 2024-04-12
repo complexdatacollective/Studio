@@ -1,26 +1,27 @@
 import { MutationCtx, QueryCtx, mutation, query } from './_generated/server';
 import { ConvexError, v } from 'convex/values';
 import { getManyVia } from 'convex-helpers/server/relationships';
-import { mutationWithAuth, queryWithAuth } from './withAuth';
-import type { WithAuthCtx } from './withAuth';
+import { getIdByEmail } from './users';
 
 // for now, we are only allowing org admins to create projects
-export const create = mutationWithAuth({
+export const create = mutation({
   args: {
     name: v.string(),
     description: v.string(),
     organizationId: v.id('organizations'),
   },
   handler: async (ctx, args) => {
-    if (!ctx.session) {
-      throw new ConvexError('Session not found');
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
+    }
+
+    const userId = await getIdByEmail(ctx, { email: identity.email });
+    if (!userId) {
+      throw new ConvexError('User not found');
     }
     // check if user is an admin of the organization
-    const role = await roleOnOrganization(
-      ctx,
-      args.organizationId,
-      ctx.session.user._id
-    );
+    const role = await roleOnOrganization(ctx, args.organizationId, userId);
 
     if (!role || role !== 'Administrator') {
       throw new ConvexError(
@@ -39,20 +40,22 @@ export const create = mutationWithAuth({
     // role is 'Administrator' by default for the creator
     await ctx.db.insert('projectUsers', {
       projectId: projectId,
-      userId: ctx.session.user._id,
+      userId: userId,
       role: 'Administrator',
     });
   },
 });
 
-export const getMembers = queryWithAuth({
+export const getMembers = query({
   args: {
     projectSlug: v.string(),
   },
   handler: async (ctx, args) => {
-    if (!ctx.session) {
-      throw new ConvexError('Session not found');
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
     }
+
     // get project id by slug
     const project = await ctx.db
       .query('projects')
@@ -77,21 +80,26 @@ export const getMembers = queryWithAuth({
 });
 
 // get ProjectUser by project slug
-export const getUserProject = queryWithAuth({
+export const getUserProject = query({
   args: {
     projectSlug: v.string(),
   },
   handler: async (ctx, args) => {
-    const session = ctx.session;
-    if (!session) {
-      throw new ConvexError('Session not found');
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
+    }
+
+    const userId = await getIdByEmail(ctx, { email: identity.email });
+    if (!userId) {
+      throw new ConvexError('User not found');
     }
     const project = await getProjectBySlug(ctx, args.projectSlug);
 
     const userProject = await ctx.db
       .query('projectUsers')
       .withIndex('byUserId')
-      .filter((q) => q.eq(q.field('userId'), session.user._id))
+      .filter((q) => q.eq(q.field('userId'), userId))
       .filter((q) => q.eq(q.field('projectId'), project._id))
       .unique();
 
@@ -99,18 +107,23 @@ export const getUserProject = queryWithAuth({
   },
 });
 
-export const getProject = queryWithAuth({
+export const getProject = query({
   args: {
     projectSlug: v.string(),
   },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null || !identity.email) {
+      throw new Error('Unauthenticated call to mutation');
+    }
+
     return getProjectBySlug(ctx, args.projectSlug);
   },
 });
 
 // Helper Functions
 async function roleOnOrganization(
-  ctx: QueryCtx | MutationCtx | WithAuthCtx,
+  ctx: QueryCtx | MutationCtx,
   organizationId: string,
   userId: string
 ) {
@@ -129,7 +142,7 @@ async function roleOnOrganization(
 }
 
 export async function getProjectBySlug(
-  ctx: QueryCtx | MutationCtx | WithAuthCtx,
+  ctx: QueryCtx | MutationCtx,
   slug: string
 ) {
   const project = await ctx.db

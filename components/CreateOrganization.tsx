@@ -12,10 +12,10 @@ import { Input } from './ui/input';
 import { Label } from '@radix-ui/react-label';
 import { api } from '~/convex/_generated/api';
 import { useState } from 'react';
-import { useMutationWithAuth, useQueryWithAuth } from '~/hooks/useAuth';
+import { useMutation } from 'convex/react';
 
 export function CreateOrganization() {
-  const createOrg = useMutationWithAuth(api.organizations.create);
+  const createOrg = useMutation(api.organizations.create);
   const [orgName, setOrgName] = useState('');
   const [open, setOpen] = useState(false);
 

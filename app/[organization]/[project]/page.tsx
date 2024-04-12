@@ -1,10 +1,10 @@
 'use client';
 
+import { useQuery } from 'convex/react';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Typography } from '~/components/Typography';
 import { api } from '~/convex/_generated/api';
-import { useQueryWithAuth } from '~/hooks/useAuth';
 
 export default function ProjectDashboard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +14,7 @@ export default function ProjectDashboard() {
     return null;
   }
 
-  const project = useQueryWithAuth(api.projects.getProject, {
+  const project = useQuery(api.projects.getProject, {
     projectSlug: params.project,
   });
 

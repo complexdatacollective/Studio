@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { Members } from '~/components/Members';
 import { ProjectRoles } from '~/components/RoleDescriptions';
 import { SettingsSection } from '~/components/SettingsSection';
-import { useQueryWithAuth } from '~/hooks/useAuth';
+import { useQuery } from 'convex/react';
 
 export default function ProjectSettingsPage() {
   const params = useParams();
@@ -15,7 +15,7 @@ export default function ProjectSettingsPage() {
     return null;
   }
 
-  const members = useQueryWithAuth(api.projects.getMembers, {
+  const members = useQuery(api.projects.getMembers, {
     projectSlug: params.project,
   });
 

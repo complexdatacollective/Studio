@@ -9,7 +9,7 @@ import { SettingsSection } from '~/components/SettingsSection';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { useState } from 'react';
-import { useMutationWithAuth, useQueryWithAuth } from '~/hooks/useAuth';
+import { useMutation, useQuery } from 'convex/react';
 
 export default function OrganizationSettingsPage() {
   const params = useParams();
@@ -19,11 +19,11 @@ export default function OrganizationSettingsPage() {
     return null;
   }
 
-  const members = useQueryWithAuth(api.organizations.getMembers, {
+  const members = useQuery(api.organizations.getMembers, {
     organizationSlug: params.organization,
   });
 
-  const addMember = useMutationWithAuth(api.organizations.addMember);
+  const addMember = useMutation(api.organizations.addMember);
 
   if (!members) {
     return <div>Loading organization members...</div>;
