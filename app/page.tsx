@@ -1,15 +1,8 @@
-'use client';
-
-import { useOrganization } from '@clerk/nextjs';
 import { Typography } from '~/components/Typography';
-import { redirect } from 'next/navigation';
+import { pageAuthorization } from '~/lib/pageAuthorization';
 
 export default function Home() {
-  const { organization } = useOrganization();
-
-  if (organization) {
-    redirect(`/${organization.slug}`);
-  }
+  pageAuthorization({});
 
   return (
     <div className='flex flex-col p-12'>

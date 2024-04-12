@@ -1,5 +1,11 @@
 import { ConvexError, v } from 'convex/values';
-import { MutationCtx, QueryCtx, internalMutation } from './_generated/server';
+import {
+  MutationCtx,
+  QueryCtx,
+  internalMutation,
+  internalQuery,
+  query,
+} from './_generated/server';
 
 import { roleValidator } from './schema';
 
@@ -78,5 +84,77 @@ export const updateRoleInOrganizationForUser = internalMutation({
     await ctx.db.patch(user._id, {
       organizationIds: user.organizationIds,
     });
+  },
+});
+
+export const getCurrentUser = query({
+  args: {},
+  async handler(ctx) {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      return null;
+    }
+
+    const user = await getUser(ctx, identity.tokenIdentifier);
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  },
+});
+
+export const hasAccessToOrganization = query({
+  args: { organizationId: v.string() },
+  async handler(ctx, args) {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      return null;
+    }
+
+    const user = await getUser(ctx, identity.tokenIdentifier);
+
+    if (!user) {
+      return null;
+    }
+
+    return user.organizationIds.some(
+      (org) => org.organizationId === args.organizationId
+    );
+  },
+});
+
+export const hasAccessToProject = query({
+  args: { projectSlug: v.string() },
+  async handler(ctx, args) {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      return null;
+    }
+
+    const user = await getUser(ctx, identity.tokenIdentifier);
+
+    if (!user) {
+      return null;
+    }
+
+    const project = await ctx.db
+      .query('projects')
+      .filter((q) => q.eq(q.field('slug'), args.projectSlug))
+      .unique();
+
+    if (!project) {
+      return null;
+    }
+
+    return ctx.db
+      .query('projectUsers')
+      .filter((q) => q.eq(q.field('projectId'), project._id))
+      .filter((q) => q.eq(q.field('userId'), user._id))
+      .unique();
   },
 });

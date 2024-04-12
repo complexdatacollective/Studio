@@ -5,11 +5,14 @@ import { api } from '~/convex/_generated/api';
 import { ProjectCard } from '~/components/ProjectCard';
 
 import { useQuery } from 'convex/react';
-import { useOrganization } from '@clerk/nextjs';
+import { Protect, useOrganization } from '@clerk/nextjs';
 import { CreateProject } from '~/components/CreateProject';
+import { useParams } from 'next/navigation';
 
 export default function OrganizationDashboard() {
   const { organization } = useOrganization();
+  const params = useParams();
+  const paramsSlug = params.organization;
 
   /*
   Skip is a built in way to skip the query if other data or dependencies are not ready
@@ -20,7 +23,9 @@ export default function OrganizationDashboard() {
 
   const projects = useQuery(
     api.projects.getOrganizationProjects,
-    organization?.id ? { organizationId: organization.id } : 'skip'
+    organization?.id && organization.slug === paramsSlug
+      ? { organizationId: organization.id }
+      : 'skip'
   );
 
   if (!organization) {
@@ -32,7 +37,9 @@ export default function OrganizationDashboard() {
       <div className='flex justify-between'>
         <Typography variant='h2'>{organization?.name} Projects</Typography>
         <div className='flex flex-row space-x-2'>
-          <CreateProject organizationId={organization.id} />
+          <Protect role='admin'>
+            <CreateProject organizationId={organization.id} />
+          </Protect>
         </div>
       </div>
       <div className='grid grid-cols-4 space-x-4 space-y-4'>
