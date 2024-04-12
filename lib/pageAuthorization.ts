@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { fetchQuery } from 'convex/nextjs';
 import { api } from '~/convex/_generated/api';
+import { auth, currentUser } from '@clerk/nextjs';
 
 export async function pageAuthorization({
   paramsOrganizationSlug,
@@ -9,25 +10,20 @@ export async function pageAuthorization({
   paramsOrganizationSlug?: string;
   paramsProjectSlug?: string;
 }) {
-  if (!paramsOrganizationSlug || !paramsProjectSlug) {
-    const user = await fetchQuery(api.users.getCurrentUser, {});
+  const { orgSlug, userId, orgRole } = auth();
 
-    console.log(user);
-    if (!user) {
-      //   redirect('/login');
-    }
+  if (!userId) {
+    redirect('/login');
   }
 
   if (paramsOrganizationSlug && !paramsProjectSlug) {
-    console.log('checking');
-    const hasAccessToOrganization = await fetchQuery(
-      api.users.hasAccessToOrganization,
-      { organizationId: paramsOrganizationSlug }
-    );
+    const hasAccessToOrganization = paramsOrganizationSlug === orgSlug;
+    console.log('hasAccessToOrganization', hasAccessToOrganization);
 
+    // can do other checks with orgRole here, if needed.
+    console.log('orgRole', orgRole);
     if (!hasAccessToOrganization) {
-      console.log('redirecting');
-      //   redirect('/');
+      redirect('/');
     }
   }
 
@@ -35,6 +31,7 @@ export async function pageAuthorization({
     console.log('checking');
     const hasAccessToProject = await fetchQuery(api.users.hasAccessToProject, {
       projectSlug: paramsProjectSlug,
+      userId,
     });
 
     console.log('hasAccessToProject', hasAccessToProject);

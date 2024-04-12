@@ -106,42 +106,9 @@ export const getCurrentUser = query({
   },
 });
 
-export const hasAccessToOrganization = query({
-  args: { organizationId: v.string() },
-  async handler(ctx, args) {
-    const identity = await ctx.auth.getUserIdentity();
-
-    if (!identity) {
-      return null;
-    }
-
-    const user = await getUser(ctx, identity.tokenIdentifier);
-
-    if (!user) {
-      return null;
-    }
-
-    return user.organizationIds.some(
-      (org) => org.organizationId === args.organizationId
-    );
-  },
-});
-
 export const hasAccessToProject = query({
-  args: { projectSlug: v.string() },
+  args: { projectSlug: v.string(), userId: v.string() },
   async handler(ctx, args) {
-    const identity = await ctx.auth.getUserIdentity();
-
-    if (!identity) {
-      return null;
-    }
-
-    const user = await getUser(ctx, identity.tokenIdentifier);
-
-    if (!user) {
-      return null;
-    }
-
     const project = await ctx.db
       .query('projects')
       .filter((q) => q.eq(q.field('slug'), args.projectSlug))
@@ -154,7 +121,7 @@ export const hasAccessToProject = query({
     return ctx.db
       .query('projectUsers')
       .filter((q) => q.eq(q.field('projectId'), project._id))
-      .filter((q) => q.eq(q.field('userId'), user._id))
+      .filter((q) => q.eq(q.field('userId'), args.userId))
       .unique();
   },
 });
