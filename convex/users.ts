@@ -1,11 +1,7 @@
 import { ConvexError, v } from 'convex/values';
-import {
-  MutationCtx,
-  QueryCtx,
-  internalMutation,
-  internalQuery,
-  mutation,
-} from './_generated/server';
+import { MutationCtx, QueryCtx, internalMutation } from './_generated/server';
+
+import { roleValidator } from './schema';
 
 /**
  * Insert or update the user in a Convex table then return the document's ID.
@@ -19,6 +15,15 @@ import {
  * which of those need to be persisted. For Clerk the fields are determined
  * by the JWT token's Claims config.
  */
+export const createUser = internalMutation({
+  args: { tokenIdentifier: v.string() },
+  async handler(ctx, args) {
+    await ctx.db.insert('users', {
+      tokenIdentifier: args.tokenIdentifier,
+      organizationIds: [],
+    });
+  },
+});
 
 export async function getUser(
   ctx: QueryCtx | MutationCtx,
@@ -30,53 +35,43 @@ export async function getUser(
     .first();
 
   if (!user) {
-    throw new ConvexError('expected user to be defined');
+    throw new ConvexError('No user');
   }
 
   return user;
 }
 
-export const store = mutation({
-  args: {},
-  handler: async (ctx) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) {
-      throw new Error('Called storeUser without authentication present');
-    }
+export const addOrgIdToUser = internalMutation({
+  args: { tokenIdentifier: v.string(), orgId: v.string(), role: roleValidator },
+  async handler(ctx, args) {
+    const user = await getUser(ctx, args.tokenIdentifier);
 
-    // Check if we've already stored this identity before.
-    const user = await ctx.db
-      .query('users')
-
-      .unique();
-    if (user !== null) {
-      // If we've seen this identity before but the name has changed, patch the value.
-      if (user.email !== identity.email) {
-        await ctx.db.patch(user._id, { email: identity.email });
-      }
-      return user._id;
-    }
-
-    if (!identity.email) {
-      throw new Error('User has no email address');
-    }
-    // If it's a new identity, create a new `User`.
-    return await ctx.db.insert('users', {
-      email: identity.email,
-      tokenIdentifier: identity.tokenIdentifier,
+    await ctx.db.patch(user._id, {
+      organizationIds: [
+        ...user.organizationIds,
+        { orgId: args.orgId, role: args.role },
+      ],
     });
   },
 });
 
-export const getIdByEmail = internalQuery({
-  args: {
-    email: v.string(),
-  },
-  handler: async (ctx, args) => {
-    const user = await ctx.db
-      .query('users')
-      .filter((q) => q.eq(q.field('email'), args.email))
-      .unique();
-    return user?._id;
+export const updateRoleInOrgForUser = internalMutation({
+  args: { tokenIdentifier: v.string(), orgId: v.string(), role: roleValidator },
+  async handler(ctx, args) {
+    const user = await getUser(ctx, args.tokenIdentifier);
+
+    const organization = user.organizationIds.find(
+      (org) => org.orgId === args.orgId
+    );
+
+    if (!organization) {
+      throw new ConvexError('No organization found');
+    }
+
+    organization.role = args.role;
+
+    await ctx.db.patch(user._id, {
+      organizationIds: user.organizationIds,
+    });
   },
 });

@@ -1,4 +1,4 @@
-import { OrganizationSwitcher } from './OrganizationSwitcher';
+import { OrganizationSwitcher, useOrganization } from '@clerk/nextjs';
 import { Button } from '~/components/ui/button';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -8,7 +8,10 @@ export function Navigation() {
 
   return (
     <div className='flex flex-row items-center justify-between space-x-2 pl-4'>
-      <OrganizationSwitcher />
+      <OrganizationSwitcher
+        afterSelectOrganizationUrl='/:slug'
+        afterSelectPersonalUrl='/'
+      />
 
       {params.project ? (
         <Link href={`/${params.organization}/${params.project}`}>

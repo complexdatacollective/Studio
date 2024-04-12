@@ -12,17 +12,13 @@ import { Label } from '@radix-ui/react-label';
 import { useMutation } from 'convex/react';
 import { api } from '~/convex/_generated/api';
 import { useState } from 'react';
-import { Doc } from '../convex/_generated/dataModel';
 
-export function CreateProject({
-  organization,
-}: {
-  organization: Doc<'organizations'>;
-}) {
-  const createProject = useMutation(api.projects.create);
-
+export function CreateProject({ organizationId }: { organizationId: string }) {
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
+
+  const createProject = useMutation(api.projects.create);
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,17 +29,15 @@ export function CreateProject({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Project</DialogTitle>
-          <DialogDescription>
-            Create a new project in {organization?.name}
-          </DialogDescription>
+          <DialogDescription>Create a new project.</DialogDescription>
         </DialogHeader>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             void createProject({
+              organizationId: organizationId,
               name: projectName,
               description: projectDescription,
-              organizationId: organization._id,
             });
 
             setOpen(false);
