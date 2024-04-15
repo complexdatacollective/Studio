@@ -6,9 +6,9 @@ export default async function ProjectPage({
 }: {
   params: { organization: string; project: string };
 }) {
-  await pageAuthorization({
-    paramsOrganizationSlug: params.organization,
-    paramsProjectSlug: params.project,
-  });
+  // await pageAuthorization({
+  //   paramsOrganizationSlug: params.organization,
+  //   paramsProjectSlug: params.project,
+  // });
   return <ProjectDashboard />;
 }

@@ -115,13 +115,15 @@ export const hasAccessToProject = query({
       .unique();
 
     if (!project) {
-      return null;
+      return false;
     }
 
-    return ctx.db
+    const projectUser = await ctx.db
       .query('projectUsers')
       .filter((q) => q.eq(q.field('projectId'), project._id))
       .filter((q) => q.eq(q.field('userId'), args.userId))
       .unique();
+
+    return projectUser ? true : false;
   },
 });

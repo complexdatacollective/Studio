@@ -6,8 +6,8 @@ export default async function OrganizationPage({
 }: {
   params: { organization: string };
 }) {
-  await pageAuthorization({
-    paramsOrganizationSlug: params.organization,
-  });
+  // await pageAuthorization({
+  //   paramsOrganizationSlug: params.organization,
+  // });
   return <OrganizationDashboard />;
 }

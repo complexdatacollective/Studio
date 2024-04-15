@@ -10,10 +10,14 @@ export async function pageAuthorization({
   paramsOrganizationSlug?: string;
   paramsProjectSlug?: string;
 }) {
-  const { orgSlug, userId, orgRole } = auth();
+  const { orgSlug, userId, orgRole } = await auth();
 
   if (!userId) {
     redirect('/login');
+  }
+
+  if (userId && orgSlug && orgRole) {
+    console.log(userId, orgSlug, orgRole);
   }
 
   if (paramsOrganizationSlug && !paramsProjectSlug) {
@@ -28,7 +32,7 @@ export async function pageAuthorization({
   }
 
   if (paramsProjectSlug) {
-    console.log('checking');
+    console.log('checking project access', userId, paramsProjectSlug);
     const hasAccessToProject = await fetchQuery(api.users.hasAccessToProject, {
       projectSlug: paramsProjectSlug,
       userId,

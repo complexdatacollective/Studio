@@ -45,7 +45,7 @@ export const getMembers = query({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (identity === null || !identity.email) {
-      throw new Error('Unauthenticated call to mutation');
+      throw new Error('Unauthenticated call to getMembers');
     }
 
     // get project id by slug
@@ -86,7 +86,7 @@ export const getProject = query({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (identity === null || !identity.email) {
-      throw new Error('Unauthenticated call to mutation');
+      throw new Error('Unauthenticated call to getProject');
     }
 
     const project = await getProjectBySlug(ctx, args.projectSlug);
@@ -114,7 +114,7 @@ export const getOrganizationProjects = query({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (identity === null || !identity.email) {
-      throw new Error('Unauthenticated call to mutation');
+      throw new Error('Unauthenticated call to getOrganizationProjects');
     }
 
     const hasAccess = await hasAccessToOrganization(ctx, args.organizationId);

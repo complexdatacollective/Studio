@@ -2,7 +2,7 @@ import { Typography } from '~/components/Typography';
 import { pageAuthorization } from '~/lib/pageAuthorization';
 
 export default function Home() {
-  pageAuthorization({});
+  // pageAuthorization({});
 
   return (
     <div className='flex flex-col p-12'>
