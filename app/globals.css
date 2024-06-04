@@ -2,55 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
   :root {
-    /* UI Colors */
-    --neon-coral: 226 33 91;
-    --neon-coral--dark: 206 28 84;
-    --mustard: 242 183 0;
-    --mustard--dark: 219 165 0;
-    --sea-green: 0 201 162;
-    --sea-green--dark: 0 160 129;
-    --slate-blue: 107 114 236;
-    --slate-blue--dark: 85 91 188;
-    --navy-taupe: 45 41 85;
-    --cyber-grape: 58 58 117;
-    --rich-black: 22 21 43;
-    --charcoal: 109 111 118;
-    --platinum: 242 246 247;
-    --platinum--dark: 218 227 229;
-    --sea-serpent: 15 178 226;
-    --sea-serpent--dark: 15 163 206;
-    --purple-pizazz: 211 15 239;
-    --purple-pizazz--dark: 191 12 216;
-    --paradise-pink: 255 58 140;
-    --paradise-pink--dark: 232 53 124;
-    --cerulean-blue: 15 112 255;
-    --cerulean-blue--dark: 15 102 232;
-    --kiwi: 112 191 84;
-    --kiwi--dark: 102 173 76;
-    --neon-carrot: 247 137 30;
-    --neon-carrot--dark: 224 124 28;
-    --barbie-pink: 237 0 140;
-    --barbie-pink--dark: 214 0 127;
-    --tomato: 232 45 63;
-    --tomato--dark: 211 43 58;
-
-    /* Semantic colors */
-    --color-background: 255 255 255;
-    --color-text: var(--rich-black);
-    --color-primary: var(--neon-coral);
-    --color-secondary: var(--sea-serpent);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-background: var(--rich-black);
-      --color-text: 255 255 255;
-      --color-primary: 255 115 179;
-      --color-secondary: 111 114 185;
-    }
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
 
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
