@@ -1,4 +1,5 @@
-import { env } from "~/env";
+// cannot use import aliases here with knip. see https://knip.dev/reference/known-issues#path-aliases-in-config-files
+import { env } from "./env";
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
