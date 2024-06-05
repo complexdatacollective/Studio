@@ -1,37 +1,50 @@
 import Link from "next/link";
 import { signup } from "~/actions/auth";
+import { Button } from "~/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export default async function Page() {
   return (
-    <div className="flex flex-col w-full items-center justify-center">
-      <h1>Create an account</h1>
-      <form action={signup}>
-        <div className="flex flex-col gap-3 border border-red-300 p-2">
-          <label htmlFor="username">Username</label>
-          <input className="text-slate-600" name="username" id="username" />
-        </div>
-        <br />
-        <div className="flex flex-col gap-3 border border-red-300 p-2">
-          <label htmlFor="password">Password</label>
-          <input
-            className="text-slate-600"
-            type="password"
-            name="password"
-            id="password"
-          />
-        </div>
-        <br />
-        <button className="p-2 border border-emerald-200">Continue</button>
-      </form>
-
-      <div>
-        <h2>
-          Already have an account{" "}
-          <Link className="text-blue-400 underline" href={"/signin"}>
-            Sign In
-          </Link>
-        </h2>
-      </div>
+    <div className="grid w-full items-center h-[100vh] justify-center gap-1.5">
+      <Card className="w-[28rem] m-3">
+        <CardHeader>
+          <CardTitle>Create an account</CardTitle>
+          <CardDescription>
+            Already have an account?{" "}
+            <Link className="text-blue-400 underline" href={"/signin"}>
+              Sign In
+            </Link>
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form action={signup}>
+            <div className="flex flex-col gap-3 p-2">
+              <Label htmlFor="username">Username</Label>
+              <Input name="username" id="username" placeholder="username..." />
+            </div>
+            <br />
+            <div className="flex flex-col gap-3 p-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="password..."
+              />
+            </div>
+            <br />
+            <Button>Continue</Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

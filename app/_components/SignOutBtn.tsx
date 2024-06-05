@@ -2,18 +2,18 @@
 
 import React from "react";
 import { signout } from "~/actions/auth";
+import { Button } from "~/components/ui/button";
 
 const SignOutBtn = () => {
   return (
-    <button
+    <Button
       onClick={async () => {
         console.log("signing out");
         await signout();
       }}
-      className="p-2 border border-emerald-400"
     >
       Sign Out
-    </button>
+    </Button>
   );
 };
 
