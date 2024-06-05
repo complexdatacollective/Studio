@@ -1,16 +1,10 @@
-import { redirect } from "next/navigation";
-import { signout } from "~/actions/auth";
 import { getOrganizations } from "~/actions/organizations";
 import CreateOrgForm from "~/components/CreateOrgForm";
-import { validateRequest } from "~/utils/auth";
+import { requirePageAuth } from "~/utils/auth";
 import SignOutBtn from "./_components/SignOutBtn";
 
 export default async function Home() {
-  const { user } = await validateRequest();
-
-  if (!user) {
-    return redirect("/signin");
-  }
+  await requirePageAuth();
 
   const allOrgs = await getOrganizations();
   return (

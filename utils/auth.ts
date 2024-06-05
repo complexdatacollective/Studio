@@ -1,14 +1,15 @@
-import { Lucia } from "lucia";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
+import type { Session, User } from "lucia";
+import { Lucia } from "lucia";
+import { cookies } from "next/headers";
+import { redirect, RedirectType } from "next/navigation";
+import { cache } from "react";
+import { db } from "~/drizzle/db";
 import {
   session as sessionTable,
   user as userTable,
   UserType,
 } from "~/drizzle/schema";
-import { db } from "~/drizzle/db";
-import type { Session, User } from "lucia";
-import { cache } from "react";
-import { cookies } from "next/headers";
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 
@@ -69,7 +70,19 @@ export const validateRequest = cache(
           sessionCookie.attributes
         );
       }
-    } catch {}
+    } catch (error) {
+      console.error(error);
+    }
     return result;
   }
 );
+
+export async function requirePageAuth() {
+  const { session, user } = await validateRequest();
+
+  if (!session || !user) {
+    redirect("/signin", RedirectType.replace);
+  }
+
+  return { session, user };
+}
