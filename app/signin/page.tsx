@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { signin } from "~/actions/auth";
-import { Button } from "~/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,8 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import SignInForm from "./_components/SignInForm";
 
 export default async function Page() {
   return (
@@ -25,24 +22,7 @@ export default async function Page() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={signin}>
-            <div className="flex flex-col gap-3 p-2">
-              <Label htmlFor="username">Username</Label>
-              <Input name="username" id="username" placeholder="username..." />
-            </div>
-            <br />
-            <div className="flex flex-col gap-3 p-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="password..."
-              />
-            </div>
-            <br />
-            <Button>Continue</Button>
-          </form>
+          <SignInForm />
         </CardContent>
       </Card>
     </div>
