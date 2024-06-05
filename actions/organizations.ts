@@ -1,5 +1,6 @@
 "use server";
 
+import { eq } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 import { db } from "~/drizzle/db";
 import { organizations } from "~/drizzle/schema";
@@ -18,6 +19,12 @@ export async function createOrganization(formData: FormData) {
   });
 
   revalidateTag("getOrganizations");
+}
+
+export async function getOrgBySlug(slug: string) {
+  return await db.query.organizations.findFirst({
+    where: eq(organizations.slug, slug),
+  });
 }
 
 export async function getOrganizations() {

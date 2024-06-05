@@ -8,9 +8,11 @@ export default async function Home() {
       <div className="text-2xl">Studio MVP</div>
       <CreateOrgForm />
       <div>All Organizations</div>
-      <div>
+      <div className="flex flex-col">
         {allOrgs.map((org) => (
-          <div key={org.id}>{org.name}</div>
+          <a key={org.id} href={`/${org.slug}`}>
+            {org.name}
+          </a>
         ))}
       </div>
     </main>
