@@ -8,11 +8,13 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "drizzle-kit push --config=drizzle.config.ts",
-    "db:studio": "drizzle-kit studio --config=drizzle.config.ts"
+    "db:studio": "drizzle-kit studio --config=drizzle.config.ts",
+    "knip": "knip"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.10.1",
     "drizzle-orm": "^0.31.1",
+    "knip": "^5.17.4",
     "next": "14.2.3",
     "postgres": "^3.4.4",
     "react": "^18",
