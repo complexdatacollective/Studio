@@ -9,9 +9,10 @@ const OrganizationLayout = ({ children, params }: OrganizationLayoutProps) => {
   const { org: orgSlug } = params;
   return (
     <>
-      <div className="flex flex-row space-x-2 text-slate-700">
-        <Link href={`/${orgSlug}`}>Organization Dashboard</Link>
-        <Link href={`/${orgSlug}/settings`}>Organization Settings</Link>
+      <div className="flex flex-row space-x-4 px-4 pt-4 text-lg">
+        <Link href={`/`}>Studio</Link>
+        <Link href={`/${orgSlug}`}>Org Dashboard</Link>
+        <Link href={`/${orgSlug}/settings`}>Org Settings</Link>
       </div>
       {children}
     </>

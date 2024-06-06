@@ -9,7 +9,7 @@ const ProjectLayout = ({ children, params }: ProjectLayoutProps) => {
   const { org: orgSlug, project: projectSlug } = params;
   return (
     <>
-      <div className="flex flex-row space-x-2 text-slate-700">
+      <div className="flex flex-row space-x-4 border-b p-4 text-lg text-slate-600">
         <Link href={`/${orgSlug}/${projectSlug}/participants`}>
           Participants
         </Link>

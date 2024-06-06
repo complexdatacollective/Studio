@@ -4,8 +4,8 @@ import CreateOrgForm from '~/app/[org]/_components/CreateOrgForm';
 export default async function Home() {
   const allOrgs = await getOrganizations();
   return (
-    <main className="flex flex-col items-center p-24">
-      <div className="text-2xl">Studio MVP</div>
+    <main className="flex flex-col p-12">
+      <div className="pb-4 text-4xl">Studio MVP</div>
       <CreateOrgForm />
       <div>All Organizations</div>
       <div className="flex flex-col">
