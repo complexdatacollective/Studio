@@ -14,7 +14,7 @@ export default async function ProjectPage({
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex flex-col items-center p-24">
       <div className="text-2xl">{project.name} Project Page</div>
       <div>slug: {projectSlug}</div>
     </main>

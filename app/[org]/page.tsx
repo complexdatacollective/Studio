@@ -1,11 +1,11 @@
-import { getProjects } from "~/actions/projects";
-import CreateProjectForm from "~/components/CreateProjectForm";
+import { getProjects } from '~/actions/projects';
+import CreateProjectForm from '~/components/CreateProjectForm';
 
 export default async function OrgPage({ params }: { params: { org: string } }) {
   const { org } = params;
   const allProjects = await getProjects(org);
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex flex-col items-center p-24">
       <div className="text-2xl">Organization Page</div>
       <div>slug: {org}</div>
 
@@ -17,7 +17,7 @@ export default async function OrgPage({ params }: { params: { org: string } }) {
                 {project.name}
               </a>
             ))
-          : "No projects found"}
+          : 'No projects found'}
       </div>
 
       <CreateProjectForm orgSlug={org} />
