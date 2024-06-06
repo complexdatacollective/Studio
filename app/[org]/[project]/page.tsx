@@ -1,14 +1,22 @@
-export default function ProjectPage({
+import { getProjectBySlug } from '~/actions/projects';
+
+export default async function ProjectPage({
   params,
 }: {
-  params: { org: string; project: string };
+  params: { orgSlug: string; project: string };
 }) {
-  const { project } = params;
+  const { project: projectSlug } = params;
+
+  const project = await getProjectBySlug(projectSlug);
+  if (!project) {
+    return <div>Project not found</div>;
+    // todo: redirect to 404 page
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      <div className="text-2xl">Project Page</div>
-      <div>slug: {project}</div>
+      <div className="text-2xl">{project.name} Project Page</div>
+      <div>slug: {projectSlug}</div>
     </main>
   );
 }
