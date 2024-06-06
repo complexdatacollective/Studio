@@ -1,6 +1,6 @@
 import { getProjectBySlug } from '~/actions/projects';
 
-export default async function ProjectPage({
+export default async function InterviewsPage({
   params,
 }: {
   params: { org: string; project: string };
@@ -15,7 +15,7 @@ export default async function ProjectPage({
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      <div className="text-2xl">{project.name} Project Page</div>
+      <div className="text-2xl">{project.name} Interviews </div>
       <div>slug: {projectSlug}</div>
     </main>
   );
