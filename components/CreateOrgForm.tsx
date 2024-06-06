@@ -1,4 +1,4 @@
-import { createOrganization } from "~/actions/organizations";
+import { createOrganization } from '~/actions/organizations';
 
 export default function CreateOrgForm() {
   return (
@@ -13,7 +13,7 @@ export default function CreateOrgForm() {
         id="orgName"
         name="orgName"
       />
-      <button className="border border-red-400 my-2" type="submit">
+      <button className="my-2 border border-red-400" type="submit">
         Create Org
       </button>
     </form>

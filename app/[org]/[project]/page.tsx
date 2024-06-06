@@ -1,9 +1,9 @@
-export default async function ProjectPage({
+export default function ProjectPage({
   params,
 }: {
   params: { org: string; project: string };
 }) {
-  const { org, project } = params;
+  const { project } = params;
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
