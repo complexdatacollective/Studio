@@ -33,7 +33,7 @@ export default function CreateProjectForm({ orgSlug }: { orgSlug: string }) {
         name="projectName"
         placeholder="Studio"
       />
-      <Button>Create project</Button>
+      <Button type="submit">Create project</Button>
     </form>
   );
 }

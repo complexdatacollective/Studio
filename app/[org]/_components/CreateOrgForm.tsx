@@ -18,7 +18,7 @@ export default function CreateOrgForm() {
         name="orgName"
         placeholder="Northwestern"
       />
-      <Button>Create Org</Button>
+      <Button type="submit">Create Org</Button>
     </form>
   );
 }
