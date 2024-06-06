@@ -14,9 +14,9 @@ export default async function InterviewsPage({
   }
 
   return (
-    <main className="flex flex-col items-center p-24">
-      <div className="text-2xl">{project.name} Interviews </div>
+    <div className="flex flex-col p-12">
+      <div className="text-4xl">{project.name} Interviews </div>
       <div>slug: {projectSlug}</div>
-    </main>
+    </div>
   );
 }

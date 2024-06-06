@@ -1,5 +1,5 @@
 import { getOrganizations } from '~/actions/organizations';
-import CreateOrgForm from '~/components/CreateOrgForm';
+import CreateOrgForm from '~/app/[org]/_components/CreateOrgForm';
 
 export default async function Home() {
   const allOrgs = await getOrganizations();
