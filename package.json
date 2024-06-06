@@ -2,31 +2,42 @@
   "name": "studio",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.1.1+sha256.9551e803dcb7a1839fdf5416153a844060c7bce013218ce823410532504ac10b",
   "scripts": {
     "dev": "docker-compose -f docker-compose.dev.yml up -d && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "SKIP_ENV_VALIDATION=true next lint",
     "db:push": "drizzle-kit push --config=drizzle.config.ts",
-    "db:studio": "drizzle-kit studio --config=drizzle.config.ts"
+    "db:studio": "drizzle-kit studio --config=drizzle.config.ts",
+    "knip": "SKIP_ENV_VALIDATION=true knip"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@typescript-eslint/eslint-plugin": "^7.12.0",
+    "@typescript-eslint/parser": "^7.12.0",
     "drizzle-orm": "^0.31.1",
+    "knip": "^5.17.4",
+    "eslint-config-prettier": "^9.1.0",
     "next": "14.2.3",
     "postgres": "^3.4.4",
+    "prettier": "^3.3.1",
+    "prettier-plugin-tailwindcss": "^0.6.1",
     "react": "^18",
     "react-dom": "^18",
+    "sharp": "^0.33.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.19",
     "drizzle-kit": "^0.22.2",
-    "eslint": "^8",
+    "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
-    "postcss": "^8",
+    "postcss": "8.4.38",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
