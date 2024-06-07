@@ -35,6 +35,9 @@ export async function createProject(formData: FormData) {
 export async function getProjectBySlug(slug: string) {
   return await db.query.projects.findFirst({
     where: eq(projects.slug, slug),
+    columns: {
+      id: false,
+    },
   });
 }
 
@@ -46,5 +49,8 @@ export async function getProjects(orgSlug: string) {
 
   return await db.query.projects.findMany({
     where: eq(projects.organizationId, organization.id),
+    columns: {
+      id: false,
+    },
   });
 }

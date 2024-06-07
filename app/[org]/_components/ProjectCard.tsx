@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { type Project } from '~/drizzle/schema';
+import { type PublicProject } from '~/drizzle/schema';
 
 export default function ProjectCard({
   project,
   href,
 }: {
-  project: Project;
+  project: PublicProject;
   href: string;
 }) {
   return (

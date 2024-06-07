@@ -20,6 +20,12 @@ export async function createOrganization(formData: FormData) {
   revalidateTag('getOrganizations');
 }
 
+/*
+Right now, this is only used in other actions and the organization is not returned to the user.
+If it were, we would need to remove the id from the response (to use the public_id instead)
+Need to think about a better way to handle and check for this.
+*/
+
 export async function getOrgBySlug(slug: string) {
   return await db.query.organizations.findFirst({
     where: eq(organizations.slug, slug),
@@ -27,5 +33,9 @@ export async function getOrgBySlug(slug: string) {
 }
 
 export async function getOrganizations() {
-  return await db.query.organizations.findMany();
+  return await db.query.organizations.findMany({
+    columns: {
+      id: false,
+    },
+  });
 }

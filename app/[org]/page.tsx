@@ -12,7 +12,7 @@ export default async function OrgPage({ params }: { params: { org: string } }) {
         {allProjects
           ? allProjects.map((project) => (
               <ProjectCard
-                key={project.id}
+                key={project.public_id}
                 project={project}
                 href={`/${org}/${project.slug}`}
               />
