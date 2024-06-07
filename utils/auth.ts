@@ -1,15 +1,16 @@
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import type { Session, User } from "lucia";
-import { Lucia } from "lucia";
-import { cookies } from "next/headers";
-import { redirect, RedirectType } from "next/navigation";
-import { cache } from "react";
-import { db } from "~/drizzle/db";
+import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
+import type { Session, User } from 'lucia';
+import { Lucia } from 'lucia';
+import { cookies } from 'next/headers';
+import { redirect, RedirectType } from 'next/navigation';
+import { cache } from 'react';
+import { db } from '~/drizzle/db';
 import {
   session as sessionTable,
   user as userTable,
-  UserType,
-} from "~/drizzle/schema";
+  type UserType,
+} from '~/drizzle/schema';
+import { env } from '~/env';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 
@@ -20,7 +21,7 @@ export const lucia = new Lucia(adapter, {
     expires: false,
     attributes: {
       // set to `true` when using HTTPS
-      secure: process.env.NODE_ENV === "production",
+      secure: env.NODE_ENV === 'production',
     },
   },
   getUserAttributes: (attributes) => {
@@ -32,7 +33,9 @@ export const lucia = new Lucia(adapter, {
 });
 
 // IMPORTANT!
-declare module "lucia" {
+declare module 'lucia' {
+  // Todo: figure out how to fix linting here
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Register {
     Lucia: typeof lucia;
     DatabaseUserAttributes: UserType;
@@ -54,12 +57,12 @@ export const validateRequest = cache(
     const result = await lucia.validateSession(sessionId);
     // next.js throws when you attempt to set cookie when rendering page
     try {
-      if (result.session && result.session.fresh) {
+      if (result.session?.fresh) {
         const sessionCookie = lucia.createSessionCookie(result.session.id);
         cookies().set(
           sessionCookie.name,
           sessionCookie.value,
-          sessionCookie.attributes
+          sessionCookie.attributes,
         );
       }
       if (!result.session) {
@@ -67,21 +70,22 @@ export const validateRequest = cache(
         cookies().set(
           sessionCookie.name,
           sessionCookie.value,
-          sessionCookie.attributes
+          sessionCookie.attributes,
         );
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
     return result;
-  }
+  },
 );
 
 export async function requirePageAuth() {
   const { session, user } = await validateRequest();
 
   if (!session || !user) {
-    redirect("/signin", RedirectType.replace);
+    redirect('/signin', RedirectType.replace);
   }
 
   return { session, user };

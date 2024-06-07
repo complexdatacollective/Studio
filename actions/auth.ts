@@ -1,24 +1,24 @@
-"use server";
+'use server';
 
-import { hash, verify } from "@node-rs/argon2";
-import { eq } from "drizzle-orm";
-import { generateIdFromEntropySize } from "lucia";
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import { db } from "~/drizzle/db";
-import { user } from "~/drizzle/schema";
-import { lucia, validateRequest } from "~/utils/auth";
+import { hash, verify } from '@node-rs/argon2';
+import { eq } from 'drizzle-orm';
+import { generateIdFromEntropySize } from 'lucia';
+import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import { db } from '~/drizzle/db';
+import { user } from '~/drizzle/schema';
+import { lucia, validateRequest } from '~/utils/auth';
 import {
   createUserFormDataSchema,
   getUserFormDataSchema,
-} from "~/utils/authSchema";
+} from '~/utils/authSchema';
 
 export async function signup(
   currentState: {
     success: boolean;
     error: null | string;
   },
-  formData: FormData
+  formData: FormData,
 ) {
   const parsedFormData = createUserFormDataSchema.safeParse(formData);
 
@@ -49,7 +49,7 @@ export async function signup(
       .where(eq(user.username, username))
       .limit(1);
 
-    if (existingUser) throw new Error("Username already taken!");
+    if (existingUser) throw new Error('Username already taken!');
 
     // create user
     await db.insert(user).values({
@@ -63,13 +63,13 @@ export async function signup(
     cookies().set(
       sessionCookie.name,
       sessionCookie.value,
-      sessionCookie.attributes
+      sessionCookie.attributes,
     );
     return { error: null, success: true };
   } catch (error) {
     return {
       success: false,
-      error: "Username already taken!",
+      error: 'Username already taken!',
     };
   }
 }
@@ -79,7 +79,7 @@ export async function signin(
     success: boolean;
     error: null | string;
   },
-  formData: FormData
+  formData: FormData,
 ) {
   const parsedFormData = getUserFormDataSchema.safeParse(formData);
 
@@ -109,10 +109,11 @@ export async function signin(
       // Since protecting against this is non-trivial,
       // it is crucial your implementation is protected against brute-force attacks with login throttling etc.
       // If usernames are public, you may outright tell the user that the username is invalid.
-      console.log("invalid username");
+      // eslint-disable-next-line no-console
+      console.log('invalid username');
       return {
         success: false,
-        error: "Incorrect username or password!",
+        error: 'Incorrect username or password!',
       };
     }
 
@@ -125,7 +126,7 @@ export async function signin(
     if (!validPassword) {
       return {
         success: false,
-        error: "Incorrect username or password!",
+        error: 'Incorrect username or password!',
       };
     }
 
@@ -134,7 +135,7 @@ export async function signin(
     cookies().set(
       sessionCookie.name,
       sessionCookie.value,
-      sessionCookie.attributes
+      sessionCookie.attributes,
     );
 
     return {
@@ -142,10 +143,11 @@ export async function signin(
       error: null,
     };
   } catch (error) {
-    console.error("Error while signing in", error);
+    // eslint-disable-next-line no-console
+    console.error('Error while signing in', error);
     return {
       success: false,
-      error: "Something went wrong! Please try again.",
+      error: 'Something went wrong! Please try again.',
     };
   }
 }
@@ -155,7 +157,7 @@ export async function signout() {
   if (!session) {
     return {
       success: false,
-      error: "Unauthorized",
+      error: 'Unauthorized',
     };
   }
 
@@ -165,10 +167,10 @@ export async function signout() {
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
 
-  revalidatePath("/");
+  revalidatePath('/');
   return {
     success: true,
     error: null,
