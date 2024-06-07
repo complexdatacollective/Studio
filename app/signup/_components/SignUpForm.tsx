@@ -1,7 +1,5 @@
 "use client";
 
-import { redirect } from "next/navigation";
-import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { signup } from "~/actions/auth";
 import { Button } from "~/components/ui/button";
@@ -11,13 +9,6 @@ import { Label } from "~/components/ui/label";
 const SignUpForm = () => {
   const initialState = { error: null, success: false };
   const [formState, formAction] = useFormState(signup, initialState);
-
-  useEffect(() => {
-    if (formState.success) {
-      // redirect to sign in page
-      redirect("/signin");
-    }
-  }, [formState]);
 
   return (
     <form action={formAction}>

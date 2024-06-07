@@ -12,13 +12,6 @@ const SignInForm = () => {
   const initialState = { error: null, success: false };
   const [formState, formAction] = useFormState(signin, initialState);
 
-  useEffect(() => {
-    if (formState.success) {
-      // redirect to home page
-      redirect("/");
-    }
-  }, [formState]);
-
   return (
     <form action={formAction}>
       {formState.error && (
