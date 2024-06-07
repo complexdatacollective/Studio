@@ -1,4 +1,4 @@
-import { getOrganizations } from '~/actions/organizations';
+import { getOrganizations } from '~/queries/organizations';
 import CreateOrgForm from '~/app/[org]/_components/CreateOrgForm';
 import { requirePageAuth } from '~/utils/auth';
 import SignOutBtn from './_components/SignOutBtn';

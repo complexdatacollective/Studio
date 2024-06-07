@@ -1,4 +1,4 @@
-import { getProjectBySlug } from '~/actions/projects';
+import { getProjectBySlug } from '~/queries/projects';
 
 export default async function ProtocolsPage({
   params,

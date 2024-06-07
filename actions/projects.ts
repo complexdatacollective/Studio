@@ -2,8 +2,7 @@
 
 import { db } from '~/drizzle/db';
 import { projects } from '~/drizzle/schema';
-import { getOrgBySlug } from '~/actions/organizations';
-import { eq } from 'drizzle-orm';
+import { getOrgBySlug } from '~/queries/organizations';
 import { safeRevalidateTag } from '~/utils/safeCacheTags';
 
 export async function createProject(formData: FormData) {
@@ -30,27 +29,4 @@ export async function createProject(formData: FormData) {
   });
 
   safeRevalidateTag('getProjects');
-}
-
-export async function getProjectBySlug(slug: string) {
-  return await db.query.projects.findFirst({
-    where: eq(projects.slug, slug),
-    columns: {
-      id: false,
-    },
-  });
-}
-
-export async function getProjects(orgSlug: string) {
-  const organization = await getOrgBySlug(orgSlug);
-  if (!organization?.id) {
-    throw new Error('Organization not found');
-  }
-
-  return await db.query.projects.findMany({
-    where: eq(projects.organizationId, organization.id),
-    columns: {
-      id: false,
-    },
-  });
 }
