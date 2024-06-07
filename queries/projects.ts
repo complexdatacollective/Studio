@@ -1,13 +1,13 @@
 import { db } from '~/drizzle/db';
-import { unstable_cache } from 'next/cache';
 import 'server-only';
 import { eq } from 'drizzle-orm';
 import { getOrgBySlug } from '~/queries/organizations';
-import { projects } from '~/drizzle/schema';
+import { type PublicProject, projects } from '~/drizzle/schema';
+import { safeUnstableCache } from '~/utils/safeCacheTags';
 
 export const getProjectBySlug = (slug: string) =>
-  unstable_cache(
-    async (slug: string) => {
+  safeUnstableCache<PublicProject>(
+    async () => {
       return await db.query.projects.findFirst({
         where: eq(projects.slug, slug),
         columns: {
@@ -19,11 +19,11 @@ export const getProjectBySlug = (slug: string) =>
     {
       tags: [`getProjectBySlug-${slug}`, 'getProjectBySlug'],
     },
-  )(slug);
+  )();
 
 export const getProjects = (orgSlug: string) =>
-  unstable_cache(
-    async (orgSlug: string) => {
+  safeUnstableCache<PublicProject[]>(
+    async () => {
       const organization = await getOrgBySlug(orgSlug);
       if (!organization?.id) {
         throw new Error('Organization not found');
@@ -40,4 +40,4 @@ export const getProjects = (orgSlug: string) =>
     {
       tags: [`getProjects-${orgSlug}`, 'getProjects'],
     },
-  )(orgSlug);
+  )();
