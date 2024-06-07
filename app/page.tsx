@@ -1,7 +1,7 @@
 import { getOrganizations } from '~/actions/organizations';
 import CreateOrgForm from '~/app/[org]/_components/CreateOrgForm';
-import { requirePageAuth } from "~/utils/auth";
-import SignOutBtn from "./_components/SignOutBtn";
+import { requirePageAuth } from '~/utils/auth';
+import SignOutBtn from './_components/SignOutBtn';
 
 export default async function Home() {
   await requirePageAuth();
@@ -14,7 +14,7 @@ export default async function Home() {
       <div>All Organizations</div>
       <div className="flex flex-col">
         {allOrgs.map((org) => (
-          <a key={org.id} href={`/${org.slug}`}>
+          <a key={org.public_id} href={`/${org.slug}`}>
             {org.name}
           </a>
         ))}
