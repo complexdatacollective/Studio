@@ -21,4 +21,4 @@ if (env.NODE_ENV === "production") {
   db = global.db;
 }
 
-export { db, pg };
+export { db };
