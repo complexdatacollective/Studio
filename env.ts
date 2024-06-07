@@ -1,5 +1,6 @@
-import { createEnv } from "@t3-oss/env-nextjs";
-import { z } from "zod";
+/* eslint-disable no-process-env */
+import { createEnv } from '@t3-oss/env-nextjs';
+import { z } from 'zod';
 
 export const env = createEnv({
   server: {
@@ -8,8 +9,8 @@ export const env = createEnv({
   client: {},
   shared: {
     NODE_ENV: z
-      .enum(["development", "test", "production"])
-      .default("development"),
+      .enum(['development', 'test', 'production'])
+      .default('development'),
   },
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,

@@ -1,7 +1,11 @@
 import { getOrganizations } from '~/actions/organizations';
 import CreateOrgForm from '~/app/[org]/_components/CreateOrgForm';
+import { requirePageAuth } from "~/utils/auth";
+import SignOutBtn from "./_components/SignOutBtn";
 
 export default async function Home() {
+  await requirePageAuth();
+
   const allOrgs = await getOrganizations();
   return (
     <main className="flex flex-col p-12">
@@ -15,6 +19,8 @@ export default async function Home() {
           </a>
         ))}
       </div>
+
+      <SignOutBtn />
     </main>
   );
 }
