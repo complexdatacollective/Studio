@@ -1,10 +1,10 @@
 'use server';
 
-import { revalidateTag } from 'next/cache';
 import { db } from '~/drizzle/db';
 import { projects } from '~/drizzle/schema';
-import { getOrgBySlug } from './organizations';
+import { getOrgBySlug } from '~/actions/organizations';
 import { eq } from 'drizzle-orm';
+import { safeRevalidateTag } from '~/utils/safeCacheTags';
 
 export async function createProject(formData: FormData) {
   const name = formData.get('projectName') as string;
@@ -29,7 +29,7 @@ export async function createProject(formData: FormData) {
     organizationId: organization.id,
   });
 
-  revalidateTag('getProjects');
+  safeRevalidateTag('getProjects');
 }
 
 export async function getProjectBySlug(slug: string) {

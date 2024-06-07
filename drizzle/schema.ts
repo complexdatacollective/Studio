@@ -34,9 +34,6 @@ export const protocols = pgTable('protocols', {
   ),
 });
 
-export type Project = typeof projects.$inferSelect;
-export type PublicProject = Omit<Project, 'id'>;
-
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
   username: text('username').notNull().unique(),
@@ -55,3 +52,9 @@ export const session = pgTable('session', {
 });
 
 export type UserType = typeof user.$inferSelect;
+
+export type Project = typeof projects.$inferSelect;
+export type PublicProject = Omit<Project, 'id'>;
+
+export type Organization = typeof organizations.$inferSelect;
+export type PublicOrganization = Omit<Organization, 'id'>;

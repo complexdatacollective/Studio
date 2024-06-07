@@ -1,7 +1,7 @@
 'use server';
 
 import { eq } from 'drizzle-orm';
-import { revalidateTag } from 'next/cache';
+import { safeRevalidateTag } from '~/utils/safeCacheTags';
 import { db } from '~/drizzle/db';
 import { organizations } from '~/drizzle/schema';
 
@@ -17,7 +17,7 @@ export async function createOrganization(formData: FormData) {
     slug: name.toLowerCase().replace(/\s+/g, '-'),
   });
 
-  revalidateTag('getOrganizations');
+  safeRevalidateTag('getOrganizations');
 }
 
 /*
