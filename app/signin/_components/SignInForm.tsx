@@ -1,12 +1,10 @@
 "use client";
 
+import { useFormState } from "react-dom";
 import { signin } from "~/actions/auth";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { useFormState } from "react-dom";
-import { useEffect } from "react";
-import { redirect } from "next/navigation";
 
 const SignInForm = () => {
   const initialState = { error: null, success: false };

@@ -3,8 +3,8 @@
 import { hash, verify } from "@node-rs/argon2";
 import { eq } from "drizzle-orm";
 import { generateIdFromEntropySize } from "lucia";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { db } from "~/drizzle/db";
 import { user } from "~/drizzle/schema";
 import { lucia, validateRequest } from "~/utils/auth";
@@ -142,9 +142,10 @@ export async function signin(
       error: null,
     };
   } catch (error) {
+    console.error("Error while signing in", error);
     return {
       success: false,
-      error: JSON.stringify(error),
+      error: "Something went wrong! Please try again.",
     };
   }
 }
@@ -153,6 +154,7 @@ export async function signout() {
   const { session } = await validateRequest();
   if (!session) {
     return {
+      success: false,
       error: "Unauthorized",
     };
   }
@@ -165,5 +167,10 @@ export async function signout() {
     sessionCookie.value,
     sessionCookie.attributes
   );
-  return redirect("/signin");
+
+  revalidatePath("/");
+  return {
+    success: true,
+    error: null,
+  };
 }

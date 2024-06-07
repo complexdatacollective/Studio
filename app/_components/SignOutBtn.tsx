@@ -5,16 +5,7 @@ import { signout } from "~/actions/auth";
 import { Button } from "~/components/ui/button";
 
 const SignOutBtn = () => {
-  return (
-    <Button
-      onClick={async () => {
-        console.log("signing out");
-        await signout();
-      }}
-    >
-      Sign Out
-    </Button>
-  );
+  return <Button onClick={() => void signout()}>Sign Out</Button>;
 };
 
 export default SignOutBtn;
