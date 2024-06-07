@@ -1,5 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignoreDependencies": ["sharp"],
+  "ignoreDependencies": ["sharp", "server-only"],
   "ignoreBinaries": ["docker-compose"]
 }
