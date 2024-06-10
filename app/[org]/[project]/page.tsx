@@ -1,4 +1,4 @@
-import { getProjectBySlug } from '~/queries/projects';
+import { getProjectBySlug } from '~/server/queries/projects';
 
 export default async function ProjectPage({
   params,

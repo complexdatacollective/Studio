@@ -1,9 +1,9 @@
-import { db } from '~/drizzle/db';
+import { db } from '~/lib/db';
 import 'server-only';
 import { eq } from 'drizzle-orm';
-import { getOrgBySlug } from '~/queries/organizations';
-import { type PublicProject, projects } from '~/drizzle/schema';
-import { safeUnstableCache } from '~/utils/safeCacheTags';
+import { getOrgBySlug } from '~/server/queries/organizations';
+import { type PublicProject, projects } from '~/lib/db/schema';
+import { safeUnstableCache } from '~/lib/safeCacheTags';
 
 export const getProjectBySlug = (slug: string) =>
   safeUnstableCache<PublicProject>(

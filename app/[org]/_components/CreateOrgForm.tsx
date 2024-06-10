@@ -1,4 +1,4 @@
-import { createOrganization } from '~/actions/organizations';
+import { createOrganization } from '~/server/actions/organizations';
 import Button from '~/components/Button';
 
 export default function CreateOrgForm() {

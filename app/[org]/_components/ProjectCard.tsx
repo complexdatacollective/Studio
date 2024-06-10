@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { type PublicProject } from '~/drizzle/schema';
+import { type PublicProject } from '~/lib/db/schema';
 
 export default function ProjectCard({
   project,

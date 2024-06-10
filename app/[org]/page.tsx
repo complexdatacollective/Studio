@@ -1,4 +1,4 @@
-import { getProjects } from '~/queries/projects';
+import { getProjects } from '~/server/queries/projects';
 import CreateProjectForm from '~/app/[org]/_components/CreateProjectForm';
 import ProjectCard from './_components/ProjectCard';
 

@@ -4,12 +4,12 @@ import { Lucia } from 'lucia';
 import { cookies } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 import { cache } from 'react';
-import { db } from '~/drizzle/db';
+import { db } from '~/lib/db';
 import {
   session as sessionTable,
   user as userTable,
   type UserType,
-} from '~/drizzle/schema';
+} from '~/lib/db/schema';
 import { env } from '~/env';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);

@@ -1,14 +1,12 @@
-import { db } from '~/drizzle/db';
-
 import 'server-only';
 import { eq } from 'drizzle-orm';
-
+import { db } from '~/lib/db';
 import {
   type Organization,
   type PublicOrganization,
   organizations,
-} from '~/drizzle/schema';
-import { safeUnstableCache } from '~/utils/safeCacheTags';
+} from '~/lib/db/schema';
+import { safeUnstableCache } from '~/lib/safeCacheTags';
 
 /*
 Right now, this is only used in other actions and the organization is not returned to the user.

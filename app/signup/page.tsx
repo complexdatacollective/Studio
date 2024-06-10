@@ -1,31 +1,31 @@
-import Link from "next/link";
+import Link from 'next/link';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
-import SignUpForm from "./_components/SignUpForm";
-import { validateRequest } from "~/utils/auth";
-import { redirect } from "next/navigation";
+} from '~/components/ui/card';
+import SignUpForm from './_components/SignUpForm';
+import { validateRequest } from '~/lib/auth';
+import { redirect } from 'next/navigation';
 
 export default async function Page() {
   const { session, user } = await validateRequest();
 
   if (session && user) {
     // If the user is already signed in, redirect to the home page
-    redirect("/");
+    redirect('/');
   }
 
   return (
-    <div className="grid w-full items-center h-[100vh] justify-center gap-1.5">
-      <Card className="w-[28rem] m-3">
+    <div className="grid h-[100vh] w-full items-center justify-center gap-1.5">
+      <Card className="m-3 w-[28rem]">
         <CardHeader>
           <CardTitle>Create an account</CardTitle>
           <CardDescription>
-            Already have an account?{" "}
-            <Link className="text-blue-400 underline" href={"/signin"}>
+            Already have an account?{' '}
+            <Link className="text-blue-400 underline" href={'/signin'}>
               Sign In
             </Link>
           </CardDescription>

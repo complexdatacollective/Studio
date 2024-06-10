@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useFormState } from "react-dom";
-import { signin } from "~/actions/auth";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import { useFormState } from 'react-dom';
+import { signin } from '~/server/actions/auth';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
 
 const SignInForm = () => {
   const initialState = { error: null, success: false };
@@ -13,7 +13,7 @@ const SignInForm = () => {
   return (
     <form action={formAction}>
       {formState.error && (
-        <div className="text-red-500 text-center text-sm">
+        <div className="text-center text-sm text-red-500">
           {formState.error}
         </div>
       )}

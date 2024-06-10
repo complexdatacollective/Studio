@@ -5,13 +5,13 @@ import { eq } from 'drizzle-orm';
 import { generateIdFromEntropySize } from 'lucia';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { db } from '~/drizzle/db';
-import { user } from '~/drizzle/schema';
-import { lucia, validateRequest } from '~/utils/auth';
+import { db } from '~/lib/db';
+import { user } from '~/lib/db/schema';
+import { lucia, validateRequest } from '~/lib/auth';
 import {
   createUserFormDataSchema,
   getUserFormDataSchema,
-} from '~/utils/authSchema';
+} from '~/lib/auth/authSchema';
 
 export async function signup(
   currentState: {

@@ -1,6 +1,6 @@
 'use client';
 
-import { createProject } from '~/actions/projects';
+import { createProject } from '~/server/actions/projects';
 import Button from '~/components/Button';
 
 export default function CreateProjectForm({ orgSlug }: { orgSlug: string }) {

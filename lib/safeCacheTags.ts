@@ -6,6 +6,7 @@ const cacheTags = [
   'getOrgBySlug',
   'getProjectBySlug',
 ] as const;
+
 type StaticTag = (typeof cacheTags)[number];
 type DynamicTag = `${StaticTag}-${string}`;
 

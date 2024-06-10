@@ -1,5 +1,5 @@
 import { bigserial, date, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
-import { generatePublicId } from '~/utils/publicId';
+import { generatePublicId } from '~/lib/generatePublicId';
 
 export const organizations = pgTable('organizations', {
   id: bigserial('id', { mode: 'number' }).primaryKey(),

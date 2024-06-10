@@ -1,9 +1,9 @@
 'use server';
 
-import { db } from '~/drizzle/db';
-import { projects } from '~/drizzle/schema';
-import { getOrgBySlug } from '~/queries/organizations';
-import { safeRevalidateTag } from '~/utils/safeCacheTags';
+import { db } from '~/lib/db';
+import { projects } from '~/lib/db/schema';
+import { getOrgBySlug } from '~/server/queries/organizations';
+import { safeRevalidateTag } from '~/lib/safeCacheTags';
 
 export async function createProject(formData: FormData) {
   const name = formData.get('projectName') as string;

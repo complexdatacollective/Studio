@@ -1,6 +1,6 @@
-import { getOrganizations } from '~/queries/organizations';
+import { getOrganizations } from '~/server/queries/organizations';
 import CreateOrgForm from '~/app/[org]/_components/CreateOrgForm';
-import { requirePageAuth } from '~/utils/auth';
+import { requirePageAuth } from '~/lib/auth';
 import SignOutBtn from './_components/SignOutBtn';
 
 export default async function Home() {
