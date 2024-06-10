@@ -9,6 +9,7 @@ import {
 } from '~/components/ui/card';
 import { validateRequest } from '~/lib/auth';
 import SignInForm from './_components/SignInForm';
+import { Routes } from '~/routes';
 
 export default async function Page() {
   const { session, user } = await validateRequest();

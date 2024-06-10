@@ -1,112 +1,109 @@
-import { z } from 'zod';
 import {
-  type ReadonlyURLSearchParams,
   useParams as useNextParams,
   useSearchParams as useNextSearchParams,
 } from 'next/navigation';
-import queryString from 'query-string';
+import { z } from 'zod';
 
 type RouteBuilder<Params extends z.ZodSchema, Search extends z.ZodSchema> = {
-  (p?: z.input<Params>, options?: { search?: z.input<Search> }): string;
-  parse: (input: z.input<Params>) => z.output<Params>;
-  useParams: () => z.output<Params>;
-  useSearchParams: () => z.output<Search>;
-  params: z.output<Params>;
+  (
+    p?: z.input<Params>,
+    options?: { readonly search?: z.input<Search> },
+  ): string;
+  readonly useParams: () => z.output<Params>;
+  readonly useSearchParams: () => z.output<Search>;
+  readonly params: z.output<Params>;
 };
 
-const empty: z.ZodSchema = z.object({});
-
-function makeRoute<Params extends z.ZodSchema, Search extends z.ZodSchema>(
+export function makeRoute<
+  Params extends z.ZodSchema,
+  Search extends z.ZodSchema,
+>(
   fn: (p: z.input<Params>) => string,
-  paramsSchema: Params = empty as Params,
-  search: Search = empty as Search,
+  paramsSchema: Params = z.object({}) as unknown as Params,
+  search: Search = z.object({}) as unknown as Search,
 ): RouteBuilder<Params, Search> {
-  const routeBuilder: RouteBuilder<Params, Search> = (params, options) => {
-    const baseUrl = fn(params);
-    const searchString =
-      options?.search && queryString.stringify(options.search);
-    return [baseUrl, searchString ? `?${searchString}` : ''].join('');
-  };
-
-  routeBuilder.parse = function parse(args: z.input<Params>): z.output<Params> {
-    const res = paramsSchema.safeParse(args);
-    if (!res.success) {
-      const routeName =
-        Object.entries(Routes).find(
-          ([, route]) => route === routeBuilder,
-        )?.[0] ?? '(unknown route)';
-      throw new Error(
-        `Invalid route params for route ${routeName}: ${res.error.message}`,
+  const routeBuilder = Object.assign(
+    (
+      params?: z.input<Params>,
+      options?: { readonly search?: z.input<Search> },
+    ): string => {
+      const paramsValidationResult = paramsSchema.safeParse(params ?? {});
+      if (!paramsValidationResult.success) {
+        throw new Error(
+          `Invalid route params: ${paramsValidationResult.error.message}`,
+        );
+      }
+      const searchString = options?.search
+        ? new URLSearchParams(options.search)
+        : null;
+      const searchParamsValidationResult = search.safeParse(
+        convertURLSearchParamsToObject(searchString),
       );
-    }
-    return res.data;
-  };
+      if (!searchParamsValidationResult.success) {
+        throw new Error(
+          `Invalid search params: ${searchParamsValidationResult.error.message}`,
+        );
+      }
+      const baseUrl = fn(params);
 
-  routeBuilder.useParams = function useParams(): z.output<Params> {
-    const res = paramsSchema.safeParse(useNextParams());
-    if (!res.success) {
-      const routeName =
-        Object.entries(Routes).find(
-          ([, route]) => route === routeBuilder,
-        )?.[0] ?? '(unknown route)';
-      throw new Error(
-        `Invalid route params for route ${routeName}: ${res.error.message}`,
-      );
-    }
-    return res.data;
-  };
-
-  routeBuilder.useSearchParams = function useSearchParams(): z.output<Search> {
-    const res = search.safeParse(
-      convertURLSearchParamsToObject(useNextSearchParams()),
-    );
-    if (!res.success) {
-      const routeName =
-        Object.entries(Routes).find(
-          ([, route]) => route === routeBuilder,
-        )?.[0] ?? '(unknown route)';
-      throw new Error(
-        `Invalid search params for route ${routeName}: ${res.error.message}`,
-      );
-    }
-    return res.data;
-  };
-
-  // set the type
-  routeBuilder.params = undefined as z.output<Params>;
-  // set the runtime getter
-  Object.defineProperty(routeBuilder, 'params', {
-    get() {
-      throw new Error(
-        'Routes.[route].params is only for type usage, not runtime. Use it like `typeof Routes.[routes].params`',
+      return [baseUrl, searchString ? `?${searchString.toString()}` : ''].join(
+        '',
       );
     },
-  });
+    {
+      useParams: function useParams(): z.output<Params> {
+        const res = paramsSchema.safeParse(useNextParams());
+        if (!res.success) {
+          throw new Error(`Invalid route params: ${res.error.message}`);
+        }
+        return res.data;
+      },
+      useSearchParams: function useSearchParams(): z.output<Search> {
+        const res = search.safeParse(
+          convertURLSearchParamsToObject(useNextSearchParams()),
+        );
+        if (!res.success) {
+          throw new Error(`Invalid search params: ${res.error.message}`);
+        }
+        return res.data;
+      },
+      params: {
+        get() {
+          // Replace the throw statement with functional error handling if needed
+          console.warn(
+            'Routes.[route].params is only for type usage, not runtime.',
+          );
+          return undefined; // Or handle accordingly
+        },
+        enumerable: true,
+        configurable: false,
+      },
+    },
+  );
 
   return routeBuilder;
 }
 
 export function convertURLSearchParamsToObject(
-  params: ReadonlyURLSearchParams | null,
-): Record<string, string | string[]> {
+  params: URLSearchParams | null,
+): Record<string, string | readonly string[]> {
   if (!params) {
     return {};
   }
 
-  const obj: Record<string, string | string[]> = {};
+  const obj: Record<string, string | readonly string[]> = Array.from(
+    params.entries(),
+  ).reduce(
+    (accumulator, [key, value]) => {
+      const allValues = params.getAll(key);
+      // Return a new object instead of modifying the accumulator
+      return {
+        ...accumulator,
+        [key]: allValues.length > 1 ? allValues : value,
+      };
+    },
+    {} as Record<string, string | readonly string[]>,
+  );
 
-  for (const [key, value] of Array.from(params.entries())) {
-    if (params.getAll(key).length > 1) {
-      obj[key] = params.getAll(key);
-    } else {
-      obj[key] = value;
-    }
-  }
   return obj;
 }
-
-export default makeRoute;
-
-export const Routes = {
-  about: makeRoute(() => `/about`, z.object({}) /* no params */),
-};
