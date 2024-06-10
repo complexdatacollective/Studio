@@ -32,6 +32,7 @@ const config = {
     "*.test.*",
     "public",
     ".eslintrc.cjs",
+    "next.config.mjs",
   ],
   rules: {
     "@next/next/no-img-element": "off",
