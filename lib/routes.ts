@@ -11,6 +11,21 @@ export const { routes, useSafeParams, useSafeSearchParams } =
     home: defineRoute('/'),
     signIn: defineRoute('/signin'),
     signUp: defineRoute('/signup'),
+    interview: defineRoute('/interview/[interviewId]', {
+      params: z.object({
+        interviewId: z.string(),
+      }),
+    }),
+    interviewFinished: defineRoute('/interview/finished'),
+    onboardProtocolRoute: defineRoute('/onboard/[protocolId]', {
+      params: z.object({
+        protocolId: z.string(),
+      }),
+    }),
+    onboardError: defineRoute('/onboard/error'),
+    onboardNoAnonymousRecruitment: defineRoute(
+      '/onboard/no-anonymous-recruitment',
+    ),
     orgDashboard: defineRoute('/[org]', {
       params: z.object({
         org: z.string(),
