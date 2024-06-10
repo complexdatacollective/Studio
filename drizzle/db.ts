@@ -10,14 +10,12 @@ declare global {
 }
 
 let db: PostgresJsDatabase<typeof schema>;
-let pg: ReturnType<typeof postgres>;
+const pg: ReturnType<typeof postgres> = postgres(env.DATABASE_URL);
 
 if (env.NODE_ENV === 'production') {
-  pg = postgres(env.DATABASE_URL);
   db = drizzle(pg, { schema });
 } else {
   if (!global.db) {
-    pg = postgres(env.DATABASE_URL);
     global.db = drizzle(pg, { schema });
   }
   db = global.db;
