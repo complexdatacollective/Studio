@@ -32,7 +32,6 @@
     "postgres": "^3.4.4",
     "prettier": "^3.3.1",
     "prettier-plugin-tailwindcss": "^0.6.1",
-    "query-string": "^9.0.0",
     "react": "^18",
     "react-dom": "^18",
     "sharp": "^0.33.4",
