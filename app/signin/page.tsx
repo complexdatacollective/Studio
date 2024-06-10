@@ -9,13 +9,14 @@ import {
 } from '~/components/ui/card';
 import { validateRequest } from '~/lib/auth';
 import SignInForm from './_components/SignInForm';
+import { routes } from '~/lib/routes';
 
 export default async function Page() {
   const { session, user } = await validateRequest();
 
   if (session && user) {
     // If the user is already signed in, redirect to the home page
-    redirect('/');
+    redirect(routes.home());
   }
 
   return (
@@ -25,7 +26,7 @@ export default async function Page() {
           <CardTitle>Sign in to Studio</CardTitle>
           <CardDescription>
             Don&apos;t have an account?{' '}
-            <Link className="text-blue-400 underline" href={'/signup'}>
+            <Link className="text-blue-400 underline" href={routes.signUp()}>
               Sign Up
             </Link>
           </CardDescription>

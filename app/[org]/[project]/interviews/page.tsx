@@ -1,11 +1,14 @@
 import { getProjectBySlug } from '~/server/queries/projects';
+import { routes } from '~/lib/routes';
 
-export default async function InterviewsPage({
-  params,
-}: {
-  params: { org: string; project: string };
-}) {
-  const { project: projectSlug } = params;
+type InterviewsPageProps = {
+  // ✅ Never assume the types of your params before validation
+  params?: unknown;
+};
+
+export default async function InterviewsPage({ params }: InterviewsPageProps) {
+  const { project: projectSlug } =
+    routes.orgProjectProtocols.$parseParams(params);
 
   const project = await getProjectBySlug(projectSlug);
   if (!project) {

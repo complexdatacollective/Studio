@@ -9,13 +9,14 @@ import {
 import SignUpForm from './_components/SignUpForm';
 import { validateRequest } from '~/lib/auth';
 import { redirect } from 'next/navigation';
+import { routes } from '~/lib/routes';
 
 export default async function Page() {
   const { session, user } = await validateRequest();
 
   if (session && user) {
     // If the user is already signed in, redirect to the home page
-    redirect('/');
+    redirect(routes.home());
   }
 
   return (
@@ -25,7 +26,7 @@ export default async function Page() {
           <CardTitle>Create an account</CardTitle>
           <CardDescription>
             Already have an account?{' '}
-            <Link className="text-blue-400 underline" href={'/signin'}>
+            <Link className="text-blue-400 underline" href={routes.signIn()}>
               Sign In
             </Link>
           </CardDescription>

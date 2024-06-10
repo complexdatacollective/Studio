@@ -11,6 +11,7 @@ import {
   type UserType,
 } from '~/lib/db/schema';
 import { env } from '~/env';
+import { routes } from '../routes';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 
@@ -85,7 +86,7 @@ export async function requirePageAuth() {
   const { session, user } = await validateRequest();
 
   if (!session || !user) {
-    redirect('/signin', RedirectType.replace);
+    redirect(routes.signIn(), RedirectType.replace);
   }
 
   return { session, user };
