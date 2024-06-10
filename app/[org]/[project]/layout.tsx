@@ -1,21 +1,42 @@
 import Link from 'next/link';
+import { routes } from '~/lib/routes';
 
 type ProjectLayoutProps = {
   children: React.ReactNode;
-  params: { org: string; project: string };
+  // ✅ Never assume the types of your params before validation
+  params?: unknown;
 };
 
 const ProjectLayout = ({ children, params }: ProjectLayoutProps) => {
-  const { org: orgSlug, project: projectSlug } = params;
+  const { org, project } = routes.orgProject.$parseParams(params);
+
   return (
     <>
       <div className="flex flex-row space-x-4 border-b p-4 text-lg text-slate-600">
-        <Link href={`/${orgSlug}/${projectSlug}/participants`}>
-          Participants
-        </Link>
-        <Link href={`/${orgSlug}/${projectSlug}/interviews`}>Interviews</Link>
-        <Link href={`/${orgSlug}/${projectSlug}/protocols`}>Protocols</Link>
-        <Link href={`/${orgSlug}/${projectSlug}/settings`}>Settings</Link>
+        <div>
+          <Link href={routes.orgProjectParticipants({ org, project })}>
+            Participants
+          </Link>{' '}
+          &#x2794;
+        </div>
+        <div>
+          <Link href={routes.orgProjectInterviews({ org, project })}>
+            Interviews
+          </Link>{' '}
+          &#x2794;
+        </div>
+        <div>
+          <Link href={routes.orgProjectProtocols({ org, project })}>
+            Protocols
+          </Link>{' '}
+          &#x2794;
+        </div>
+        <div>
+          <Link href={routes.orgProjectSettings({ org, project })}>
+            Settings
+          </Link>{' '}
+          &#x2794;
+        </div>
       </div>
       {children}
     </>

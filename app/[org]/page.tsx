@@ -1,10 +1,17 @@
 import { getProjects } from '~/server/queries/projects';
 import CreateProjectForm from '~/app/[org]/_components/CreateProjectForm';
 import ProjectCard from './_components/ProjectCard';
+import { routes } from '~/lib/routes';
 
-export default async function OrgPage({ params }: { params: { org: string } }) {
-  const { org } = params;
+type OrgPageProps = {
+  // ✅ Never assume the types of your params before validation
+  params?: unknown;
+};
+
+export default async function OrgPage({ params }: OrgPageProps) {
+  const { org } = routes.orgDashboard.$parseParams(params);
   const allProjects = await getProjects(org);
+
   return (
     <div className="flex flex-col p-12">
       <h1 className="pb-4 text-4xl">Organization Page</h1>

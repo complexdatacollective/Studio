@@ -1,11 +1,14 @@
 import { getProjectBySlug } from '~/server/queries/projects';
+import { routes } from '~/lib/routes';
 
-export default async function ProtocolsPage({
-  params,
-}: {
-  params: { org: string; project: string };
-}) {
-  const { project: projectSlug } = params;
+type ProtocolsPageProps = {
+  // ✅ Never assume the types of your params before validation
+  params?: unknown;
+};
+
+export default async function ProtocolsPage({ params }: ProtocolsPageProps) {
+  const { project: projectSlug } =
+    routes.orgProjectProtocols.$parseParams(params);
 
   const project = await getProjectBySlug(projectSlug);
   if (!project) {
@@ -15,7 +18,7 @@ export default async function ProtocolsPage({
 
   return (
     <div className="flex flex-col p-12">
-      <div className="text-4xl">{project.name} Protocols Page </div>
+      <div className="text-4xl">{project.name} Protocols </div>
       <div>slug: {projectSlug}</div>
     </div>
   );
