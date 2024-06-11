@@ -2,7 +2,7 @@ import 'server-only';
 import { eq } from 'drizzle-orm';
 import { db } from '~/lib/db';
 import { organizations } from '~/lib/db/schema';
-import { createCachedFunction } from '~/lib/safeCacheTags';
+import { createCachedFunction } from '~/lib/cache';
 
 /*
 Right now, this is only used in other actions and the organization is not returned to the user.

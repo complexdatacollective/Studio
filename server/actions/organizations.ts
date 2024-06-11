@@ -1,6 +1,6 @@
 'use server';
 
-import { safeRevalidateTag } from '~/lib/safeCacheTags';
+import { safeRevalidateTag } from '~/lib/cache';
 import { db } from '~/lib/db';
 import { organizations } from '~/lib/db/schema';
 

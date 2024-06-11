@@ -3,7 +3,7 @@ import 'server-only';
 import { eq } from 'drizzle-orm';
 import { getOrgBySlug } from '~/server/queries/organizations';
 import { projects } from '~/lib/db/schema';
-import { createCachedFunction } from '~/lib/safeCacheTags';
+import { createCachedFunction } from '~/lib/cache';
 
 export const getProjectBySlug = (slug: string) =>
   createCachedFunction(async () => {
