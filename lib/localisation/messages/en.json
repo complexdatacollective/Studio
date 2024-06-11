@@ -1,5 +1,79 @@
 {
   "Home": {
-    "title": "Hello world!"
+    "title": "Studio MVP",
+    "allOrganizationsHeading": "All Organizations"
+  },
+  "SignIn": {
+    "cardTitle": "Sign in to Studio",
+    "cardDescription": "Don't have an account?",
+    "linkText": "Sign up"
+  },
+  "SignUp": {
+    "cardTitle": "Create an account",
+    "cardDescription": "Already have an account?",
+    "linkText": "Sign In"
+  },
+  "AuthForm": {
+    "usernameInput": "Username",
+    "passwordInput": "Password",
+    "formButton": "Continue"
+  },
+  "CreateOrgForm": {
+    "formTitle": "Create Organization",
+    "orgNameInputLabel": "Organization Name",
+    "orgNameInputPlaceholder": "Northwestern",
+    "formButton": "Create Org"
+  },
+  "SignOutBtn": {
+    "buttonLabel": "Sign Out"
+  },
+  "OrgPage": {
+    "title": "Organization Page",
+    "noProjectFoundMessage": "No projects found"
+  },
+  "CreateProjectForm": {
+    "formTitle": "Create Project",
+    "projectNameInputLabel": "Project Name",
+    "projectNameInputPlaceholder": "Studio",
+    "formButton": "Create Project"
+  },
+  "TopNavigation": {
+    "studioLink": "Studio",
+    "orgDashboardLink": "Org Dashboard",
+    "orgSettingsLink": "Org Settings"
+  },
+  "SecondaryNavigation": {
+    "projectParticipantsLink": "Participants",
+    "projectInterviewsLink": "Interviews",
+    "projectProtocolsLink": "Protocols",
+    "projectSettingsLink": "Settings"
+  },
+  "OrgSettingPage": {
+    "title": "Organization Settings Page",
+    "description": "slug:"
+  },
+  "ProjectPage": {
+    "title": "Project Page",
+    "description": "slug:",
+    "noProjectFoundMessage": "Project not found"
+  },
+  "ProjectCard": {
+    "subText": "Subtext about the project"
+  },
+  "ProjectSettingsPage": {
+    "title": "Settings Page",
+    "description": "slug:"
+  },
+  "ProjectProtocolsPage": {
+    "title": "Protocols Page",
+    "description": "slug:"
+  },
+  "ProjectInterviewsPage": {
+    "title": "Interviews Page",
+    "description": "slug:"
+  },
+  "ProjectParticipantsPage": {
+    "title": "Participants Page",
+    "description": "slug:"
   }
 }

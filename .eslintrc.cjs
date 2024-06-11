@@ -53,6 +53,24 @@ const config = {
       },
     ],
     'no-unreachable': 'error',
+    // Consistently import navigation APIs from `~/lib/localisation/navigation`
+    'no-restricted-imports': [
+      'error',
+      {
+        name: 'next/link',
+        message: 'Please import from `~/lib/localisation/navigation` instead.',
+      },
+      {
+        name: 'next/navigation',
+        importNames: [
+          'redirect',
+          'permanentRedirect',
+          'useRouter',
+          'usePathname',
+        ],
+        message: 'Please import from `~/lib/localisation/navigation` instead.',
+      },
+    ],
   },
 };
 

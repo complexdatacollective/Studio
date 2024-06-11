@@ -5,10 +5,12 @@ import { signup } from '~/server/actions/auth';
 import { Button } from '~/components/ui/Button';
 import { Input } from '~/components/ui/form/Input';
 import { Label } from '~/components/ui/form/Label';
+import { useTranslations } from 'next-intl';
 
 const SignUpForm = () => {
   const initialState = { error: null, success: false };
   const [formState, formAction] = useFormState(signup, initialState);
+  const t = useTranslations('AuthForm');
 
   return (
     <form action={formAction}>
@@ -19,21 +21,25 @@ const SignUpForm = () => {
       )}
 
       <div className="flex flex-col gap-3 p-2">
-        <Label htmlFor="username">Username</Label>
-        <Input name="username" id="username" placeholder="username..." />
+        <Label htmlFor="username">{t('usernameInput')}</Label>
+        <Input
+          name="username"
+          id="username"
+          placeholder={t('usernameInput').toLowerCase()}
+        />
       </div>
       <br />
       <div className="flex flex-col gap-3 p-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">{t('passwordInput')}</Label>
         <Input
           type="password"
           name="password"
           id="password"
-          placeholder="password..."
+          placeholder={t('passwordInput').toLowerCase()}
         />
       </div>
       <br />
-      <Button>Continue</Button>
+      <Button>{t('formButton')}</Button>
     </form>
   );
 };

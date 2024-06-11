@@ -9,9 +9,11 @@ import SignUpForm from './_components/SignUpForm';
 import { validateRequest } from '~/lib/auth';
 import { routes } from '~/lib/routes';
 import { Link, redirect } from '~/lib/localisation/navigation';
+import { getTranslations } from 'next-intl/server';
 
 export default async function Page() {
   const { session, user } = await validateRequest();
+  const t = await getTranslations('SignUp');
 
   if (session && user) {
     // If the user is already signed in, redirect to the home page
@@ -22,11 +24,11 @@ export default async function Page() {
     <div className="grid h-[100vh] w-full items-center justify-center gap-1.5">
       <Card className="m-3 w-[28rem]">
         <CardHeader>
-          <CardTitle>Create an account</CardTitle>
+          <CardTitle>{t('cardTitle')}</CardTitle>
           <CardDescription>
-            Already have an account?{' '}
+            {t('cardDescription')}{' '}
             <Link className="text-blue-400 underline" href={routes.signIn()}>
-              Sign In
+              {t('linkText')}
             </Link>
           </CardDescription>
         </CardHeader>

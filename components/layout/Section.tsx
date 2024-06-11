@@ -1,5 +1,5 @@
 import { cn } from '~/lib/utils';
-import { cardClasses } from '../ui/Card';
+import { cardClasses } from '~/components/ui/Card';
 
 const Section = ({
   children,

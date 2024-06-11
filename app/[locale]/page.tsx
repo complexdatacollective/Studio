@@ -8,16 +8,14 @@ import { Link } from '~/lib/localisation/navigation';
 
 export default async function Home() {
   await requirePageAuth();
-
   const t = await getTranslations('Home');
 
   const allOrgs = await getOrganizations();
   return (
     <main className="flex flex-col p-12">
-      <h1 className="pb-4 text-4xl">Studio MVP</h1>
-      <h1>{t('title')}</h1>
+      <h1 className="pb-4 text-4xl">{t('title')}</h1>
       <CreateOrgForm />
-      <h2 className="pb-4 text-2xl">All Organizations</h2>
+      <h2 className="pb-4 text-2xl">{t('allOrganizationsHeading')}</h2>
       <div className="flex flex-col text-blue-700 underline">
         {allOrgs.map((org) => (
           <Link
