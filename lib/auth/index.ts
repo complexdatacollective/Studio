@@ -11,7 +11,7 @@ import {
   type UserType,
 } from '~/lib/db/schema';
 import { env } from '~/env';
-import { routes } from '../routes';
+import { routes } from '~/lib/routes';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 
@@ -33,9 +33,7 @@ export const lucia = new Lucia(adapter, {
   },
 });
 
-// IMPORTANT!
 declare module 'lucia' {
-  // Todo: figure out how to fix linting here
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Register {
     Lucia: typeof lucia;
