@@ -1,4 +1,11 @@
-import { bigserial, date, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import {
+  bigserial,
+  boolean,
+  date,
+  pgTable,
+  text,
+  timestamp,
+} from 'drizzle-orm/pg-core';
 import { generatePublicId } from '~/lib/generatePublicId';
 
 export const organizations = pgTable('organizations', {
@@ -19,6 +26,9 @@ export const projects = pgTable('projects', {
       onDelete: 'cascade',
     },
   ),
+  allowAnonymousRecruitment: boolean('allow_anonymous_recruitment')
+    .notNull()
+    .default(false),
 });
 
 export const protocols = pgTable('protocols', {

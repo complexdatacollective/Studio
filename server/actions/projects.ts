@@ -4,6 +4,7 @@ import { db } from '~/lib/db';
 import { projects } from '~/lib/db/schema';
 import { getOrgBySlug } from '~/server/queries/organizations';
 import { safeRevalidateTag } from '~/lib/cache';
+import { eq } from 'drizzle-orm';
 
 export async function createProject(formData: FormData) {
   const name = formData.get('projectName') as string;
@@ -29,4 +30,24 @@ export async function createProject(formData: FormData) {
   });
 
   safeRevalidateTag('getProjects');
+}
+
+export async function setAnonymousRecruitment(
+  projectSlug: string,
+  input: boolean,
+) {
+  try {
+    await db
+      .update(projects)
+      .set({ allowAnonymousRecruitment: input })
+      .where(eq(projects.slug, projectSlug));
+
+    safeRevalidateTag('getProjects');
+    safeRevalidateTag(`getAnonymousRecruitmentStatus-${projectSlug}`);
+    return true;
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Unable to update project anonymous recruitment status', e);
+    return false;
+  }
 }

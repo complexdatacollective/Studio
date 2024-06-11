@@ -62,7 +62,10 @@
   },
   "ProjectSettingsPage": {
     "title": "Settings Page",
-    "description": "slug:"
+    "description": "slug:",
+    "anonymousRecruitmentLabel": "Allow Anonymous Recruitment",
+    "anonymousRecruitmentEnabled": "Enabled. Rendered separately from switch.",
+    "anonymousRecruitmentDisabled": "Disabled. Rendered separately from switch."
   },
   "ProjectProtocolsPage": {
     "title": "Protocols Page",

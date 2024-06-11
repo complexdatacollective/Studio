@@ -29,3 +29,9 @@ export const getProjects = (orgSlug: string) =>
       },
     });
   }, [`getProjects-${orgSlug}`, 'getProjects'])();
+
+export const getAnonymousRecruitmentStatus = (projectSlug: string) =>
+  createCachedFunction(async () => {
+    const project = await getProjectBySlug(projectSlug);
+    return !!project?.allowAnonymousRecruitment;
+  }, [`getAnonymousRecruitmentStatus-${projectSlug}`])();
