@@ -1,5 +1,5 @@
 import { createOrganization } from '~/server/actions/organizations';
-import Button from '~/components/Button';
+import { Button } from '~/components/ui/button';
 
 export default function CreateOrgForm() {
   return (
