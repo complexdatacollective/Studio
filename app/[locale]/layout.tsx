@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import LanguageSwitcher from '../_components/LanguageSwitcher';
 
 export default async function LocaleLayout({
   children,
@@ -16,6 +17,9 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
+          <div className="m-2">
+            <LanguageSwitcher />
+          </div>
           {children}
         </NextIntlClientProvider>
       </body>

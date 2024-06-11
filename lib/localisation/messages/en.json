@@ -75,5 +75,9 @@
   "ProjectParticipantsPage": {
     "title": "Participants Page",
     "description": "slug:"
+  },
+  "LanguageSwitcher": {
+    "en": "English",
+    "es": "Español"
   }
 }
