@@ -2,6 +2,7 @@ import { getProjects } from '~/server/queries/projects';
 import CreateProjectForm from '~/app/[locale]/[org]/_components/CreateProjectForm';
 import ProjectCard from './_components/ProjectCard';
 import { routes } from '~/lib/routes';
+import Section from '~/components/layout/Section';
 import { getTranslations } from 'next-intl/server';
 
 type OrgPageProps = {
@@ -17,7 +18,7 @@ export default async function OrgPage({ params }: OrgPageProps) {
   return (
     <div className="flex flex-col p-12">
       <h1 className="pb-4 text-4xl">{t('title')}</h1>
-      <div className="grid grid-cols-4 space-x-4">
+      <Section>
         {allProjects
           ? allProjects.map((project) => (
               <ProjectCard
@@ -27,7 +28,7 @@ export default async function OrgPage({ params }: OrgPageProps) {
               />
             ))
           : t('noProjectFoundMessage')}
-      </div>
+      </Section>
       <CreateProjectForm orgSlug={org} />
     </div>
   );

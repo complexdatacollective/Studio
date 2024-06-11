@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { signout } from '~/server/actions/auth';
-import { Button } from '~/components/ui/button';
+import { Button } from '~/components/ui/Button';
 import { useTranslations } from 'next-intl';
 
 const SignOutBtn = () => {

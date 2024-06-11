@@ -1,7 +1,7 @@
 'use client';
 
 import { createProject } from '~/server/actions/projects';
-import Button from '~/components/Button';
+import { Button } from '~/components/ui/Button';
 import { useTranslations } from 'next-intl';
 
 export default function CreateProjectForm({ orgSlug }: { orgSlug: string }) {

@@ -4,7 +4,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '~/components/ui/card';
+} from '~/components/ui/Card';
 import SignUpForm from './_components/SignUpForm';
 import { validateRequest } from '~/lib/auth';
 import { routes } from '~/lib/routes';
