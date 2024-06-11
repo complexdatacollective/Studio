@@ -14,9 +14,12 @@ const meta = {
   tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    size: { control: 'radio', options: ['default', 'sm', 'lg', 'icon'] },
+    size: {
+      control: 'select',
+      options: Object.keys(buttonVariants.variants.size),
+    },
     variant: {
-      control: 'radio',
+      control: 'select',
       options: Object.keys(buttonVariants.variants.variant),
     },
     children: { control: 'text', defaultValue: 'Button' },
