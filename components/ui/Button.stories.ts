@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { Button } from './button';
+import { Button, buttonVariants } from './Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -17,14 +17,7 @@ const meta = {
     size: { control: 'radio', options: ['default', 'sm', 'lg', 'icon'] },
     variant: {
       control: 'radio',
-      options: [
-        'default',
-        'destructive',
-        'outline',
-        'secondary',
-        'ghost',
-        'link',
-      ],
+      options: Object.keys(buttonVariants.variants.variant),
     },
     children: { control: 'text', defaultValue: 'Button' },
   },

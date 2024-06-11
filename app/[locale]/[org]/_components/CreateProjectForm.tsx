@@ -1,7 +1,7 @@
 'use client';
 
 import { createProject } from '~/server/actions/projects';
-import { Button } from '~/components/ui/button';
+import { Button } from '~/components/ui/Button';
 
 export default function CreateProjectForm({ orgSlug }: { orgSlug: string }) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
