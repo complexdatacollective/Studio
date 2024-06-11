@@ -41,7 +41,7 @@ const buttonVariants = tv({
   ],
 });
 
-export type ButtonProps = {
+type ButtonProps = {
   variant?: VariantProps<typeof buttonVariants>['variant'];
   size?: VariantProps<typeof buttonVariants>['size'];
   asChild?: boolean;
@@ -61,13 +61,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = 'Button';
 
-const ButtonSkeleton = (props: ButtonProps) => {
-  const classes = cn(
-    buttonVariants({ variant: props.variant, size: props.size }),
-    props.className,
-  );
-
-  return <Skeleton className={classes} />;
-};
-
-export { Button, ButtonSkeleton, buttonVariants };
+export { Button, buttonVariants };
