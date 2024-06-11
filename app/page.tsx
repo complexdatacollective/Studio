@@ -1,5 +1,5 @@
 import { getOrganizations } from '~/server/queries/organizations';
-import CreateOrgForm from '~/app/[org]/_components/CreateOrgForm';
+import CreateOrgForm from '~/app/[...locale]/[org]/_components/CreateOrgForm';
 import { requirePageAuth } from '~/lib/auth';
 import SignOutBtn from './_components/SignOutBtn';
 import Link from 'next/link';
