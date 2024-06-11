@@ -37,6 +37,9 @@ export async function setAnonymousRecruitment(
   input: boolean,
 ) {
   try {
+    // Simulate a delay to test optimistic UI
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     await db
       .update(projects)
       .set({ allowAnonymousRecruitment: input })
@@ -50,4 +53,15 @@ export async function setAnonymousRecruitment(
     console.error('Unable to update project anonymous recruitment status', e);
     return false;
   }
+}
+
+export async function getAnonymousRecruitmentStatus(projectSlug: string) {
+  const project = await db.query.projects.findFirst({
+    where: eq(projects.slug, projectSlug),
+    columns: {
+      allowAnonymousRecruitment: true,
+    },
+  });
+
+  return !!project?.allowAnonymousRecruitment;
 }

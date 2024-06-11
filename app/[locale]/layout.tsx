@@ -5,6 +5,7 @@ import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
+import TanstackQueryClient from '~/components/TanstackQueryProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,12 +28,14 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
+        <TanstackQueryClient>
         <NextIntlClientProvider messages={messages}>
           <div className="m-2">
             <LanguageSwitcher />
           </div>
           <ResponsiveContainer>{children}</ResponsiveContainer>
         </NextIntlClientProvider>
+        </TanstackQueryClient>
       </body>
     </html>
   );

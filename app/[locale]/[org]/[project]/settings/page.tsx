@@ -1,9 +1,13 @@
 import { getProjectBySlug } from '~/server/queries/projects';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
-import AllowAnonymousRecruitmentSwitch from './_components/AllowAnonymousRecruitmentSwitch';
-import { Card, CardDescription, CardTitle } from '~/components/ui/Card';
 import { getAnonymousRecruitmentStatus } from '~/server/queries/projects';
+import AnonymousRecruitmentCard from './_components/AnonymousRecruitmentCard';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
 type ProjectSettingsPageProps = {
   // ✅ Never assume the types of your params before validation
@@ -24,8 +28,12 @@ export default async function ProjectSettingsPage({
     // todo: redirect to 404 page
   }
 
-  const allowAnonymousRecruitment =
-    await getAnonymousRecruitmentStatus(projectSlug);
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['allowAnonymousRecruitment', projectSlug],
+    queryFn: getAnonymousRecruitmentStatus.bind(null, projectSlug),
+  });
 
   return (
     <div className="flex flex-col space-y-2 p-12">
@@ -35,17 +43,9 @@ export default async function ProjectSettingsPage({
       <div>
         {t('description')} {projectSlug}
       </div>
-      <Card className="flex w-1/3 flex-row items-center justify-between p-6">
-        <div className="flex flex-col">
-          <CardTitle>{t('anonymousRecruitmentLabel')}</CardTitle>
-          <CardDescription>
-            {allowAnonymousRecruitment
-              ? t('anonymousRecruitmentEnabled')
-              : t('anonymousRecruitmentDisabled')}
-          </CardDescription>
-        </div>
-        <AllowAnonymousRecruitmentSwitch projectSlug={projectSlug} />
-      </Card>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <AnonymousRecruitmentCard projectSlug={projectSlug} />
+      </HydrationBoundary>
     </div>
   );
 }
