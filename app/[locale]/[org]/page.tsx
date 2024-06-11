@@ -21,7 +21,7 @@ export default async function OrgPage({ params }: OrgPageProps) {
               <ProjectCard
                 key={project.public_id}
                 project={project}
-                href={`/${org}/${project.slug}`}
+                href={routes.orgProject({ org, project: project.slug })}
               />
             ))
           : 'No projects found'}

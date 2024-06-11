@@ -9,59 +9,59 @@ import { z } from 'zod';
 // Todo: add back the useSafeParams and useSafeSearchParams exports below as needed
 // deleting them temporarily because of knip errors
 export const { routes } = createNavigationConfig((defineRoute) => ({
-  home: defineRoute('/'),
-  signIn: defineRoute('/signin'),
-  signUp: defineRoute('/signup'),
-  interview: defineRoute('/interview/[interviewId]', {
+  home: defineRoute('/en'),
+  signIn: defineRoute('/en/signin'),
+  signUp: defineRoute('/en/signup'),
+  interview: defineRoute('/en/interview/[interviewId]', {
     params: z.object({
       interviewId: z.string(),
     }),
   }),
-  interviewFinished: defineRoute('/interview/finished'),
-  onboardProtocolRoute: defineRoute('/onboard/[protocolId]', {
+  interviewFinished: defineRoute('/en/interview/finished'),
+  onboardProtocolRoute: defineRoute('/en/onboard/[protocolId]', {
     params: z.object({
       protocolId: z.string(),
     }),
   }),
-  onboardError: defineRoute('/onboard/error'),
+  onboardError: defineRoute('/en/onboard/error'),
   onboardNoAnonymousRecruitment: defineRoute(
-    '/onboard/no-anonymous-recruitment',
+    '/en/onboard/no-anonymous-recruitment',
   ),
-  orgDashboard: defineRoute('/[org]', {
+  orgDashboard: defineRoute('/en/[org]', {
     params: z.object({
       org: z.string(),
     }),
   }),
-  orgSettings: defineRoute('/[org]/settings', {
+  orgSettings: defineRoute('/en/[org]/settings', {
     params: z.object({
       org: z.string(),
     }),
   }),
-  orgProject: defineRoute('/[org]/[project]', {
-    params: z.object({
-      org: z.string(),
-      project: z.string(),
-    }),
-  }),
-  orgProjectParticipants: defineRoute('/[org]/[project]/participants', {
+  orgProject: defineRoute('/en/[org]/[project]', {
     params: z.object({
       org: z.string(),
       project: z.string(),
     }),
   }),
-  orgProjectInterviews: defineRoute('/[org]/[project]/interviews', {
+  orgProjectParticipants: defineRoute('/en/[org]/[project]/participants', {
     params: z.object({
       org: z.string(),
       project: z.string(),
     }),
   }),
-  orgProjectProtocols: defineRoute('/[org]/[project]/protocols', {
+  orgProjectInterviews: defineRoute('/en/[org]/[project]/interviews', {
     params: z.object({
       org: z.string(),
       project: z.string(),
     }),
   }),
-  orgProjectSettings: defineRoute('/[org]/[project]/settings', {
+  orgProjectProtocols: defineRoute('/en/[org]/[project]/protocols', {
+    params: z.object({
+      org: z.string(),
+      project: z.string(),
+    }),
+  }),
+  orgProjectSettings: defineRoute('/en/[org]/[project]/settings', {
     params: z.object({
       org: z.string(),
       project: z.string(),
