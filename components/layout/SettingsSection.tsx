@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react';
 import { cn } from '~/lib/utils';
-import { Skeleton } from '../ui/skeleton';
-import Heading from '../ui/typography/Heading';
-import Section from './Section';
+import { Skeleton } from '~/components/ui/Skeleton';
+import Heading from '~/components/typography/Heading';
+import Section from '~/components/layout/Section';
 
 export default function SettingsSection({
   heading,

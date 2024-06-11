@@ -1,6 +1,6 @@
 import { type VariantProps, tv } from 'tailwind-variants';
 import type { HTMLAttributes } from 'react';
-import { cn } from '~/utils/shadcn';
+import { cn } from '~/lib/utils';
 
 const containerVariants = tv({
   base: 'mx-auto flex flex-col my-6 md:my-10 ',
