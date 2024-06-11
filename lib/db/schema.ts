@@ -1,16 +1,15 @@
 import { bigserial, date, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
-import { generatePublicId } from '~/lib/generatePublicId';
 
 export const organizations = pgTable('organizations', {
   id: bigserial('id', { mode: 'number' }).primaryKey(),
-  public_id: text('public_id').default(generatePublicId()),
+  public_id: text('public_id').notNull().unique(),
   name: text('name').notNull(),
   slug: text('slug').notNull().unique(),
 });
 
 export const projects = pgTable('projects', {
   id: bigserial('id', { mode: 'number' }).primaryKey(),
-  public_id: text('public_id').default(generatePublicId()),
+  public_id: text('public_id').notNull().unique(),
   name: text('name').notNull(),
   slug: text('slug').notNull().unique(),
   organizationId: bigserial('organization_id', { mode: 'number' }).references(
@@ -23,7 +22,7 @@ export const projects = pgTable('projects', {
 
 export const protocols = pgTable('protocols', {
   id: bigserial('id', { mode: 'number' }).primaryKey(),
-  public_id: text('public_id').default(generatePublicId()),
+  public_id: text('public_id').notNull().unique(),
   description: text('description'),
   lastModified: date('last_modified').notNull(),
   projectId: bigserial('project_id', { mode: 'number' }).references(

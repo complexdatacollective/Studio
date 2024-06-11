@@ -4,6 +4,7 @@ import { db } from '~/lib/db';
 import { projects } from '~/lib/db/schema';
 import { getOrgBySlug } from '~/server/queries/organizations';
 import { safeRevalidateTag } from '~/lib/cache';
+import { generatePublicId } from '~/lib/generatePublicId';
 
 export async function createProject(formData: FormData) {
   const name = formData.get('projectName') as string;
@@ -24,6 +25,7 @@ export async function createProject(formData: FormData) {
 
   await db.insert(projects).values({
     name,
+    public_id: generatePublicId(),
     slug: name.toLowerCase().replace(/\s+/g, '-'),
     organizationId: organization.id,
   });
