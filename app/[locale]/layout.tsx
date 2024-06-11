@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { Inter } from 'next/font/google';
 import { getMessages } from 'next-intl/server';
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 
