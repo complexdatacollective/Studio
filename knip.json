@@ -4,6 +4,7 @@
   "ignore": [
     "./lib/db/drizzle.config.ts",
     "./lib/localisation/i18n.ts",
+    "./lib/localisation/navigation.ts",
     "./lib/utils.ts"
   ]
 }
