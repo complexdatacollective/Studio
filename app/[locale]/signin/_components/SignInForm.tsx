@@ -2,9 +2,9 @@
 
 import { useFormState } from 'react-dom';
 import { signin } from '~/server/actions/auth';
-import { Button } from '~/components/ui/button';
-import { Input } from '~/components/ui/input';
-import { Label } from '~/components/ui/label';
+import { Button } from '~/components/ui/Button';
+import { Input } from '~/components/ui/form/Input';
+import { Label } from '~/components/ui/form/Label';
 import { useTranslations } from 'next-intl';
 
 const SignInForm = () => {

@@ -1,5 +1,5 @@
 import { createOrganization } from '~/server/actions/organizations';
-import Button from '~/components/Button';
+import { Button } from '~/components/ui/Button';
 import { getTranslations } from 'next-intl/server';
 
 export default async function CreateOrgForm() {
