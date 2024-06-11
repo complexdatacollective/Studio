@@ -1,5 +1,9 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreDependencies": ["sharp", "server-only"],
-  "ignore": ["./lib/db/drizzle.config.ts"]
+  "ignore": [
+    "./lib/db/drizzle.config.ts",
+    "./lib/localisation/i18n.ts",
+    "./lib/utils.ts"
+  ]
 }

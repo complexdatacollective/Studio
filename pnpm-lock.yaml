@@ -93,6 +93,9 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2(zod@3.23.8)
     devDependencies:
+      '@total-typescript/ts-reset':
+        specifier: ^0.5.1
+        version: 0.5.1
       '@types/node':
         specifier: ^20
         version: 20.14.2
@@ -1049,6 +1052,9 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  '@total-typescript/ts-reset@0.5.1':
+    resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}
 
   '@tybys/wasm-util@0.8.3':
     resolution: {integrity: sha512-Z96T/L6dUFFxgFJ+pQtkPpne9q7i6kIPYCFnQBHSgSPV9idTsKfIhCss0h5iM9irweZCatkrdeP8yi5uM1eX6Q==}
@@ -3597,6 +3603,8 @@ snapshots:
       zod: 3.23.8
     optionalDependencies:
       typescript: 5.4.5
+
+  '@total-typescript/ts-reset@0.5.1': {}
 
   '@tybys/wasm-util@0.8.3':
     dependencies:
