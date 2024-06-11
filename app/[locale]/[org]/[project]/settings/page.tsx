@@ -2,7 +2,7 @@ import { getProjectBySlug } from '~/server/queries/projects';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import AllowAnonymousRecruitmentSwitch from './_components/AllowAnonymousRecruitmentSwitch';
-import { Card, CardDescription, CardTitle } from '~/components/ui/card';
+import { Card, CardDescription, CardTitle } from '~/components/ui/Card';
 import { getAnonymousRecruitmentStatus } from '~/server/queries/projects';
 
 type ProjectSettingsPageProps = {
