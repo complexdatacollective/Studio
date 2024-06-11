@@ -1,12 +1,8 @@
 import 'server-only';
 import { eq } from 'drizzle-orm';
 import { db } from '~/lib/db';
-import {
-  type Organization,
-  type PublicOrganization,
-  organizations,
-} from '~/lib/db/schema';
-import { safeUnstableCache } from '~/lib/safeCacheTags';
+import { organizations } from '~/lib/db/schema';
+import { createCachedFunction } from '~/lib/safeCacheTags';
 
 /*
 Right now, this is only used in other actions and the organization is not returned to the user.
@@ -15,29 +11,17 @@ Need to think about a better way to handle and check for this.
 */
 
 export const getOrgBySlug = (slug: string) =>
-  safeUnstableCache<Organization>(
-    async () => {
-      return await db.query.organizations.findFirst({
-        where: eq(organizations.slug, slug),
-      });
-    },
-    [`getOrgBySlug-${slug}`],
-    {
-      tags: [`getOrgBySlug-${slug}`, 'getOrgBySlug'],
-    },
-  )();
+  createCachedFunction(async () => {
+    return await db.query.organizations.findFirst({
+      where: eq(organizations.slug, slug),
+    });
+  }, [`getOrgBySlug-${slug}`, 'getOrgBySlug'])();
 
 export const getOrganizations = () =>
-  safeUnstableCache<PublicOrganization[]>(
-    async () => {
-      return await db.query.organizations.findMany({
-        columns: {
-          id: false,
-        },
-      });
-    },
-    ['getOrganizations'],
-    {
-      tags: ['getOrganizations'],
-    },
-  )();
+  createCachedFunction(async () => {
+    return await db.query.organizations.findMany({
+      columns: {
+        id: false,
+      },
+    });
+  }, ['getOrganizations'])();
