@@ -3,7 +3,7 @@
 import { db } from '~/lib/db';
 import { projects } from '~/lib/db/schema';
 import { getOrgBySlug } from '~/server/queries/organizations';
-import { safeRevalidateTag } from '~/lib/safeCacheTags';
+import { safeRevalidateTag } from '~/lib/cache';
 
 export async function createProject(formData: FormData) {
   const name = formData.get('projectName') as string;
