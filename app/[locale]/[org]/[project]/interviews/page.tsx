@@ -1,5 +1,6 @@
 import { getProjectBySlug } from '~/server/queries/projects';
 import { routes } from '~/lib/routes';
+import { getTranslations } from 'next-intl/server';
 
 type InterviewsPageProps = {
   // ✅ Never assume the types of your params before validation
@@ -10,6 +11,8 @@ export default async function InterviewsPage({ params }: InterviewsPageProps) {
   const { project: projectSlug } =
     routes.orgProjectProtocols.$parseParams(params);
 
+  const t = await getTranslations('ProjectInterviewsPage');
+
   const project = await getProjectBySlug(projectSlug);
   if (!project) {
     return <div>Project not found</div>;
@@ -18,8 +21,12 @@ export default async function InterviewsPage({ params }: InterviewsPageProps) {
 
   return (
     <div className="flex flex-col p-12">
-      <div className="text-4xl">{project.name} Interviews </div>
-      <div>slug: {projectSlug}</div>
+      <div className="text-4xl">
+        {project.name} {t('title')}{' '}
+      </div>
+      <div>
+        {t('description')} {projectSlug}
+      </div>
     </div>
   );
 }
