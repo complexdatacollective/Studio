@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { type PublicProject } from '~/lib/db/schema';
+import { Link } from '~/lib/localisation/navigation';
 
 export default function ProjectCard({
   project,

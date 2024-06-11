@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '~/lib/localisation/navigation';
 import { routes } from '~/lib/routes';
 
 type ProjectLayoutProps = {

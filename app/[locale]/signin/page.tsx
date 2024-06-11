@@ -1,5 +1,3 @@
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import {
   Card,
   CardContent,
@@ -10,6 +8,7 @@ import {
 import { validateRequest } from '~/lib/auth';
 import SignInForm from './_components/SignInForm';
 import { routes } from '~/lib/routes';
+import { Link, redirect } from '~/lib/localisation/navigation';
 
 export default async function Page() {
   const { session, user } = await validateRequest();

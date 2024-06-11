@@ -2,7 +2,6 @@ import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
 import type { Session, User } from 'lucia';
 import { Lucia } from 'lucia';
 import { cookies } from 'next/headers';
-import { redirect, RedirectType } from 'next/navigation';
 import { cache } from 'react';
 import { db } from '~/lib/db';
 import {
@@ -12,6 +11,8 @@ import {
 } from '~/lib/db/schema';
 import { env } from '~/env';
 import { routes } from '../routes';
+import { redirect } from '~/lib/localisation/navigation';
+import { RedirectType } from 'next/navigation';
 
 const adapter = new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 

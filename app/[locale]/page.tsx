@@ -2,9 +2,9 @@ import { getOrganizations } from '~/server/queries/organizations';
 import CreateOrgForm from '~/app/[locale]/[org]/_components/CreateOrgForm';
 import { requirePageAuth } from '~/lib/auth';
 import SignOutBtn from '../_components/SignOutBtn';
-import Link from 'next/link';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
+import { Link } from '~/lib/localisation/navigation';
 
 export default async function Home() {
   await requirePageAuth();
