@@ -1,5 +1,5 @@
 import { getProjects } from '~/server/queries/projects';
-import CreateProjectForm from '~/app/[...locale]/[org]/_components/CreateProjectForm';
+import CreateProjectForm from '~/app/[locale]/[org]/_components/CreateProjectForm';
 import ProjectCard from './_components/ProjectCard';
 import { routes } from '~/lib/routes';
 

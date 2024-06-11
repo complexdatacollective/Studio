@@ -1,12 +1,10 @@
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
-
-// Can be imported from a shared config
-const locales = ['en', 'de'];
+import { SUPPORTED_LOCALES } from './locales';
 
 export default getRequestConfig(async ({ locale }) => {
   // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale)) notFound();
+  if (!SUPPORTED_LOCALES.includes(locale)) notFound();
 
   return {
     //Todo: fix linting error here later
