@@ -5,11 +5,25 @@ import { db } from '~/lib/db';
 import { organizations } from '~/lib/db/schema';
 import { generatePublicId } from '~/lib/generatePublicId';
 
-export async function createOrganization(formData: FormData) {
+export type CreateOrganizationFormState = {
+  name: string;
+  errors: {
+    message: string | undefined;
+  };
+};
+export async function createOrganization(
+  previousState: CreateOrganizationFormState,
+  formData: FormData,
+) {
   const name = formData.get('orgName') as string;
 
   if (!name) {
-    throw new Error('Organization name is required');
+    return {
+      name,
+      errors: {
+        message: 'Must provide an org name',
+      },
+    };
   }
 
   // Simulate a delay to test optimistic UI
@@ -22,4 +36,11 @@ export async function createOrganization(formData: FormData) {
   });
 
   safeRevalidateTag('getOrganizations');
+
+  return {
+    name: '',
+    errors: {
+      message: undefined,
+    },
+  };
 }

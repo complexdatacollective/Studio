@@ -1,21 +1,34 @@
 'use client';
 
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/Card';
-import { createOrganization } from '~/server/actions/organizations';
+import {
+  type CreateOrganizationFormState,
+  createOrganization,
+} from '~/server/actions/organizations';
 import SubmitButton from './SubmitButton';
-import type { PublicOrganization } from '~/lib/db/schema';
+import { type PublicOrganization } from '~/lib/db/schema';
 import { useOptimistic } from 'react';
+import { useFormState } from 'react-dom';
 
 export default function ResponsiveForm({
   orgs,
 }: {
   orgs: PublicOrganization[];
 }) {
-  const [optimisticOrgs, setOptimisticOrgs] = useOptimistic(
+  const [optimisticOrgs, addOptimisticOrg] = useOptimistic(
     orgs,
     (state, newOrg: PublicOrganization) => {
       return [...state, newOrg];
     },
+  );
+  const [formState, wrappedCreateOrganization] = useFormState(
+    createOrganization,
+    {
+      name: '',
+      errors: {
+        message: undefined,
+      },
+    } as CreateOrganizationFormState,
   );
 
   return (
@@ -26,13 +39,13 @@ export default function ResponsiveForm({
         </CardHeader>
         <CardContent>
           <form
-            action={async (formData) => {
-              setOptimisticOrgs({
+            action={(formData) => {
+              addOptimisticOrg({
                 public_id: Math.random().toString(),
                 slug: formData.get('orgName') as string,
                 name: formData.get('orgName') as string,
               });
-              await createOrganization(formData);
+              wrappedCreateOrganization(formData);
             }}
             className="flex flex-col space-y-4"
           >
@@ -42,7 +55,11 @@ export default function ResponsiveForm({
               id="orgName"
               name="orgName"
               placeholder="Org name"
+              defaultValue={formState.name}
             />
+            {formState.errors.message && (
+              <div className="text-destructive">{formState.errors.message}</div>
+            )}
             <SubmitButton />
           </form>
         </CardContent>
