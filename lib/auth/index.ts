@@ -69,10 +69,10 @@ export const getServerSession = cache(async () => {
 });
 
 export async function requirePageAuth({
-  redirectPath = null,
+  redirectPath,
 }: {
   redirectPath?: string | null;
-}) {
+} = {}) {
   const { session } = await getServerSession();
 
   if (!session) {
