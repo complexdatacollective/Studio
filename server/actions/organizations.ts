@@ -12,6 +12,9 @@ export async function createOrganization(formData: FormData) {
     throw new Error('Organization name is required');
   }
 
+  // Simulate a delay to test optimistic UI
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   await db.insert(organizations).values({
     name,
     public_id: generatePublicId(),
