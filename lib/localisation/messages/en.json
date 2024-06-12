@@ -1,7 +1,7 @@
 {
   "Home": {
     "title": "Studio MVP",
-    "allOrganizationsHeading": "All Organizations"
+    "allStudiesHeading": "All Studies"
   },
   "SignIn": {
     "cardTitle": "Sign in to Studio",
@@ -18,17 +18,17 @@
     "passwordInput": "Password",
     "formButton": "Continue"
   },
-  "CreateOrgForm": {
-    "formTitle": "Create Organization",
-    "orgNameInputLabel": "Organization Name",
-    "orgNameInputPlaceholder": "Northwestern",
-    "formButton": "Create Org"
+  "CreateStudyForm": {
+    "formTitle": "Create Study",
+    "inputLabel": "Study Name",
+    "inputPlaceholder": "My New Study",
+    "formButton": "Create Study"
   },
   "SignOutBtn": {
     "buttonLabel": "Sign Out"
   },
-  "OrgPage": {
-    "title": "Organization Page",
+  "StudyPage": {
+    "title": "Study Page",
     "noProjectFoundMessage": "No projects found"
   },
   "CreateProjectForm": {
@@ -38,9 +38,9 @@
     "formButton": "Create Project"
   },
   "TopNavigation": {
-    "studioLink": "Studio",
-    "orgDashboardLink": "Org Dashboard",
-    "orgSettingsLink": "Org Settings"
+    "home": "Studio",
+    "dashboard": "Dashboard",
+    "settings": "Settings"
   },
   "SecondaryNavigation": {
     "projectParticipantsLink": "Participants",
@@ -48,8 +48,8 @@
     "projectProtocolsLink": "Protocols",
     "projectSettingsLink": "Settings"
   },
-  "OrgSettingPage": {
-    "title": "Organization Settings Page",
+  "StudySettingsPage": {
+    "title": "Study Settings Page",
     "description": "slug:"
   },
   "ProjectPage": {

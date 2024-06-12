@@ -29,4 +29,4 @@ const loginSchema = z.object({
 
 export const createUserFormDataSchema = zfd.formData(createUserSchema);
 
-export const getUserFormDataSchema = zfd.formData(loginSchema);
+export const loginFormDataSchema = zfd.formData(loginSchema);

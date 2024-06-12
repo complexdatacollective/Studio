@@ -6,13 +6,13 @@ import {
   CardTitle,
 } from '~/components/ui/Card';
 import SignUpForm from './_components/SignUpForm';
-import { validateRequest } from '~/lib/auth';
+import { getServerSession } from '~/lib/auth';
 import { routes } from '~/lib/routes';
 import { Link, redirect } from '~/lib/localisation/navigation';
 import { getTranslations } from 'next-intl/server';
 
 export default async function Page() {
-  const { session, user } = await validateRequest();
+  const { session, user } = await getServerSession();
   const t = await getTranslations('SignUp');
 
   if (session && user) {
