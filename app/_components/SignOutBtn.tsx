@@ -1,18 +1,16 @@
 'use client';
 
 import React from 'react';
-import { signout } from '~/server/actions/auth';
-import { Button } from '~/components/ui/Button';
+import { logout } from '~/server/actions/auth';
 import { useTranslations } from 'next-intl';
+import { SubmitButton } from '~/components/form/SubmitButton';
 
-const SignOutBtn = () => {
+export default function SignOutBtn() {
   const t = useTranslations('SignOutBtn');
 
   return (
-    <Button className="my-2" onClick={() => void signout()}>
-      {t('buttonLabel')}
-    </Button>
+    <form action={logout}>
+      <SubmitButton>{t('buttonLabel')}</SubmitButton>
+    </form>
   );
-};
-
-export default SignOutBtn;
+}

@@ -1,7 +1,5 @@
 import 'server-only';
-import { eq } from 'drizzle-orm';
 import { db } from '~/lib/db';
-import { organizations } from '~/lib/db/schema';
 import { createCachedFunction } from '~/lib/cache';
 
 /*
@@ -10,18 +8,16 @@ If it were, we would need to remove the id from the response (to use the public_
 Need to think about a better way to handle and check for this.
 */
 
-export const getOrgBySlug = (slug: string) =>
+export const getStudyBySlug = (slug: string) =>
   createCachedFunction(async () => {
-    return await db.query.organizations.findFirst({
-      where: eq(organizations.slug, slug),
+    return await db.study.findFirst({
+      where: {
+        slug,
+      },
     });
   }, [`getOrgBySlug-${slug}`, 'getOrgBySlug'])();
 
-export const getOrganizations = () =>
+export const getStudies = () =>
   createCachedFunction(async () => {
-    return await db.query.organizations.findMany({
-      columns: {
-        id: false,
-      },
-    });
+    return await db.study.findMany();
   }, ['getOrganizations'])();

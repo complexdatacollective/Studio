@@ -1,16 +1,15 @@
-import createMiddleware from 'next-intl/middleware';
-import { SUPPORTED_LOCALES } from './lib/localisation/locales';
+import { middlewareStacker } from './lib/middleware/middlewareStacker';
+import nextIntlMiddleware from './lib/middleware/nextIntlMiddleware';
+import CSRFMiddleware from './lib/middleware/CSRFMiddleware';
 
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: SUPPORTED_LOCALES,
 
-  // Used when no locale matches
-  defaultLocale: 'en',
-});
+export default middlewareStacker([
+  nextIntlMiddleware,
+  CSRFMiddleware,
+])
+
 
 export const config = {
-  // Match only internationalized pathnames
-  // ! The locales in `matcher` should be the same as `SUPPORTED_LOCALES`
-  matcher: ['/', `/(es|en)/:path*`],
+  // Only run middleware at all on these paths:
+  matcher: ['/((?!_next/static|images|_next/image|favicon.ico).*)'],
 };

@@ -1,7 +1,7 @@
 {
   "Home": {
     "title": "Estudio MVP en español",
-    "allOrganizationsHeading": "Todas las organizaciones"
+    "allStudiesHeading": "Todas las organizaciones"
   },
   "SignIn": {
     "cardTitle": "Iniciar sesión en Estudio",
@@ -18,7 +18,7 @@
     "passwordInput": "Contraseña",
     "formButton": "Continuar"
   },
-  "CreateOrgForm": {
+  "CreateStudyForm": {
     "formTitle": "Crear organización",
     "orgNameInputLabel": "Nombre de la organización",
     "orgNameInputPlaceholder": "Northwestern",
@@ -27,7 +27,7 @@
   "SignOutBtn": {
     "buttonLabel": "Cerrar sesión"
   },
-  "OrgPage": {
+  "StudyPage": {
     "title": "Página de la organización",
     "noProjectFoundMessage": "No se encontraron proyectos"
   },
@@ -38,9 +38,9 @@
     "formButton": "Crear proyecto"
   },
   "TopNavigation": {
-    "studioLink": "Estudio",
-    "orgDashboardLink": "Panel de control de la organización",
-    "orgSettingsLink": "Configuración de la organización"
+    "home": "Estudio",
+    "dashboard": "Panel de control de la organización",
+    "settings": "Configuración de la organización"
   },
   "SecondaryNavigation": {
     "projectParticipantsLink": "Participantes",
@@ -48,7 +48,7 @@
     "projectProtocolsLink": "Protocolos",
     "projectSettingsLink": "Ajustes"
   },
-  "OrgSettingPage": {
+  "StudySettingsPage": {
     "title": "Página de configuración de la organización",
     "description": "slug:"
   },

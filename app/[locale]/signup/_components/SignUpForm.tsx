@@ -2,12 +2,12 @@
 
 import { useFormState } from 'react-dom';
 import { signup } from '~/server/actions/auth';
-import { Button } from '~/components/ui/Button';
 import { Input } from '~/components/ui/form/Input';
 import { Label } from '~/components/ui/form/Label';
 import { useTranslations } from 'next-intl';
+import { SubmitButton } from '~/components/form/SubmitButton';
 
-const SignUpForm = () => {
+export default function SignUpForm() {
   const initialState = { error: null, success: false };
   const [formState, formAction] = useFormState(signup, initialState);
   const t = useTranslations('AuthForm');
@@ -15,7 +15,7 @@ const SignUpForm = () => {
   return (
     <form action={formAction}>
       {formState.error && (
-        <div className="text-center text-sm text-red-500">
+        <div className="text-red-500 text-center text-sm">
           {formState.error}
         </div>
       )}
@@ -35,13 +35,12 @@ const SignUpForm = () => {
           type="password"
           name="password"
           id="password"
+          autoComplete="new-password"
           placeholder={t('passwordInput').toLowerCase()}
         />
       </div>
       <br />
-      <Button>{t('formButton')}</Button>
+      <SubmitButton>{t('formButton')}</SubmitButton>
     </form>
   );
-};
-
-export default SignUpForm;
+}

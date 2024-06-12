@@ -5,17 +5,18 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/Card';
-import { validateRequest } from '~/lib/auth';
 import SignInForm from './_components/SignInForm';
 import { routes } from '~/lib/routes';
 import { Link, redirect } from '~/lib/localisation/navigation';
 import { getTranslations } from 'next-intl/server';
+import { getServerSession } from '~/lib/auth';
 
 export default async function Page() {
-  const { session, user } = await validateRequest();
   const t = await getTranslations('SignIn');
 
-  if (session && user) {
+  const { session } = await getServerSession();
+
+  if (session) {
     // If the user is already signed in, redirect to the home page
     redirect(routes.home());
   }
