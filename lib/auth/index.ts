@@ -68,13 +68,11 @@ export const getServerSession = cache(async () => {
   return result;
 });
 
-export type RequireAuthOptions = {
-  redirectPath?: string;
-};
-
-export async function requirePageAuth(
-  { redirectPath = null } = {} as RequireAuthOptions,
-) {
+export async function requirePageAuth({
+  redirectPath = null,
+}: {
+  redirectPath?: string | null;
+}) {
   const { session } = await getServerSession();
 
   if (!session) {
@@ -82,17 +80,17 @@ export async function requirePageAuth(
       redirect('/signin');
     }
 
-    redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath));
+    redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath!));
   }
   return session;
 }
 
-export async function requireApiAuth() {
-  const { session } = await getServerSession();
+// export async function requireApiAuth() {
+//   const { session } = await getServerSession();
 
-  if (!session) {
-    throw new Error('Unauthorized');
-  }
+//   if (!session) {
+//     throw new Error('Unauthorized');
+//   }
 
-  return session;
-}
+//   return session;
+// }

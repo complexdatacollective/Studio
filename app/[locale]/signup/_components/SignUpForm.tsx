@@ -8,8 +8,9 @@ import { useTranslations } from 'next-intl';
 import { SubmitButton } from '~/components/form/SubmitButton';
 
 export default function SignUpForm() {
-  const initialState = { error: null, success: false };
-  const [formState, formAction] = useFormState(signup, initialState);
+  const [formState, formAction] = useFormState(signup, {
+    error: null,
+  });
   const t = useTranslations('AuthForm');
 
   return (

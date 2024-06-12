@@ -8,10 +8,21 @@ import { redirect } from '~/lib/localisation/navigation';
 import { generateIdFromEntropySize } from 'lucia';
 import { revalidatePath } from 'next/cache';
 import { zfd } from 'zod-form-data';
+import {
+  createUserFormDataSchema,
+  loginFormDataSchema,
+} from '~/lib/auth/authSchema';
 
 export async function signup(_: unknown, formData: FormData) {
-  const username = formData.get('username') as string;
-  const password = formData.get('password') as string;
+  const result = createUserFormDataSchema.safeParse(formData);
+
+  if (!result.success) {
+    return {
+      error: 'Invalid form data',
+    };
+  }
+
+  const { username, password } = result.data;
 
   const hashedPassword = await hash(password);
   const userId = generateIdFromEntropySize(10); // 16 characters long
@@ -34,7 +45,7 @@ export async function signup(_: unknown, formData: FormData) {
       sessionCookie.attributes,
     );
 
-    return;
+    return { error: null };
   } catch (error) {
     // db error, email taken, etc
     return {
@@ -44,12 +55,15 @@ export async function signup(_: unknown, formData: FormData) {
 }
 
 export async function login(formData: FormData) {
-  const schema = zfd.formData({
-    username: zfd.text(),
-    password: zfd.text(),
-  });
+  const result = loginFormDataSchema.safeParse(formData);
 
-  const { username, password } = schema.parse(formData);
+  if (!result.success) {
+    return {
+      error: 'Invalid form data',
+    };
+  }
+
+  const { username, password } = result.data;
 
   const existingUser = await db.user.findFirst({
     where: {
