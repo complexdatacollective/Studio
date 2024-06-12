@@ -121,6 +121,11 @@ model Interview {
   @@index([publicId])
 }
 
+model Todo {
+  id        Int      @id @default(autoincrement())
+  title     String
+}
+
 enum StageTypes {
   NameGenerator
   Sociogram
