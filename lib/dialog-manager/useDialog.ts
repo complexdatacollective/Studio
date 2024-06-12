@@ -6,13 +6,24 @@ const useDialog = () => {
 
   const showDialog = ({
     type,
-    message,
+    content,
     title,
+    cancelLabel,
+    confirmLabel,
     onConfirm,
     onCancel,
   }: Dialog) => {
     const id = nanoid();
-    openDialog({ id, type, title, message, onConfirm, onCancel });
+    openDialog({
+      id,
+      type,
+      title,
+      content,
+      cancelLabel,
+      confirmLabel,
+      onConfirm,
+      onCancel,
+    });
 
     return id;
   };

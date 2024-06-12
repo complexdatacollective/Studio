@@ -1,11 +1,22 @@
+import { type ReactNode } from 'react';
 import { create } from 'zustand';
+
+// add more variants here as needed
+enum DialogVariants {
+  Error = 'Error',
+  Warning = 'Warning',
+  Info = 'Info',
+}
+
+export type DialogVariant = keyof typeof DialogVariants;
 
 export type Dialog = {
   id: string;
-  type: 'Confirm' | 'Notice'; // add more types here
+  type: DialogVariant;
   title: string;
-  message: string;
+  content: string | ReactNode;
   confirmLabel?: string;
+  cancelLabel?: string;
   onConfirm: () => void;
   onCancel: () => void;
 };

@@ -9,9 +9,9 @@ const CreateDialog = () => {
   const createDialog = () => {
     showDialog({
       id: '1234-1234-1',
-      type: 'Confirm',
+      type: 'Info',
       title: 'Something to confirm',
-      message: 'More detail about confirmation',
+      content: 'This is an example of an Info dialog. Do you want to proceed?',
       confirmLabel: 'Yes please!',
       onConfirm: () => {
         // eslint-disable-next-line no-console
