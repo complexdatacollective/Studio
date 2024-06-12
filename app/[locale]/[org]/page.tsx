@@ -4,6 +4,7 @@ import ProjectCard from './_components/ProjectCard';
 import { routes } from '~/lib/routes';
 import Section from '~/components/layout/Section';
 import { getTranslations } from 'next-intl/server';
+import Heading from '~/components/typography/Heading';
 
 type OrgPageProps = {
   // ✅ Never assume the types of your params before validation
@@ -17,7 +18,7 @@ export default async function OrgPage({ params }: OrgPageProps) {
 
   return (
     <div className="flex flex-col p-12">
-      <h1 className="pb-4 text-4xl">{t('title')}</h1>
+      <Heading variant="h1">{t('title')}</Heading>
       <Section>
         {allProjects
           ? allProjects.map((project) => (

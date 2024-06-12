@@ -4,7 +4,6 @@ import { useFormState } from 'react-dom';
 import { signin } from '~/server/actions/auth';
 import { Button } from '~/components/ui/Button';
 import { Input } from '~/components/ui/form/Input';
-import { Label } from '~/components/ui/form/Label';
 import { useTranslations } from 'next-intl';
 
 const SignInForm = () => {
@@ -21,8 +20,8 @@ const SignInForm = () => {
       )}
 
       <div className="flex flex-col gap-3 p-2">
-        <Label htmlFor="username">{t('usernameInput')}</Label>
         <Input
+          label={t('usernameInput')}
           name="username"
           id="username"
           placeholder={t('usernameInput').toLowerCase()}
@@ -30,8 +29,8 @@ const SignInForm = () => {
       </div>
       <br />
       <div className="flex flex-col gap-3 p-2">
-        <Label htmlFor="password">{t('passwordInput')}</Label>
         <Input
+          label={t('passwordInput')}
           type="password"
           name="password"
           id="password"
