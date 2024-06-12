@@ -1,36 +1,30 @@
 'use client';
 
-import { Button } from '~/components/ui/Button';
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '~/components/ui/Dialog';
+import { Dialog, DialogContent, DialogOverlay } from '~/components/ui/Dialog';
 import useDialog from './useDialog';
 
-function DialogManager() {
-  const { dialogs, confirmDialog } = useDialog();
-  const dialog = dialogs[0];
+const DialogManager = () => {
+  const { dialogs, confirmDialog, cancelDialog } = useDialog();
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Open dialog</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>{dialog.title}</DialogTitle>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">{dialog.message}</div>
-        <DialogFooter>
-          <Button onClick={() => confirmDialog(dialog.id)}>Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <div>
+      {dialogs.map((dialog) => (
+        <Dialog
+          key={dialog.id}
+          open
+          onOpenChange={() => cancelDialog(dialog.id)}
+        >
+          <DialogOverlay />
+
+          <DialogContent>
+            {dialog.message}
+            <button onClick={() => confirmDialog(dialog.id)}>Confirm</button>
+            <button onClick={() => cancelDialog(dialog.id)}>Cancel</button>
+          </DialogContent>
+        </Dialog>
+      ))}
+    </div>
   );
-}
+};
 
 export default DialogManager;

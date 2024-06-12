@@ -5,6 +5,7 @@ import SignOutBtn from '../_components/SignOutBtn';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
+import CreateDialog from '../_components/CreateDialog';
 
 export default async function Home() {
   await requirePageAuth();
@@ -16,7 +17,7 @@ export default async function Home() {
       <h1 className="pb-4 text-4xl">{t('title')}</h1>
       <CreateOrgForm />
       <h2 className="pb-4 text-2xl">{t('allOrganizationsHeading')}</h2>
-      <div className="flex flex-col text-blue-700 underline">
+      <div className="text-blue-700 flex flex-col underline">
         {allOrgs.map((org) => (
           <Link
             key={org.public_id}
@@ -28,6 +29,7 @@ export default async function Home() {
       </div>
 
       <SignOutBtn />
+      <CreateDialog />
     </main>
   );
 }

@@ -17,23 +17,7 @@ type DialogState = {
 };
 
 const useDialogStore = create<DialogState>((set) => ({
-  dialogs: [
-    {
-      id: '1234-1234-1',
-      type: 'Confirm',
-      title: 'Something to confirm',
-      message: 'More detail about confirmation',
-      confirmLabel: 'Yes please!',
-      onConfirm: () => {
-        // eslint-disable-next-line no-console
-        console.log('dialog confirmed');
-      },
-      onCancel: () => {
-        // eslint-disable-next-line no-console
-        console.log('dialog cancelled');
-      },
-    },
-  ],
+  dialogs: [],
   openDialog: (dialog) =>
     set((state) => ({ dialogs: [...state.dialogs, dialog] })),
   closeDialog: (dialogId) =>
