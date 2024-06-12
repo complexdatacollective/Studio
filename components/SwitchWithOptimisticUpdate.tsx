@@ -2,16 +2,15 @@
 
 import { Switch as SwitchUI } from '~/components/ui/switch';
 import { useOptimistic, useTransition } from 'react';
-import { type UseMutateFunction } from '@tanstack/react-query';
 
 const SwitchWithOptimisticUpdate = ({
   initialValue,
   name,
-  mutation,
+  action,
 }: {
   initialValue: boolean;
   name: string;
-  mutation: UseMutateFunction<boolean, Error, boolean, unknown>;
+  action: (value: boolean) => Promise<boolean>;
 }) => {
   const [isTransitioning, startTransition] = useTransition();
   const [optimisticIsActive, setOptimisticIsActive] = useOptimistic(
@@ -19,9 +18,9 @@ const SwitchWithOptimisticUpdate = ({
     (_, newValue: boolean) => newValue,
   );
 
-  const updateIsActive = (newValue: boolean) => {
+  const updateIsActive = async (newValue: boolean) => {
     setOptimisticIsActive(newValue);
-    mutation(newValue);
+    await action(newValue); // this is a server action which calls `revalidateTag`
   };
 
   return (
