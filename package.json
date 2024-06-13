@@ -6,7 +6,7 @@
   "packageManager": "pnpm@9.1.1+sha256.9551e803dcb7a1839fdf5416153a844060c7bce013218ce823410532504ac10b",
   "scripts": {
     "dev": "./scripts/dev.sh",
-    "postinstall": "prisma generate && prisma db push",
+    "postinstall": "node postinstall.js",
     "build": "next build",
     "start": "next start",
     "lint": "SKIP_ENV_VALIDATION=true next lint",
@@ -30,6 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^7.12.0",
     "@typescript-eslint/parser": "^7.12.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
     "eslint-config-prettier": "^9.1.0",
     "knip": "^5.17.4",
     "lucia": "^3.2.0",
