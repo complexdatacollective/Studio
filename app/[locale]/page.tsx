@@ -5,7 +5,6 @@ import SignOutBtn from '../_components/SignOutBtn';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
-import CreateDialog from '../_components/CreateDialog';
 import type { Study } from '@prisma/client';
 
 export default async function Home() {
@@ -30,7 +29,6 @@ export default async function Home() {
       </div>
 
       <SignOutBtn />
-      <CreateDialog />
     </main>
   );
 }

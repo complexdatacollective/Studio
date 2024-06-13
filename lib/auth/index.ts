@@ -68,19 +68,19 @@ export const getServerSession = cache(async () => {
   return result;
 });
 
-export async function requirePageAuth({
-  redirectPath,
-}: {
-  redirectPath?: string | null;
-} = {}) {
+export async function requirePageAuth(options?: { redirectPath?: string }) {
   const { session } = await getServerSession();
 
   if (!session) {
-    if (!redirectPath) {
-      redirect('/signin');
+    if (options?.redirectPath) {
+      redirect(
+        '/signin?callbackUrl=' + encodeURIComponent(options.redirectPath),
+      );
+
+      return;
     }
 
-    redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath!));
+    redirect('/signin');
   }
   return session;
 }

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: 'UI/Dialog',
+  title: 'Dialogs/Dialog',
   component: Dialog,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
