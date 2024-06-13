@@ -3,7 +3,7 @@ import * as React from 'react';
 import { cn } from '~/lib/utils';
 import Heading from '~/components/typography/Heading';
 
-export const cardClasses =
+const cardClasses =
   'rounded-xl border border-[hsl(var(--platinum--dark))] bg-card text-card-foreground';
 
 export const Card = React.forwardRef<

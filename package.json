@@ -6,17 +6,18 @@
   "packageManager": "pnpm@9.1.1+sha256.9551e803dcb7a1839fdf5416153a844060c7bce013218ce823410532504ac10b",
   "scripts": {
     "dev": "./scripts/dev.sh",
+    "postinstall": "prisma generate && prisma db push",
     "build": "next build",
     "start": "next start",
     "lint": "SKIP_ENV_VALIDATION=true next lint",
-    "db:push": "drizzle-kit push --config=./lib/db/drizzle.config.ts",
-    "db:studio": "drizzle-kit studio --config=./lib/db/drizzle.config.ts",
+    "db:push": "prisma db push --force-reset",
+    "db:studio": "prisma studio",
     "knip": "SKIP_ENV_VALIDATION=true knip",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "@lucia-auth/adapter-prisma": "^4.0.1",
     "@node-rs/argon2": "^1.8.3",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
@@ -26,19 +27,18 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.7",
+    "@types/validator": "^13.11.10",
     "@typescript-eslint/eslint-plugin": "^7.12.0",
     "@typescript-eslint/parser": "^7.12.0",
     "clsx": "^2.1.1",
-    "drizzle-orm": "^0.31.1",
     "eslint-config-prettier": "^9.1.0",
     "knip": "^5.17.4",
     "lucia": "^3.2.0",
     "lucide-react": "^0.394.0",
     "nanoid": "^5.0.7",
-    "next": "14.2.3",
+    "next": "14.2.4",
     "next-intl": "^3.15.0",
     "next-safe-navigation": "^0.3.2",
-    "postgres": "^3.4.4",
     "prettier": "^3.3.1",
     "prettier-plugin-tailwindcss": "^0.6.1",
     "react": "^18",
@@ -53,6 +53,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@prisma/client": "^5.15.0",
     "@storybook/addon-a11y": "^8.1.6",
     "@storybook/addon-essentials": "^8.1.6",
     "@storybook/addon-interactions": "^8.1.6",
@@ -66,16 +67,18 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/validator": "^13.11.10",
     "autoprefixer": "^10.4.19",
-    "drizzle-kit": "^0.22.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
     "eslint-plugin-storybook": "^0.8.0",
     "postcss": "8.4.38",
+    "prisma": "^5.15.0",
     "sass": "^1.77.4",
     "storybook": "^8.1.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "prisma": {
+    "schema": "lib/db/schema.prisma"
   }
 }

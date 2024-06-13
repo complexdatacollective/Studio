@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+
+model User {
+  id             String      @id
+  name           String?
+  username       String?     @unique
+  email          String?     @unique
+  image          String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  studyUsers     StudyUser[]
+  hashedPassword String
+  sessions       Session[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model AppSettings {
+  configured                Boolean  @default(false)
+  initializedAt             DateTime @default(now())
+  allowAnonymousRecruitment Boolean  @default(false)
+  limitInterviews           Boolean  @default(true)
+  installationId            String   @unique @default(cuid())
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  timestamp DateTime @default(now())
+  type      String
+  message   String
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  DATA_MANAGER
+  STAFF
+}
+
+model Study {
+  id          Int         @id @default(autoincrement())
+  publicId    String      @unique @db.VarChar(12)
+  name        String      @unique
+  slug        String      @unique
+  description String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  users       StudyUser[] @relation
+  protocols   Protocol[]
+
+  @@index([publicId])
+}
+
+model StudyUser {
+  id      String @id @default(cuid())
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId  String
+  study   Study  @relation(fields: [studyId], references: [publicId], onDelete: Cascade, onUpdate: Cascade)
+  studyId String
+  role    Role   @default(STAFF)
+}
+
+model Protocol {
+  id        Int                @id @default(autoincrement())
+  publicId  String             @unique @db.VarChar(12)
+  study     Study              @relation(fields: [studyId], references: [publicId], onDelete: Cascade, onUpdate: Cascade)
+  studyId   String
+  revisions ProtocolRevision[]
+
+  @@index([publicId])
+}
+
+model ProtocolRevision {
+  id          String      @id @default(cuid())
+  revision    Int         @unique @default(autoincrement())
+  protocol    Protocol    @relation(fields: [protocolId], references: [publicId], onDelete: Cascade, onUpdate: Cascade)
+  protocolId  String
+  name        String?
+  description String?
+  createdAt   DateTime    @default(now())
+  stages      Stage[]
+  interviews  Interview[]
+
+  @@index([revision])
+}
+
+model Stage {
+  id                 Int              @id @default(autoincrement())
+  publicId           String           @unique @db.VarChar(12)
+  name               String
+  type               StageTypes
+  protocolRevision   ProtocolRevision @relation(fields: [protocolRevisionId], references: [revision], onDelete: Cascade, onUpdate: Cascade)
+  protocolRevisionId Int
+
+  @@index([publicId])
+}
+
+model Interview {
+  id                 Int              @id @default(autoincrement())
+  publicId           String           @unique @db.VarChar(12)
+  startedAt          DateTime         @default(now())
+  endedAt            DateTime?
+  lastUpdated        DateTime         @updatedAt
+  protocolRevision   ProtocolRevision @relation(fields: [protocolRevisionId], references: [revision], onDelete: Cascade, onUpdate: Cascade)
+  protocolRevisionId Int
+
+  @@index([publicId])
+}
+
+enum StageTypes {
+  NameGenerator
+  Sociogram
+  DyadCensus
+  TieStrengthCensus
+  Narrative
+  Information
+  CategoricalBin
+  OrdinalBin
+  AlterForm
+  AlterEdgeForm
+  EgoForm
+}

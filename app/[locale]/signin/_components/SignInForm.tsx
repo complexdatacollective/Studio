@@ -1,47 +1,30 @@
-'use client';
-
-import { useFormState } from 'react-dom';
-import { signin } from '~/server/actions/auth';
-import { Button } from '~/components/ui/Button';
+import { login } from '~/server/actions/auth';
 import { Input } from '~/components/ui/form/Input';
-import { Label } from '~/components/ui/form/Label';
-import { useTranslations } from 'next-intl';
+import { SubmitButton } from '~/components/form/SubmitButton';
 
-const SignInForm = () => {
-  const initialState = { error: null, success: false };
-  const [formState, formAction] = useFormState(signin, initialState);
-  const t = useTranslations('AuthForm');
-
+export default function SignInForm() {
   return (
-    <form action={formAction}>
-      {formState.error && (
-        <div className="text-center text-sm text-red-500">
-          {formState.error}
-        </div>
-      )}
-
-      <div className="flex flex-col gap-3 p-2">
-        <Label htmlFor="username">{t('usernameInput')}</Label>
+    <form action={login} className="flex w-full flex-col">
+      <div className="mb-6 flex flex-wrap">
         <Input
           name="username"
-          id="username"
-          placeholder={t('usernameInput').toLowerCase()}
+          label="Username"
+          autoComplete="username"
+          className="w-full"
         />
       </div>
-      <br />
-      <div className="flex flex-col gap-3 p-2">
-        <Label htmlFor="password">{t('passwordInput')}</Label>
+      <div className="mb-6 flex flex-wrap">
         <Input
-          type="password"
           name="password"
-          id="password"
-          placeholder={t('passwordInput').toLowerCase()}
+          type="password"
+          label="Password"
+          autoComplete="current-password"
+          className="w-full"
         />
       </div>
-      <br />
-      <Button>{t('formButton')}</Button>
+      <div className="flex flex-wrap">
+        <SubmitButton>Sign In</SubmitButton>
+      </div>
     </form>
   );
-};
-
-export default SignInForm;
+}
