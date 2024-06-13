@@ -25,9 +25,6 @@ export async function createTodo(
     };
   }
 
-  // Simulate a delay to test optimistic UI
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   await db.todo.create({
     data: {
       title,

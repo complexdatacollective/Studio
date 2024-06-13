@@ -6,10 +6,19 @@ import SubmitButton from './SubmitButton';
 import { useOptimistic } from 'react';
 import { useFormState } from 'react-dom';
 import type { Todo } from '@prisma/client';
+import { useAtom, atom } from 'jotai';
 
-export default function ResponsiveForm({ todos }: { todos: Todo[] }) {
+export const todosAtom = atom<Todo[]>([]);
+
+export default function ResponsiveForm({
+  initialTodos,
+}: {
+  initialTodos: Todo[];
+}) {
+  const [todosState, setOptimisticTodoAtom] = useAtom(todosAtom);
+
   const [optimisticTodos, addOptimisticTodo] = useOptimistic(
-    todos,
+    initialTodos,
     (state, newTodo: Todo) => {
       return [...state, newTodo];
     },
@@ -30,10 +39,14 @@ export default function ResponsiveForm({ todos }: { todos: Todo[] }) {
         <CardContent>
           <form
             action={(formData) => {
-              addOptimisticTodo({
-                id: Math.random(),
+              const newTodo = {
+                id: Math.floor(Math.random() * 1000),
                 title: formData.get('todoTitle') as string,
-              });
+              };
+              // eslint-disable-next-line no-console
+              console.log('setting atom', todosState, newTodo);
+              setOptimisticTodoAtom([...todosState, newTodo]);
+              addOptimisticTodo(newTodo);
               wrappedCreateTodo(formData);
             }}
             className="flex flex-col space-y-4"
