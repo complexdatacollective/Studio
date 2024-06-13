@@ -3,6 +3,9 @@ import { Dialog, DialogContent, DialogFooter, DialogOverlay } from './Dialog';
 import { Button } from './Button';
 import { useState } from 'react';
 import { fn } from '@storybook/test';
+import useDialog from '~/lib/dialog-manager/useDialog';
+import { generatePublicId } from '~/lib/generatePublicId';
+import DialogManager from '~/lib/dialog-manager/DialogManager';
 
 const meta = {
   title: 'Dialogs/Dialog',
@@ -14,97 +17,52 @@ const meta = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
-    open: { control: 'boolean' },
-    defaultOpen: { control: 'boolean' },
-    onOpenChange: { action: 'openChange' },
+    type: {
+      options: ['Info', 'Warning', 'Error'],
+      control: { type: 'select' },
+    },
+    title: { control: 'text' },
+    content: { control: 'text' },
+    confirmLabel: { control: 'text' },
+    cancelLabel: { control: 'text' },
+    onConfirm: { control: false },
+    onCancel: { control: false },
   },
   args: {
-    open: false,
-    defaultOpen: false,
-    onOpenChange: fn(),
+    type: 'Info',
+    title: 'Info',
+    content: 'This is an info dialog',
+    confirmLabel: 'OK',
+    cancelLabel: 'Cancel',
+    onConfirm: fn(() => {}),
+    onCancel: fn(() => {}),
   },
+  decorators: [
+    (Story) => (
+      <>
+        <DialogManager />
+        <Story />
+      </>
+    ),
+  ],
 } as Meta<typeof Dialog>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const InfoDialog: Story = {
-  args: { open: false },
-  render: ({ open, defaultOpen }) => {
-    const [show, setShow] = useState(open);
+  render: (props) => {
+    const { children, ...rest } = props;
+
+    const { showDialog } = useDialog();
+
+    const createDialog = () => {
+      showDialog(rest);
+    };
 
     return (
       <>
-        <Button onClick={() => setShow(!show)}>Toggle info dialog</Button>
-        <Dialog defaultOpen={defaultOpen} open={show} onOpenChange={setShow}>
-          <DialogOverlay />
-          <DialogContent variant="Info">
-            <h2>Info Dialog Title</h2>
-            <p>Info Dialog Content...</p>
-            <DialogFooter>
-              <Button onClick={() => setShow(false)} variant="outline">
-                Cancel
-              </Button>
-              <Button onClick={() => setShow(false)}>Confirm</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </>
-    );
-  },
-};
-
-export const ErrorDialog: Story = {
-  args: { open: false },
-  render: ({ open, defaultOpen }) => {
-    const [show, setShow] = useState(open);
-
-    return (
-      <>
-        <Button variant="destructive" onClick={() => setShow(!show)}>
-          Toggle error dialog
-        </Button>
-        <Dialog defaultOpen={defaultOpen} open={show} onOpenChange={setShow}>
-          <DialogOverlay />
-          <DialogContent variant="Error">
-            <h2>Error Dialog Title</h2>
-            <p>Error Dialog Content...</p>
-            <DialogFooter>
-              <Button onClick={() => setShow(false)} variant="outline">
-                Cancel
-              </Button>
-              <Button onClick={() => setShow(false)}>Confirm</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </>
-    );
-  },
-};
-
-export const WarningDialog: Story = {
-  args: { open: false },
-  render: ({ open, defaultOpen }) => {
-    const [show, setShow] = useState(open);
-
-    return (
-      <>
-        <Button variant="accent" onClick={() => setShow(!show)}>
-          Toggle warning dialog
-        </Button>
-        <Dialog defaultOpen={defaultOpen} open={show} onOpenChange={setShow}>
-          <DialogOverlay />
-          <DialogContent variant="Warning">
-            <h2>Warning Dialog Title</h2>
-            <p>Warning Dialog Content...</p>
-            <DialogFooter>
-              <Button onClick={() => setShow(false)} variant="outline">
-                Cancel
-              </Button>
-              <Button onClick={() => setShow(false)}>Confirm</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <Button onClick={() => createDialog()}>Show Dialog</Button>
       </>
     );
   },
