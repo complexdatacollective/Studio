@@ -5,7 +5,7 @@ import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
-import DialogManager from '~/lib/dialog-manager/DialogManager';
+import DialogManager from '~/lib/dialogs/DialogManager';
 
 const inter = Inter({ subsets: ['latin'] });
 

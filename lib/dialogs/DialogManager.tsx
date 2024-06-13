@@ -1,14 +1,9 @@
 'use client';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogOverlay,
-} from '~/components/ui/Dialog';
+import { Dialog, DialogContent, DialogFooter } from '~/components/ui/Dialog';
 import useDialog from './useDialog';
 import { Button } from '~/components/ui/Button';
-import { DialogTitle } from '@radix-ui/react-dialog';
+import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog';
 
 const DialogManager = () => {
   const { dialogs, confirmDialog, cancelDialog } = useDialog();
@@ -23,7 +18,7 @@ const DialogManager = () => {
         >
           <DialogContent variant={dialog.type}>
             <DialogTitle>{dialog.title}</DialogTitle>
-            {dialog.content}
+            <DialogDescription>{dialog.content}</DialogDescription>
             <DialogFooter>
               <Button variant="outline" onClick={() => cancelDialog(dialog.id)}>
                 {dialog.cancelLabel ?? 'Cancel'}

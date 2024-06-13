@@ -3,7 +3,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X, OctagonAlert, Info, TriangleAlert } from 'lucide-react';
 import * as React from 'react';
-import { type DialogVariant } from '~/lib/dialog-manager/store';
+import type { DialogVariant } from '~/lib/dialogs/store';
 import { cn } from '~/lib/utils';
 
 // Show different icons based on the dialog variant
@@ -24,8 +24,7 @@ const Dialog = (props: DialogPrimitive.DialogProps) => {
   return (
     <DialogPrimitive.Root {...props}>
       <DialogPortal>
-        <DialogOverlay />
-        {props.children}
+        <DialogOverlay>{props.children}</DialogOverlay>
       </DialogPortal>
     </DialogPrimitive.Root>
   );
@@ -90,4 +89,4 @@ const DialogFooter = ({
 );
 DialogFooter.displayName = 'DialogFooter';
 
-export { Dialog, DialogContent, DialogOverlay, DialogFooter };
+export { Dialog, DialogContent, DialogFooter };

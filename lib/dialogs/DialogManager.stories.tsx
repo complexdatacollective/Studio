@@ -1,11 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Dialog, DialogContent, DialogFooter, DialogOverlay } from './Dialog';
-import { Button } from './Button';
-import { useState } from 'react';
+import { Dialog } from '../../components/ui/Dialog';
+import { Button } from '../../components/ui/Button';
 import { fn } from '@storybook/test';
-import useDialog from '~/lib/dialog-manager/useDialog';
-import { generatePublicId } from '~/lib/generatePublicId';
-import DialogManager from '~/lib/dialog-manager/DialogManager';
+import DialogManager from './DialogManager';
+import useDialog from './useDialog';
 
 const meta = {
   title: 'Dialogs/Dialog',
@@ -30,8 +28,8 @@ const meta = {
   },
   args: {
     type: 'Info',
-    title: 'Info',
-    content: 'This is an info dialog',
+    title: 'Dialog title',
+    content: 'This is the dialog content.',
     confirmLabel: 'OK',
     cancelLabel: 'Cancel',
     onConfirm: fn(() => {}),
