@@ -1,6 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { Dialog, DialogContent, DialogFooter, DialogOverlay } from './Dialog';
 import { Button } from './Button';
+import { useState } from 'react';
+import { fn } from '@storybook/test';
 
 const meta = {
   title: 'UI/Dialog',
@@ -13,9 +15,13 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     open: { control: 'boolean' },
+    defaultOpen: { control: 'boolean' },
+    onOpenChange: { action: 'openChange' },
   },
   args: {
     open: false,
+    defaultOpen: false,
+    onOpenChange: fn(),
   },
 } as Meta<typeof Dialog>;
 
@@ -23,52 +29,83 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const InfoDialog: Story = {
-  args: { open: true },
-  render: ({ open }) => (
-    <Dialog open={open}>
-      <DialogOverlay />
-      <DialogContent variant="Info">
-        <h2>Info Dialog Title</h2>
-        <p>Info Dialog Content...</p>
-        <DialogFooter>
-          <Button variant="outline">Cancel</Button>
-          <Button>Confirm</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  ),
-};
+  args: { open: false },
+  render: ({ open, defaultOpen }) => {
+    const [show, setShow] = useState(open);
 
-export const WarningDialog: Story = {
-  args: { open: true },
-  render: ({ open }) => (
-    <Dialog open={open}>
-      <DialogOverlay />
-      <DialogContent variant="Warning">
-        <h2>Warning Dialog Title</h2>
-        <p>Warning Dialog Content...</p>
-        <DialogFooter>
-          <Button variant="outline">Cancel</Button>
-          <Button>Confirm</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  ),
+    return (
+      <>
+        <Button onClick={() => setShow(!show)}>Toggle info dialog</Button>
+        <Dialog defaultOpen={defaultOpen} open={show} onOpenChange={setShow}>
+          <DialogOverlay />
+          <DialogContent variant="Info">
+            <h2>Info Dialog Title</h2>
+            <p>Info Dialog Content...</p>
+            <DialogFooter>
+              <Button onClick={() => setShow(false)} variant="outline">
+                Cancel
+              </Button>
+              <Button onClick={() => setShow(false)}>Confirm</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </>
+    );
+  },
 };
 
 export const ErrorDialog: Story = {
-  args: { open: true },
-  render: ({ open }) => (
-    <Dialog open={open}>
-      <DialogOverlay />
-      <DialogContent variant="Error">
-        <h2>Error Dialog Title</h2>
-        <p>Error Dialog Content...</p>
-        <DialogFooter>
-          <Button variant="outline">Cancel</Button>
-          <Button>Confirm</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  ),
+  args: { open: false },
+  render: ({ open, defaultOpen }) => {
+    const [show, setShow] = useState(open);
+
+    return (
+      <>
+        <Button variant="destructive" onClick={() => setShow(!show)}>
+          Toggle error dialog
+        </Button>
+        <Dialog defaultOpen={defaultOpen} open={show} onOpenChange={setShow}>
+          <DialogOverlay />
+          <DialogContent variant="Error">
+            <h2>Error Dialog Title</h2>
+            <p>Error Dialog Content...</p>
+            <DialogFooter>
+              <Button onClick={() => setShow(false)} variant="outline">
+                Cancel
+              </Button>
+              <Button onClick={() => setShow(false)}>Confirm</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </>
+    );
+  },
+};
+
+export const WarningDialog: Story = {
+  args: { open: false },
+  render: ({ open, defaultOpen }) => {
+    const [show, setShow] = useState(open);
+
+    return (
+      <>
+        <Button variant="accent" onClick={() => setShow(!show)}>
+          Toggle warning dialog
+        </Button>
+        <Dialog defaultOpen={defaultOpen} open={show} onOpenChange={setShow}>
+          <DialogOverlay />
+          <DialogContent variant="Warning">
+            <h2>Warning Dialog Title</h2>
+            <p>Warning Dialog Content...</p>
+            <DialogFooter>
+              <Button onClick={() => setShow(false)} variant="outline">
+                Cancel
+              </Button>
+              <Button onClick={() => setShow(false)}>Confirm</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </>
+    );
+  },
 };
