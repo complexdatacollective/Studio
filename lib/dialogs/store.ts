@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { create } from 'zustand';
+import { createStore } from 'zustand/vanilla';
 
 // add more variants here as needed
 enum DialogVariants {
@@ -23,18 +23,26 @@ export type Dialog = {
 
 type DialogState = {
   dialogs: Dialog[];
+};
+
+type DialogActions = {
   openDialog: (dialog: Dialog) => void;
   closeDialog: (dialogId: string) => void;
 };
 
-const useDialogStore = create<DialogState>((set) => ({
-  dialogs: [],
-  openDialog: (dialog) =>
-    set((state) => ({ dialogs: [...state.dialogs, dialog] })),
-  closeDialog: (dialogId) =>
-    set((state) => ({
-      dialogs: state.dialogs.filter((dialog) => dialog.id !== dialogId),
-    })),
-}));
+export type DialogStore = DialogState & DialogActions;
 
-export default useDialogStore;
+const defaultInitState: DialogState = {
+  dialogs: [],
+};
+
+export const createDialogStore = (initState: DialogState = defaultInitState) =>
+  createStore<DialogStore>((set) => ({
+    ...initState,
+    openDialog: (dialog) =>
+      set((state) => ({ dialogs: [...state.dialogs, dialog] })),
+    closeDialog: (dialogId) =>
+      set((state) => ({
+        dialogs: state.dialogs.filter((dialog) => dialog.id !== dialogId),
+      })),
+  }));

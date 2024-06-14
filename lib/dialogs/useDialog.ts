@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid';
-import useDialogStore, { type Dialog } from './store';
+import { type Dialog } from './store';
+import { useDialogStore } from './dialog-store-provider';
 
 const useDialog = () => {
-  const { openDialog, closeDialog, dialogs } = useDialogStore();
+  const { openDialog, closeDialog, dialogs } = useDialogStore((state) => state);
 
   const showDialog = ({
     type,
