@@ -1,5 +1,6 @@
 'use server';
 
+import { type Todo } from '@prisma/client';
 import { safeRevalidateTag } from '~/lib/cache';
 import { db } from '~/lib/db';
 
@@ -10,18 +11,14 @@ export type CreateTodoFormState = {
   };
 };
 
-export async function createTodo(_previousState: unknown, title: string) {
+export async function createTodo(title: Todo['title']) {
   if (!title) {
     return {
-      title,
       errors: {
         message: 'Must provide a title for the todo',
       },
     };
   }
-
-  // Simulate a delay to test optimistic UI
-  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   await db.todo.create({
     data: {

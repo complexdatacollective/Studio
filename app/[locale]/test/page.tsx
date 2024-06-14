@@ -9,8 +9,8 @@ export default async function Page() {
   return (
     <div>
       <h1 className="text-4xl">Responsive Form UX Test Page</h1>
-      {/* <Todos initialTodos={todos} /> */}
       <TodoForm initialTodos={todos} />
+      <Todos initialTodos={todos} />
     </div>
   );
 }
