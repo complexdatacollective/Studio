@@ -1,13 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Dialog } from '../../components/ui/Dialog';
-import { Button } from '../../components/ui/Button';
+import { Button } from '~/components/ui/Button';
 import { fn } from '@storybook/test';
 import DialogManager from './DialogManager';
 import useDialog from './useDialog';
+import { Dialog } from './store';
+import { DialogStoreProvider } from './dialog-store-provider';
 
 const meta = {
   title: 'Dialogs/Dialog',
-  component: Dialog,
+  component: DialogManager,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -37,25 +38,27 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <>
+      <DialogStoreProvider>
         <DialogManager />
         <Story />
-      </>
+      </DialogStoreProvider>
     ),
   ],
-} as Meta<typeof Dialog>;
+} as Meta<Dialog>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const InfoDialog: Story = {
-  render: (props) => {
-    const { children, ...rest } = props;
+  args: {
+    type: 'Info',
+  },
 
+  render: (props) => {
     const { showDialog } = useDialog();
 
     const createDialog = () => {
-      showDialog(rest);
+      showDialog(props);
     };
 
     return (
