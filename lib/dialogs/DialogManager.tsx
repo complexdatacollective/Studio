@@ -1,37 +1,28 @@
 'use client';
 
-import { Dialog, DialogContent, DialogFooter } from '~/components/ui/Dialog';
+import ConfirmDialog from './ConfirmDialog';
+import ErrorDialog from './ErrorDialog';
+import InfoDialog from './InfoDialog';
+import WarningDialog from './WarningDialog';
+import { type Dialog } from './dialog-schemas';
 import useDialog from './useDialog';
-import { Button } from '~/components/ui/Button';
-import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog';
+
+const DialogComponents = {
+  Info: InfoDialog,
+  Confirm: ConfirmDialog,
+  Warning: WarningDialog,
+  Error: ErrorDialog,
+};
 
 const DialogManager = () => {
-  const { dialogs, confirmDialog, cancelDialog } = useDialog();
+  const { dialogs } = useDialog();
 
-  return (
-    <div>
-      {dialogs.map((dialog) => (
-        <Dialog
-          key={dialog.id}
-          open
-          onOpenChange={() => cancelDialog(dialog.id)}
-        >
-          <DialogContent variant={dialog.type}>
-            <DialogTitle>{dialog.title}</DialogTitle>
-            <DialogDescription>{dialog.content}</DialogDescription>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => cancelDialog(dialog.id)}>
-                {dialog.cancelLabel ?? 'Cancel'}
-              </Button>
-              <Button onClick={() => confirmDialog(dialog.id)}>
-                {dialog.confirmLabel ?? 'OK'}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      ))}
-    </div>
-  );
+  return <div>{dialogs.map(renderDialog)}</div>;
 };
 
 export default DialogManager;
+
+const renderDialog = (dialog: Dialog) => {
+  const DialogComponent = DialogComponents[dialog.type];
+  return <DialogComponent key={dialog.id} {...dialog} />;
+};

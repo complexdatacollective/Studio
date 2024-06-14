@@ -51,7 +51,7 @@ type Story = StoryObj<typeof meta>;
 
 export const InfoDialog: Story = {
   args: {
-    type: DialogVariants.Info,
+    type: 'Info',
   },
 
   render: (props) => {
