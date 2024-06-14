@@ -1,58 +1,50 @@
 'use client';
 
-import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/Card';
-import { type CreateTodoFormState, createTodo } from '~/server/actions/todo';
+import { createTodo } from '~/server/actions/todo';
 import SubmitButton from './SubmitButton';
 import { useOptimistic } from 'react';
-import { useFormState } from 'react-dom';
 import type { Todo } from '@prisma/client';
 
-export default function ResponsiveForm({ todos }: { todos: Todo[] }) {
-  const [optimisticTodos, addOptimisticTodo] = useOptimistic(
-    todos,
-    (state, newTodo: Todo) => {
-      return [...state, newTodo];
-    },
-  );
-  const [formState, wrappedCreateTodo] = useFormState(createTodo, {
-    title: '',
-    errors: {
-      message: undefined,
-    },
-  } as CreateTodoFormState);
+// Function to generate an ascending ID number for optimistic updates, taking
+// into account the current number of todos.
+let nextId = 0;
+const generateUUID = (currentIds: number[]) => {
+  while (currentIds.includes(nextId)) {
+    nextId++;
+  }
+  return nextId;
+};
+
+export default function TodoForm({ initialTodos }: { initialTodos: Todo[] }) {
+  const [optimisticTodos, addOptimisticTodo] = useOptimistic<
+    Todo[],
+    Todo['title']
+  >(initialTodos, (state, title) => [
+    ...state,
+    { id: generateUUID(state.map((todo) => todo.id)), title },
+  ]);
 
   return (
     <div>
-      <Card className="m-3 w-[28rem]">
-        <CardHeader>
-          <CardTitle>Create todo form</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form
-            action={(formData) => {
-              addOptimisticTodo({
-                id: Math.random(),
-                title: formData.get('todoTitle') as string,
-              });
-              wrappedCreateTodo(formData);
-            }}
-            className="flex flex-col space-y-4"
-          >
-            <input
-              className="rounded-sm"
-              type="text"
-              id="todoTitle"
-              name="todoTitle"
-              placeholder="Todo title"
-              defaultValue={formState.title}
-            />
-            {formState.errors.message && (
-              <div className="text-destructive">{formState.errors.message}</div>
-            )}
-            <SubmitButton />
-          </form>
-        </CardContent>
-      </Card>
+      <div>
+        <form
+          action={async (formData: FormData) => {
+            const todoTitle = formData.get('todoTitle') as string;
+            addOptimisticTodo(todoTitle);
+            await createTodo(undefined, todoTitle);
+          }}
+          className="flex flex-col space-y-4"
+        >
+          <input
+            className="rounded-sm"
+            type="text"
+            id="todoTitle"
+            name="todoTitle"
+            placeholder="Todo title"
+          />
+          <SubmitButton />
+        </form>
+      </div>
       <div>
         <ul className="space-y-2">
           {optimisticTodos.map((todo) => (

@@ -10,12 +10,7 @@ export type CreateTodoFormState = {
   };
 };
 
-export async function createTodo(
-  previousState: CreateTodoFormState,
-  formData: FormData,
-) {
-  const title = formData.get('todoTitle') as string;
-
+export async function createTodo(_previousState: unknown, title: string) {
   if (!title) {
     return {
       title,
