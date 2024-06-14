@@ -3,7 +3,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X, OctagonAlert, Info, TriangleAlert } from 'lucide-react';
 import * as React from 'react';
-import type { DialogVariant } from '~/lib/dialogs/store';
+import { type DialogVariant } from '~/lib/dialogs/dialog-schemas';
 import { cn } from '~/lib/utils';
 
 // Show different icons based on the dialog variant

@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
-import { type Dialog } from './store';
 import { useDialogStore } from './dialog-store-provider';
+import { type Dialog } from './dialog-schemas';
 
 const useDialog = () => {
   const { openDialog, closeDialog, dialogs } = useDialogStore((state) => state);
@@ -13,7 +13,7 @@ const useDialog = () => {
     confirmLabel,
     onConfirm,
     onCancel,
-  }: Dialog) => {
+  }: Omit<Dialog, 'id'>) => {
     const id = nanoid();
     openDialog({
       id,

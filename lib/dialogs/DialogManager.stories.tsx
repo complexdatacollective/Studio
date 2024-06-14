@@ -3,8 +3,8 @@ import { Button } from '~/components/ui/Button';
 import { fn } from '@storybook/test';
 import DialogManager from './DialogManager';
 import useDialog from './useDialog';
-import { Dialog } from './store';
 import { DialogStoreProvider } from './dialog-store-provider';
+import { Dialog, DialogVariants } from './dialog-schemas';
 
 const meta = {
   title: 'Dialogs/Dialog',
@@ -17,7 +17,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     type: {
-      options: ['Info', 'Warning', 'Error'],
+      options: Object.values(DialogVariants),
       control: { type: 'select' },
     },
     title: { control: 'text' },
@@ -51,7 +51,7 @@ type Story = StoryObj<typeof meta>;
 
 export const InfoDialog: Story = {
   args: {
-    type: 'Info',
+    type: DialogVariants.Info,
   },
 
   render: (props) => {

@@ -1,25 +1,5 @@
-import { type ReactNode } from 'react';
 import { createStore } from 'zustand/vanilla';
-
-// add more variants here as needed
-enum DialogVariants {
-  Error = 'Error',
-  Warning = 'Warning',
-  Info = 'Info',
-}
-
-export type DialogVariant = keyof typeof DialogVariants;
-
-export type Dialog = {
-  id: string;
-  type: DialogVariant;
-  title: string;
-  content: string | ReactNode;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-};
+import { type Dialog } from './dialog-schemas';
 
 type DialogState = {
   dialogs: Dialog[];
