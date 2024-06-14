@@ -1,13 +1,15 @@
 'use server';
 
+import { todoFormSchema } from '~/lib/schemas/todoForm';
 import { safeRevalidateTag } from '~/lib/cache';
 import { db } from '~/lib/db';
 
 export type CreateTodoFormState = {
   title: string;
   errors: {
-    message: string | undefined;
+    message?: string | undefined;
   };
+  success?: boolean;
 };
 
 export async function createTodo(
@@ -22,6 +24,21 @@ export async function createTodo(
       errors: {
         message: 'Must provide a title for the todo',
       },
+      success: false,
+    };
+  }
+
+  const parsedFormData = todoFormSchema.safeParse({
+    todoTitle: title,
+  });
+
+  if (!parsedFormData.success) {
+    return {
+      title,
+      errors: {
+        ...parsedFormData.error.flatten(),
+      },
+      success: false,
     };
   }
 
@@ -38,5 +55,12 @@ export async function createTodo(
     errors: {
       message: undefined,
     },
+    success: true,
   };
+}
+
+export async function deleteAllTodos() {
+  await db.todo.deleteMany();
+
+  safeRevalidateTag('getTodos');
 }
