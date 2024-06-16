@@ -1,31 +1,13 @@
 import { nanoid } from 'nanoid';
 import { useDialogStore } from './dialog-store-provider';
-import { type Dialog } from './dialog-schemas';
+import { type DialogWithoutId } from './dialog-schemas';
 
 const useDialog = () => {
   const { openDialog, closeDialog, dialogs } = useDialogStore((state) => state);
 
-  const showDialog = ({
-    type,
-    content,
-    title,
-    cancelLabel,
-    confirmLabel,
-    onConfirm,
-    onCancel,
-  }: Omit<Dialog, 'id'>) => {
+  const showDialog = (dialog: DialogWithoutId) => {
     const id = nanoid();
-    openDialog({
-      id,
-      type,
-      title,
-      content,
-      cancelLabel,
-      confirmLabel,
-      onConfirm,
-      onCancel,
-    });
-
+    openDialog({ id, ...dialog });
     return id;
   };
 
@@ -39,8 +21,8 @@ const useDialog = () => {
 
   const cancelDialog = (id: string) => {
     const dialog = dialogs.find((d) => d.id === id);
-    if (dialog?.onCancel) {
-      dialog.onCancel();
+    if (dialog?.type === 'Confirm' || dialog?.type === 'Warning') {
+      dialog.onCancel?.();
     }
     closeDialog(id);
   };

@@ -1,68 +1,78 @@
 import { z } from 'zod';
 import { type ReactNode } from 'react';
 
-// add more variants here as needed
-export const DialogVariants = [
-  'Warning', // we may use confirm dialog for warnings?
-  'Info',
-  'Confirm',
-  'Error',
-] as const;
+export const DialogVariants = {
+  Info: 'Info',
+  Confirm: 'Confirm',
+  Warning: 'Warning',
+  Error: 'Error',
+} as const;
 
-export type DialogVariant = (typeof DialogVariants)[number];
-
-export const DialogSchema = z.object({
+const SharedDialogProperties = z.object({
   id: z.string(),
-  type: z.enum(DialogVariants),
   title: z.string(),
-  content: z.union([z.string(), z.custom<ReactNode>()]),
-  error: z.instanceof(Error).optional(),
   confirmLabel: z.string().optional(),
-  cancelLabel: z.string().optional(),
-  onConfirm: z.function().returns(z.undefined()).optional(),
-  onCancel: z.function().returns(z.undefined()).optional(),
+  onConfirm: z.function().returns(z.undefined()),
 });
 
-export type Dialog = z.infer<typeof DialogSchema>;
+const DialogWithContent = SharedDialogProperties.extend({
+  content: z.union([z.string(), z.custom<ReactNode>()]),
+});
 
-export const InfoDialogSchema = DialogSchema.omit({
-  cancelLabel: true,
-  onCancel: true,
-  error: true,
-}).extend({
-  type: z.literal('Info'),
-  onConfirm: z.function().returns(z.undefined()),
+export const InfoDialogSchema = DialogWithContent.extend({
+  type: z.literal(DialogVariants.Info),
 });
 
 export type InfoDialog = z.infer<typeof InfoDialogSchema>;
 
-export const ConfirmDialogSchema = DialogSchema.omit({
-  error: true,
-}).extend({
-  type: z.literal('Confirm'),
-  onConfirm: z.function().returns(z.undefined()),
-  onCancel: z.function().returns(z.undefined()),
+export const ConfirmDialogSchema = DialogWithContent.extend({
+  type: z.literal(DialogVariants.Confirm),
+  cancelLabel: z.string().optional(),
+  onCancel: z.function().returns(z.undefined()).optional(),
 });
 
 export type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
 
-export const WarningDialogSchema = DialogSchema.omit({
-  error: true,
-}).extend({
-  type: z.literal('Warning'),
-  onConfirm: z.function().returns(z.undefined()),
-  onCancel: z.function().returns(z.undefined()),
+export const WarningDialogSchema = DialogWithContent.extend({
+  type: z.literal(DialogVariants.Warning),
+  cancelLabel: z.string().optional(),
+  onCancel: z.function().returns(z.undefined()).optional(),
 });
 
 export type WarningDialog = z.infer<typeof WarningDialogSchema>;
 
-export const ErrorDialogSchema = DialogSchema.omit({
-  cancelLabel: true,
-  onCancel: true,
-}).extend({
-  type: z.literal('Error'),
+// Error dialogs have an 'error' field instead of 'content'
+export const ErrorDialogSchema = SharedDialogProperties.extend({
+  type: z.literal(DialogVariants.Error),
   onConfirm: z.function().returns(z.undefined()),
   error: z.instanceof(Error),
 });
 
 export type ErrorDialog = z.infer<typeof ErrorDialogSchema>;
+
+// Create a discriminated union of all dialog schemas
+export const DialogSchema = z.discriminatedUnion('type', [
+  InfoDialogSchema,
+  ConfirmDialogSchema,
+  WarningDialogSchema,
+  ErrorDialogSchema,
+]);
+
+export type Dialog = z.infer<typeof DialogSchema>;
+
+// Omit the 'id' field from each individual dialog schema
+const InfoDialogWithoutIdSchema = InfoDialogSchema.omit({ id: true });
+const ConfirmDialogWithoutIdSchema = ConfirmDialogSchema.omit({ id: true });
+const WarningDialogWithoutIdSchema = WarningDialogSchema.omit({ id: true });
+const ErrorDialogWithoutIdSchema = ErrorDialogSchema.omit({ id: true });
+
+// Create a discriminated union of dialogs without the 'id' field
+export const DialogWithoutIdSchema = z.discriminatedUnion('type', [
+  InfoDialogWithoutIdSchema,
+  ConfirmDialogWithoutIdSchema,
+  WarningDialogWithoutIdSchema,
+  ErrorDialogWithoutIdSchema,
+]);
+
+// Infer the type of DialogWithoutIdSchema
+export type DialogWithoutId = z.infer<typeof DialogWithoutIdSchema>;

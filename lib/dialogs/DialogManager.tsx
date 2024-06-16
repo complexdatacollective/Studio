@@ -7,22 +7,24 @@ import WarningDialog from './WarningDialog';
 import { type Dialog } from './dialog-schemas';
 import useDialog from './useDialog';
 
-const DialogComponents = {
-  Info: InfoDialog,
-  Confirm: ConfirmDialog,
-  Warning: WarningDialog,
-  Error: ErrorDialog,
-};
-
 const DialogManager = () => {
   const { dialogs } = useDialog();
-
   return <div>{dialogs.map(renderDialog)}</div>;
 };
 
 export default DialogManager;
 
 const renderDialog = (dialog: Dialog) => {
-  const DialogComponent = DialogComponents[dialog.type];
-  return <DialogComponent key={dialog.id} {...dialog} />;
+  switch (dialog.type) {
+    case 'Info':
+      return <InfoDialog {...dialog} />;
+    case 'Confirm':
+      return <ConfirmDialog {...dialog} />;
+    case 'Warning':
+      return <WarningDialog {...dialog} />;
+    case 'Error':
+      return <ErrorDialog {...dialog} />;
+    default:
+      throw new Error(`Unknown dialog type provided!}`);
+  }
 };

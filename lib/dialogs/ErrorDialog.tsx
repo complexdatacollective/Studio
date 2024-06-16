@@ -12,7 +12,6 @@ import { type ErrorDialog as ErrorDialogType } from './dialog-schemas';
 const ErrorDialog = ({
   id,
   type,
-  content,
   confirmLabel,
   error,
   title,
@@ -24,10 +23,10 @@ const ErrorDialog = ({
       <DialogContent variant={type}>
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>
-          {content}
-          <br />
           {error.name}
+          <br />
           {error.message}
+          <br />
           {error.stack}
         </DialogDescription>
         <DialogFooter>
