@@ -3,6 +3,7 @@
 import ConfirmDialog from './ConfirmDialog';
 import ErrorDialog from './ErrorDialog';
 import InfoDialog from './InfoDialog';
+import PromptDialog from './PromptDialog';
 import WarningDialog from './WarningDialog';
 import { type Dialog } from './dialog-schemas';
 import useDialog from './useDialog';
@@ -23,6 +24,8 @@ const renderDialog = (dialog: Dialog, index: number) => {
       return <ConfirmDialog key={dialog.id} order={index} {...dialog} />;
     case 'Warning':
       return <WarningDialog key={dialog.id} order={index} {...dialog} />;
+    case 'Prompt':
+      return <PromptDialog key={dialog.id} order={index} {...dialog} />;
     case 'Error':
       return <ErrorDialog key={dialog.id} order={index} {...dialog} />;
     default:

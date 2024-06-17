@@ -5,6 +5,7 @@ export const DialogVariants = {
   Info: 'Info',
   Confirm: 'Confirm',
   Warning: 'Warning',
+  Prompt: 'Prompt',
   Error: 'Error',
 } as const;
 
@@ -41,6 +42,14 @@ const WarningDialogSchema = DialogWithContent.extend({
 
 export type WarningDialog = z.infer<typeof WarningDialogSchema>;
 
+const PromptDialogSchema = DialogWithContent.extend({
+  type: z.literal(DialogVariants.Prompt),
+  formId: z.string(),
+  onConfirm: z.function().returns(z.boolean()),
+});
+
+export type PromptDialog = z.infer<typeof PromptDialogSchema>;
+
 // Error dialogs have an 'error' field instead of 'content'
 const ErrorDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Error),
@@ -55,6 +64,7 @@ const DialogSchema = z.discriminatedUnion('type', [
   InfoDialogSchema,
   ConfirmDialogSchema,
   WarningDialogSchema,
+  PromptDialogSchema,
   ErrorDialogSchema,
 ]);
 
@@ -64,6 +74,7 @@ export type Dialog = z.infer<typeof DialogSchema>;
 const InfoDialogWithoutIdSchema = InfoDialogSchema.omit({ id: true });
 const ConfirmDialogWithoutIdSchema = ConfirmDialogSchema.omit({ id: true });
 const WarningDialogWithoutIdSchema = WarningDialogSchema.omit({ id: true });
+const PromptDialogWithoutIdSchema = PromptDialogSchema.omit({ id: true });
 const ErrorDialogWithoutIdSchema = ErrorDialogSchema.omit({ id: true });
 
 // Create a discriminated union of dialogs without the 'id' field
@@ -71,6 +82,7 @@ const DialogWithoutIdSchema = z.discriminatedUnion('type', [
   InfoDialogWithoutIdSchema,
   ConfirmDialogWithoutIdSchema,
   WarningDialogWithoutIdSchema,
+  PromptDialogWithoutIdSchema,
   ErrorDialogWithoutIdSchema,
 ]);
 

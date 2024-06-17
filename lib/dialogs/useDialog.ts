@@ -13,10 +13,12 @@ const useDialog = () => {
 
   const confirmDialog = (id: string) => {
     const dialog = dialogs.find((d) => d.id === id);
-    if (dialog?.onConfirm) {
-      dialog.onConfirm();
+    const result = dialog?.onConfirm?.();
+
+    // close the dialog if onConfirm resolves to undefined or true
+    if (result === undefined || result) {
+      closeDialog(id);
     }
-    closeDialog(id);
   };
 
   const cancelDialog = (id: string) => {
