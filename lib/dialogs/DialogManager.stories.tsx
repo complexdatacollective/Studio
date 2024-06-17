@@ -6,6 +6,10 @@ import { DialogStoreProvider } from './dialog-store-provider';
 import DialogManager from './DialogManager';
 import useDialog from './useDialog';
 
+/* 
+ This story is a composition of the DialogManager component and the useDialog hook.
+*/
+
 const meta = {
   title: 'Dialogs/Dialog',
   component: DialogManager,
@@ -56,6 +60,7 @@ const meta = {
     title: 'Dialog title',
     content: 'This is the dialog content.',
     confirmLabel: 'OK',
+    // Error dialog args will be used if the type is 'Error'
     error: {
       name: 'Error name',
       message: 'Error message',
@@ -82,14 +87,11 @@ export const InfoDialog: Story = {
   args: {
     type: 'Info',
   },
-
   render: (props: Dialog) => {
     const { showDialog } = useDialog();
-
     const createDialog = () => {
       showDialog(props);
     };
-
     return (
       <>
         <Button onClick={() => createDialog()}>Show Dialog</Button>
@@ -102,14 +104,11 @@ export const ConfirmDialog: Story = {
   args: {
     type: 'Confirm',
   },
-
   render: (props: Dialog) => {
     const { showDialog } = useDialog();
-
     const createDialog = () => {
       showDialog(props);
     };
-
     return (
       <>
         <Button variant="accent" onClick={() => createDialog()}>
@@ -124,14 +123,11 @@ export const WarningDialog: Story = {
   args: {
     type: 'Warning',
   },
-
   render: (props: Dialog) => {
     const { showDialog } = useDialog();
-
     const createDialog = () => {
       showDialog(props);
     };
-
     return (
       <>
         <Button variant="outline" onClick={() => createDialog()}>
@@ -146,14 +142,11 @@ export const ErrorDialog: Story = {
   args: {
     type: 'Error',
   },
-
   render: (props: Dialog) => {
     const { showDialog } = useDialog();
-
     const createDialog = () => {
       showDialog(props);
     };
-
     return (
       <>
         <Button variant="destructive" onClick={() => createDialog()}>

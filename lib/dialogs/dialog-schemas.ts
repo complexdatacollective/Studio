@@ -19,13 +19,13 @@ const DialogWithContent = SharedDialogProperties.extend({
   content: z.union([z.string(), z.custom<ReactNode>()]),
 });
 
-export const InfoDialogSchema = DialogWithContent.extend({
+const InfoDialogSchema = DialogWithContent.extend({
   type: z.literal(DialogVariants.Info),
 });
 
 export type InfoDialog = z.infer<typeof InfoDialogSchema>;
 
-export const ConfirmDialogSchema = DialogWithContent.extend({
+const ConfirmDialogSchema = DialogWithContent.extend({
   type: z.literal(DialogVariants.Confirm),
   cancelLabel: z.string().optional(),
   onCancel: z.function().returns(z.undefined()).optional(),
@@ -33,7 +33,7 @@ export const ConfirmDialogSchema = DialogWithContent.extend({
 
 export type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
 
-export const WarningDialogSchema = DialogWithContent.extend({
+const WarningDialogSchema = DialogWithContent.extend({
   type: z.literal(DialogVariants.Warning),
   cancelLabel: z.string().optional(),
   onCancel: z.function().returns(z.undefined()).optional(),
@@ -42,7 +42,7 @@ export const WarningDialogSchema = DialogWithContent.extend({
 export type WarningDialog = z.infer<typeof WarningDialogSchema>;
 
 // Error dialogs have an 'error' field instead of 'content'
-export const ErrorDialogSchema = SharedDialogProperties.extend({
+const ErrorDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Error),
   onConfirm: z.function().returns(z.undefined()),
   error: z.instanceof(Error),
@@ -51,7 +51,7 @@ export const ErrorDialogSchema = SharedDialogProperties.extend({
 export type ErrorDialog = z.infer<typeof ErrorDialogSchema>;
 
 // Create a discriminated union of all dialog schemas
-export const DialogSchema = z.discriminatedUnion('type', [
+const DialogSchema = z.discriminatedUnion('type', [
   InfoDialogSchema,
   ConfirmDialogSchema,
   WarningDialogSchema,
@@ -67,7 +67,7 @@ const WarningDialogWithoutIdSchema = WarningDialogSchema.omit({ id: true });
 const ErrorDialogWithoutIdSchema = ErrorDialogSchema.omit({ id: true });
 
 // Create a discriminated union of dialogs without the 'id' field
-export const DialogWithoutIdSchema = z.discriminatedUnion('type', [
+const DialogWithoutIdSchema = z.discriminatedUnion('type', [
   InfoDialogWithoutIdSchema,
   ConfirmDialogWithoutIdSchema,
   WarningDialogWithoutIdSchema,
