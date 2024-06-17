@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Button } from '~/components/ui/Button';
 import { fn } from '@storybook/test';
+import { Button } from '~/components/ui/Button';
+import { Dialog, DialogVariants } from './dialog-schemas';
+import { DialogStoreProvider } from './dialog-store-provider';
 import DialogManager from './DialogManager';
 import useDialog from './useDialog';
-import { DialogStoreProvider } from './dialog-store-provider';
-import { Dialog, DialogVariants } from './dialog-schemas';
 
 const meta = {
   title: 'Dialogs/Dialog',
@@ -17,21 +17,50 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     type: {
-      options: Object.values(DialogVariants),
       control: { type: 'select' },
+      options: Object.values(DialogVariants),
     },
     title: { control: 'text' },
-    content: { control: 'text' },
+    content: { control: 'text', if: { arg: 'type', neq: 'Error' } },
+    error: {
+      name: 'error',
+      type: { name: 'object' },
+      description: 'The error object',
+      control: {
+        type: 'object',
+      },
+      defaultValue: {
+        name: 'error',
+        message: 'An error occurred',
+        stack: 'Error stack',
+      },
+      table: {
+        type: {
+          summary: 'object',
+          detail: `{ name: string, message: string, stack: string }`,
+        },
+        defaultValue: {
+          summary: 'error',
+          detail: `{ name: 'Error name', message: 'Error message', stack: 'Error stack' }`,
+        },
+      },
+      if: { arg: 'type', eq: 'Error' },
+    },
     confirmLabel: { control: 'text' },
-    cancelLabel: { control: 'text' },
+    cancelLabel: { control: 'text', if: { arg: 'type', neq: 'Error' } },
     onConfirm: { control: false },
-    onCancel: { control: false },
+    onCancel: { control: false, if: { arg: 'type', neq: 'Error' } },
   },
   args: {
     type: 'Info',
     title: 'Dialog title',
     content: 'This is the dialog content.',
     confirmLabel: 'OK',
+    error: {
+      name: 'Error name',
+      message: 'Error message',
+      stack: 'Error stack',
+    },
     cancelLabel: 'Cancel',
     onConfirm: fn(() => {}),
     onCancel: fn(() => {}),
@@ -47,14 +76,14 @@ const meta = {
 } as Meta<Dialog>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<Dialog>;
 
 export const InfoDialog: Story = {
   args: {
     type: 'Info',
   },
 
-  render: (props) => {
+  render: (props: Dialog) => {
     const { showDialog } = useDialog();
 
     const createDialog = () => {
@@ -64,6 +93,72 @@ export const InfoDialog: Story = {
     return (
       <>
         <Button onClick={() => createDialog()}>Show Dialog</Button>
+      </>
+    );
+  },
+};
+
+export const ConfirmDialog: Story = {
+  args: {
+    type: 'Confirm',
+  },
+
+  render: (props: Dialog) => {
+    const { showDialog } = useDialog();
+
+    const createDialog = () => {
+      showDialog(props);
+    };
+
+    return (
+      <>
+        <Button variant="accent" onClick={() => createDialog()}>
+          Show Dialog
+        </Button>
+      </>
+    );
+  },
+};
+
+export const WarningDialog: Story = {
+  args: {
+    type: 'Warning',
+  },
+
+  render: (props: Dialog) => {
+    const { showDialog } = useDialog();
+
+    const createDialog = () => {
+      showDialog(props);
+    };
+
+    return (
+      <>
+        <Button variant="outline" onClick={() => createDialog()}>
+          Show Dialog
+        </Button>
+      </>
+    );
+  },
+};
+
+export const ErrorDialog: Story = {
+  args: {
+    type: 'Error',
+  },
+
+  render: (props: Dialog) => {
+    const { showDialog } = useDialog();
+
+    const createDialog = () => {
+      showDialog(props);
+    };
+
+    return (
+      <>
+        <Button variant="destructive" onClick={() => createDialog()}>
+          Show Dialog
+        </Button>
       </>
     );
   },
