@@ -15,7 +15,7 @@ export async function createTodo(_: unknown, formData: FormData) {
   const title = formData.get('todoTitle') as string;
 
   const parsedFormData = todoFormSchema.safeParse({
-    title,
+    todoTitle: title,
   });
 
   if (!parsedFormData.success) {
