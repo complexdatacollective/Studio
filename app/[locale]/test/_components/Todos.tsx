@@ -1,5 +1,6 @@
 'use client';
 
+import type { Todo } from '@prisma/client';
 import { useGlobalOptimisticValue } from '../useOptimisticUpdate';
 
 type TodoAtom = {
@@ -8,15 +9,19 @@ type TodoAtom = {
   processing: boolean;
 };
 
-export default function Todos() {
+export default function Todos({ initialTodos }: { initialTodos: Todo[] }) {
   const data = useGlobalOptimisticValue({ key: 'todoStore' }) as TodoAtom[];
 
   return (
     <ul>
-      {data.map((todo) => (
+      {(data && data.length > 0 ? data : initialTodos).map((todo) => (
         <li
           key={todo.id}
-          className={todo.processing ? 'opacity-50' : 'opacity-100'}
+          className={
+            'processing' in todo && todo.processing
+              ? 'opacity-50'
+              : 'opacity-100'
+          }
         >
           {todo.title}
         </li>
