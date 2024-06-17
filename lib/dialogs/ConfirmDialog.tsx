@@ -16,12 +16,13 @@ const ConfirmDialog = ({
   title,
   content,
   cancelLabel,
-}: ConfirmDialogType) => {
+  order,
+}: ConfirmDialogType & { order: number }) => {
   const { confirmDialog, cancelDialog } = useDialog();
 
   return (
     <Dialog key={id} open onOpenChange={() => cancelDialog(id)}>
-      <DialogContent>
+      <DialogContent dialogOrder={order}>
         <DialogTitle className="flex items-center gap-2">
           <BookmarkCheck size={24} className="text-cyber-grape" />
           {title}

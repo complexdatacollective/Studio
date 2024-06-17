@@ -10,12 +10,18 @@ import {
 import { type ErrorDialog as ErrorDialogType } from './dialog-schemas';
 import useDialog from './useDialog';
 
-const ErrorDialog = ({ id, confirmLabel, error, title }: ErrorDialogType) => {
+const ErrorDialog = ({
+  id,
+  confirmLabel,
+  error,
+  title,
+  order,
+}: ErrorDialogType & { order: number }) => {
   const { confirmDialog } = useDialog();
 
   return (
     <Dialog key={id} open onOpenChange={() => confirmDialog(id)}>
-      <DialogContent>
+      <DialogContent dialogOrder={order}>
         <DialogTitle className="flex items-center gap-2">
           <OctagonAlert size={24} className="text-destructive" />
           {title}

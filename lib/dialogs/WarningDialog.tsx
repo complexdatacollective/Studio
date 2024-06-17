@@ -16,12 +16,13 @@ const WarningDialog = ({
   title,
   content,
   cancelLabel,
-}: WarningDialogType) => {
+  order,
+}: WarningDialogType & { order: number }) => {
   const { confirmDialog, cancelDialog } = useDialog();
 
   return (
     <Dialog key={id} open onOpenChange={() => cancelDialog(id)}>
-      <DialogContent>
+      <DialogContent dialogOrder={order}>
         <DialogTitle className="flex items-center gap-2">
           <TriangleAlert className="h-6 w-6 text-mustard" />
           {title}

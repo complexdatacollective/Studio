@@ -35,8 +35,10 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    dialogOrder: number;
+  }
+>(({ className, children, dialogOrder, ...props }, ref) => (
   <DialogPrimitive.Content
     ref={ref}
     className={cn(
@@ -58,6 +60,7 @@ const DialogContent = React.forwardRef<
         translateY: '-50%',
         translateX: '-50%',
         scale: 1,
+        transition: { delay: dialogOrder * 0.25 },
       }}
       exit={{
         opacity: 0,

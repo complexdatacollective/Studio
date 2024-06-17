@@ -10,12 +10,18 @@ import {
 import { type InfoDialog as InfoDialogType } from './dialog-schemas';
 import useDialog from './useDialog';
 
-const InfoDialog = ({ id, confirmLabel, title, content }: InfoDialogType) => {
+const InfoDialog = ({
+  id,
+  confirmLabel,
+  title,
+  content,
+  order,
+}: InfoDialogType & { order: number }) => {
   const { confirmDialog } = useDialog();
 
   return (
     <Dialog key={id} open onOpenChange={() => confirmDialog(id)}>
-      <DialogContent>
+      <DialogContent dialogOrder={order}>
         <DialogTitle className="flex items-center gap-2">
           <Info size={24} className="text-cerulean-blue" />
           {title}
