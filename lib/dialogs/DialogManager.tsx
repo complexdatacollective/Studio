@@ -6,10 +6,11 @@ import InfoDialog from './InfoDialog';
 import WarningDialog from './WarningDialog';
 import { type Dialog } from './dialog-schemas';
 import useDialog from './useDialog';
+import { AnimatePresence } from 'framer-motion';
 
 const DialogManager = () => {
   const { dialogs } = useDialog();
-  return <div>{dialogs.map(renderDialog)}</div>;
+  return <AnimatePresence>{dialogs.map(renderDialog)}</AnimatePresence>;
 };
 
 export default DialogManager;

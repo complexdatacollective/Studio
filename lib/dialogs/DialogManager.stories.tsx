@@ -156,3 +156,31 @@ export const ErrorDialog: Story = {
     );
   },
 };
+
+export const StackingDialogs: Story = {
+  args: {
+    type: 'Error',
+  },
+  render: (props: Dialog) => {
+    const { showDialog } = useDialog();
+    const createDialog = () => {
+      showDialog(props);
+      showDialog({
+        type: 'Info',
+        title: 'Info Dialog',
+        content: 'This is an info dialog.',
+        confirmLabel: 'Yes',
+        onConfirm: () => {
+          console.log('Info dialog confirmed');
+        },
+      });
+    };
+    return (
+      <>
+        <Button variant="destructive" onClick={() => createDialog()}>
+          Show Dialog
+        </Button>
+      </>
+    );
+  },
+};
