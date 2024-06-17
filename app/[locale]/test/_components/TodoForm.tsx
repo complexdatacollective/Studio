@@ -1,12 +1,11 @@
 'use client';
 
-import { type CreateTodoFormState, createTodo } from '~/server/actions/todo';
+import { createTodo } from '~/server/actions/todo';
 import SubmitButton from './SubmitButton';
 import { useRef } from 'react';
 import type { Todo } from '@prisma/client';
 import { useGlobalOptimistic } from '../useOptimisticUpdate';
 import { useFormState } from 'react-dom';
-import { create } from 'domain';
 
 // Function to generate an ascending ID number for optimistic updates, taking
 // into account the current number of todos.
