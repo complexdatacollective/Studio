@@ -28,6 +28,7 @@ export default function TodoForm({ initialTodos }: { initialTodos: Todo[] }) {
         processing: true,
       },
     ],
+    'todoStore',
   );
 
   return (

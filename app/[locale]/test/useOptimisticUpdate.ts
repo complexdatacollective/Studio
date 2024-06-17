@@ -1,16 +1,17 @@
 import { useAtom } from 'jotai';
-import { useState, useCallback, useOptimistic, useEffect } from 'react';
+import { useOptimistic, useEffect } from 'react';
 import { dataAtomFamily } from './_atoms';
 import { hash } from 'ohash';
 
 export const useGlobalOptimistic = <State, Action>(
   initialState: State,
   reducer: (state: State, action: Action) => State,
+  key: string,
 ): [State, (action: Action) => void] => {
   const [optimisticState, addOptimistic] = useOptimistic(initialState, reducer);
 
   // When optimistic state updates, sync it to our Jotai atom
-  const [data, setData] = useAtom(dataAtomFamily({ key: 'todoStore' }));
+  const [data, setData] = useAtom(dataAtomFamily({ key: key }));
 
   useEffect(() => {
     if (hash(optimisticState) !== hash(data)) {
@@ -22,7 +23,7 @@ export const useGlobalOptimistic = <State, Action>(
   return [optimisticState, addOptimistic];
 };
 
-export const useGlobalOptimisticValue = () => {
-  const [data] = useAtom(dataAtomFamily({ key: 'todoStore' }));
+export const useGlobalOptimisticValue = ({ key }: { key: string }) => {
+  const [data] = useAtom(dataAtomFamily({ key: key }));
   return data;
 };

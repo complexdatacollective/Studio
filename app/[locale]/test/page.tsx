@@ -10,7 +10,7 @@ export default async function Page() {
     <div>
       <h1 className="text-4xl">Responsive Form UX Test Page</h1>
       <TodoForm initialTodos={todos} />
-      <Todos initialTodos={todos} />
+      <Todos />
     </div>
   );
 }

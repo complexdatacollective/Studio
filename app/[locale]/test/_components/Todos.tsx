@@ -1,16 +1,15 @@
 'use client';
 
-import {
-  useGlobalOptimisticValue,
-  useOptimisticValue,
-} from '../useOptimisticUpdate';
+import { useGlobalOptimisticValue } from '../useOptimisticUpdate';
 
-export default function Todos({
-  initialTodos,
-}: {
-  initialTodos: { id: number; title: string; processing: boolean }[];
-}) {
-  const data = useGlobalOptimisticValue('globalTodos');
+type TodoAtom = {
+  id: number;
+  title: string;
+  processing: boolean;
+};
+
+export default function Todos() {
+  const data = useGlobalOptimisticValue({ key: 'todoStore' }) as TodoAtom[];
 
   return (
     <ul>
