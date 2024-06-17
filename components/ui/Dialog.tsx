@@ -1,24 +1,9 @@
 'use client';
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { X, OctagonAlert, Info, TriangleAlert } from 'lucide-react';
+import { X } from 'lucide-react';
 import * as React from 'react';
-import { type DialogVariant } from '~/lib/dialogs/dialog-schemas';
 import { cn } from '~/lib/utils';
-
-// Show different icons based on the dialog variant
-const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
-  switch (variant) {
-    case 'Error':
-      return <OctagonAlert size={24} className="text-destructive" />;
-    case 'Warning':
-      return <TriangleAlert size={24} className="text-mustard" />;
-    case 'Info':
-      return <Info size={24} className="text-cerulean-blue" />;
-    default:
-      throw new Error(`Unknown dialog variant`);
-  }
-};
 
 const Dialog = (props: DialogPrimitive.DialogProps) => {
   return (
@@ -47,16 +32,10 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-type DialogContentProps = React.ComponentPropsWithoutRef<
-  typeof DialogPrimitive.Content
-> & {
-  variant: DialogVariant;
-};
-
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  DialogContentProps
->(({ className, children, variant, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
   <DialogPrimitive.Content
     ref={ref}
     className={cn(
@@ -65,7 +44,6 @@ const DialogContent = React.forwardRef<
     )}
     {...props}
   >
-    <DialogIcon variant={variant} />
     {children}
     <DialogPrimitive.Close className="focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
       <X className="h-4 w-4" />
@@ -116,4 +94,4 @@ const DialogDescription = React.forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
-export { Dialog, DialogContent, DialogFooter, DialogTitle, DialogDescription };
+export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle };

@@ -17,13 +17,13 @@ export default DialogManager;
 const renderDialog = (dialog: Dialog) => {
   switch (dialog.type) {
     case 'Info':
-      return <InfoDialog {...dialog} />;
+      return <InfoDialog key={dialog.id} {...dialog} />;
     case 'Confirm':
-      return <ConfirmDialog {...dialog} />;
+      return <ConfirmDialog key={dialog.id} {...dialog} />;
     case 'Warning':
-      return <WarningDialog {...dialog} />;
+      return <WarningDialog key={dialog.id} {...dialog} />;
     case 'Error':
-      return <ErrorDialog {...dialog} />;
+      return <ErrorDialog key={dialog.id} {...dialog} />;
     default:
       throw new Error(`Unknown dialog type provided!}`);
   }

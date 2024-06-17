@@ -1,3 +1,5 @@
+import { Info } from 'lucide-react';
+import { Button } from '~/components/ui/Button';
 import {
   Dialog,
   DialogContent,
@@ -5,23 +7,19 @@ import {
   DialogFooter,
   DialogTitle,
 } from '~/components/ui/Dialog';
-import { Button } from '~/components/ui/Button';
-import useDialog from './useDialog';
 import { type InfoDialog as InfoDialogType } from './dialog-schemas';
+import useDialog from './useDialog';
 
-const InfoDialog = ({
-  id,
-  confirmLabel,
-  title,
-  type,
-  content,
-}: InfoDialogType) => {
+const InfoDialog = ({ id, confirmLabel, title, content }: InfoDialogType) => {
   const { confirmDialog } = useDialog();
 
   return (
     <Dialog key={id} open onOpenChange={() => confirmDialog(id)}>
-      <DialogContent variant={type}>
-        <DialogTitle>{title}</DialogTitle>
+      <DialogContent>
+        <DialogTitle className="flex items-center gap-2">
+          <Info size={24} className="text-cerulean-blue" />
+          {title}
+        </DialogTitle>
         <DialogDescription>{content}</DialogDescription>
         <DialogFooter>
           <Button onClick={() => confirmDialog(id)}>

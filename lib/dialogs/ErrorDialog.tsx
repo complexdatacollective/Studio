@@ -1,3 +1,5 @@
+import { OctagonAlert } from 'lucide-react';
+import { Button } from '~/components/ui/Button';
 import {
   Dialog,
   DialogContent,
@@ -5,23 +7,19 @@ import {
   DialogFooter,
   DialogTitle,
 } from '~/components/ui/Dialog';
-import { Button } from '~/components/ui/Button';
-import useDialog from './useDialog';
 import { type ErrorDialog as ErrorDialogType } from './dialog-schemas';
+import useDialog from './useDialog';
 
-const ErrorDialog = ({
-  id,
-  type,
-  confirmLabel,
-  error,
-  title,
-}: ErrorDialogType) => {
+const ErrorDialog = ({ id, confirmLabel, error, title }: ErrorDialogType) => {
   const { confirmDialog } = useDialog();
 
   return (
     <Dialog key={id} open onOpenChange={() => confirmDialog(id)}>
-      <DialogContent variant={type}>
-        <DialogTitle>{title}</DialogTitle>
+      <DialogContent>
+        <DialogTitle className="flex items-center gap-2">
+          <OctagonAlert size={24} className="text-destructive" />
+          {title}
+        </DialogTitle>
         <DialogDescription>
           {error.name}
           <br />
