@@ -1,6 +1,5 @@
 'use server';
 
-import { type Todo } from '@prisma/client';
 import { safeRevalidateTag } from '~/lib/cache';
 import { db } from '~/lib/db';
 
@@ -11,11 +10,13 @@ export type CreateTodoFormState = {
   };
 };
 
-export async function createTodo(title: Todo['title']) {
+export async function createTodo(_: unknown, formData: FormData) {
+  const title = formData.get('todoTitle') as string;
+
   if (!title) {
     return {
       errors: {
-        message: 'Must provide a title for the todo',
+        message: 'Server error: Must provide a title for the todo',
       },
     };
   }

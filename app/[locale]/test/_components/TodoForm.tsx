@@ -1,10 +1,12 @@
 'use client';
 
-import { createTodo } from '~/server/actions/todo';
+import { type CreateTodoFormState, createTodo } from '~/server/actions/todo';
 import SubmitButton from './SubmitButton';
 import { useRef } from 'react';
 import type { Todo } from '@prisma/client';
 import { useGlobalOptimistic } from '../useOptimisticUpdate';
+import { useFormState } from 'react-dom';
+import { create } from 'domain';
 
 // Function to generate an ascending ID number for optimistic updates, taking
 // into account the current number of todos.
@@ -31,15 +33,22 @@ export default function TodoForm({ initialTodos }: { initialTodos: Todo[] }) {
     'todoStore',
   );
 
+  const [formState, wrappedCreateTodo] = useFormState(createTodo, {
+    title: '',
+    errors: {
+      message: undefined,
+    },
+  });
+
   return (
     <div>
       <form
         ref={formRef}
-        action={async (formData: FormData) => {
+        action={(formData: FormData) => {
           formRef.current?.reset();
           const todoTitle = formData.get('todoTitle') as string;
           addOptimisticTodo(todoTitle);
-          await createTodo(todoTitle);
+          wrappedCreateTodo(formData);
         }}
         className="flex flex-col space-y-4"
       >
@@ -50,6 +59,9 @@ export default function TodoForm({ initialTodos }: { initialTodos: Todo[] }) {
           name="todoTitle"
           placeholder="Todo title"
         />
+        {formState.errors.message && (
+          <div className="text-destructive">{formState.errors.message}</div>
+        )}
         <SubmitButton />
       </form>
     </div>
