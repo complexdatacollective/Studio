@@ -122,25 +122,6 @@ export const ConfirmDialog: Story = {
   },
 };
 
-export const WarningDialog: Story = {
-  args: {
-    type: 'Warning',
-  },
-  render: (props: Dialog) => {
-    const { showDialog } = useDialog();
-    const createDialog = () => {
-      showDialog(props);
-    };
-    return (
-      <>
-        <Button variant="outline" onClick={() => createDialog()}>
-          Show Dialog
-        </Button>
-      </>
-    );
-  },
-};
-
 export const ErrorDialog: Story = {
   args: {
     type: 'Error',

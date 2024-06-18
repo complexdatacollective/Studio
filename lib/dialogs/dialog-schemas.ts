@@ -4,7 +4,6 @@ import { type ReactNode } from 'react';
 export const DialogVariants = {
   Info: 'Info',
   Confirm: 'Confirm',
-  Warning: 'Warning',
   Prompt: 'Prompt',
   Error: 'Error',
 } as const;
@@ -34,14 +33,6 @@ const ConfirmDialogSchema = DialogWithContent.extend({
 
 export type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
 
-const WarningDialogSchema = DialogWithContent.extend({
-  type: z.literal(DialogVariants.Warning),
-  cancelLabel: z.string().optional(),
-  onCancel: z.function().returns(z.undefined()).optional(),
-});
-
-export type WarningDialog = z.infer<typeof WarningDialogSchema>;
-
 const PromptDialogSchema = DialogWithContent.extend({
   type: z.literal(DialogVariants.Prompt),
   formId: z.string(),
@@ -63,7 +54,6 @@ export type ErrorDialog = z.infer<typeof ErrorDialogSchema>;
 const DialogSchema = z.discriminatedUnion('type', [
   InfoDialogSchema,
   ConfirmDialogSchema,
-  WarningDialogSchema,
   PromptDialogSchema,
   ErrorDialogSchema,
 ]);
@@ -73,6 +63,5 @@ export type Dialog = z.infer<typeof DialogSchema>;
 export type DialogWithoutId =
   | Omit<InfoDialog, 'id'>
   | Omit<ConfirmDialog, 'id'>
-  | Omit<WarningDialog, 'id'>
   | Omit<ErrorDialog, 'id'>
   | Omit<PromptDialog, 'id'>;

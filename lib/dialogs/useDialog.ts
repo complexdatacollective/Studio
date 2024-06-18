@@ -23,7 +23,7 @@ const useDialog = () => {
 
   const cancelDialog = (id: string) => {
     const dialog = dialogs.find((d) => d.id === id);
-    if (dialog?.type === 'Confirm' || dialog?.type === 'Warning') {
+    if (dialog?.type === 'Confirm') {
       dialog.onCancel?.();
     }
     closeDialog(id);
