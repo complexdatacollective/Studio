@@ -39,6 +39,27 @@ const PromptDialogSchema = SharedDialogProperties.extend({
   /**
    * This function is called when the prompt dialog choice is confirmed.
    * It should return a `true` value, indicating the prompt form submission has been successful.
+   * @example
+   * ```typescript
+   * onConfirm: () => {
+        // get the form based on the formId
+        const form = document.getElementById(
+          'prompt-example',
+        ) as HTMLFormElement;
+
+        // check if the form is valid
+        if (form.checkValidity()) {
+          // if the form is valid, get the form data
+          const formData = new FormData(form);
+          const firstName = formData.get('firstName');
+          // do something with the form data
+          console.log('Prompt dialog confirmed with:', firstName);
+          // then return true to close the dialog
+          return !!firstName;
+        }
+        return false;
+      }
+   * ```
    */
   onConfirm: z.function().returns(z.boolean()),
 });
