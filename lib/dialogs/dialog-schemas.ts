@@ -67,24 +67,12 @@ const DialogSchema = z.discriminatedUnion('type', [
   PromptDialogSchema,
   ErrorDialogSchema,
 ]);
-
+// use it as props in the Dialog component
 export type Dialog = z.infer<typeof DialogSchema>;
 
-// Omit the 'id' field from each individual dialog schema
-const InfoDialogWithoutIdSchema = InfoDialogSchema.omit({ id: true });
-const ConfirmDialogWithoutIdSchema = ConfirmDialogSchema.omit({ id: true });
-const WarningDialogWithoutIdSchema = WarningDialogSchema.omit({ id: true });
-const PromptDialogWithoutIdSchema = PromptDialogSchema.omit({ id: true });
-const ErrorDialogWithoutIdSchema = ErrorDialogSchema.omit({ id: true });
-
-// Create a discriminated union of dialogs without the 'id' field
-const DialogWithoutIdSchema = z.discriminatedUnion('type', [
-  InfoDialogWithoutIdSchema,
-  ConfirmDialogWithoutIdSchema,
-  WarningDialogWithoutIdSchema,
-  PromptDialogWithoutIdSchema,
-  ErrorDialogWithoutIdSchema,
-]);
-
-// Infer the type of DialogWithoutIdSchema
-export type DialogWithoutId = z.infer<typeof DialogWithoutIdSchema>;
+export type DialogWithoutId =
+  | Omit<InfoDialog, 'id'>
+  | Omit<ConfirmDialog, 'id'>
+  | Omit<WarningDialog, 'id'>
+  | Omit<ErrorDialog, 'id'>
+  | Omit<PromptDialog, 'id'>;

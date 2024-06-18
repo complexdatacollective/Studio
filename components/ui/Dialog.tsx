@@ -6,6 +6,15 @@ import * as React from 'react';
 import { cn } from '~/lib/utils';
 import { motion } from 'framer-motion';
 
+// todo: Implement a single Dialog component and render UI based on props
+// style for each dialog based on Type (look at Button component)
+
+// type DialogProps = {
+//   title: string;
+//   content: React.ReactNode;
+//   type: DialogVariants;
+// };
+
 const Dialog = (props: DialogPrimitive.DialogProps) => {
   return (
     <DialogPrimitive.Root {...props}>

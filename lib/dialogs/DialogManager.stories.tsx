@@ -6,6 +6,9 @@ import { DialogStoreProvider } from './dialog-store-provider';
 import DialogManager from './DialogManager';
 import useDialog from './useDialog';
 
+// Todo: Strip out everything from DialogManager Story except the core functionality
+// just render DialogManager functionalities here
+
 /* 
  This story is a composition of the DialogManager component and the useDialog hook.
 */

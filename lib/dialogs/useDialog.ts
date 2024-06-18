@@ -15,8 +15,8 @@ const useDialog = () => {
     const dialog = dialogs.find((d) => d.id === id);
     const result = dialog?.onConfirm?.();
 
-    // close the dialog if onConfirm resolves to undefined or true
-    if (result === undefined || result) {
+    // close the dialog if it's not a prompt dialog or the prompt dialog returns a truthy value
+    if (dialog?.type !== 'Prompt' || result) {
       closeDialog(id);
     }
   };
