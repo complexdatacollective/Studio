@@ -36,6 +36,10 @@ type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
 const PromptDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Prompt),
   formId: z.string(),
+  /**
+   * This function is called when the prompt dialog choice is confirmed.
+   * It should return a `true` value, indicating the prompt form submission has been successful.
+   */
   onConfirm: z.function().returns(z.boolean()),
 });
 

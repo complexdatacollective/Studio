@@ -17,8 +17,8 @@ import {
 } from '~/lib/dialogs/dialog-schemas';
 import { Button } from './Button';
 
-// todo: Implement a single Dialog component and render UI based on props
-// style for each dialog based on Type (look at Button component)
+// todo: Tidy up the component, try to make it more readable
+// todo: style for each dialog based on Type (look at Button component)
 
 type DialogProps = {
   dialog: DialogType;
@@ -33,10 +33,17 @@ const Dialog = (props: DialogProps) => {
     props;
 
   return (
-    <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog)}>
+    <DialogPrimitive.Root
+      modal={dialog.type === 'Prompt'}
+      open
+      onOpenChange={() => handleOpenChange(dialog)}
+    >
       <DialogPortal>
         <DialogOverlay>
-          <DialogContent dialogOrder={dialogOrder}>
+          <DialogContent
+            dialogOrder={dialogOrder}
+            disableClose={dialog.type === 'Prompt'}
+          >
             <DialogTitle className="flex items-center gap-2">
               <DialogIcon variant={dialog.type} />
               {dialog.title}
@@ -60,9 +67,19 @@ const Dialog = (props: DialogProps) => {
                   {dialog.cancelLabel ?? 'Cancel'}
                 </Button>
               )}
-              <Button onClick={() => confirmDialog(dialog)}>
-                {dialog.confirmLabel ?? 'OK'}
-              </Button>
+              {dialog.type === 'Prompt' ? (
+                <Button
+                  type="submit"
+                  form={dialog.formId}
+                  onClick={() => confirmDialog(dialog)}
+                >
+                  {dialog.confirmLabel ?? 'OK'}
+                </Button>
+              ) : (
+                <Button onClick={() => confirmDialog(dialog)}>
+                  {dialog.confirmLabel ?? 'OK'}
+                </Button>
+              )}
             </DialogFooter>
           </DialogContent>
         </DialogOverlay>

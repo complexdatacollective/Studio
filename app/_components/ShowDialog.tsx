@@ -13,8 +13,7 @@ const ShowDialog = () => {
       title: 'Error Dialog',
       error: {
         name: 'Error',
-        message:
-          'An error occurred,Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam earum est ea eius fuga optio numquam officiis id voluptas debitis, laudantium, possimus sint cumque vitae perferendis similique explicabo eligendi minima!',
+        message: 'An error occurred message',
         stack: 'Error stack',
       },
       onConfirm: () => {
@@ -30,19 +29,33 @@ const ShowDialog = () => {
       type: 'Prompt',
       title: 'Prompt Dialog',
       content: (
-        <form id="prompt-example">
-          <input required type="text" placeholder="please enter your name..." />
+        <form id="prompt-example" onSubmit={(e) => e.preventDefault()}>
+          <input
+            required
+            name="firstName"
+            type="text"
+            placeholder="please enter your first name..."
+          />
         </form>
       ),
       confirmLabel: 'Yes',
       formId: 'prompt-example',
       onConfirm: () => {
-        // submit the form and prevent default refresh
-        const form = document.getElementById('prompt-example');
-        if (form instanceof HTMLFormElement) {
-          form.submit();
-        }
+        // get the form based on the formId
+        const form = document.getElementById(
+          'prompt-example',
+        ) as HTMLFormElement;
 
+        // check if the form is valid
+        if (form.checkValidity()) {
+          // if the form is valid, get the form data
+          const formData = new FormData(form);
+          const firstName = formData.get('firstName');
+          // do something with the form data
+          console.log('Prompt dialog confirmed with:', firstName);
+          // then return true to close the dialog
+          return !!firstName;
+        }
         return false;
       },
     });

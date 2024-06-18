@@ -14,8 +14,11 @@ const DialogManager = () => {
       closeDialog(dialog.id);
       return;
     }
-    dialog.onConfirm?.();
-    closeDialog(dialog.id);
+    const result = dialog?.onConfirm?.();
+    // close the dialog if it's not a prompt dialog or the prompt dialog returns a truthy value
+    if (dialog?.type !== 'Prompt' || result) {
+      closeDialog(dialog.id);
+    }
   };
 
   const confirmDialog = (dialog: DialogType) => {
