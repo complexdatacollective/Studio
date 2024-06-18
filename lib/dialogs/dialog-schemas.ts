@@ -23,7 +23,7 @@ const InfoDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Info),
 });
 
-export type InfoDialog = z.infer<typeof InfoDialogSchema>;
+type InfoDialog = z.infer<typeof InfoDialogSchema>;
 
 const ConfirmDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Confirm),
@@ -31,7 +31,7 @@ const ConfirmDialogSchema = SharedDialogProperties.extend({
   onCancel: z.function().returns(z.undefined()).optional(),
 });
 
-export type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
+type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
 
 const PromptDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Prompt),
@@ -39,7 +39,7 @@ const PromptDialogSchema = SharedDialogProperties.extend({
   onConfirm: z.function().returns(z.boolean()),
 });
 
-export type PromptDialog = z.infer<typeof PromptDialogSchema>;
+type PromptDialog = z.infer<typeof PromptDialogSchema>;
 
 // Error dialogs have an 'error' field instead of 'content'
 const ErrorDialogSchema = SharedDialogProperties.extend({
@@ -47,7 +47,7 @@ const ErrorDialogSchema = SharedDialogProperties.extend({
   error: z.instanceof(Error),
 });
 
-export type ErrorDialog = z.infer<typeof ErrorDialogSchema>;
+type ErrorDialog = z.infer<typeof ErrorDialogSchema>;
 
 // Create a discriminated union of all dialog schemas
 const DialogSchema = z.discriminatedUnion('type', [

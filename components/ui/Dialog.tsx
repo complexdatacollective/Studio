@@ -71,6 +71,8 @@ const Dialog = (props: DialogProps) => {
   );
 };
 
+export default Dialog;
+
 const DialogPortal = DialogPrimitive.Portal;
 
 const DialogOverlay = React.forwardRef<
@@ -192,13 +194,4 @@ const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
     default:
       throw new Error(`Unknown dialog variant`);
   }
-};
-
-export {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogTitle,
-  DialogIcon,
 };

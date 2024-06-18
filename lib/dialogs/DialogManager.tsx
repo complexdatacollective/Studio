@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence } from 'framer-motion';
-import { Dialog } from '~/components/ui/Dialog';
+import Dialog from '~/components/ui/Dialog';
 import { type Dialog as DialogType } from './dialog-schemas';
 import { useDialogStore } from './dialog-store-provider';
 
