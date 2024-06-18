@@ -122,6 +122,43 @@ export const ConfirmDialog: Story = {
   },
 };
 
+export const PromptDialog: Story = {
+  args: {
+    type: 'Prompt',
+    title: 'Prompt Dialog',
+    content: (
+      <form id="prompt-form" onSubmit={(e) => e.preventDefault()}>
+        <input required name="input" type="text" placeholder="required input" />
+      </form>
+    ),
+    confirmLabel: 'Submit',
+    formId: 'prompt-form',
+    onConfirm: () => {
+      // get the form based on the formId
+      const form = document.getElementById('prompt-form') as HTMLFormElement;
+
+      // check if the form is valid
+      if (form.checkValidity()) {
+        return true;
+      }
+      return false;
+    },
+  },
+  render: (props: Dialog) => {
+    const { openDialog } = useDialogStore((state) => state);
+    const createDialog = () => {
+      openDialog(props);
+    };
+    return (
+      <>
+        <Button variant="accent" onClick={() => createDialog()}>
+          Show Dialog
+        </Button>
+      </>
+    );
+  },
+};
+
 export const ErrorDialog: Story = {
   args: {
     type: 'Error',
