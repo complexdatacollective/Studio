@@ -12,10 +12,41 @@ import * as React from 'react';
 import { cn } from '~/lib/utils';
 import { motion } from 'framer-motion';
 import {
+  DialogVariants,
   type Dialog as DialogType,
   type DialogVariant,
 } from '~/lib/dialogs/dialog-schemas';
 import { Button } from './Button';
+import { tv } from 'tailwind-variants';
+
+// following this docs to implement this
+// https://www.tailwind-variants.org/docs/slots#slots-with-variants
+export const dialogElements = tv({
+  slots: {
+    title: 'text-lg font-semibold leading-none tracking-tight',
+    description: 'text-2xl font-bold',
+  },
+  variants: {
+    type: {
+      [DialogVariants.Error]: {
+        title: 'text-destructive',
+        description: 'text-destructive',
+      },
+      [DialogVariants.Prompt]: {
+        title: 'text-cerulean-blue',
+        description: 'text-cerulean-blue',
+      },
+      [DialogVariants.Confirm]: {
+        title: 'text-mustard',
+        description: 'text-mustard',
+      },
+      [DialogVariants.Info]: {
+        title: 'text-paradise-pink',
+        description: 'text-paradise-pink',
+      },
+    },
+  },
+});
 
 // todo: Tidy up the component, try to make it more readable
 // todo: style for each dialog based on Type (look at Button component)
@@ -32,12 +63,10 @@ const Dialog = (props: DialogProps) => {
   const { dialog, handleOpenChange, cancelDialog, confirmDialog, dialogOrder } =
     props;
 
+  const { title, description } = dialogElements({ type: dialog.type });
+
   return (
-    <DialogPrimitive.Root
-      modal={dialog.type === 'Prompt'}
-      open
-      onOpenChange={() => handleOpenChange(dialog)}
-    >
+    <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog)}>
       <DialogPortal>
         <DialogOverlay>
           <DialogContent
@@ -46,9 +75,9 @@ const Dialog = (props: DialogProps) => {
           >
             <DialogTitle className="flex items-center gap-2">
               <DialogIcon variant={dialog.type} />
-              {dialog.title}
+              <div className={title()}>{dialog.title}</div>
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className={description()}>
               {dialog.content}
               <br />
               {dialog.type === 'Error' && (
