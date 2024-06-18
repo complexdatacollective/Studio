@@ -8,24 +8,24 @@ export const DialogVariants = {
   Error: 'Error',
 } as const;
 
+export type DialogVariant =
+  (typeof DialogVariants)[keyof typeof DialogVariants];
+
 const SharedDialogProperties = z.object({
   id: z.string(),
   title: z.string(),
-  confirmLabel: z.string().optional(),
-  onConfirm: z.function().returns(z.undefined()),
-});
-
-const DialogWithContent = SharedDialogProperties.extend({
   content: z.union([z.string(), z.custom<ReactNode>()]),
+  confirmLabel: z.string().optional(),
+  onConfirm: z.function().returns(z.undefined()).optional(),
 });
 
-const InfoDialogSchema = DialogWithContent.extend({
+const InfoDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Info),
 });
 
 export type InfoDialog = z.infer<typeof InfoDialogSchema>;
 
-const ConfirmDialogSchema = DialogWithContent.extend({
+const ConfirmDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Confirm),
   cancelLabel: z.string().optional(),
   onCancel: z.function().returns(z.undefined()).optional(),
@@ -33,7 +33,7 @@ const ConfirmDialogSchema = DialogWithContent.extend({
 
 export type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
 
-const PromptDialogSchema = DialogWithContent.extend({
+const PromptDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Prompt),
   formId: z.string(),
   onConfirm: z.function().returns(z.boolean()),
@@ -44,7 +44,6 @@ export type PromptDialog = z.infer<typeof PromptDialogSchema>;
 // Error dialogs have an 'error' field instead of 'content'
 const ErrorDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Error),
-  onConfirm: z.function().returns(z.undefined()),
   error: z.instanceof(Error),
 });
 

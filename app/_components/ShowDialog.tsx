@@ -2,13 +2,13 @@
 'use client';
 
 import { Button } from '~/components/ui/Button';
-import useDialog from '~/lib/dialogs/useDialog';
+import { useDialogStore } from '~/lib/dialogs/dialog-store-provider';
 
 const ShowDialog = () => {
-  const { showDialog } = useDialog();
+  const { openDialog } = useDialogStore((state) => state);
 
   const createErrorDialog = () => {
-    showDialog({
+    openDialog({
       type: 'Error',
       title: 'Error Dialog',
       error: {
@@ -26,7 +26,7 @@ const ShowDialog = () => {
   };
 
   const createConfirmDialog = () => {
-    showDialog({
+    openDialog({
       type: 'Prompt',
       title: 'Prompt Dialog',
       content: (

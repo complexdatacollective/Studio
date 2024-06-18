@@ -1,25 +1,71 @@
 'use client';
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { X } from 'lucide-react';
+import {
+  X,
+  OctagonAlert,
+  Info,
+  BookmarkCheck,
+  TriangleAlert,
+} from 'lucide-react';
 import * as React from 'react';
 import { cn } from '~/lib/utils';
 import { motion } from 'framer-motion';
+import {
+  type Dialog as DialogType,
+  type DialogVariant,
+} from '~/lib/dialogs/dialog-schemas';
+import { Button } from './Button';
 
 // todo: Implement a single Dialog component and render UI based on props
 // style for each dialog based on Type (look at Button component)
 
-// type DialogProps = {
-//   title: string;
-//   content: React.ReactNode;
-//   type: DialogVariants;
-// };
+type DialogProps = {
+  dialog: DialogType;
+  dialogOrder: number;
+  handleOpenChange: (dialog: DialogType) => void;
+  confirmDialog: (dialog: DialogType) => void;
+  cancelDialog: (dialog: DialogType) => void;
+};
 
-const Dialog = (props: DialogPrimitive.DialogProps) => {
+const Dialog = (props: DialogProps) => {
+  const { dialog, handleOpenChange, cancelDialog, confirmDialog, dialogOrder } =
+    props;
+
   return (
-    <DialogPrimitive.Root {...props}>
+    <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog)}>
       <DialogPortal>
-        <DialogOverlay>{props.children}</DialogOverlay>
+        <DialogOverlay>
+          <DialogContent dialogOrder={dialogOrder}>
+            <DialogTitle className="flex items-center gap-2">
+              <DialogIcon variant={dialog.type} />
+              {dialog.title}
+            </DialogTitle>
+            <DialogDescription>
+              {dialog.content}
+              <br />
+              {dialog.type === 'Error' && (
+                <div>
+                  {dialog.error.name}
+                  <br />
+                  {dialog.error.message}
+                  <br />
+                  {dialog.error.stack}
+                </div>
+              )}
+            </DialogDescription>
+            <DialogFooter>
+              {dialog.type === 'Confirm' && (
+                <Button variant="outline" onClick={() => cancelDialog(dialog)}>
+                  {dialog.cancelLabel ?? 'Cancel'}
+                </Button>
+              )}
+              <Button onClick={() => confirmDialog(dialog)}>
+                {dialog.confirmLabel ?? 'OK'}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </DialogOverlay>
       </DialogPortal>
     </DialogPrimitive.Root>
   );
@@ -132,4 +178,27 @@ const DialogDescription = React.forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
-export { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle };
+// Show different icons based on the dialog variant
+const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
+  switch (variant) {
+    case 'Error':
+      return <OctagonAlert className="h-6 w-6 text-destructive" />;
+    case 'Info':
+      return <Info className="h-6 w-6 text-cerulean-blue" />;
+    case 'Confirm':
+      return <BookmarkCheck className="h-6 w-6 text-cerulean-blue" />;
+    case 'Prompt':
+      return <TriangleAlert className="h-6 w-6 text-cerulean-blue" />;
+    default:
+      throw new Error(`Unknown dialog variant`);
+  }
+};
+
+export {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+  DialogIcon,
+};

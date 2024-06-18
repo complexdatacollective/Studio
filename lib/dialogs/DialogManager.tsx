@@ -1,31 +1,52 @@
 'use client';
 
-import ConfirmDialog from './ConfirmDialog';
-import ErrorDialog from './ErrorDialog';
-import InfoDialog from './InfoDialog';
-import PromptDialog from './PromptDialog';
-import { type Dialog } from './dialog-schemas';
-import useDialog from './useDialog';
 import { AnimatePresence } from 'framer-motion';
+import { Dialog } from '~/components/ui/Dialog';
+import { type Dialog as DialogType } from './dialog-schemas';
+import { useDialogStore } from './dialog-store-provider';
 
 const DialogManager = () => {
-  const { dialogs } = useDialog();
-  return <AnimatePresence>{dialogs.map(renderDialog)}</AnimatePresence>;
+  const { closeDialog, dialogs } = useDialogStore((state) => state);
+
+  const handleOpenChange = (dialog: DialogType) => {
+    if (dialog.type === 'Confirm' && dialog.onCancel) {
+      dialog.onCancel();
+      closeDialog(dialog.id);
+      return;
+    }
+    dialog.onConfirm?.();
+    closeDialog(dialog.id);
+  };
+
+  const confirmDialog = (dialog: DialogType) => {
+    const result = dialog?.onConfirm?.();
+    // close the dialog if it's not a prompt dialog or the prompt dialog returns a truthy value
+    if (dialog?.type !== 'Prompt' || result) {
+      closeDialog(dialog.id);
+    }
+  };
+
+  const cancelDialog = (dialog: DialogType) => {
+    if (dialog?.type === 'Confirm') {
+      dialog.onCancel?.();
+    }
+    closeDialog(dialog.id);
+  };
+
+  return (
+    <AnimatePresence>
+      {dialogs.map((dialog, index) => (
+        <Dialog
+          key={dialog.id}
+          dialog={dialog}
+          dialogOrder={index}
+          handleOpenChange={handleOpenChange}
+          cancelDialog={cancelDialog}
+          confirmDialog={confirmDialog}
+        />
+      ))}
+    </AnimatePresence>
+  );
 };
 
 export default DialogManager;
-
-const renderDialog = (dialog: Dialog, index: number) => {
-  switch (dialog.type) {
-    case 'Info':
-      return <InfoDialog key={dialog.id} order={index} {...dialog} />;
-    case 'Confirm':
-      return <ConfirmDialog key={dialog.id} order={index} {...dialog} />;
-    case 'Prompt':
-      return <PromptDialog key={dialog.id} order={index} {...dialog} />;
-    case 'Error':
-      return <ErrorDialog key={dialog.id} order={index} {...dialog} />;
-    default:
-      throw new Error(`Unknown dialog type provided!}`);
-  }
-};

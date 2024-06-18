@@ -4,7 +4,7 @@ import { Button } from '~/components/ui/Button';
 import { Dialog, DialogVariants } from './dialog-schemas';
 import { DialogStoreProvider } from './dialog-store-provider';
 import DialogManager from './DialogManager';
-import useDialog from './useDialog';
+import { useDialogStore } from './dialog-store-provider';
 
 // Todo: Strip out everything from DialogManager Story except the core functionality
 // just render DialogManager functionalities here
@@ -91,9 +91,9 @@ export const InfoDialog: Story = {
     type: 'Info',
   },
   render: (props: Dialog) => {
-    const { showDialog } = useDialog();
+    const { openDialog } = useDialogStore((state) => state);
     const createDialog = () => {
-      showDialog(props);
+      openDialog(props);
     };
     return (
       <>
@@ -108,9 +108,9 @@ export const ConfirmDialog: Story = {
     type: 'Confirm',
   },
   render: (props: Dialog) => {
-    const { showDialog } = useDialog();
+    const { openDialog } = useDialogStore((state) => state);
     const createDialog = () => {
-      showDialog(props);
+      openDialog(props);
     };
     return (
       <>
@@ -127,9 +127,9 @@ export const ErrorDialog: Story = {
     type: 'Error',
   },
   render: (props: Dialog) => {
-    const { showDialog } = useDialog();
+    const { openDialog } = useDialogStore((state) => state);
     const createDialog = () => {
-      showDialog(props);
+      openDialog(props);
     };
     return (
       <>
@@ -146,10 +146,10 @@ export const StackingDialogs: Story = {
     type: 'Error',
   },
   render: (props: Dialog) => {
-    const { showDialog } = useDialog();
+    const { openDialog } = useDialogStore((state) => state);
     const createDialog = () => {
-      showDialog(props);
-      showDialog({
+      openDialog(props);
+      openDialog({
         type: 'Info',
         title: 'Info Dialog',
         content: 'This is an info dialog.',
