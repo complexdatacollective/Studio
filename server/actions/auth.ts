@@ -101,7 +101,7 @@ export async function login(formData: FormData) {
     sessionCookie.attributes,
   );
 
-  return redirect('/dashboard');
+  return redirect('/');
 }
 
 export async function logout() {
