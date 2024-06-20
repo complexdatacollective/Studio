@@ -29,32 +29,26 @@ const dialogElements = tv({
     close:
       'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground',
     title: 'flex items-center gap-1.5 text-xl font-bold',
-    description: 'text-foreground',
+    contentMain: 'text-foreground',
     footer: 'flex flex-col-reverse sm:flex-row sm:justify-end gap-2',
   },
   variants: {
     type: {
       [DialogVariants.Error]: {
-        title: '',
-        description: 'text-sm',
+        contentMain: 'text-sm',
       },
       [DialogVariants.Prompt]: {
-        title: '',
-        description: '',
+        // contentMain: '',
       },
       [DialogVariants.Confirm]: {
-        title: '',
-        description: '',
+        // contentMain: '',
       },
       [DialogVariants.Info]: {
-        title: '',
-        description: '',
+        // contentMain: '',
       },
     },
   },
 });
-
-// todo: style for each dialog based on Type (look at Button component)
 
 // Main Dialog Component
 type DialogProps = {
@@ -69,7 +63,7 @@ const Dialog = (props: DialogProps) => {
   const { dialog, handleOpenChange, cancelDialog, confirmDialog, dialogOrder } =
     props;
 
-  const { title, description, overlay, content, footer, close } =
+  const { title, contentMain, overlay, content, footer, close } =
     dialogElements({
       type: dialog.type,
     });
@@ -81,13 +75,13 @@ const Dialog = (props: DialogProps) => {
           <DialogContent className={content()} dialogOrder={dialogOrder}>
             <DialogPrimitive.Title className={title()}>
               <DialogIcon variant={dialog.type} />
-              <h2>{dialog.title}</h2>
+              <span>{dialog.title}</span>
             </DialogPrimitive.Title>
-            <DialogPrimitive.Description className={description()}>
+            <main className={contentMain()}>
               {dialog.content}
               <br />
               {dialog.type === 'Error' && <DialogError {...dialog.error} />}
-            </DialogPrimitive.Description>
+            </main>
             <DialogFooter
               className={footer()}
               dialog={dialog}
@@ -96,7 +90,7 @@ const Dialog = (props: DialogProps) => {
             />
             <DialogClose
               className={close()}
-              disableClose={dialog.type === 'Prompt'}
+              disable={dialog.type === 'Prompt'}
             />
           </DialogContent>
         </DialogPrimitive.Overlay>
@@ -151,13 +145,13 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 // Dialog Close Button
 const DialogClose = ({
-  disableClose,
+  disable,
   className,
 }: {
-  disableClose: boolean;
+  disable: boolean;
   className: string;
 }) =>
-  !disableClose && (
+  !disable && (
     <DialogPrimitive.Close className={className}>
       <X className="h-4 w-4" />
       <span className="sr-only">Close</span>
@@ -191,6 +185,7 @@ const DialogFooter = ({
       )}
       {dialog.type === 'Prompt' ? (
         <Button
+          variant="secondary"
           size="sm"
           type="submit"
           form={dialog.formId}
@@ -248,7 +243,7 @@ const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
     case 'Confirm':
       return <BookmarkCheck className="h-5 w-5 text-mustard-dark" />;
     case 'Prompt':
-      return <TriangleAlert className="h-5 w-5" />;
+      return <TriangleAlert className="h-5 w-5 text-mustard" />;
     default:
       throw new Error(`Unknown dialog variant`);
   }

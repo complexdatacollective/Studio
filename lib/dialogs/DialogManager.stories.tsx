@@ -5,6 +5,7 @@ import { Dialog, DialogVariants } from './dialog-schemas';
 import { DialogStoreProvider } from './dialog-store-provider';
 import DialogManager from './DialogManager';
 import { useDialogStore } from './dialog-store-provider';
+import { Input } from '~/components/ui/form/Input';
 
 // Todo: Strip out everything from DialogManager Story except the core functionality
 // just render DialogManager functionalities here
@@ -156,10 +157,19 @@ export const ConfirmDialog: Story = {
 export const PromptDialog: Story = {
   args: {
     type: 'Prompt',
-    title: 'Prompt Dialog',
+    title: 'Enter Your Name',
     content: (
       <form id="prompt-form" onSubmit={(e) => e.preventDefault()}>
-        <input required name="input" type="text" placeholder="required input" />
+        <p className="text-sm">
+          Please provide your name so we can personalize your experience.
+        </p>
+        <Input
+          label="Name"
+          required
+          name="input"
+          type="text"
+          placeholder="Enter your name..."
+        />
       </form>
     ),
     confirmLabel: 'Submit',
