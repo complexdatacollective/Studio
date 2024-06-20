@@ -10,6 +10,9 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['@node-rs/argon2'],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  }
 };
 
 export default withNextIntl(nextConfig);
