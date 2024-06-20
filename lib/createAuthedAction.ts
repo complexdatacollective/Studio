@@ -24,6 +24,8 @@ export async function createAuthedAction<T>({
   // from here, we need study-specific roles for authorization
   const studyUser = await getStudyUser(session.userId, publicStudyId);
 
+  console.log(studyUser);
+
   if (!studyUser) {
     throw new Error('Unauthorized');
   }

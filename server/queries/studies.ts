@@ -21,6 +21,7 @@ export const getStudyBySlug = (slug: string) =>
 
 export const getStudyUser = (userId: string, publicStudyId: string) =>
   createCachedFunction(async () => {
+    console.log('getStudyUser', userId, publicStudyId);
     return await db.studyUser.findFirst({
       where: {
         userId,

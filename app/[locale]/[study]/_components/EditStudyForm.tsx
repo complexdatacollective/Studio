@@ -9,11 +9,11 @@ import { Button } from '~/components/ui/Button';
 export default function EditStudyForm({ study }: { study: Study }) {
   const t = useTranslations('EditStudyForm');
 
-  //   const authedEditStudy = createAuthedAction({
-  //     action: updateStudy,
-  //     publicStudyId: study.publicId,
-  //     requiredRoles: ['STAFF'],
-  //   });
+  const authedEditStudy = createAuthedAction({
+    action: updateStudy,
+    publicStudyId: study.publicId,
+    requiredRoles: ['STAFF'],
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ export default function EditStudyForm({ study }: { study: Study }) {
     }
 
     try {
-      await updateStudy(study.slug, formData);
+      await authedEditStudy(study.slug, formData);
       console.log('Study description updated');
     } catch (error) {
       console.error('Failed to update study description', error);
