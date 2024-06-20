@@ -85,12 +85,22 @@ export async function requirePageAuth({
   return session;
 }
 
-// export async function requireApiAuth() {
-//   const { session } = await getServerSession();
+export async function requireApiAuth() {
+  const { session } = await getServerSession();
 
-//   if (!session) {
-//     throw new Error('Unauthorized');
-//   }
+  if (!session) {
+    throw new Error('Unauthorized');
+  }
 
-//   return session;
-// }
+  const studyUser = await db.studyUser.findFirst({
+    where: {
+      userId: session.userId,
+    },
+  });
+
+  if (!studyUser) {
+    throw new Error('Unauthorized');
+  }
+
+  return studyUser;
+}
