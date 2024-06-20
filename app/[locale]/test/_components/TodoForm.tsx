@@ -7,7 +7,7 @@ import type { Todo } from '@prisma/client';
 import { useGlobalOptimistic } from '../useOptimisticUpdate';
 import { useFormState } from 'react-dom';
 import useZodForm from '~/lib/hooks/useZodForm';
-import { todoFormSchema } from '~/lib/schemas/todoForm';
+import { todoSchema } from '~/lib/schemas/todoForm';
 
 // Function to generate an ascending ID number for optimistic updates, taking
 // into account the current number of todos.
@@ -45,7 +45,7 @@ export default function TodoForm({ initialTodos }: { initialTodos: Todo[] }) {
     register,
     formState: { errors, isValid },
   } = useZodForm({
-    schema: todoFormSchema,
+    schema: todoSchema,
   });
 
   return (
