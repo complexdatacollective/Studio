@@ -1,17 +1,22 @@
-import { createStudy } from '~/server/actions/study';
+import { updateStudy } from '~/server/actions/study';
 import { getTranslations } from 'next-intl/server';
 import { SubmitButton } from '~/components/form/SubmitButton';
 import { createAuthedAction } from '~/lib/createAuthedAction';
+import { type Study } from '@prisma/client';
 
-export default async function CreateStudyForm() {
-  const t = await getTranslations('CreateStudyForm');
+export default async function EditStudyForm({ study }: { study: Study }) {
+  const t = await getTranslations('EditStudyForm');
 
-  // does not require specific study access or roles
-  const authedCreateStudy = createAuthedAction({ action: createStudy });
+  const authedEditStudy = createAuthedAction({
+    action: updateStudy,
+    publicStudyId: study.publicId,
+    requiredRoles: ['STAFF'],
+  });
 
   return (
     <form
-      action={await authedCreateStudy}
+      // need to pass study.slug to the form action too
+      action={await authedEditStudy}
       className="border-slate-400 flex max-w-lg flex-col space-y-2 rounded-lg border p-4"
     >
       <h2 className="text-lg font-semibold">{t('formTitle')}</h2>

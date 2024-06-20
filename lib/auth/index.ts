@@ -92,15 +92,5 @@ export async function requireApiAuth() {
     throw new Error('Unauthorized');
   }
 
-  const studyUser = await db.studyUser.findFirst({
-    where: {
-      userId: session.userId,
-    },
-  });
-
-  if (!studyUser) {
-    throw new Error('Unauthorized');
-  }
-
-  return studyUser;
+  return session;
 }

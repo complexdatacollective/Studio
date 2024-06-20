@@ -24,6 +24,12 @@
     "inputPlaceholder": "My New Study",
     "formButton": "Create Study"
   },
+  "EditStudyForm": {
+    "formTitle": "Edit Study",
+    "inputLabel": "Study Description",
+    "inputPlaceholder": "Descriptive Study Name",
+    "formButton": "Save Changes"
+  },
   "SignOutBtn": {
     "buttonLabel": "Sign Out"
   },

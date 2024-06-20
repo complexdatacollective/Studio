@@ -5,6 +5,8 @@ const CACHE_TAGS = [
   'getOrganizations',
   'getOrgBySlug',
   'getProjectBySlug',
+  'getStudyUser',
+  'getStudyBySlug',
 ] as const;
 
 type StaticTag = (typeof CACHE_TAGS)[number];

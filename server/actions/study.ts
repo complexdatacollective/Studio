@@ -21,3 +21,22 @@ export async function createStudy(formData: FormData) {
 
   safeRevalidateTag('getOrganizations');
 }
+
+export async function updateStudy(slug: string, formData: FormData) {
+  const description = formData.get('description') as string;
+
+  if (!description) {
+    throw new Error('Study description is required');
+  }
+
+  await db.study.update({
+    where: {
+      slug,
+    },
+    data: {
+      description,
+    },
+  });
+
+  safeRevalidateTag(`getStudyBySlug-${slug}`);
+}
