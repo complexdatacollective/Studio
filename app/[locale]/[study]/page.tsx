@@ -10,15 +10,16 @@ export default async function StudyPage({
   const t = await getTranslations('StudyPage');
   const study = await getStudyBySlug(params.study);
 
-  if (!study) {
-    return <div>Study not found</div>;
-  }
-
   return (
     <div className="flex flex-col p-12">
       <h1 className="pb-4 text-4xl">{t('title')}</h1>
-      <p>description: {study?.description}</p>
-      <EditStudyForm study={study} />
+      {study ? (
+        <>
+          <h2 className="pb-4 text-2xl">{study.name}</h2>
+          <p>description: {study?.description}</p>
+          <EditStudyForm study={study} />
+        </>
+      ) : null}
     </div>
   );
 }

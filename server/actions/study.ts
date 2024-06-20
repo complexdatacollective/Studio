@@ -23,7 +23,7 @@ export async function createStudy(formData: FormData) {
 }
 
 export async function updateStudy(slug: string, formData: FormData) {
-  const description = formData.get('description') as string;
+  const description = formData.get('studyDescription') as string;
 
   if (!description) {
     throw new Error('Study description is required');

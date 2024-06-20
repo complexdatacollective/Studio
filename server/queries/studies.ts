@@ -9,11 +9,14 @@ export const getStudies = () =>
 
 export const getStudyBySlug = (slug: string) =>
   createCachedFunction(async () => {
-    return await db.study.findFirst({
+    console.log('getStudyBySlug', slug);
+    const study = await db.study.findFirst({
       where: {
         slug,
       },
     });
+    console.log('study', study);
+    return study;
   }, [`getStudyBySlug-${slug}`])();
 
 export const getStudyUser = (userId: string, publicStudyId: string) =>
