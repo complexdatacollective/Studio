@@ -22,8 +22,9 @@ const generateUUID = (currentIds: number[]) => {
 export default function TodoForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { addOptimisticItem } = useDataContext<Todo>();
+  const [, addOptimisticItem] = useDataContext<Todo>();
 
+  // Todo: this should use useActionState when available
   const [serverFormState, wrappedCreateTodo] = useFormState(createTodo, {
     title: '',
     errors: {
