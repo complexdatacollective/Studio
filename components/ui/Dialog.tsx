@@ -21,7 +21,7 @@ import { Button } from './Button';
 
 // following this docs to implement this
 // https://www.tailwind-variants.org/docs/slots#slots-with-variants
-export const dialogElements = tv({
+const dialogElements = tv({
   slots: {
     overlay: 'fixed inset-0 z-50 bg-rich-black/50',
     content:
@@ -183,7 +183,7 @@ const DialogFooter = ({
       {dialog.type === 'Confirm' && (
         <Button
           size="sm"
-          variant="outline"
+          variant="destructive"
           onClick={() => cancelDialog(dialog)}
         >
           {dialog.cancelLabel ?? 'Cancel'}
@@ -246,7 +246,7 @@ const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
     case 'Info':
       return <Info className="h-5 w-5" />;
     case 'Confirm':
-      return <BookmarkCheck className="h-5 w-5" />;
+      return <BookmarkCheck className="h-5 w-5 text-mustard-dark" />;
     case 'Prompt':
       return <TriangleAlert className="h-5 w-5" />;
     default:
