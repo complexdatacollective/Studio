@@ -5,13 +5,12 @@ import SignOutBtn from '../_components/SignOutBtn';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
-import type { Study } from '@prisma/client';
 
 export default async function Home() {
   await requirePageAuth();
   const t = await getTranslations('Home');
 
-  const studies: Study[] = await getStudies();
+  const studies = await getStudies();
   return (
     <main className="flex flex-col p-12">
       <h1 className="pb-4 text-4xl">{t('title')}</h1>
