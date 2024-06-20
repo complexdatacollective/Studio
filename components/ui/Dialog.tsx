@@ -4,6 +4,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { motion } from 'framer-motion';
 import {
   BookmarkCheck,
+  ChevronDown,
   Info,
   OctagonAlert,
   TriangleAlert,
@@ -24,10 +25,10 @@ export const dialogElements = tv({
   slots: {
     overlay: 'fixed inset-0 z-50 bg-rich-black/50',
     content:
-      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-4 border bg-background p-5 shadow-lg duration-200 rounded-md sm:rounded-lg',
+      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-1 border bg-background p-5 shadow-lg duration-200 rounded-md sm:rounded-lg',
     close:
       'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground',
-    title: 'flex items-center gap-1 text-xl font-semibold',
+    title: 'flex items-center gap-1.5 text-xl font-bold',
     description: 'text-foreground',
     footer: 'flex flex-col-reverse sm:flex-row sm:justify-end gap-2',
   },
@@ -35,7 +36,7 @@ export const dialogElements = tv({
     type: {
       [DialogVariants.Error]: {
         title: '',
-        description: '',
+        description: 'text-sm',
       },
       [DialogVariants.Prompt]: {
         title: '',
@@ -195,10 +196,14 @@ const DialogFooter = ({
           form={dialog.formId}
           onClick={() => confirmDialog(dialog)}
         >
-          {dialog.confirmLabel ?? 'OK'}
+          {dialog.confirmLabel ?? 'Submit'}
         </Button>
       ) : (
-        <Button size="sm" onClick={() => confirmDialog(dialog)}>
+        <Button
+          variant={dialog.type === 'Error' ? 'destructive' : 'default'}
+          size="sm"
+          onClick={() => confirmDialog(dialog)}
+        >
           {dialog.confirmLabel ?? 'OK'}
         </Button>
       )}
@@ -208,12 +213,28 @@ const DialogFooter = ({
 
 // Dialog Error Section
 const DialogError = ({ name, message, stack }: Error) => (
-  <div>
-    {name}
-    <br />
-    {message}
-    <br />
-    {stack}
+  <div className="grid gap-4 py-4">
+    <div className="grid gap-2">
+      <div className="flex items-center justify-between">
+        <span className="font-semibold">Name:</span>
+        <span className="text-destructive">{name}</span>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="font-semibold">Message:</span>
+        <span className="text-destructive">{message}</span>
+      </div>
+    </div>
+    <details className="group">
+      <summary className="flex cursor-pointer select-none list-none items-center justify-between font-semibold">
+        <span>Stack Trace</span>
+        <span className="text-muted-foreground transition-transform duration-300 group-open:rotate-180">
+          <ChevronDown className="h-4 w-4 text-destructive" />
+        </span>
+      </summary>
+      <pre className="mt-2 whitespace-pre-wrap font-mono text-sm text-muted-foreground">
+        {stack}
+      </pre>
+    </details>
   </div>
 );
 
@@ -221,7 +242,7 @@ const DialogError = ({ name, message, stack }: Error) => (
 const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
   switch (variant) {
     case 'Error':
-      return <OctagonAlert className="h-5 w-5" />;
+      return <OctagonAlert className="h-5 w-5 text-destructive" />;
     case 'Info':
       return <Info className="h-5 w-5" />;
     case 'Confirm':

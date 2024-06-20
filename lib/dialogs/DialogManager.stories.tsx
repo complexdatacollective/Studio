@@ -28,7 +28,7 @@ const meta = {
       options: Object.values(DialogVariants),
     },
     title: { control: 'text' },
-    content: { control: 'text', if: { arg: 'type', neq: 'Error' } },
+    content: { control: 'text' },
     error: {
       name: 'error',
       type: { name: 'object' },
@@ -65,9 +65,19 @@ const meta = {
     confirmLabel: 'OK',
     // Error dialog args will be used if the type is 'Error'
     error: {
-      name: 'Error name',
-      message: 'Error message',
-      stack: 'Error stack',
+      name: 'TypeError',
+      message: 'Cannot read property `length` of undefined',
+      stack: `TypeError: Cannot read property length of undefined at
+        Object.handleClick (/app/components/Button.js:21:30) at
+        HTMLUnknownElement.callCallback (react-dom.development.js:4164:14) at
+        Object.invokeGuardedCallbackDev (react-dom.development.js:4213:16) at
+        invokeGuardedCallback (react-dom.development.js:4277:31) at
+        invokeGuardedCallbackAndCatchFirstError
+        (react-dom.development.js:4291:25) at executeDispatch
+        (react-dom.development.js:9041:3) at processDispatchQueueItemsInOrder
+        (react-dom.development.js:9073:7) at processDispatchQueue
+        (react-dom.development.js:9086:7) at dispatchEventsForPlugins
+        (react-dom.development.js:9097:7) at react-dom.development.js:9306:7`,
     },
     cancelLabel: 'Cancel',
     onConfirm: fn(() => {}),
@@ -162,6 +172,8 @@ export const PromptDialog: Story = {
 export const ErrorDialog: Story = {
   args: {
     type: 'Error',
+    title: 'Oops, something went wrong',
+    content: 'We encountered an unexpected error. Please try again later.',
   },
   render: (props: Dialog) => {
     const { openDialog } = useDialogStore((state) => state);
