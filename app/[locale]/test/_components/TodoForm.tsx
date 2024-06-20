@@ -4,10 +4,10 @@ import { createTodo } from '~/server/actions/todo';
 import SubmitButton from './SubmitButton';
 import { useRef } from 'react';
 import type { Todo } from '@prisma/client';
-import { useGlobalOptimistic } from '../useOptimisticUpdate';
 import { useFormState } from 'react-dom';
 import useZodForm from '~/lib/hooks/useZodForm';
 import { todoSchema } from '~/lib/schemas/todoForm';
+import { useDataContext } from '../Provider';
 
 // Function to generate an ascending ID number for optimistic updates, taking
 // into account the current number of todos.
@@ -19,20 +19,10 @@ const generateUUID = (currentIds: number[]) => {
   return nextId;
 };
 
-export default function TodoForm({ initialTodos }: { initialTodos: Todo[] }) {
+export default function TodoForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [, addOptimisticTodo] = useGlobalOptimistic<Todo[], Todo['title']>(
-    initialTodos,
-    (state, title) => [
-      ...state,
-      {
-        id: generateUUID(state.map((todo) => todo.id)),
-        title,
-        processing: true,
-      },
-    ],
-    'todoStore',
-  );
+
+  const { addOptimisticItem } = useDataContext<Todo>();
 
   const [serverFormState, wrappedCreateTodo] = useFormState(createTodo, {
     title: '',
@@ -55,7 +45,7 @@ export default function TodoForm({ initialTodos }: { initialTodos: Todo[] }) {
         action={(formData: FormData) => {
           formRef.current?.reset();
           const todoTitle = formData.get('todoTitle') as string;
-          addOptimisticTodo(todoTitle);
+          addOptimisticItem({ title: todoTitle, id: Math.random() });
           wrappedCreateTodo(formData);
         }}
         className="flex flex-col space-y-4"

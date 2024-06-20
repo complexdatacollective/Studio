@@ -1,20 +1,14 @@
 'use client';
 
-import type { Todo } from '@prisma/client';
-import { useGlobalOptimisticValue } from '../useOptimisticUpdate';
+import { type Todo } from '@prisma/client';
+import { useDataContext } from '../Provider';
 
-type TodoAtom = {
-  id: number;
-  title: string;
-  processing: boolean;
-};
-
-export default function Todos({ initialTodos }: { initialTodos: Todo[] }) {
-  const data = useGlobalOptimisticValue({ key: 'todoStore' }) as TodoAtom[];
+export default function Todos() {
+  const { optimisticData } = useDataContext<Todo>();
 
   return (
     <ul>
-      {(data && data.length > 0 ? data : initialTodos).map((todo) => (
+      {optimisticData.map((todo) => (
         <li
           key={todo.id}
           className={
