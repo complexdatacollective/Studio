@@ -2,16 +2,15 @@ import { getTodos } from '~/server/queries/todos';
 
 import TodoForm from './_components/TodoForm';
 import Todos from './_components/Todos';
-import DataContextProvider from './Provider';
+import CreateDataContext from './SharedDataContext';
 
 export default function Page() {
-  const todos = getTodos();
   return (
-    <DataContextProvider dataPromise={todos}>
+    <CreateDataContext query={getTodos}>
       <div className="flex flex-col gap-10">
         <TodoForm />
         <Todos />
       </div>
-    </DataContextProvider>
+    </CreateDataContext>
   );
 }
