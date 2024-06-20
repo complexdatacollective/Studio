@@ -1,30 +1,36 @@
 'use client';
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { motion } from 'framer-motion';
 import {
-  X,
-  OctagonAlert,
-  Info,
   BookmarkCheck,
+  Info,
+  OctagonAlert,
   TriangleAlert,
+  X,
 } from 'lucide-react';
 import * as React from 'react';
-import { cn } from '~/lib/utils';
-import { motion } from 'framer-motion';
+import { tv } from 'tailwind-variants';
 import {
   DialogVariants,
   type Dialog as DialogType,
   type DialogVariant,
 } from '~/lib/dialogs/dialog-schemas';
 import { Button } from './Button';
-import { tv } from 'tailwind-variants';
 
 // following this docs to implement this
 // https://www.tailwind-variants.org/docs/slots#slots-with-variants
 export const dialogElements = tv({
   slots: {
-    title: 'text-lg font-semibold leading-none tracking-tight',
-    description: 'text-2xl font-bold',
+    overlay: 'fixed inset-0 z-50 bg-rich-black/50',
+    content:
+      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 border bg-background p-6 shadow-lg duration-200 sm:rounded-lg',
+    close:
+      'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground',
+    title:
+      'flex items-center gap-2 text-lg font-semibold leading-none tracking-tight',
+    description: 'text-2xl leading-7 tracking-tight uppercase',
+    footer: 'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
   },
   variants: {
     type: {
@@ -48,9 +54,9 @@ export const dialogElements = tv({
   },
 });
 
-// todo: Tidy up the component, try to make it more readable
 // todo: style for each dialog based on Type (look at Button component)
 
+// Main Dialog Component
 type DialogProps = {
   dialog: DialogType;
   dialogOrder: number;
@@ -63,168 +69,149 @@ const Dialog = (props: DialogProps) => {
   const { dialog, handleOpenChange, cancelDialog, confirmDialog, dialogOrder } =
     props;
 
-  const { title, description } = dialogElements({ type: dialog.type });
+  const { title, description, overlay, content, footer, close } =
+    dialogElements({
+      type: dialog.type,
+    });
 
   return (
     <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog)}>
-      <DialogPortal>
-        <DialogOverlay>
-          <DialogContent
-            dialogOrder={dialogOrder}
-            disableClose={dialog.type === 'Prompt'}
-          >
-            <DialogTitle className="flex items-center gap-2">
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className={overlay()}>
+          <DialogContent className={content()} dialogOrder={dialogOrder}>
+            <DialogPrimitive.Title className={title()}>
               <DialogIcon variant={dialog.type} />
-              <div className={title()}>{dialog.title}</div>
-            </DialogTitle>
-            <DialogDescription className={description()}>
+              <h2>{dialog.title}</h2>
+            </DialogPrimitive.Title>
+            <DialogPrimitive.Description className={description()}>
               {dialog.content}
               <br />
-              {dialog.type === 'Error' && (
-                <div>
-                  {dialog.error.name}
-                  <br />
-                  {dialog.error.message}
-                  <br />
-                  {dialog.error.stack}
-                </div>
-              )}
-            </DialogDescription>
-            <DialogFooter>
-              {dialog.type === 'Confirm' && (
-                <Button variant="outline" onClick={() => cancelDialog(dialog)}>
-                  {dialog.cancelLabel ?? 'Cancel'}
-                </Button>
-              )}
-              {dialog.type === 'Prompt' ? (
-                <Button
-                  type="submit"
-                  form={dialog.formId}
-                  onClick={() => confirmDialog(dialog)}
-                >
-                  {dialog.confirmLabel ?? 'OK'}
-                </Button>
-              ) : (
-                <Button onClick={() => confirmDialog(dialog)}>
-                  {dialog.confirmLabel ?? 'OK'}
-                </Button>
-              )}
-            </DialogFooter>
+              {dialog.type === 'Error' && <DialogError {...dialog.error} />}
+            </DialogPrimitive.Description>
+            <DialogFooter
+              className={footer()}
+              dialog={dialog}
+              cancelDialog={cancelDialog}
+              confirmDialog={confirmDialog}
+            />
+            <DialogClose
+              className={close()}
+              disableClose={dialog.type === 'Prompt'}
+            />
           </DialogContent>
-        </DialogOverlay>
-      </DialogPortal>
+        </DialogPrimitive.Overlay>
+      </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
 };
-
 export default Dialog;
 
-const DialogPortal = DialogPrimitive.Portal;
-
-const DialogOverlay = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
-    ref={ref}
-    className={cn(
-      'fixed inset-0 z-50 bg-rich-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-      className,
-    )}
-    {...props}
-  />
-));
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
+// Dialog Content Section
+type DialogContentProps = {
+  dialogOrder: number;
+} & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
-    dialogOrder: number;
-    disableClose?: boolean;
-  }
->(({ className, children, dialogOrder, disableClose, ...props }, ref) => (
-  <DialogPrimitive.Content
-    ref={ref}
-    className={cn(
-      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 border bg-background p-6 shadow-lg duration-200 sm:rounded-lg',
-      className,
-    )}
-    {...props}
-    asChild
-  >
-    <motion.div
-      initial={{
-        opacity: 0,
-        translateY: '-60%',
-        translateX: '-50%',
-        scale: 0.8,
-      }}
-      animate={{
+  DialogContentProps
+>(({ children, dialogOrder, ...props }, ref) => {
+  const variants = React.useMemo(
+    () => ({
+      visible: {
         opacity: 1,
         translateY: '-50%',
         translateX: '-50%',
         scale: 1,
         transition: { delay: dialogOrder * 0.25 },
-      }}
-      exit={{
+      },
+      hidden: {
         opacity: 0,
-        translateY: '-70%',
+        translateY: '-60%',
         translateX: '-50%',
-        scale: 0.7,
-      }}
-    >
-      {children}
-      {!disableClose && (
-        <DialogPrimitive.Close className="focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
-      )}
-    </motion.div>
-  </DialogPrimitive.Content>
-));
+        scale: 0.8,
+      },
+    }),
+    [dialogOrder],
+  );
+
+  return (
+    <DialogPrimitive.Content ref={ref} {...props} asChild>
+      <motion.div
+        initial={'hidden'}
+        animate={'visible'}
+        exit={'hidden'}
+        variants={variants}
+      >
+        {children}
+      </motion.div>
+    </DialogPrimitive.Content>
+  );
+});
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const DialogFooter = ({
+// Dialog Close Button
+const DialogClose = ({
+  disableClose,
   className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
-      className,
-    )}
-    {...props}
-  />
+}: {
+  disableClose: boolean;
+  className: string;
+}) =>
+  !disableClose && (
+    <DialogPrimitive.Close className={className}>
+      <X className="h-4 w-4" />
+      <span className="sr-only">Close</span>
+    </DialogPrimitive.Close>
+  );
+
+// Dialog Footer Section
+type DialogFooterProps = {
+  dialog: DialogType;
+  className: string;
+  confirmDialog: (dialog: DialogType) => void;
+  cancelDialog: (dialog: DialogType) => void;
+};
+
+const DialogFooter = ({
+  dialog,
+  className,
+  cancelDialog,
+  confirmDialog,
+}: DialogFooterProps) => {
+  return (
+    <div className={className}>
+      {dialog.type === 'Confirm' && (
+        <Button variant="outline" onClick={() => cancelDialog(dialog)}>
+          {dialog.cancelLabel ?? 'Cancel'}
+        </Button>
+      )}
+      {dialog.type === 'Prompt' ? (
+        <Button
+          type="submit"
+          form={dialog.formId}
+          onClick={() => confirmDialog(dialog)}
+        >
+          {dialog.confirmLabel ?? 'OK'}
+        </Button>
+      ) : (
+        <Button onClick={() => confirmDialog(dialog)}>
+          {dialog.confirmLabel ?? 'OK'}
+        </Button>
+      )}
+    </div>
+  );
+};
+
+// Dialog Error Section
+const DialogError = ({ name, message, stack }: Error) => (
+  <div>
+    {name}
+    <br />
+    {message}
+    <br />
+    {stack}
+  </div>
 );
-DialogFooter.displayName = 'DialogFooter';
-
-const DialogTitle = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title
-    ref={ref}
-    className={cn(
-      'text-lg font-semibold leading-none tracking-tight',
-      className,
-    )}
-    {...props}
-  />
-));
-DialogTitle.displayName = DialogPrimitive.Title.displayName;
-
-const DialogDescription = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description
-    ref={ref}
-    className={cn('text-sm text-muted-foreground', className)}
-    {...props}
-  />
-));
-DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 // Show different icons based on the dialog variant
 const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
