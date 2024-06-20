@@ -24,31 +24,30 @@ export const dialogElements = tv({
   slots: {
     overlay: 'fixed inset-0 z-50 bg-rich-black/50',
     content:
-      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4 border bg-background p-6 shadow-lg duration-200 sm:rounded-lg',
+      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-4 border bg-background p-5 shadow-lg duration-200 rounded-md sm:rounded-lg',
     close:
       'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground',
-    title:
-      'flex items-center gap-2 text-lg font-semibold leading-none tracking-tight',
-    description: 'text-2xl leading-7 tracking-tight uppercase',
-    footer: 'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2',
+    title: 'flex items-center gap-1 text-xl font-semibold',
+    description: 'text-foreground',
+    footer: 'flex flex-col-reverse sm:flex-row sm:justify-end gap-2',
   },
   variants: {
     type: {
       [DialogVariants.Error]: {
-        title: 'text-destructive',
-        description: 'text-destructive',
+        title: '',
+        description: '',
       },
       [DialogVariants.Prompt]: {
-        title: 'text-cerulean-blue',
-        description: 'text-cerulean-blue',
+        title: '',
+        description: '',
       },
       [DialogVariants.Confirm]: {
-        title: 'text-mustard',
-        description: 'text-mustard',
+        title: '',
+        description: '',
       },
       [DialogVariants.Info]: {
-        title: 'text-paradise-pink',
-        description: 'text-paradise-pink',
+        title: '',
+        description: '',
       },
     },
   },
@@ -126,7 +125,7 @@ const DialogContent = React.forwardRef<
       },
       hidden: {
         opacity: 0,
-        translateY: '-60%',
+        translateY: '-50%',
         translateX: '-50%',
         scale: 0.8,
       },
@@ -181,12 +180,17 @@ const DialogFooter = ({
   return (
     <div className={className}>
       {dialog.type === 'Confirm' && (
-        <Button variant="outline" onClick={() => cancelDialog(dialog)}>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => cancelDialog(dialog)}
+        >
           {dialog.cancelLabel ?? 'Cancel'}
         </Button>
       )}
       {dialog.type === 'Prompt' ? (
         <Button
+          size="sm"
           type="submit"
           form={dialog.formId}
           onClick={() => confirmDialog(dialog)}
@@ -194,7 +198,7 @@ const DialogFooter = ({
           {dialog.confirmLabel ?? 'OK'}
         </Button>
       ) : (
-        <Button onClick={() => confirmDialog(dialog)}>
+        <Button size="sm" onClick={() => confirmDialog(dialog)}>
           {dialog.confirmLabel ?? 'OK'}
         </Button>
       )}
@@ -217,13 +221,13 @@ const DialogError = ({ name, message, stack }: Error) => (
 const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
   switch (variant) {
     case 'Error':
-      return <OctagonAlert className="h-6 w-6 text-destructive" />;
+      return <OctagonAlert className="h-5 w-5" />;
     case 'Info':
-      return <Info className="h-6 w-6 text-cerulean-blue" />;
+      return <Info className="h-5 w-5" />;
     case 'Confirm':
-      return <BookmarkCheck className="h-6 w-6 text-cerulean-blue" />;
+      return <BookmarkCheck className="h-5 w-5" />;
     case 'Prompt':
-      return <TriangleAlert className="h-6 w-6 text-cerulean-blue" />;
+      return <TriangleAlert className="h-5 w-5" />;
     default:
       throw new Error(`Unknown dialog variant`);
   }
