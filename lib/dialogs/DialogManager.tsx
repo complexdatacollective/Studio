@@ -5,7 +5,7 @@ import Dialog from '~/components/ui/Dialog';
 import { useDialogStore } from './dialog-store-provider';
 
 const DialogManager = () => {
-  const { closeDialog, dialogs } = useDialogStore((state) => state);
+  const { closeDialog, dialogs } = useDialogStore();
 
   const handleOpenChange = async (dialogId: string) => {
     const dialog = dialogs.find((dialog) => dialog.id === dialogId)!;

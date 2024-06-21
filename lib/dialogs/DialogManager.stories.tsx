@@ -121,7 +121,7 @@ export const InfoDialog: Story = {
     confirmLabel: 'Got it',
   },
   render: (props: Dialog) => {
-    const { openDialog } = useDialogStore((state) => state);
+    const { openDialog } = useDialogStore();
     const createDialog = () => {
       openDialog(props);
     };
@@ -141,7 +141,7 @@ export const ConfirmDialog: Story = {
       'Are you sure you want to proceed with this action? This cannot be undone.',
   },
   render: (props: Dialog) => {
-    const { openDialog } = useDialogStore((state) => state);
+    const { openDialog } = useDialogStore();
     const createDialog = () => {
       openDialog(props);
     };
@@ -159,7 +159,7 @@ export const PromptDialog: Story = {
   render: (props: Dialog) => {
     const formRef = useRef<HTMLFormElement>(null);
 
-    const { openDialog } = useDialogStore((state) => state);
+    const { openDialog } = useDialogStore();
     const createDialog = () => {
       openDialog({
         type: 'Prompt',
@@ -207,7 +207,7 @@ export const ErrorDialog: Story = {
     content: 'We encountered an unexpected error. Please try again later.',
   },
   render: (props: Dialog) => {
-    const { openDialog } = useDialogStore((state) => state);
+    const { openDialog } = useDialogStore();
     const createDialog = () => {
       openDialog(props);
     };
@@ -226,7 +226,7 @@ export const StackingDialogs: Story = {
     type: 'Error',
   },
   render: (props: Dialog) => {
-    const { openDialog } = useDialogStore((state) => state);
+    const { openDialog } = useDialogStore();
     const createDialog = () => {
       openDialog({
         type: 'Error',

@@ -25,7 +25,9 @@ export const DialogStoreProvider = ({ children }: DialogStoreProviderProps) => {
   );
 };
 
-export const useDialogStore = <T,>(selector: (store: DialogStore) => T): T => {
+export const useDialogStore = <T = DialogStore,>(
+  selector: (store: DialogStore) => T = (state) => state as T,
+): T => {
   const dialogStoreContext = useContext(DialogStoreContext);
 
   if (!dialogStoreContext) {
