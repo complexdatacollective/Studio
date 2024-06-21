@@ -18,6 +18,7 @@ import {
   type DialogVariant,
 } from '~/lib/dialogs/dialog-schemas';
 import { Button } from './Button';
+import { headingVariants } from '../typography/Heading';
 
 // following this docs to implement this
 // https://www.tailwind-variants.org/docs/slots#slots-with-variants
@@ -25,48 +26,47 @@ const dialogElements = tv({
   slots: {
     overlay: 'fixed inset-0 z-50 bg-rich-black/50',
     content:
-      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-1 border bg-background p-5 shadow-lg duration-200 rounded-md sm:rounded-lg',
+      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-1 border bg-background p-5 shadow-lg rounded-md sm:rounded-lg',
     close:
-      'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground',
-    title: 'flex items-center gap-1.5 text-xl font-bold',
-    contentMain: 'text-foreground',
+      'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none',
+    title: `flex items-center gap-1.5 ${headingVariants({ variant: 'h2' })}`,
     footer: 'flex flex-col-reverse sm:flex-row sm:justify-end gap-2',
   },
   variants: {
     type: {
       [DialogVariants.Error]: {
-        contentMain: 'text-sm',
+        // can be used to override the default styles based on Dialog type
       },
       [DialogVariants.Prompt]: {
-        // contentMain: '',
+        // can be used to override the default styles based on Dialog type
       },
       [DialogVariants.Confirm]: {
-        // contentMain: '',
+        // can be used to override the default styles based on Dialog type
       },
       [DialogVariants.Info]: {
-        // contentMain: '',
+        // can be used to override the default styles based on Dialog type
       },
     },
   },
 });
 
 // Main Dialog Component
-type DialogProps = {
+const Dialog = ({
+  dialog,
+  handleOpenChange,
+  cancelDialog,
+  confirmDialog,
+  dialogOrder,
+}: {
   dialog: DialogType;
   dialogOrder: number;
   handleOpenChange: (dialog: DialogType) => void;
   confirmDialog: (dialog: DialogType) => void;
   cancelDialog: (dialog: DialogType) => void;
-};
-
-const Dialog = (props: DialogProps) => {
-  const { dialog, handleOpenChange, cancelDialog, confirmDialog, dialogOrder } =
-    props;
-
-  const { title, contentMain, overlay, content, footer, close } =
-    dialogElements({
-      type: dialog.type,
-    });
+}) => {
+  const { title, overlay, content, footer, close } = dialogElements({
+    type: dialog.type,
+  });
 
   return (
     <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog)}>
@@ -75,11 +75,10 @@ const Dialog = (props: DialogProps) => {
           <DialogContent className={content()} dialogOrder={dialogOrder}>
             <DialogPrimitive.Title className={title()}>
               <DialogIcon variant={dialog.type} />
-              <span>{dialog.title}</span>
+              {dialog.title}
             </DialogPrimitive.Title>
-            <main className={contentMain()}>
+            <main>
               {dialog.content}
-              <br />
               {dialog.type === 'Error' && <DialogError {...dialog.error} />}
             </main>
             <DialogFooter
@@ -88,10 +87,7 @@ const Dialog = (props: DialogProps) => {
               cancelDialog={cancelDialog}
               confirmDialog={confirmDialog}
             />
-            <DialogClose
-              className={close()}
-              disable={dialog.type === 'Prompt'}
-            />
+            {dialog.type === 'Prompt' && <DialogClose className={close()} />}
           </DialogContent>
         </DialogPrimitive.Overlay>
       </DialogPrimitive.Portal>
@@ -131,9 +127,9 @@ const DialogContent = React.forwardRef<
   return (
     <DialogPrimitive.Content ref={ref} {...props} asChild>
       <motion.div
-        initial={'hidden'}
-        animate={'visible'}
-        exit={'hidden'}
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
         variants={variants}
       >
         {children}
@@ -144,19 +140,12 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 // Dialog Close Button
-const DialogClose = ({
-  disable,
-  className,
-}: {
-  disable: boolean;
-  className: string;
-}) =>
-  !disable && (
-    <DialogPrimitive.Close className={className}>
-      <X className="h-4 w-4" />
-      <span className="sr-only">Close</span>
-    </DialogPrimitive.Close>
-  );
+const DialogClose = ({ className }: { className: string }) => (
+  <DialogPrimitive.Close className={className}>
+    <X className="h-4 w-4" />
+    <span className="sr-only">Close</span>
+  </DialogPrimitive.Close>
+);
 
 // Dialog Footer Section
 type DialogFooterProps = {
@@ -175,33 +164,16 @@ const DialogFooter = ({
   return (
     <div className={className}>
       {dialog.type === 'Confirm' && (
-        <Button
-          size="sm"
-          variant="destructive"
-          onClick={() => cancelDialog(dialog)}
-        >
+        <Button variant="destructive" onClick={() => cancelDialog(dialog)}>
           {dialog.cancelLabel ?? 'Cancel'}
         </Button>
       )}
-      {dialog.type === 'Prompt' ? (
-        <Button
-          variant="secondary"
-          size="sm"
-          type="submit"
-          form={dialog.formId}
-          onClick={() => confirmDialog(dialog)}
-        >
-          {dialog.confirmLabel ?? 'Submit'}
-        </Button>
-      ) : (
-        <Button
-          variant={dialog.type === 'Error' ? 'destructive' : 'default'}
-          size="sm"
-          onClick={() => confirmDialog(dialog)}
-        >
-          {dialog.confirmLabel ?? 'OK'}
-        </Button>
-      )}
+      <Button
+        variant={dialog.type === 'Error' ? 'destructive' : 'default'}
+        onClick={() => confirmDialog(dialog)}
+      >
+        {dialog.confirmLabel ?? 'OK'}
+      </Button>
     </div>
   );
 };
@@ -244,7 +216,5 @@ const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
       return <BookmarkCheck className="h-5 w-5 text-mustard-dark" />;
     case 'Prompt':
       return <TriangleAlert className="h-5 w-5 text-mustard" />;
-    default:
-      throw new Error(`Unknown dialog variant`);
   }
 };
