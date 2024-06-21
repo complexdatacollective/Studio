@@ -6,6 +6,7 @@ import { DialogStoreProvider } from './dialog-store-provider';
 import DialogManager from './DialogManager';
 import { useDialogStore } from './dialog-store-provider';
 import { Input } from '~/components/ui/form/Input';
+import Paragraph from '~/components/typography/Paragraph';
 
 // Todo: Strip out everything from DialogManager Story except the core functionality
 // just render DialogManager functionalities here
@@ -103,18 +104,17 @@ export const InfoDialog: Story = {
     title: 'Important Information',
     content: (
       <div>
-        <p className="text-muted-foreground">
+        <Paragraph>
           Our product is designed to provide a seamless user experience and help
           you achieve your goals more efficiently. We have carefully crafted
           every aspect of the application to ensure maximum effectiveness and
           ease of use.
-        </p>
-        <br />
-        <p className="text-muted-foreground">
+        </Paragraph>
+        <Paragraph>
           By using our product, you agree to our terms of service and privacy
           policy. If you have any questions or concerns, please don't hesitate
           to reach out to our support team.
-        </p>
+        </Paragraph>
       </div>
     ),
     confirmLabel: 'Got it',
@@ -253,18 +253,17 @@ export const StackingDialogs: Story = {
         title: 'Important Information',
         content: (
           <div>
-            <p className="text-muted-foreground">
+            <Paragraph>
               Our product is designed to provide a seamless user experience and
               help you achieve your goals more efficiently. We have carefully
               crafted every aspect of the application to ensure maximum
               effectiveness and ease of use.
-            </p>
-            <br />
-            <p className="text-muted-foreground">
+            </Paragraph>
+            <Paragraph>
               By using our product, you agree to our terms of service and
               privacy policy. If you have any questions or concerns, please
               don't hesitate to reach out to our support team.
-            </p>
+            </Paragraph>
           </div>
         ),
         confirmLabel: 'Got it',

@@ -18,7 +18,8 @@ import {
   type DialogVariant,
 } from '~/lib/dialogs/dialog-schemas';
 import { Button } from './Button';
-import { headingVariants } from '../typography/Heading';
+import Heading, { headingVariants } from '../typography/Heading';
+import { paragraphVariants } from '../typography/Paragraph';
 
 // following this docs to implement this
 // https://www.tailwind-variants.org/docs/slots#slots-with-variants
@@ -26,7 +27,7 @@ const dialogElements = tv({
   slots: {
     overlay: 'fixed inset-0 z-50 bg-rich-black/50',
     content:
-      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-1 border bg-background p-5 shadow-lg rounded-md sm:rounded-lg',
+      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-2 border bg-background p-5 shadow-lg rounded-md sm:rounded-lg',
     close:
       'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none',
     title: `flex items-center gap-1.5 ${headingVariants({ variant: 'h2' })}`,
@@ -184,22 +185,22 @@ const DialogError = ({ name, message, stack }: Error) => (
   <div className="grid gap-4 py-4">
     <div className="grid gap-2">
       <div className="flex items-center justify-between">
-        <span className="font-semibold">Name:</span>
+        <Heading variant="h4">Name:</Heading>
         <span className="text-destructive">{name}</span>
       </div>
       <div className="flex items-center justify-between">
-        <span className="font-semibold">Message:</span>
+        <Heading variant="h4">Message:</Heading>
         <span className="text-destructive">{message}</span>
       </div>
     </div>
     <details className="group">
-      <summary className="flex cursor-pointer select-none list-none items-center justify-between font-semibold">
-        <span>Stack Trace</span>
-        <span className="text-muted-foreground transition-transform duration-300 group-open:rotate-180">
+      <summary className="flex cursor-pointer select-none list-none items-center justify-between">
+        <Heading variant="h4">Stack Trace</Heading>
+        <span className="transition-transform duration-300 group-open:rotate-180">
           <ChevronDown className="h-4 w-4 text-destructive" />
         </span>
       </summary>
-      <pre className="mt-2 whitespace-pre-wrap font-mono text-sm text-muted-foreground">
+      <pre className={paragraphVariants({ variant: 'inlineCode' })}>
         {stack}
       </pre>
     </details>
