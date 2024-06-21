@@ -54,22 +54,22 @@ const dialogElements = tv({
 const Dialog = ({
   dialog,
   handleOpenChange,
-  cancelDialog,
-  confirmDialog,
+  handleCancelDialog,
+  handleConfirmDialog,
   dialogOrder,
 }: {
   dialog: DialogType;
   dialogOrder: number;
-  handleOpenChange: (dialog: DialogType) => void;
-  confirmDialog: (dialog: DialogType) => void;
-  cancelDialog: (dialog: DialogType) => void;
+  handleOpenChange: (dialogId: string) => void;
+  handleConfirmDialog: (dialogId: string) => void;
+  handleCancelDialog: (dialogId: string) => void;
 }) => {
   const { title, overlay, content, footer, close } = dialogElements({
     type: dialog.type,
   });
 
   return (
-    <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog)}>
+    <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog.id)}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className={overlay()}>
           <DialogContent className={content()} dialogOrder={dialogOrder}>
@@ -84,8 +84,8 @@ const Dialog = ({
             <DialogFooter
               className={footer()}
               dialog={dialog}
-              cancelDialog={cancelDialog}
-              confirmDialog={confirmDialog}
+              handleCancelDialog={handleCancelDialog}
+              handleConfirmDialog={handleConfirmDialog}
             />
             {dialog.type === 'Prompt' && <DialogClose className={close()} />}
           </DialogContent>
@@ -148,29 +148,30 @@ const DialogClose = ({ className }: { className: string }) => (
 );
 
 // Dialog Footer Section
-type DialogFooterProps = {
-  dialog: DialogType;
-  className: string;
-  confirmDialog: (dialog: DialogType) => void;
-  cancelDialog: (dialog: DialogType) => void;
-};
-
 const DialogFooter = ({
   dialog,
   className,
-  cancelDialog,
-  confirmDialog,
-}: DialogFooterProps) => {
+  handleConfirmDialog,
+  handleCancelDialog,
+}: {
+  dialog: DialogType;
+  className: string;
+  handleConfirmDialog: (dialogId: string) => void;
+  handleCancelDialog: (dialogId: string) => void;
+}) => {
   return (
     <div className={className}>
       {dialog.type === 'Confirm' && (
-        <Button variant="destructive" onClick={() => cancelDialog(dialog)}>
+        <Button
+          variant="destructive"
+          onClick={() => handleCancelDialog(dialog.id)}
+        >
           {dialog.cancelLabel ?? 'Cancel'}
         </Button>
       )}
       <Button
         variant={dialog.type === 'Error' ? 'destructive' : 'default'}
-        onClick={() => confirmDialog(dialog)}
+        onClick={() => handleConfirmDialog(dialog.id)}
       >
         {dialog.confirmLabel ?? 'OK'}
       </Button>
