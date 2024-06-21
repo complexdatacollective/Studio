@@ -1,7 +1,7 @@
 'use client';
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import {
   BookmarkCheck,
   ChevronDown,
@@ -103,39 +103,28 @@ type DialogContentProps = {
   dialogOrder: number;
 } & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
 
+const variants: Variants = {
+  hidden: {
+    opacity: 0,
+    translateY: '-50%',
+    translateX: '-50%',
+    scale: 0.8,
+  },
+  visible: {
+    opacity: 1,
+    translateY: '-50%',
+    translateX: '-50%',
+    scale: 1,
+  },
+};
+
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
 >(({ children, dialogOrder, ...props }, ref) => {
-  const variants = React.useMemo(
-    () => ({
-      visible: {
-        opacity: 1,
-        translateY: '-50%',
-        translateX: '-50%',
-        scale: 1,
-        transition: { delay: dialogOrder * 0.25 },
-      },
-      hidden: {
-        opacity: 0,
-        translateY: '-50%',
-        translateX: '-50%',
-        scale: 0.8,
-      },
-    }),
-    [dialogOrder],
-  );
-
   return (
     <DialogPrimitive.Content ref={ref} {...props} asChild>
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        variants={variants}
-      >
-        {children}
-      </motion.div>
+      <motion.div variants={variants}>{children}</motion.div>
     </DialogPrimitive.Content>
   );
 });

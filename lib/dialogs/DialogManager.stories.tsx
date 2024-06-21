@@ -271,6 +271,16 @@ export const StackingDialogs: Story = {
           console.log('Info dialog confirmed');
         },
       });
+
+      openDialog({
+        type: 'Confirm',
+        title: 'Confirm Action',
+        content: 'Are you sure you want to proceed with this action?',
+        confirmLabel: 'Yes',
+        onConfirm: () => {
+          console.log('Confirm dialog confirmed');
+        },
+      });
     };
     return (
       <>

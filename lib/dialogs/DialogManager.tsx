@@ -1,8 +1,19 @@
 'use client';
 
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, type Variants } from 'framer-motion';
 import Dialog from '~/components/ui/Dialog';
 import { useDialogStore } from './dialog-store-provider';
+import { motion } from 'framer-motion';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.5, // Stagger the animation of children
+    },
+  },
+};
 
 const DialogManager = () => {
   const { closeDialog, dialogs } = useDialogStore();
@@ -36,17 +47,24 @@ const DialogManager = () => {
   };
 
   return (
-    <AnimatePresence>
-      {dialogs.map((dialog, index) => (
-        <Dialog
-          key={dialog.id}
-          dialog={dialog}
-          dialogOrder={index}
-          handleOpenChange={handleOpenChange}
-          handleCancelDialog={handleCancelDialog}
-          handleConfirmDialog={handleConfirmDialog}
-        />
-      ))}
+    <AnimatePresence mode="wait">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+      >
+        {dialogs.map((dialog, index) => (
+          <Dialog
+            key={dialog.id}
+            dialog={dialog}
+            dialogOrder={index}
+            handleOpenChange={handleOpenChange}
+            handleCancelDialog={handleCancelDialog}
+            handleConfirmDialog={handleConfirmDialog}
+          />
+        ))}
+      </motion.div>
     </AnimatePresence>
   );
 };
