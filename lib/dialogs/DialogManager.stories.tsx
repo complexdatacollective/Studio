@@ -7,6 +7,7 @@ import DialogManager from './DialogManager';
 import { useDialogStore } from './dialog-store-provider';
 import { Input } from '~/components/ui/form/Input';
 import Paragraph from '~/components/typography/Paragraph';
+import { useRef } from 'react';
 
 // Todo: Strip out everything from DialogManager Story except the core functionality
 // just render DialogManager functionalities here
@@ -155,40 +156,39 @@ export const ConfirmDialog: Story = {
 };
 
 export const PromptDialog: Story = {
-  args: {
-    type: 'Prompt',
-    title: 'Enter Your Name',
-    content: (
-      <form id="prompt-form" onSubmit={(e) => e.preventDefault()}>
-        <p className="text-sm">
-          Please provide your name so we can personalize your experience.
-        </p>
-        <Input
-          label="Name"
-          required
-          name="input"
-          type="text"
-          placeholder="Enter your name..."
-        />
-      </form>
-    ),
-    confirmLabel: 'Submit',
-    formId: 'prompt-form',
-    onConfirm: () => {
-      // get the form based on the formId
-      const form = document.getElementById('prompt-form') as HTMLFormElement;
-
-      // check if the form is valid
-      if (form.checkValidity()) {
-        return true;
-      }
-      return false;
-    },
-  },
   render: (props: Dialog) => {
+    const formRef = useRef<HTMLFormElement>(null);
+
     const { openDialog } = useDialogStore((state) => state);
     const createDialog = () => {
-      openDialog(props);
+      openDialog({
+        type: 'Prompt',
+        title: 'Enter Your Name',
+        content: (
+          <form ref={formRef}>
+            <Paragraph>
+              Please provide your name so we can personalize your experience.
+            </Paragraph>
+            <Input
+              label="Name"
+              required
+              name="input"
+              type="text"
+              placeholder="Enter your name..."
+            />
+          </form>
+        ),
+        confirmLabel: 'Submit',
+        onConfirm: async () => {
+          // check if the form is valid
+          if (formRef.current?.checkValidity()) {
+            // do something with the form data
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+            return true;
+          }
+          return false;
+        },
+      });
     };
     return (
       <>

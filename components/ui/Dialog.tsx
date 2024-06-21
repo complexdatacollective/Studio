@@ -9,6 +9,7 @@ import {
   OctagonAlert,
   TriangleAlert,
   X,
+  Loader2,
 } from 'lucide-react';
 import * as React from 'react';
 import { tv } from 'tailwind-variants';
@@ -61,8 +62,8 @@ const Dialog = ({
 }: {
   dialog: DialogType;
   dialogOrder: number;
-  handleOpenChange: (dialogId: string) => void;
-  handleConfirmDialog: (dialogId: string) => void;
+  handleOpenChange: (dialogId: string) => Promise<void>;
+  handleConfirmDialog: (dialogId: string) => Promise<void>;
   handleCancelDialog: (dialogId: string) => void;
 }) => {
   const { title, overlay, content, footer, close } = dialogElements({
@@ -157,9 +158,11 @@ const DialogFooter = ({
 }: {
   dialog: DialogType;
   className: string;
-  handleConfirmDialog: (dialogId: string) => void;
+  handleConfirmDialog: (dialogId: string) => Promise<void>;
   handleCancelDialog: (dialogId: string) => void;
 }) => {
+  const [loading, setLoading] = React.useState(false);
+
   return (
     <div className={className}>
       {dialog.type === 'Confirm' && (
@@ -172,9 +175,20 @@ const DialogFooter = ({
       )}
       <Button
         variant={dialog.type === 'Error' ? 'destructive' : 'default'}
-        onClick={() => handleConfirmDialog(dialog.id)}
+        onClick={async () => {
+          setLoading(true);
+          await handleConfirmDialog(dialog.id);
+          setLoading(false);
+        }}
       >
-        {dialog.confirmLabel ?? 'OK'}
+        {loading ? (
+          <>
+            <Loader2 className="mr-2 animate-spin" />
+            <span>Submitting...</span>
+          </>
+        ) : (
+          dialog.confirmLabel ?? 'OK'
+        )}
       </Button>
     </div>
   );
