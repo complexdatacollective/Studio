@@ -7,7 +7,6 @@
     "./lib/db/seed.ts",
     "./lib/localisation/i18n.ts",
     "./lib/localisation/navigation.ts",
-    "./lib/utils.ts",
-    "**/*.stories.tsx"
+    "./lib/utils.ts"
   ]
 }
