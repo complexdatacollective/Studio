@@ -73,58 +73,99 @@ const Dialog = ({
   return (
     <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog.id)}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className={overlay()}>
-          <DialogContent className={content()} dialogOrder={dialogOrder}>
+        <DialogOverlay className={overlay()}>
+          <DialogContent delay={dialogOrder * 0.1} className={content()}>
             <DialogPrimitive.Title className={title()}>
               <DialogIcon variant={dialog.type} />
               {dialog.title}
             </DialogPrimitive.Title>
-            <main>
+            <section>
               {dialog.content}
               {dialog.type === 'Error' && <DialogError {...dialog.error} />}
-            </main>
+            </section>
             <DialogFooter
               className={footer()}
               dialog={dialog}
               handleCancelDialog={handleCancelDialog}
               handleConfirmDialog={handleConfirmDialog}
             />
-            {dialog.type === 'Prompt' && <DialogClose className={close()} />}
+            {dialog.type !== 'Prompt' && <DialogClose className={close()} />}
           </DialogContent>
-        </DialogPrimitive.Overlay>
+        </DialogOverlay>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
 };
 export default Dialog;
 
+// Dialog Overlay Section
+const DialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ children, ...props }, ref) => {
+  const variants: Variants = React.useMemo(
+    () => ({
+      visible: {
+        opacity: 1,
+      },
+      hidden: {
+        opacity: 0,
+      },
+    }),
+    [],
+  );
+
+  return (
+    <DialogPrimitive.Overlay ref={ref} {...props} asChild>
+      <motion.main
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={variants}
+      >
+        {children}
+      </motion.main>
+    </DialogPrimitive.Overlay>
+  );
+});
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
+
 // Dialog Content Section
-type DialogContentProps = {
-  dialogOrder: number;
-} & React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
-
-const variants: Variants = {
-  hidden: {
-    opacity: 0,
-    translateY: '-50%',
-    translateX: '-50%',
-    scale: 0.8,
-  },
-  visible: {
-    opacity: 1,
-    translateY: '-50%',
-    translateX: '-50%',
-    scale: 1,
-  },
-};
-
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  DialogContentProps
->(({ children, dialogOrder, ...props }, ref) => {
+  { delay: number } & React.ComponentPropsWithoutRef<
+    typeof DialogPrimitive.Content
+  >
+>(({ children, delay, ...props }, ref) => {
+  const variants: Variants = React.useMemo(
+    () => ({
+      visible: {
+        opacity: 1,
+        translateY: '-50%',
+        translateX: '-50%',
+        scale: 1,
+        transition: { delay },
+      },
+      hidden: {
+        opacity: 0,
+        translateY: '-50%',
+        translateX: '-50%',
+        scale: 0.8,
+      },
+    }),
+    [delay],
+  );
+
   return (
     <DialogPrimitive.Content ref={ref} {...props} asChild>
-      <motion.div variants={variants}>{children}</motion.div>
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        exit="hidden"
+        variants={variants}
+      >
+        {children}
+      </motion.div>
     </DialogPrimitive.Content>
   );
 });
