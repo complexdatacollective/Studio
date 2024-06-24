@@ -62,8 +62,8 @@ const Dialog = ({
 }: {
   dialog: DialogType;
   dialogOrder: number;
-  handleOpenChange: (dialogId: string) => Promise<void>;
-  handleConfirmDialog: (dialogId: string) => Promise<void>;
+  handleOpenChange: (dialogId: string) => Promise<void> | void;
+  handleConfirmDialog: (dialogId: string) => Promise<void> | void;
   handleCancelDialog: (dialogId: string) => void;
 }) => {
   const { title, overlay, content, footer, close } = dialogElements({
@@ -188,7 +188,7 @@ const DialogFooter = ({
 }: {
   dialog: DialogType;
   className: string;
-  handleConfirmDialog: (dialogId: string) => Promise<void>;
+  handleConfirmDialog: (dialogId: string) => Promise<void> | void;
   handleCancelDialog: (dialogId: string) => void;
 }) => {
   const [loading, setLoading] = React.useState(false);

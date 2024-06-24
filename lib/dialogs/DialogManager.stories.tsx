@@ -17,7 +17,7 @@ import { useRef } from 'react';
 */
 
 const meta = {
-  title: 'Dialogs/Dialog',
+  title: 'Dialogs/DialogManager',
   component: DialogManager,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
