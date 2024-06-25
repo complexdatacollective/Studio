@@ -40,11 +40,11 @@ const DialogManager = () => {
       {dialogs.map((dialog, index) => (
         <Dialog
           key={dialog.id}
-          dialog={dialog}
           dialogOrder={index}
           handleOpenChange={handleOpenChange}
           handleCancelDialog={handleCancelDialog}
           handleConfirmDialog={handleConfirmDialog}
+          {...dialog}
         />
       ))}
     </AnimatePresence>

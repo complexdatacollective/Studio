@@ -54,18 +54,17 @@ const dialogElements = tv({
 
 // Main Dialog Component
 const Dialog = ({
-  dialog,
   handleOpenChange,
   handleCancelDialog,
   handleConfirmDialog,
   dialogOrder,
+  ...dialog
 }: {
-  dialog: DialogType;
   dialogOrder: number;
   handleOpenChange: (dialogId: string) => Promise<void> | void;
   handleConfirmDialog: (dialogId: string) => Promise<void> | void;
   handleCancelDialog: (dialogId: string) => void;
-}) => {
+} & DialogType) => {
   const { title, overlay, content, footer, close } = dialogElements({
     type: dialog.type,
   });
