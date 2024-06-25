@@ -51,3 +51,9 @@ export async function updateStudy(slug: string, formData: FormData) {
 
   safeRevalidateTag(`getStudyBySlug-${slug}`);
 }
+
+// eslint-disable-next-line @typescript-eslint/require-await
+export async function testAuthedAction() {
+  // eslint-disable-next-line no-console
+  console.log('testAuthedAction ran');
+}
