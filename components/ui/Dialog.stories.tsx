@@ -266,9 +266,9 @@ export const StackingDialogs: Story = {
     const addDialogs = () => {
       setDialogs([
         ...dialogs,
-        { ...args, id: Date.now().toString() },
+        { ...args },
         {
-          id: (Date.now() + 10).toString(),
+          id: '2',
           type: 'Info',
           title: 'Important Information',
           content: (

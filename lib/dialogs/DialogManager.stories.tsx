@@ -65,7 +65,7 @@ export const DialogManagerComponent: Story = {
     };
     return (
       <>
-        {/* This is not part of the DialogManager component,
+        {/* Button is not part of the DialogManager component,
             just putting there to showcase what the component renders
          */}
         <Button onClick={createDialog}>Show Dialog</Button>
