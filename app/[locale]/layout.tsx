@@ -5,6 +5,8 @@ import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
+import DialogManager from '~/lib/dialogs/DialogManager';
+import { DialogStoreProvider } from '~/lib/dialogs/dialog-store-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,12 +29,17 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <NextIntlClientProvider messages={messages}>
-          <div className="m-2">
-            <LanguageSwitcher />
-          </div>
-          <ResponsiveContainer>{children}</ResponsiveContainer>
-        </NextIntlClientProvider>
+        <DialogStoreProvider>
+          <NextIntlClientProvider messages={messages}>
+            <div className="m-2">
+              <LanguageSwitcher />
+            </div>
+            <ResponsiveContainer>
+              {children}
+              <DialogManager />
+            </ResponsiveContainer>
+          </NextIntlClientProvider>
+        </DialogStoreProvider>
       </body>
     </html>
   );
