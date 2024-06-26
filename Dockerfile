@@ -7,8 +7,8 @@ FROM base AS deps
 # RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy package.json and lockfile, along with postinstall script
-COPY package.json pnpm-lock.yaml* postinstall.js ./
+# Copy package.json and lockfile
+COPY package.json pnpm-lock.yaml* ./
 
 # Install pnpm and install dependencies
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
