@@ -8,7 +8,7 @@ FROM base AS deps
 WORKDIR /app
 
 # Prisma stuff
-COPY prisma ./lib/db
+COPY lib/db ./lib/db
 
 # Copy package.json and lockfile
 COPY package.json pnpm-lock.yaml* ./
@@ -55,7 +55,7 @@ RUN chown nextjs:nodejs .next
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/lib/db ./db
+COPY --from=builder --chown=nextjs:nodejs /app/lib/db ./lib/db
 
 USER nextjs
 
