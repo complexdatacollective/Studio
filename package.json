@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "./scripts/dev.sh",
     "build": "next build",
-    "postinstall": "prisma generate",
+    "postinstall": "node postinstall.js",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "SKIP_ENV_VALIDATION=true next lint",
