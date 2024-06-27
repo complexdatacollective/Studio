@@ -25,8 +25,8 @@ export function TestAdminActionButton() {
         const form = event.currentTarget;
 
         const formData = new FormData(form);
-        const [data, err] = await execute({
-          publicStudyId: 'abcd',
+        const [err] = await execute({
+          publicStudyId: 'nc',
           roles: ['ADMIN'],
         });
 

@@ -9,7 +9,7 @@ export const getStudies = () =>
 
 export const getStudyUser = (userId: string, publicStudyId: string) =>
   createCachedFunction(async () => {
-    return await db.studyUser.findFirst({
+    const studyUser = await db.studyUser.findFirst({
       where: {
         userId,
         study: {
@@ -17,4 +17,5 @@ export const getStudyUser = (userId: string, publicStudyId: string) =>
         },
       },
     });
+    return studyUser;
   }, [`getStudyUser-${userId}-${publicStudyId}`])();

@@ -14,6 +14,27 @@ async function seed() {
     },
     update: {},
   });
+  await db.study.upsert({
+    where: {
+      publicId: 'nc',
+    },
+    create: {
+      publicId: 'nc',
+      name: 'Network Canvas',
+      slug: 'network-canvas',
+      users: {
+        create: {
+          role: 'ADMIN',
+          user: {
+            connect: {
+              username: 'admin',
+            },
+          },
+        },
+      },
+    },
+    update: {},
+  });
 }
 
 void seed();
