@@ -85,12 +85,12 @@ export async function requirePageAuth({
   return session;
 }
 
-// export async function requireApiAuth() {
-//   const { session } = await getServerSession();
+export async function requireApiAuth() {
+  const { session } = await getServerSession();
 
-//   if (!session) {
-//     throw new Error('Unauthorized');
-//   }
+  if (!session) {
+    throw new Error('Unauthorized');
+  }
 
-//   return session;
-// }
+  return session;
+}
