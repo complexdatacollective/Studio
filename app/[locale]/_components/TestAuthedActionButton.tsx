@@ -16,7 +16,17 @@ export function TestAuthedActionButton() {
 }
 
 export function TestAdminActionButton() {
-  const { execute } = useServerAction(testAuthedActionWithRoles);
+  const { execute, isSuccess, isError } = useServerAction(
+    testAuthedActionWithRoles,
+  );
+
+  if (isSuccess) {
+    console.log('Success!');
+  }
+
+  if (isError) {
+    console.log('Error!');
+  }
 
   return (
     <form
@@ -25,15 +35,10 @@ export function TestAdminActionButton() {
         const form = event.currentTarget;
 
         const formData = new FormData(form);
-        const [err] = await execute({
+        await execute({
           publicStudyId: 'nc',
           roles: ['ADMIN'],
         });
-
-        if (err) {
-          // handle error
-          return;
-        }
 
         form.reset();
       }}
