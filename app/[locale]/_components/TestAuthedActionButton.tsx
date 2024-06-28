@@ -14,9 +14,15 @@ Only the user's session is required.
 No specific roles are required.
 */
 export function TestAuthedActionButton() {
+  const { executeFormAction, isError, isSuccess, data } =
+    useServerAction(testAuthedAction);
   return (
-    <form action={testAuthedAction}>
+    <form action={executeFormAction}>
       <Button type="submit">Test authed action</Button>
+      {isSuccess && (
+        <div className="text-success">Success: {JSON.stringify(data)}</div>
+      )}
+      {isError && <div className="text-destructive">Denied</div>}
     </form>
   );
 }
