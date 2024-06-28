@@ -7,15 +7,14 @@ export const getStudies = () =>
     return await db.study.findMany();
   }, ['getOrganizations'])();
 
-export const getStudyUser = (userId: string, publicStudyId: string) =>
-  createCachedFunction(async () => {
-    const studyUser = await db.studyUser.findFirst({
-      where: {
-        userId,
-        study: {
-          publicId: publicStudyId,
-        },
+export const getStudyUser = async (userId: string, publicStudyId: string) => {
+  const studyUser = await db.studyUser.findFirst({
+    where: {
+      userId,
+      study: {
+        publicId: publicStudyId,
       },
-    });
-    return studyUser;
-  }, [`getStudyUser-${userId}-${publicStudyId}`])();
+    },
+  });
+  return studyUser;
+};

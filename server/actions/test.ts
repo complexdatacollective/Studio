@@ -1,28 +1,34 @@
 'use server';
 
-import { zfd } from 'zod-form-data';
+import { formData, zfd } from 'zod-form-data';
 import {
   authedAction,
   authedActionWithRoles,
   authedActionWithRolesSchema,
 } from '~/lib/authedAction';
 
-const schema = zfd.formData({
-  // Add form data schema here
-});
-
 export const testAuthedAction = authedAction
   .createServerAction()
-  .input(schema)
+  .input(zfd.formData({}))
   .handler(() => {
-    // eslint-disable-next-line no-console
-    console.log('Authed action ran');
+    return { messageFromAction: 'Authed action ran' };
   });
+
+const testAuthedActionWithRolesSchema = authedActionWithRolesSchema.extend({
+  formData: formData({
+    otherFormData: zfd.text(),
+  }),
+});
 
 export const testAuthedActionWithRoles = authedActionWithRoles
   .createServerAction()
-  .input(authedActionWithRolesSchema)
-  .handler(() => {
-    // eslint-disable-next-line no-console
-    console.log('Role-based auth action ran');
+  .input(testAuthedActionWithRolesSchema)
+  .handler(({ input, ctx }) => {
+    const otherFormData = input.formData.otherFormData;
+    const userId = ctx.userId;
+    return {
+      messageFromAction: 'Authed action with roles ran',
+      otherFormData,
+      userId,
+    };
   });
