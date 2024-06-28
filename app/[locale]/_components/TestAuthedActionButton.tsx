@@ -8,6 +8,11 @@ import {
 import { useServerAction } from 'zsa-react';
 import { Input } from '~/components/ui/form/Input';
 
+/*
+Demonstration of a button that triggers an action that requires basic authentication.
+Only the user's session is required.
+No specific roles are required.
+*/
 export function TestAuthedActionButton() {
   return (
     <form action={testAuthedAction}>
@@ -15,6 +20,13 @@ export function TestAuthedActionButton() {
     </form>
   );
 }
+
+/*
+Demonstration of more complex role-based authorization.
+Requires publicStudyId nc and the ADMIN role.
+Demonstrates passing additional form data.
+Demonstrates using useServerAction's props for execution, statuses, and data.
+*/
 
 export function TestAdminActionButton() {
   const { execute, isSuccess, isError, isPending, error, data } =
