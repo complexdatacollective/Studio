@@ -5,10 +5,6 @@ import SignOutBtn from '../_components/SignOutBtn';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
-import {
-  TestAuthedActionButton,
-  TestAdminActionButton,
-} from './_components/TestAuthedActionButton';
 
 export default async function Home() {
   await requirePageAuth();
@@ -32,8 +28,6 @@ export default async function Home() {
       </div>
 
       <SignOutBtn />
-      <TestAuthedActionButton />
-      <TestAdminActionButton />
     </main>
   );
 }
