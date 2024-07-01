@@ -42,15 +42,19 @@ export const authedActionWithRoles = createServerActionProcedure(authedAction)
       const studyUser = await getStudyUser(ctx.userId, input.publicStudyId);
 
       if (!studyUser) {
-        throw new Error('Role-based access denied');
+        throw new Error(
+          `Role-based access denied: User with ${ctx.userId} not found in study ${input.publicStudyId}`,
+        );
       }
 
       if (!input.roles.includes(studyUser.role)) {
-        throw new Error('Role-based access denied');
+        throw new Error(
+          `Role-based access denied: User with ${ctx.userId} does not have the required role`,
+        );
       }
 
       return studyUser;
     } catch {
-      throw new Error('Role-based access denied');
+      throw new Error('Role-based access denied: Error checking user roles');
     }
   });
