@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createServerActionProcedure } from 'zsa';
+import { createServerActionProcedure, ZSAError } from 'zsa';
 import { requireApiAuth } from '~/lib/auth';
 import { Role } from '@prisma/client';
 import { getStudyUser } from '~/server/queries/studies';
@@ -15,7 +15,10 @@ export const authedAction = createServerActionProcedure().handler(async () => {
 
     return session;
   } catch {
-    throw new Error('User not authenticated. Access denied.');
+    throw new ZSAError(
+      'NOT_AUTHORIZED',
+      'Access denied: User is not authenticated',
+    );
   }
 });
 
@@ -42,19 +45,24 @@ export const authedActionWithRoles = createServerActionProcedure(authedAction)
       const studyUser = await getStudyUser(ctx.userId, input.publicStudyId);
 
       if (!studyUser) {
-        throw new Error(
+        throw new ZSAError(
+          'NOT_AUTHORIZED',
           `Role-based access denied: User with ${ctx.userId} not found in study ${input.publicStudyId}`,
         );
       }
 
       if (!input.roles.includes(studyUser.role)) {
-        throw new Error(
+        throw new ZSAError(
+          'NOT_AUTHORIZED',
           `Role-based access denied: User with ${ctx.userId} does not have the required role`,
         );
       }
 
       return studyUser;
     } catch {
-      throw new Error('Role-based access denied: Error checking user roles');
+      throw new ZSAError(
+        'ERROR',
+        'Role-based access denied: Error checking user roles',
+      );
     }
   });
