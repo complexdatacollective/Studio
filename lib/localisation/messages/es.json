@@ -79,5 +79,9 @@
   "LanguageSwitcher": {
     "en": "English",
     "es": "Español"
+  },
+  "Navigation": {
+    "forward": "Avanzar",
+    "back": "Retroceder"
   }
 }

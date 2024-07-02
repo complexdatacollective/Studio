@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '~/lib/utils';
 
@@ -44,12 +45,13 @@ const Navigation = ({
   pulseNext,
   progress,
 }: NavigationProps) => {
+  const t = useTranslations('Navigation');
   return (
     <div
       role="navigation"
       className="flex h-full flex-shrink-0 flex-grow-0 flex-col items-center justify-between bg-navy-taupe text-white"
     >
-      <NavigationButton onClick={moveBackward} ariaLabel="Move backward">
+      <NavigationButton onClick={moveBackward} ariaLabel={t('back')}>
         <ChevronUp className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
       </NavigationButton>
       {progress}
@@ -59,7 +61,7 @@ const Navigation = ({
           'hover:bg-success',
         )}
         onClick={moveForward}
-        ariaLabel="Move forward"
+        ariaLabel={t('forward')}
       >
         <ChevronDown className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
       </NavigationButton>
