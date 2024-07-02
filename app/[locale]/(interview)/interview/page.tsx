@@ -20,8 +20,8 @@ export default function Page() {
   const isReadyForNextStage = false;
 
   return (
-    <div className="flex h-screen border-2 border-primary">
-      <div className="w-1/5 p-4">
+    <div className="flex h-screen">
+      <div className="">
         <Navigation
           moveBackward={moveBackward}
           moveForward={moveForward}
@@ -29,7 +29,7 @@ export default function Page() {
           progress={progress}
         />
       </div>
-      <div className="flex-1 overflow-hidden overflow-y-auto p-4">
+      <div className="flex-1 overflow-hidden overflow-y-auto">
         <StageShell />
       </div>
     </div>

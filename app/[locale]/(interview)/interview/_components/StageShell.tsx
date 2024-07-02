@@ -1,8 +1,9 @@
 export default function StageShell() {
   return (
-    <div>
+    <div className="p-4">
       <h1 className="mb-4 text-2xl font-bold">Interview</h1>
       <p>This is the main task area</p>
+      <div className="h-48 bg-mustard">Big component</div>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Id diam maecenas
