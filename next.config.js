@@ -8,7 +8,11 @@ const withNextIntl = createNextIntlPlugin(
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
-  }
+  },
+  // Todo: remove this config once we upgrade to Next 15
+  experimental: {
+    serverComponentsExternalPackages: ['@node-rs/argon2'],
+  },
 };
 
 export default withNextIntl(nextConfig);

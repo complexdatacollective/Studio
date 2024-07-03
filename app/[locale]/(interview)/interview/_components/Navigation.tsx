@@ -2,6 +2,7 @@
 
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { cn } from '~/lib/utils';
 
@@ -33,18 +34,26 @@ const NavigationButton = ({
 };
 
 type NavigationProps = {
-  moveBackward: () => void;
-  moveForward: () => void;
   pulseNext: boolean;
   progress: number;
 };
 
-const Navigation = ({
-  moveBackward,
-  moveForward,
-  pulseNext,
-  progress,
-}: NavigationProps) => {
+const Navigation = ({ pulseNext, progress }: NavigationProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const stage = searchParams.get('stage');
+
+  const moveBackward = () => {
+    if (!stage) return;
+    const newStage = parseInt(stage) - 1;
+    router.push(`${pathname}/?stage=${newStage}`);
+  };
+  const moveForward = () => {
+    if (!stage) return;
+    const newStage = parseInt(stage) + 1;
+    router.push(`${pathname}/?stage=${newStage}`);
+  };
   const t = useTranslations('Navigation');
   return (
     <div
