@@ -4,8 +4,7 @@ import { useState, useRef } from 'react';
 import { CircleHelp, X } from 'lucide-react';
 import { motion, type Variants } from 'framer-motion';
 
-// Main StageInstructions Component
-export default function StageInstructions({ hint }: { hint: string }) {
+export default function SlideInTooltip({ hint }: { hint: string }) {
   const [showHint, setShowHint] = useState(false);
   const hintRef = useRef<HTMLDivElement>(null);
 
