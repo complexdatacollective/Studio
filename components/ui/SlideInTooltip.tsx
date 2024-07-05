@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { CircleHelp, X } from 'lucide-react';
+import { Info, X } from 'lucide-react';
 import { motion, type Variants } from 'framer-motion';
 
 export default function SlideInTooltip({ hint }: { hint: string }) {
@@ -29,8 +29,11 @@ export default function SlideInTooltip({ hint }: { hint: string }) {
 
   return (
     <div>
-      <button onClick={toggleHint} className="fixed right-0 top-0 z-50 p-6">
-        <CircleHelp className="mr-2 h-8 w-8" />
+      <button
+        onClick={toggleHint}
+        className="focusable fixed right-6 top-6 z-10 flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-accent p-6 text-accent-foreground sm:h-20 sm:w-20"
+      >
+        <Info className="h-8 w-8" />
       </button>
       {showHint && (
         <motion.div
@@ -42,7 +45,7 @@ export default function SlideInTooltip({ hint }: { hint: string }) {
           variants={variants}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
-          <div className="relative flex justify-between rounded-lg bg-background p-4 text-foreground shadow-lg">
+          <div className="relative flex h-12 justify-between rounded-lg bg-accent p-4 text-accent-foreground sm:h-20">
             <div className="flex items-center">
               <p>{hint}</p>
             </div>
