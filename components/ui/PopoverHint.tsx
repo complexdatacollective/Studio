@@ -4,7 +4,13 @@ import { useState, useRef, useEffect } from 'react';
 import { Info, X } from 'lucide-react';
 import { motion, type Variants } from 'framer-motion';
 
-export default function PopoverHint({ hint }: { hint: string }) {
+export default function PopoverHint({
+  hint,
+  title,
+}: {
+  hint: string;
+  title?: string;
+}) {
   const [showHint, setShowHint] = useState(false);
   const hintRef = useRef<HTMLDivElement>(null);
 
@@ -61,8 +67,9 @@ export default function PopoverHint({ hint }: { hint: string }) {
           variants={variants}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
-          <div className="relative flex h-12 justify-between rounded-lg bg-accent p-4 text-accent-foreground sm:h-20">
-            <div className="flex items-center">
+          <div className="relative flex min-h-12 max-w-md justify-between rounded-lg bg-accent p-4 text-accent-foreground sm:min-h-20">
+            <div className="flex flex-col">
+              <h2 className="font-bold">{title}</h2>
               <p>{hint}</p>
             </div>
             <button

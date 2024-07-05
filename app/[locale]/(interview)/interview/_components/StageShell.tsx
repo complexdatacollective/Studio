@@ -1,4 +1,4 @@
-import SlideInTooltip from '~/components/ui/PopoverHint';
+import PopoverHint from '~/components/ui/PopoverHint';
 import TooltipHint from '~/components/ui/TooltipHint';
 
 export default function StageShell({ stageId }: { stageId: number }) {
@@ -6,7 +6,10 @@ export default function StageShell({ stageId }: { stageId: number }) {
     <div className="space-y-4 bg-navy-taupe p-4 text-white">
       <h1 className="mb-4 text-2xl font-bold">Interview Stage {stageId}</h1>
       <p>This is the main task area</p>
-      <SlideInTooltip hint="Drag and drop each node into the bin that makes the most sense." />
+      <PopoverHint
+        title="Ordinal Bin"
+        hint="Drag and drop each node into the bin that makes the most sense. If you're not sure, you can place it in the 'Other' bin."
+      />
       {/* example stage components */}
       <TooltipHint hint="Interview task hint: ex. click this to nominate a node">
         <div className="h-48 bg-mustard-dark">Stage component with tip</div>
