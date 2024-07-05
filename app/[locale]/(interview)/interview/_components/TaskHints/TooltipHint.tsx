@@ -1,9 +1,3 @@
-// abstract away the complexities of using the Tooltip component
-// this should be a function that can wrap any Interview component
-// takes children and a hint prop
-// hint prop will be the text content of the tooltip
-// children will be the component that should trigger the tooltip
-
 import { type ReactNode } from 'react';
 import {
   TooltipProvider,
