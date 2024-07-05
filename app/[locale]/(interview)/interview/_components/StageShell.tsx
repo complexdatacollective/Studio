@@ -1,4 +1,4 @@
-import SlideInTooltip from '~/components/ui/SlideInTooltip';
+import SlideInTooltip from '~/components/ui/PopoverHint';
 import TooltipHint from '~/components/ui/TooltipHint';
 
 export default function StageShell({ stageId }: { stageId: number }) {

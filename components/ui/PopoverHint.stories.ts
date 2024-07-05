@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import SlideInTooltip from './SlideInTooltip';
+import PopoverHint from './PopoverHint';
 
-const meta: Meta<typeof SlideInTooltip> = {
-  title: 'UI/SlideInTooltip',
-  component: SlideInTooltip,
+const meta: Meta<typeof PopoverHint> = {
+  title: 'UI/PopoverHint',
+  component: PopoverHint,
   parameters: {
     layout: 'centered',
   },

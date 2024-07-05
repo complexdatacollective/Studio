@@ -1,12 +1,28 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Info, X } from 'lucide-react';
 import { motion, type Variants } from 'framer-motion';
 
-export default function SlideInTooltip({ hint }: { hint: string }) {
+export default function PopoverHint({ hint }: { hint: string }) {
   const [showHint, setShowHint] = useState(false);
   const hintRef = useRef<HTMLDivElement>(null);
+
+  // Keyboard shortcut to toggle hint
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'i' && event.metaKey) {
+        // CMD + I
+        setShowHint(!showHint);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [showHint]);
 
   const toggleHint = () => {
     setShowHint(!showHint);
