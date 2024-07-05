@@ -58,7 +58,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   return (
     <div
       role="navigation"
-      className="flex h-full flex-shrink-0 flex-grow-0 flex-col items-center justify-between bg-navy-taupe text-white"
+      className="flex h-full flex-shrink-0 flex-grow-0 flex-col items-center justify-between bg-cyber-grape text-white"
     >
       <NavigationButton onClick={moveBackward} ariaLabel={t('back')}>
         <ChevronUp className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />

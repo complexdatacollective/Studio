@@ -17,7 +17,9 @@ export default function TooltipHint({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>{children}</TooltipTrigger>
-        <TooltipContent>{hint}</TooltipContent>
+        <TooltipContent className="bg-background text-foreground">
+          {hint}
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

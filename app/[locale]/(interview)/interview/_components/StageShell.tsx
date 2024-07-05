@@ -3,7 +3,7 @@ import TooltipHint from './TaskHints/TooltipHint';
 
 export default function StageShell({ stageId }: { stageId: number }) {
   return (
-    <div className="space-y-4 p-4">
+    <div className="space-y-4 bg-navy-taupe p-4 text-white">
       <h1 className="mb-4 text-2xl font-bold">Interview Stage {stageId}</h1>
       <p>This is the main task area</p>
       <StageInstructions hint="Drag and drop each node into the bin that makes the most sense." />
