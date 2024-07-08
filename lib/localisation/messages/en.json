@@ -83,5 +83,17 @@
   "Navigation": {
     "forward": "Move forward",
     "back": "Move backward"
+  },
+  "PopoverHint": {
+    "hint": "Click this for stage instructions",
+    "close": "Close",
+    "open": "Open"
+  },
+  "ExampleTooltip": {
+    "hint": "Interview task hint. For example, click this to nominate a person"
+  },
+  "ExamplePopover": {
+    "title": "Ordinal Bin",
+    "hint": "Drag and drop each node into the bin that makes the most sense. If you're not sure, you can place it in the 'Other' bin."
   }
 }

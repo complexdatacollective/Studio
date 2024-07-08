@@ -1,17 +1,17 @@
 import PopoverHint from '~/components/ui/PopoverHint';
 import TooltipHint from '~/components/ui/TooltipHint';
+import { useTranslations } from 'next-intl';
 
 export default function StageShell({ stageId }: { stageId: number }) {
+  const tTooltip = useTranslations('ExampleTooltip');
+  const tPopover = useTranslations('ExamplePopover');
   return (
     <div className="space-y-4 bg-navy-taupe p-4 text-white">
       <h1 className="mb-4 text-2xl font-bold">Interview Stage {stageId}</h1>
       <p>This is the main task area</p>
-      <PopoverHint
-        title="Ordinal Bin"
-        hint="Drag and drop each node into the bin that makes the most sense. If you're not sure, you can place it in the 'Other' bin."
-      />
+      <PopoverHint title={tPopover('title')} hint={tPopover('hint')} />
       {/* example stage components */}
-      <TooltipHint hint="Interview task hint: ex. click this to nominate a node">
+      <TooltipHint hint={tTooltip('hint')}>
         <div className="h-48 bg-mustard-dark">Stage component with tip</div>
       </TooltipHint>
       <div className="h-48 bg-sea-green-dark">Stage component</div>

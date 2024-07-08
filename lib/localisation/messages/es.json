@@ -83,5 +83,17 @@
   "Navigation": {
     "forward": "Avanzar",
     "back": "Retroceder"
+  },
+  "PopoverHint": {
+    "hint": "Haz clic aquí para las instrucciones de la etapa",
+    "close": "Cerrar",
+    "open": "Abrir"
+  },
+  "ExampleTooltip": {
+    "hint": "Pista para la tarea de la entrevista. Por ejemplo, haz clic aquí para nominar a una persona"
+  },
+  "ExamplePopover": {
+    "title": "Cubo Ordinal",
+    "hint": "Arrastra y suelta cada nodo en el cubo que tenga más sentido. Si no estás seguro, puedes colocarlo en el cubo 'Otro'."
   }
 }
