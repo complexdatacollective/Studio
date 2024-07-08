@@ -70,7 +70,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
     <div
       role="navigation"
       className={cn(
-        'flex h-full flex-shrink-0 flex-grow-0 flex-col items-center justify-between bg-cyber-grape text-white',
+        'flex h-full flex-shrink-0 flex-grow-0 flex-col items-center bg-cyber-grape text-white',
         expanded && 'w-full',
       )}
     >
@@ -82,7 +82,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         )}
       </NavigationButton>
       {!expanded && (
-        <>
+        <div className="flex h-full flex-col items-center justify-between">
           <NavigationButton onClick={moveBackward} ariaLabel={t('back')}>
             <ChevronUp className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
           </NavigationButton>
@@ -97,7 +97,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           >
             <ChevronDown className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
           </NavigationButton>
-        </>
+        </div>
       )}
       {expanded && (
         <div className="p-4">
