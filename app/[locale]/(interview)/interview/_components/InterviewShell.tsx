@@ -3,6 +3,7 @@ import Navigation from './Navigation';
 import StageShell from './StageShell';
 import type { Interview } from '@prisma/client';
 
+// This is the shell for the interview. It contains the navigation and the current stage shell.
 export default function InterviewShell({
   interview,
   currentStage,
@@ -15,7 +16,7 @@ export default function InterviewShell({
   console.log(interview);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-navy-taupe text-white">
       <div className="">
         <Navigation pulseNext={isReadyForNextStage} progress={progress} />
       </div>
