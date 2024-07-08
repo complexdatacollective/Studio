@@ -59,7 +59,7 @@ export default function PopoverHint({
       >
         <button
           onClick={() => toggleShowHint()}
-          className="focusable fixed right-6 top-6 z-10 flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-accent p-6 text-accent-foreground sm:h-20 sm:w-20"
+          className="focusable hover:scale fixed right-6 top-6 z-10 flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-accent p-6 text-accent-foreground transition-transform hover:scale-105 sm:h-20 sm:w-20"
         >
           <Info className="h-8 w-8" />
         </button>
@@ -81,7 +81,7 @@ export default function PopoverHint({
             className="p-2 opacity-70 transition-opacity hover:opacity-100"
             aria-label="Close"
           >
-            <X className="h-6 w-6" />
+            <X className="h-8 w-8" />
           </button>
         </div>
       </motion.div>
