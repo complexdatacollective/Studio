@@ -13,7 +13,9 @@ export default function StageShell({ stageId }: { stageId: number }) {
       <PopoverHint title={tPopover('title')} hint={tPopover('hint')} />
       {/* example stage components */}
       <TooltipHint hint={tTooltip('hint')}>
-        <div className="h-48 bg-mustard-dark">Stage component with tip</div>
+        <div className="flex h-48 w-48 items-center justify-center rounded-full bg-neon-coral-dark text-center text-white">
+          Example node
+        </div>
       </TooltipHint>
     </div>
   );

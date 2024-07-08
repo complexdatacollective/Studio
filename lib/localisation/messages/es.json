@@ -91,7 +91,7 @@
     "open": "Abrir"
   },
   "ExampleTooltip": {
-    "hint": "Pista para la tarea de la entrevista. Por ejemplo, haz clic aquí para nominar a una persona"
+    "hint": "Arrastra y suelta este nodo en un contenedor debajo."
   },
   "ExamplePopover": {
     "title": "Cubo Ordinal",

@@ -91,7 +91,7 @@
     "open": "Open"
   },
   "ExampleTooltip": {
-    "hint": "Interview task hint. For example, click this to nominate a person"
+    "hint": "Drag and drop this node into a bin below."
   },
   "ExamplePopover": {
     "title": "Ordinal Bin",
