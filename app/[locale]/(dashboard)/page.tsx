@@ -1,7 +1,7 @@
 import { getStudies } from '~/server/queries/studies';
-import CreateStudyForm from './_components/CreateStudyForm';
+import CreateStudyForm from '../_components/CreateStudyForm';
 import { requirePageAuth } from '~/lib/auth';
-import SignOutBtn from '../_components/SignOutBtn';
+import SignOutBtn from '../../_components/SignOutBtn';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
