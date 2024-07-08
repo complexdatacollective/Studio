@@ -2,7 +2,8 @@
 
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '~/lib/localisation/navigation';
 
 import { cn } from '~/lib/utils';
 
