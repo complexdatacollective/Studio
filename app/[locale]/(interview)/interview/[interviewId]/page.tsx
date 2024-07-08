@@ -1,5 +1,6 @@
 import { getInterviewById } from '~/server/queries/interviews';
 import InterviewShell from '../_components/InterviewShell';
+import { redirect } from '~/lib/localisation/navigation';
 
 export default async function Page({
   params: { interviewId },
@@ -11,6 +12,7 @@ export default async function Page({
   let stage;
   if (!searchParams.stage) {
     stage = 0;
+    redirect(`/interview/${interviewId}?stage=0`);
   } else {
     stage = parseInt(searchParams.stage as string);
   }
