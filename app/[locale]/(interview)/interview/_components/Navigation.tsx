@@ -74,7 +74,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         expanded && 'w-full',
       )}
     >
-      <NavigationButton onClick={toggleMenu} ariaLabel="Menu">
+      <NavigationButton onClick={toggleMenu} ariaLabel={t('menu')}>
         {expanded ? (
           <X className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
         ) : (

@@ -82,7 +82,8 @@
   },
   "Navigation": {
     "forward": "Move forward",
-    "back": "Move backward"
+    "back": "Move backward",
+    "menu": "Menu"
   },
   "PopoverHint": {
     "hint": "Click this for stage instructions",

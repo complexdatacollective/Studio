@@ -82,7 +82,8 @@
   },
   "Navigation": {
     "forward": "Avanzar",
-    "back": "Retroceder"
+    "back": "Retroceder",
+    "menu": "Menú"
   },
   "PopoverHint": {
     "hint": "Haz clic aquí para las instrucciones de la etapa",
