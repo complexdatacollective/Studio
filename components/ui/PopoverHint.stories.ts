@@ -17,6 +17,7 @@ const meta: Meta<typeof PopoverHint> = {
   args: {
     hint: 'This is a longer hint. It is intended for stage-level instructions.',
   },
+  tags: ['autodocs'],
 };
 
 export default meta;
