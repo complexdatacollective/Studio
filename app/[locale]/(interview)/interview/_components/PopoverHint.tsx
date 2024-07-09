@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { Info, X } from 'lucide-react';
 import { motion, type Variants, useCycle } from 'framer-motion';
-import TooltipHint from './TooltipHint';
+import TooltipHint from '~/components/ui/TooltipHint';
 import { useTranslations } from 'next-intl';
 
 export default function PopoverHint({
