@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import TooltipHint from './TooltipHint';
 import { Button } from './Button';
-import { Info } from 'lucide-react';
 
 const meta: Meta<typeof TooltipHint> = {
   title: 'UI/TooltipHint',

@@ -81,7 +81,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           <Menu className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
         )}
       </NavigationButton>
-      {!expanded && (
+      {!expanded ? (
         <div className="flex h-full flex-col items-center justify-between">
           <NavigationButton onClick={moveBackward} ariaLabel={t('back')}>
             <ChevronUp className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
@@ -98,8 +98,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
             <ChevronDown className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
           </NavigationButton>
         </div>
-      )}
-      {expanded && (
+      ) : (
         <div className="p-4">
           <div>Select language </div>
           <LanguageSwitcher />
