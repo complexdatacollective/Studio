@@ -1,4 +1,4 @@
-import PopoverHint from '~/components/ui/Popover';
+import PopoverHint from './PopoverHint';
 import TooltipHint from '~/components/ui/TooltipHint';
 import { useTranslations } from 'next-intl';
 
