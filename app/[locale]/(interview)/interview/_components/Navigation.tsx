@@ -99,9 +99,12 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           </NavigationButton>
         </div>
       ) : (
+        // Expanded settings menu
         <div className="p-4">
           <div>Select language </div>
-          <LanguageSwitcher />
+          <div className="text-foreground">
+            <LanguageSwitcher />
+          </div>
         </div>
       )}
     </div>
