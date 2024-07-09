@@ -58,7 +58,7 @@ export default function PopoverHint({
       <TooltipHint
         hint={
           <div className="flex">
-            {hint}
+            {t('hint')}
             {tooltipKeyboardShortcut()}
           </div>
         }
