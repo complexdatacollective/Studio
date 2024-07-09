@@ -9,11 +9,9 @@ import {
 export default function TooltipHint({
   children,
   hint,
-  additionalContent,
 }: {
   children: ReactNode;
-  hint: string;
-  additionalContent?: ReactNode;
+  hint: ReactNode;
 }) {
   return (
     <TooltipProvider>
@@ -22,10 +20,7 @@ export default function TooltipHint({
         This fixes hydration issues when the trigger is a button
          */}
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent>
-          {hint}
-          {additionalContent}
-        </TooltipContent>
+        <TooltipContent>{hint}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

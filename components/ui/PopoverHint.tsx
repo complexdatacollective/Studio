@@ -56,8 +56,12 @@ export default function PopoverHint({
   return (
     <div>
       <TooltipHint
-        hint={t('hint')}
-        additionalContent={tooltipKeyboardShortcut()}
+        hint={
+          <div className="flex">
+            {hint}
+            {tooltipKeyboardShortcut()}
+          </div>
+        }
       >
         <button
           onClick={() => toggleShowHint()}
