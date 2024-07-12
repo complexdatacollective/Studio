@@ -61,6 +61,7 @@ export const Rule = z.object({
         'OPTIONS_NOT_EQUALS',
         'CONTAINS',
         'DOES NOT CONTAIN',
+        'COUNT',
       ]),
       value: z
         .union([z.number(), z.string(), z.boolean(), z.array(z.any())])
@@ -167,7 +168,7 @@ export const SearchOptions = z.object({
   matchProperties: z.array(z.string()),
 });
 
-export const Behaviours = z.object({
+export const Behaviors = z.object({
   minNodes: z.number().optional(),
   maxNodes: z.number().optional(),
   freeDraw: z.boolean().optional(),
@@ -260,7 +261,7 @@ export const Stage = z.object({
   sortOptions: SortOptions.optional(),
   cardOptions: CardOptions.optional(),
   searchOptions: SearchOptions.optional(),
-  behaviours: Behaviours.optional(),
+  behaviors: Behaviors.optional(),
   showExistingNodes: z.boolean().optional(),
   title: z.string().optional(),
   items: z
@@ -288,4 +289,22 @@ export const Protocol = z.object({
   codebook: Codebook,
   assetManifest: AssetManifest.optional(),
   stages: z.array(Stage),
+});
+
+export const Node = z.object({
+  name: z.string(),
+  displayVariable: z.string(),
+  iconVariant: z.string(),
+  variables: z.array(Variable),
+  color: z.string(),
+  glyph: z.string().optional(), // node glyph options - including images?
+});
+
+export const Edge = z.object({
+  name: z.string(),
+  variables: z.array(Variable),
+  color: z.string(),
+  from: z.string(),
+  to: z.string(),
+  directed: z.boolean(), // directed edges
 });
