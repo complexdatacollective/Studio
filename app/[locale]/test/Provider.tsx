@@ -10,7 +10,7 @@ import {
 
 type DataContextType<T extends Record<string | number | symbol, unknown>> = {
   optimisticData: T[];
-  addOptimisticItem: (item: T) => void;
+  setOptimisticData: (item: T) => void;
 };
 
 export type WithPendingState<T> = T & { pending: boolean };
@@ -31,15 +31,10 @@ export default function DataContextProvider<
 }) {
   const data = use(dataPromise);
 
-  const [optimisticData, addOptimisticItem] = useOptimistic(
-    data,
-    (state: T[], newItem: T) => {
-      return [...state, { ...newItem, pending: true }];
-    },
-  );
+  const [optimisticData, setOptimisticData] = useOptimistic(data);
 
   return (
-    <DataContext.Provider value={{ optimisticData, addOptimisticItem }}>
+    <DataContext.Provider value={{ optimisticData, setOptimisticData }}>
       {children}
     </DataContext.Provider>
   );
@@ -53,10 +48,31 @@ export function useDataContext<
   if (context === undefined) {
     throw new Error('useDataContext must be used within a DataContextProvider');
   }
+
+  const addOptimisticItem = (item: T) => {
+    context.setOptimisticData((prev) => [...prev, { ...item, pending: true }]);
+  };
+
+  const deleteOptimisticItem = (id: number) => {
+    context.setOptimisticData((prev) => {
+      const index = prev.findIndex((item) => item.id === id);
+      if (index === -1) {
+        return prev; // item not found, return previous state
+      }
+
+      const deletedItem = prev[index];
+      const newData = [...prev];
+      newData.splice(index, 1, { ...deletedItem, pending: true }); // return pending true to visualize the optimistic deletion
+
+      return newData;
+    });
+  };
+
   return [
     context.optimisticData as DataContextType<
       WithPendingState<T>
     >['optimisticData'],
-    context.addOptimisticItem as DataContextType<T>['addOptimisticItem'],
+    addOptimisticItem,
+    deleteOptimisticItem,
   ] as const;
 }

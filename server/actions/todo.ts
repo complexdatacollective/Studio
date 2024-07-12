@@ -50,3 +50,23 @@ export async function createTodo(_: unknown, formData: FormData) {
     };
   }
 }
+
+export async function deleteTodo(id: number) {
+  try {
+    console.log('Deleting todo:', id);
+    await db.todo.delete({
+      where: {
+        id,
+      },
+    });
+    safeRevalidateTag('getTodos');
+  } catch (error) {
+    console.log('Failed to delete todo:', error);
+    return {
+      title: '',
+      errors: {
+        message: 'An error occurred while deleting the todo. Please try again.',
+      },
+    };
+  }
+}
