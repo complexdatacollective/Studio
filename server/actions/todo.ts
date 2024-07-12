@@ -70,3 +70,25 @@ export async function deleteTodo(id: number) {
     };
   }
 }
+
+export async function updateTodo(id: number, title: string) {
+  try {
+    await db.todo.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+      },
+    });
+    safeRevalidateTag('getTodos');
+  } catch (error) {
+    console.log('Failed to update todo:', error);
+    return {
+      title: '',
+      errors: {
+        message: 'An error occurred while updating the todo. Please try again.',
+      },
+    };
+  }
+}

@@ -68,11 +68,26 @@ export function useDataContext<
     });
   };
 
+  const updateOptimisticItem = (item: T) => {
+    context.setOptimisticData((prev) => {
+      const index = prev.findIndex((prevItem) => prevItem.id === item.id);
+      if (index === -1) {
+        return prev; // item not found, return previous state
+      }
+
+      const newData = [...prev];
+      newData.splice(index, 1, { ...item, pending: true }); // return pending true to visualize the optimistic update
+
+      return newData;
+    });
+  };
+
   return [
     context.optimisticData as DataContextType<
       WithPendingState<T>
     >['optimisticData'],
     addOptimisticItem,
     deleteOptimisticItem,
+    updateOptimisticItem,
   ] as const;
 }
