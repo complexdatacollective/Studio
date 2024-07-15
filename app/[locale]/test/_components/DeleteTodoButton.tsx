@@ -6,7 +6,7 @@ import { useDataContext } from '../Provider';
 import { type Todo } from '@prisma/client';
 
 export default function DeleteTodoButton({ id }: { id: number }) {
-  const [, , deleteOptimisticItem] = useDataContext<Todo>();
+  const { deleteOptimisticItem } = useDataContext<Todo>();
 
   const handleDelete = async () => {
     try {

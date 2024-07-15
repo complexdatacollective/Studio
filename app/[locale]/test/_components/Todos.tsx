@@ -6,7 +6,7 @@ import DeleteTodoButton from './DeleteTodoButton';
 import EditTodo from './EditTodo';
 
 export default function Todos() {
-  const [todos] = useDataContext<Todo>();
+  const { optimisticData: todos } = useDataContext<Todo>();
 
   return (
     <ul>

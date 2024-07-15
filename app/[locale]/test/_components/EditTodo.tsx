@@ -4,7 +4,7 @@ import { updateTodo } from '~/server/actions/todo';
 import { useDataContext } from '../Provider';
 
 export default function EditTodo({ id }: { id: number }) {
-  const [, , , updateOptimisticItem] = useDataContext<Todo>();
+  const { updateOptimisticItem } = useDataContext<Todo>();
 
   const handleEdit = async () => {
     const newTitle = prompt('Enter new title');

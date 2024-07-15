@@ -54,18 +54,7 @@ export function useDataContext<
   };
 
   const deleteOptimisticItem = (id: number) => {
-    context.setOptimisticData((prev) => {
-      const index = prev.findIndex((item) => item.id === id);
-      if (index === -1) {
-        return prev; // item not found, return previous state
-      }
-
-      const deletedItem = prev[index];
-      const newData = [...prev];
-      newData.splice(index, 1, { ...deletedItem, pending: true }); // return pending true to visualize the optimistic deletion
-
-      return newData;
-    });
+    context.setOptimisticData((prev) => prev.filter((item) => item.id !== id));
   };
 
   const updateOptimisticItem = (item: T) => {
@@ -82,12 +71,12 @@ export function useDataContext<
     });
   };
 
-  return [
-    context.optimisticData as DataContextType<
+  return {
+    optimisticData: context.optimisticData as DataContextType<
       WithPendingState<T>
     >['optimisticData'],
     addOptimisticItem,
     deleteOptimisticItem,
     updateOptimisticItem,
-  ] as const;
+  };
 }
