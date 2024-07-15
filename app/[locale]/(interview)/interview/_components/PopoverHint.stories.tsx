@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import PopoverHint from '~/app/[locale]/(interview)/interview/_components/PopoverHint';
 import { NextIntlClientProvider } from 'next-intl';
-// import { getMessages } from 'next-intl/server';
 
 const meta: Meta<typeof PopoverHint> = {
-  title: 'UI/PopoverHint',
+  title: 'Interview/PopoverHint',
   component: PopoverHint,
   decorators: [
     (Story, context) => {

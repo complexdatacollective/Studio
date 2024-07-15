@@ -3,10 +3,11 @@ import { db } from '~/lib/db';
 
 export const getInterviewById = ({ interviewId }: { interviewId: string }) =>
   createCachedFunction(async () => {
-    return await db.interview.findFirst({
+    const interview = await db.interview.findFirst({
       where: { publicId: interviewId },
       include: {
         protocolRevision: true,
       },
     });
+    return interview;
   }, [`getInterview-${interviewId}`])();
