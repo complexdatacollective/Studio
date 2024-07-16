@@ -7,7 +7,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Todo: remove this config once we upgrade to Next 15
+  // Todo: remove this config once it is fixed in a compatible version of next
   experimental: {
     serverComponentsExternalPackages: ['@node-rs/argon2'],
   },
