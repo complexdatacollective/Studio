@@ -8,6 +8,9 @@ const meta: Meta<typeof Navigation> = {
   component: Navigation,
   parameters: {
     layout: 'centered',
+    nextjs: {
+      appDirectory: 'true',
+    },
   },
   decorators: [
     (Story, context) => {
