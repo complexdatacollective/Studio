@@ -1,12 +1,11 @@
 'use client';
 
+import { useFormState } from 'react-dom';
 import { Button } from '~/components/ui/Button';
 import {
-  testAuthedAction,
-  testAuthedActionWithRoles,
+  myAuthedAction,
+  myRolesBasedAuthedAction,
 } from '~/server/actions/test';
-import { useServerAction } from 'zsa-react';
-import { Input } from '~/components/ui/form/Input';
 
 /*
 Demonstration of a button that triggers an action that requires basic authentication.
@@ -14,15 +13,19 @@ Only the user's session is required.
 No specific roles are required.
 */
 export function TestAuthedActionButton() {
-  const { executeFormAction, isError, isSuccess, data } =
-    useServerAction(testAuthedAction);
+  const [formState, formAction] = useFormState(myAuthedAction, {
+    data: null,
+    error: null,
+  });
   return (
-    <form action={executeFormAction}>
+    <form action={formAction}>
       <Button type="submit">Test authed action</Button>
-      {isSuccess && (
-        <div className="text-success">Success: {JSON.stringify(data)}</div>
+      {formState.data && (
+        <div className="text-success">
+          Success: {JSON.stringify(formState.data)}
+        </div>
       )}
-      {isError && <div className="text-destructive">Denied</div>}
+      {formState.error && <div className="text-destructive">Denied</div>}
     </form>
   );
 }
@@ -31,47 +34,24 @@ export function TestAuthedActionButton() {
 Demonstration of more complex role-based authorization.
 Requires publicStudyId nc and the ADMIN role.
 Demonstrates passing additional form data.
-Demonstrates using useServerAction's props for execution, statuses, and data.
 */
 
 export function TestAdminActionButton() {
-  const { execute, isSuccess, isError, isPending, error, data } =
-    useServerAction(testAuthedActionWithRoles);
-
+  const [formState, formAction] = useFormState(myRolesBasedAuthedAction, {
+    data: null,
+    error: null,
+  });
   return (
-    <form
-      onSubmit={async (event) => {
-        event.preventDefault();
-        const form = event.currentTarget;
-
-        const formData = new FormData(form);
-
-        await execute({
-          publicStudyId: formData.get('publicStudyId') as string,
-          roles: ['ADMIN'],
-          formData,
-        });
-
-        form.reset();
-      }}
-    >
-      <Input name="publicStudyId" label="Public study ID" />
-      <Input
-        name="otherFormData"
-        label="Required other form data. Enter any text."
-      />
-      <div>This action requires publicStudyId nc and ADMIN role</div>
-      <Button type="submit" disabled={isPending}>
-        Test authed action with roles
-      </Button>
-      {isSuccess && (
+    <form action={formAction}>
+      <Button type="submit">Test authed action with roles</Button>
+      {formState.data && (
         <div className="text-success">
-          Success. Data: {JSON.stringify(data)}
+          Success. {JSON.stringify(formState.data)}
         </div>
       )}
-      {isError && (
+      {formState.error && (
         <div className="text-destructive">
-          Denied. Error: {JSON.stringify(error)}
+          Denied. Error: {JSON.stringify(formState.error)}
         </div>
       )}
     </form>

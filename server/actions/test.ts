@@ -1,51 +1,20 @@
 'use server';
 
-import { z } from 'zod';
-import { formData, zfd } from 'zod-form-data';
-import {
-  authedAction,
-  authedActionWithRoles,
-  authedActionWithRolesSchema,
-} from '~/lib/authedAction';
+import { createAuthedAction } from '~/lib/createAuthedAction';
 
-const actionOutputSchema = z.object({
-  data: z.object({}),
-  error: z.string().optional(),
+const insecureAction = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 100)); // simulate db call
+  return { data: 'Authed action ran', error: null };
+};
+
+export const myAuthedAction = createAuthedAction({
+  requireSession: true,
+  action: insecureAction,
 });
 
-export const testAuthedAction = authedAction
-  .createServerAction()
-  .input(zfd.formData({}))
-  .output(actionOutputSchema)
-  .handler(({ ctx }) => {
-    // ctx is session from authedAction
-    return {
-      data: { messageFromAction: 'Authed action ran', userId: ctx.userId },
-      error: undefined,
-    };
-  });
-
-// example of extending authedActionWithRolesSchema to add additional form data
-const testAuthedActionWithRolesSchema = authedActionWithRolesSchema.extend({
-  formData: formData({
-    otherFormData: zfd.text(),
-  }),
+export const myRolesBasedAuthedAction = createAuthedAction({
+  requireSession: true,
+  requireRoles: ['ADMIN'],
+  publicStudyId: 'nc',
+  action: insecureAction,
 });
-
-export const testAuthedActionWithRoles = authedActionWithRoles
-  .createServerAction()
-  .input(testAuthedActionWithRolesSchema)
-  .output(actionOutputSchema)
-  .handler(({ input, ctx }) => {
-    const otherFormData = input.formData.otherFormData;
-    // ctx is studyUser from authedActionWithRoles
-    const userId = ctx.userId;
-    return {
-      data: {
-        messageFromAction: 'Authed action with roles ran',
-        otherFormData,
-        userId,
-      },
-      error: undefined,
-    };
-  });
