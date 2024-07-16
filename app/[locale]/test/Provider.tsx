@@ -50,15 +50,20 @@ export function useDataContext<
   }
 
   const addOptimisticItem = (item: T) => {
-    context.setOptimisticData((prev) => [...prev, { ...item, pending: true }]);
+    context.setOptimisticData((prev: T[]) => [
+      ...prev,
+      { ...item, pending: true },
+    ]);
   };
 
   const deleteOptimisticItem = (id: number) => {
-    context.setOptimisticData((prev) => prev.filter((item) => item.id !== id));
+    context.setOptimisticData((prev: T[]) =>
+      prev.filter((item) => item.id !== id),
+    );
   };
 
   const updateOptimisticItem = (item: T) => {
-    context.setOptimisticData((prev) => {
+    context.setOptimisticData((prev: T[]) => {
       const index = prev.findIndex((prevItem) => prevItem.id === item.id);
       if (index === -1) {
         return prev; // item not found, return previous state
