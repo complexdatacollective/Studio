@@ -21,5 +21,6 @@ export default async function Page({
   if (!interviewData) {
     return <div>Interview not found</div>;
   }
+  console.log(stage);
   return <InterviewShell interview={interviewData} currentStage={stage} />;
 }

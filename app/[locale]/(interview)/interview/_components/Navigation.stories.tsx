@@ -16,7 +16,9 @@ const meta: Meta<typeof Navigation> = {
     (Story, context) => {
       return (
         <NextIntlClientProvider locale="en">
-          <Story />
+          <div className="h-screen">
+            <Story />
+          </div>
         </NextIntlClientProvider>
       );
     },

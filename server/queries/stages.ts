@@ -12,4 +12,4 @@ export const getStage = ({
     return await db.stage.findFirst({
       where: { id: stageId, protocolRevisionId },
     });
-  }, [`getStages`])();
+  }, [`getStage-${stageId}`])();
