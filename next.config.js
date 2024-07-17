@@ -12,6 +12,10 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   output: 'standalone',
+  // Todo: remove this config once it is fixed in a compatible version of next
+  experimental: {
+    serverComponentsExternalPackages: ['@node-rs/argon2'],
+  },
 };
 
 export default withNextIntl(nextConfig);
