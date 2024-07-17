@@ -21,7 +21,10 @@ export default function InterviewShell({
         <Navigation pulseNext={isReadyForNextStage} progress={progress} />
       </div>
       <div className="flex-1 overflow-hidden overflow-y-auto">
-        <StageShell stageId={currentStage} />
+        <StageShell
+          stageId={currentStage}
+          protocolRevisionId={interview.protocolRevisionId}
+        />
       </div>
     </div>
   );

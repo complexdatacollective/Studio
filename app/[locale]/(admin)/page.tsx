@@ -1,5 +1,5 @@
 import { getStudies } from '~/server/queries/studies';
-// import CreateStudyForm from '../_components/CreateStudyForm';
+import CreateStudyForm from '../_components/CreateStudyForm';
 import { requirePageAuth } from '~/lib/auth';
 import SignOutBtn from '../../_components/SignOutBtn';
 import { routes } from '~/lib/routes';
@@ -14,7 +14,7 @@ export default async function Home() {
   return (
     <main className="flex flex-col p-12">
       <h1 className="pb-4 text-4xl">{t('title')}</h1>
-      {/* <CreateStudyForm /> */}
+      <CreateStudyForm />
       <h2 className="pb-4 text-2xl">{t('allStudiesHeading')}</h2>
       <div className="text-blue-700 flex flex-col underline">
         {studies.map((study) => (
