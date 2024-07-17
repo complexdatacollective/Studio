@@ -1,15 +1,13 @@
-import { createCachedFunction } from '~/lib/cache';
 import { db } from '~/lib/db';
 
-export const getStage = ({
+export const getStage = async ({
   stageId,
   protocolRevisionId,
 }: {
   stageId: number;
   protocolRevisionId: number;
-}) =>
-  createCachedFunction(async () => {
-    return await db.stage.findFirst({
-      where: { id: stageId, protocolRevisionId },
-    });
-  }, [`getStage-${stageId}`])();
+}) => {
+  return await db.stage.findFirst({
+    where: { id: stageId, protocolRevisionId },
+  });
+};
