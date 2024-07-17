@@ -17,7 +17,6 @@ export default async function InterviewShell({
     stageId: currentStage,
     protocolRevisionId: interview.protocolRevisionId,
   });
-  console.log(stage);
 
   return (
     <div className="flex h-screen bg-navy-taupe text-white">
