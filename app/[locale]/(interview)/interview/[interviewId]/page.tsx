@@ -18,7 +18,6 @@ export default async function Page({
   }
 
   const interviewData = await getInterviewById({ interviewId });
-  console.log(interviewData, interviewId);
   if (!interviewData) {
     return <div>Interview not found</div>;
   }
