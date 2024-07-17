@@ -93,8 +93,12 @@
   "ExampleTooltip": {
     "hint": "Drag and drop this node into a bin below."
   },
-  "ExamplePopover": {
-    "title": "Ordinal Bin",
-    "hint": "Drag and drop each node into the bin that makes the most sense. If you're not sure, you can place it in the 'Other' bin."
+  "NameGeneratorPopover": {
+    "title": "Name Generator",
+    "hint": "Tap the icon to nominate a person. Type in a name and press enter to add it. Click next to continue. To remove a person, drag and drop the circle into the trash bin."
+  },
+  "InformationPopover": {
+    "title": "Information Interface",
+    "hint": "This interface is used to display information in text, image, or video format. Read the information and click next to continue."
   }
 }
