@@ -22,23 +22,17 @@ const withIntl = (Story, context) => {
   const [messages, setMessages] = useState<AbstractIntlMessages | undefined>(
     undefined,
   );
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMessages = async () => {
       const locale = context.globals.locale;
       const loadedMessages = await loadMessages(locale);
       setMessages(loadedMessages);
-      setLoading(false);
       document.dir = getDirection(locale);
     };
 
     fetchMessages();
   }, [context.globals.locale]);
-
-  if (loading) {
-    return <div>Loading Translations...</div>;
-  }
 
   return (
     <Suspense fallback={<div>Loading Translations...</div>}>
