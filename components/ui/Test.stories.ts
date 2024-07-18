@@ -4,9 +4,7 @@ import Test from './Test';
 const meta = {
   title: 'UI/Test',
   component: Test,
-  parameters: {
-    layout: 'centered',
-  },
+
   tags: ['autodocs'],
 } satisfies Meta<typeof Test>;
 
