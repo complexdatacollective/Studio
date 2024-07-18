@@ -1,13 +1,24 @@
-'use server';
 import type { Preview } from '@storybook/react';
 import '../app/globals.scss';
 import React, { Suspense } from 'react';
-import { getMessages } from 'next-intl/server';
-import { NextIntlClientProvider } from 'next-intl';
+import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 
-const withIntl = (Story, context) => {
-  const messages = getMessages(context.globals.locale);
+const loadMessages = async (
+  locale: string,
+): Promise<AbstractIntlMessages | undefined> => {
+  try {
+    const messages = (
+      await import(`../lib/localisation/messages/${locale}.json`)
+    ).default;
+    return messages;
+  } catch (error) {
+    console.error(`Could not load messages for locale ${locale}`, error);
+    return undefined;
+  }
+};
 
+const withIntl = async (Story, context) => {
+  const messages = await loadMessages(context.globals.locale);
   return (
     <Suspense fallback={<div>Loading Translations...</div>}>
       <NextIntlClientProvider
