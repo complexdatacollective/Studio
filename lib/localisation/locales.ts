@@ -2,3 +2,8 @@
 export const SUPPORTED_LOCALES = ['en', 'es', 'ar'] as const;
 
 export type Locales = (typeof SUPPORTED_LOCALES)[number];
+
+export const getDirection = (locale: Locales) => {
+  const rtlLocales = ['ar'];
+  return rtlLocales.includes(locale) ? 'rtl' : 'ltr';
+};

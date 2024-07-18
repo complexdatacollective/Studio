@@ -5,6 +5,7 @@ import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
+import { getDirection, type Locales } from '~/lib/localisation/locales';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,14 +19,14 @@ export default async function LocaleLayout({
   params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: Locales };
 }) {
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={getDirection(locale)}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <div className="m-2">

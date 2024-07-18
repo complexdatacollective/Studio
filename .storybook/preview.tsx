@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/react';
 import '../app/globals.scss';
 import React, { Suspense, useState, useEffect } from 'react';
 import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
-import type { Locales } from '../lib/localisation/locales';
+import { type Locales, getDirection } from '../lib/localisation/locales';
 
 const loadMessages = async (
   locale: Locales,
@@ -16,11 +16,6 @@ const loadMessages = async (
     console.error(`Could not load messages for locale ${locale}`, error);
     return undefined;
   }
-};
-
-const getDirection = (locale: Locales): 'ltr' | 'rtl' => {
-  const rtlLocales = ['ar'];
-  return rtlLocales.includes(locale) ? 'rtl' : 'ltr';
 };
 
 const withIntl = (Story, context) => {
