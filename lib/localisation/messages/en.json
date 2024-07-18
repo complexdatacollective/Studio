@@ -79,5 +79,8 @@
   "LanguageSwitcher": {
     "en": "English",
     "es": "Español"
+  },
+  "Test": {
+    "hello": "Hello"
   }
 }
