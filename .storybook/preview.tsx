@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react';
 import '../app/globals.scss';
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 
 const loadMessages = async (
@@ -22,11 +22,27 @@ const getDirection = (locale: string): 'ltr' | 'rtl' => {
   return rtlLocales.includes(locale) ? 'rtl' : 'ltr';
 };
 
-const withIntl = async (Story, context) => {
-  const messages = await loadMessages(context.globals.locale);
+const withIntl = (Story, context) => {
+  const [messages, setMessages] = useState<AbstractIntlMessages | undefined>(
+    undefined,
+  );
+  const [loading, setLoading] = useState(true);
 
-  const direction = getDirection(context.globals.locale);
-  document.dir = direction;
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const locale = context.globals.locale;
+      const loadedMessages = await loadMessages(locale);
+      setMessages(loadedMessages);
+      setLoading(false);
+      document.dir = getDirection(locale);
+    };
+
+    fetchMessages();
+  }, [context.globals.locale]);
+
+  if (loading) {
+    return <div>Loading Translations...</div>;
+  }
 
   return (
     <Suspense fallback={<div>Loading Translations...</div>}>
