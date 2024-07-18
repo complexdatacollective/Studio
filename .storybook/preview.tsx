@@ -17,8 +17,17 @@ const loadMessages = async (
   }
 };
 
+const getDirection = (locale: string): 'ltr' | 'rtl' => {
+  const rtlLocales = ['ar'];
+  return rtlLocales.includes(locale) ? 'rtl' : 'ltr';
+};
+
 const withIntl = async (Story, context) => {
   const messages = await loadMessages(context.globals.locale);
+
+  const direction = getDirection(context.globals.locale);
+  document.dir = direction;
+
   return (
     <Suspense fallback={<div>Loading Translations...</div>}>
       <NextIntlClientProvider
@@ -53,6 +62,7 @@ const preview: Preview = {
         ],
         showName: true,
         dynamicTitle: true,
+        defaultValue: 'en',
       },
     },
   },
