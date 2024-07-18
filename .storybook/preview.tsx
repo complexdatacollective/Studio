@@ -2,9 +2,10 @@ import type { Preview } from '@storybook/react';
 import '../app/globals.scss';
 import React, { Suspense, useState, useEffect } from 'react';
 import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
+import type { Locales } from '../lib/localisation/locales';
 
 const loadMessages = async (
-  locale: string,
+  locale: Locales,
 ): Promise<AbstractIntlMessages | undefined> => {
   try {
     const messages = (
@@ -17,7 +18,7 @@ const loadMessages = async (
   }
 };
 
-const getDirection = (locale: string): 'ltr' | 'rtl' => {
+const getDirection = (locale: Locales): 'ltr' | 'rtl' => {
   const rtlLocales = ['ar'];
   return rtlLocales.includes(locale) ? 'rtl' : 'ltr';
 };
