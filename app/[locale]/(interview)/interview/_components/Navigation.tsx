@@ -8,6 +8,7 @@ import { usePathname, useRouter } from '~/lib/localisation/navigation';
 
 import { cn } from '~/lib/utils';
 import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
+import ProgressBar from './ProgressBar';
 
 const NavigationButton = ({
   onClick,
@@ -86,7 +87,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           <NavigationButton onClick={moveBackward} ariaLabel={t('back')}>
             <ChevronUp className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
           </NavigationButton>
-          {progress}
+          <ProgressBar percentProgress={progress} />
           <NavigationButton
             className={cn(
               pulseNext && 'animate-pulse bg-success',
