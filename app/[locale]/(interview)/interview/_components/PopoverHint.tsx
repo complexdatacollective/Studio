@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Info, X } from 'lucide-react';
 import { motion, type Variants, useCycle } from 'framer-motion';
 import TooltipHint from '~/components/ui/TooltipHint';
@@ -14,7 +14,6 @@ export default function PopoverHint({
   title?: string;
 }) {
   const [showHint, toggleShowHint] = useCycle(false, true);
-  const hintRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('PopoverHint');
 
   // Keyboard shortcut to toggle hint
@@ -72,7 +71,6 @@ export default function PopoverHint({
         </button>
       </TooltipHint>
       <motion.div
-        ref={hintRef}
         className="fixed right-0 top-0 z-50 p-6"
         initial={false}
         animate={showHint ? 'open' : 'closed'}
