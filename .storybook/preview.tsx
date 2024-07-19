@@ -25,7 +25,7 @@ const withIntl = (Story, context) => {
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const locale = context.globals.locale;
+      const locale = context.globals.locale || 'en';
       const loadedMessages = await loadMessages(locale);
       setMessages(loadedMessages);
       document.dir = getDirection(locale);
