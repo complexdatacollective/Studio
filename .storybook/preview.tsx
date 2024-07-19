@@ -25,7 +25,7 @@ const withIntl = (Story, context) => {
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const locale = context.globals.locale || 'en';
+      const locale = context.globals.locale;
       const loadedMessages = await loadMessages(locale);
       setMessages(loadedMessages);
       document.dir = getDirection(locale);
@@ -59,6 +59,7 @@ const preview: Preview = {
     locale: {
       name: 'Locale',
       description: 'Internationalization',
+      defaultValue: 'en',
       toolbar: {
         icon: 'globe',
         items: [
@@ -68,7 +69,6 @@ const preview: Preview = {
         ],
         showName: true,
         dynamicTitle: true,
-        defaultValue: 'en',
       },
     },
   },
