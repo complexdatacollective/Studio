@@ -1,5 +1,4 @@
 import { type ClassValue, clsx } from 'clsx';
-import { headers } from 'next/headers';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -28,6 +27,3 @@ export function ensureError(value: unknown): Error {
   );
   return error;
 }
-
-// Type for NextJs server page params
-export type PageParams = Record<string, string | string[]>;

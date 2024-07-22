@@ -7,6 +7,8 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
 import Heading from '~/components/typography/Heading';
 import UnorderedList from '~/components/typography/UnorderedList';
+import Section from '~/components/layout/Section';
+import PageHeader from '~/components/typography/PageHeader';
 
 export default async function Home() {
   await requirePageAuth();
@@ -17,10 +19,9 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col gap-4">
-      <Heading variant="h1">{t('title')}</Heading>
+      <PageHeader headerText={t('title')} subHeaderText={t('subtitle')} />
       <CreateStudyForm />
-      <section className="rounded-lg border p-4">
-        <Heading variant="h2">{t('allStudiesHeading')}</Heading>
+      <Section title={t('allStudiesHeading')}>
         <UnorderedList>
           {studies.map((study) => (
             <li key={study.id}>
@@ -30,7 +31,7 @@ export default async function Home() {
             </li>
           ))}
         </UnorderedList>
-      </section>
+      </Section>
       <SignOutBtn />
     </main>
   );

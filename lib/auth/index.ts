@@ -7,6 +7,7 @@ import { cache } from 'react';
 import { redirect } from '~/lib/localisation/navigation';
 import { cookies, headers } from 'next/headers';
 import 'server-only';
+import { getServerPath } from '../serverUtils';
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -77,9 +78,8 @@ export async function requirePageAuth({
 
   if (!session) {
     if (returnToCurrentPath) {
-      const headerList = headers();
-      const redirectPath = headerList.get('x-current-path');
-      redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath!));
+      const redirectPath = getServerPath();
+      redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath));
     }
 
     redirect('/signin');

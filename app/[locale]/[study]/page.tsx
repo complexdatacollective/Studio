@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import PageHeader from '~/components/typography/PageHeader';
 import { getServerPath } from '~/lib/serverUtils';
 
 export default async function StudyPage() {
@@ -7,8 +8,7 @@ export default async function StudyPage() {
 
   return (
     <div className="flex flex-col p-12">
-      <h1 className="pb-4 text-4xl">{t('title')}</h1>
-      <p>{serverPath}</p>
+      <PageHeader headerText={t('title')} subHeaderText={serverPath} />
     </div>
   );
 }

@@ -1,27 +1,33 @@
+import Heading from '~/components/typography/Heading';
 import { roleAuthedAction } from './_actions';
 import Form from './_components/Form';
 import {
   TestAuthedActionButton,
   TestAdminActionButton,
 } from './_components/TestAuthedActionButton';
+import PageHeader from '~/components/typography/PageHeader';
 
 export default function TestPage() {
   return (
     <div>
-      <h1 className="pb-4 text-4xl">Test Authed Actions</h1>
-      <p>This page demonstrates the use of authenticated server actions.</p>
+      <PageHeader
+        headerText="Test Authed Actions"
+        subHeaderText="This page demonstrates the use of authenticated server actions. Delete
+        this page when work is complete."
+      />
       {/* <TestAuthedActionButton />
       <TestAdminActionButton /> */}
       <Form
-        description="description"
-        helpText="helpText"
+        title="Form Requiring Admin Role"
+        description="This form uses a server action that requires the user to be an admin in the current study."
+        helpText="Some help text can go here, optionally."
         inputAttrs={{
+          label: 'Additional data to pass to the action',
           name: 'name',
-          type: 'type',
-          defaultValue: 'defaultValue',
+          type: 'text',
+          defaultValue: 'Thie is a default value',
         }}
         handleSubmit={roleAuthedAction}
-        title="title"
       />
     </div>
   );
