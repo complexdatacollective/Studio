@@ -1,7 +1,7 @@
 import {
   TestAuthedActionButton,
   TestAdminActionButton,
-} from '../_components/TestAuthedActionButton';
+} from './_components/TestAuthedActionButton';
 
 export default function TestPage() {
   return (
