@@ -10,30 +10,27 @@ import UnorderedList from '~/components/typography/UnorderedList';
 
 export default async function Home() {
   await requirePageAuth();
+
   const t = await getTranslations('Home');
 
   const studies = await getStudies();
+
   return (
-    <main className="flex flex-col p-12">
+    <main className="flex flex-col gap-4">
       <Heading variant="h1">{t('title')}</Heading>
       <CreateStudyForm />
-      <Heading variant="h2">{t('allStudiesHeading')}</Heading>
-      <div className="text-blue-700 flex flex-col underline">
-        {studies.map((study) => (
-          <Link
-            key={study.id}
-            href={routes.studyDashboard({ study: study.slug })}
-          >
-            {study.name}
-          </Link>
-        ))}
-      </div>
-      <Heading variant="h2">Test Pages</Heading>
-      <UnorderedList>
-        <li>
-          <Link href={routes.authedActions()}>Authed Actions</Link>
-        </li>
-      </UnorderedList>
+      <section className="rounded-lg border p-4">
+        <Heading variant="h2">{t('allStudiesHeading')}</Heading>
+        <UnorderedList>
+          {studies.map((study) => (
+            <li key={study.id}>
+              <Link href={routes.studyDashboard({ study: study.slug })}>
+                {study.name}
+              </Link>
+            </li>
+          ))}
+        </UnorderedList>
+      </section>
       <SignOutBtn />
     </main>
   );

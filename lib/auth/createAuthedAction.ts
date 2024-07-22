@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import type { Role } from '@prisma/client';
-import { requireApiAuth } from '~/lib/auth';
+import { getServerSession } from '~/lib/auth';
 import { getStudyUser } from '~/server/queries/studies';
 import {
   NoSessionError,
@@ -8,13 +8,24 @@ import {
   UserRoleError,
   PublicStudyIdRequiredError,
 } from './customErrors';
+import { ensureError } from '../utils';
+
+export type ActionResponse =
+  | {
+      data: null;
+      error: string;
+    }
+  | {
+      data: unknown;
+      error: null;
+    };
 
 const checkUserRoles = async ({
-  requireRoles,
+  requireRole,
   publicStudyId,
   session,
 }: {
-  requireRoles: Role[];
+  requireRole: Role;
   publicStudyId: string;
   session: { userId: string };
 }) => {
@@ -26,38 +37,53 @@ const checkUserRoles = async ({
     throw UserNotFoundError;
   }
 
-  if (!requireRoles.includes(studyUser.role)) {
+  if (!requireRole || !studyUser.role) {
     throw UserRoleError;
   }
 };
 
-export const createAuthedAction = <T>({
-  requireSession,
-  requireRoles,
-  publicStudyId,
-  action,
-}: {
-  requireSession: boolean;
-  requireRoles?: Role[];
-  publicStudyId?: string;
-  action: () => Promise<T>;
-}) => {
+export const createAuthedAction = <T>(action: () => Promise<T>) => {
   return async function () {
-    const session = await requireApiAuth();
-    if (requireSession) {
-      if (!session) {
-        return NoSessionError;
-      }
+    const session = await getServerSession();
+    if (!session.session) {
+      return NoSessionError;
     }
 
-    if (requireRoles) {
+    return action();
+  };
+};
+
+export const withRoleAuth = <T>(
+  action: () => Promise<T>,
+  requireRole: Role,
+  publicStudyId: string,
+) => {
+  return async function () {
+    const session = await getServerSession();
+    if (!session.session) {
+      return {
+        data: null,
+        error: 'Not authenticated',
+      };
+    }
+
+    if (requireRole) {
       if (!publicStudyId) {
-        return PublicStudyIdRequiredError;
+        return {
+          data: null,
+          error: 'Study not found',
+        };
       }
+
       try {
-        await checkUserRoles({ requireRoles, publicStudyId, session });
-      } catch (error) {
-        return { data: null, error: error };
+        await checkUserRoles({
+          requireRole,
+          publicStudyId,
+          session: session.session,
+        });
+      } catch (e) {
+        const error = ensureError(e);
+        return { data: null, error: error.message };
       }
     }
 

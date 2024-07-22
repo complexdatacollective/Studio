@@ -15,8 +15,11 @@ export function TestAuthedActionButton() {
     data: null,
     error: null,
   });
+
+  const params = useParams<{ tag: string; item: string }>();
+
   return (
-    <form action={formAction}>
+    <form action={formAction} handleSubmit>
       <SubmitButton>Test authed action</SubmitButton>
       {formState.data && (
         <div className="text-success">

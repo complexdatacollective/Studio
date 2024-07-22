@@ -1,27 +1,26 @@
 import { createStudy } from '~/server/actions/study';
 import { getTranslations } from 'next-intl/server';
 import { SubmitButton } from '~/components/form/SubmitButton';
+import Heading from '~/components/typography/Heading';
+import { Input } from '~/components/ui/form/Input';
 
 export default async function CreateStudyForm() {
   const t = await getTranslations('CreateStudyForm');
 
   return (
-    <form
-      action={createStudy}
-      className="border-slate-400 flex max-w-lg flex-col space-y-2 rounded-lg border p-4"
-    >
-      <h2 className="text-lg font-semibold">{t('formTitle')}</h2>
-      <label htmlFor="studyName" className="text-sm">
-        {t('inputLabel')}
-      </label>
-      <input
-        className="border-slate-200 text-slate-600 rounded-md border p-2"
-        type="text"
-        id="studyName"
-        name="studyName"
-        placeholder={t('inputPlaceholder')}
-      />
-      <SubmitButton>{t('formButton')}</SubmitButton>
-    </form>
+    <section className="rounded-lg border p-4">
+      <Heading variant="h2">{t('formTitle')}</Heading>
+      <form action={createStudy}>
+        <Input
+          className="mb-4"
+          label={t('inputLabel')}
+          type="text"
+          id="studyName"
+          name="studyName"
+          placeholder={t('inputPlaceholder')}
+        />
+        <SubmitButton>{t('formButton')}</SubmitButton>
+      </form>
+    </section>
   );
 }

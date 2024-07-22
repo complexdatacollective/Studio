@@ -5,7 +5,7 @@ import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
 import { env } from '~/env';
 import { cache } from 'react';
 import { redirect } from '~/lib/localisation/navigation';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import 'server-only';
 
 const adapter = new PrismaAdapter(db.session, db.user);
@@ -69,23 +69,24 @@ export const getServerSession = cache(async () => {
 });
 
 export async function requirePageAuth({
-  redirectPath,
+  returnToCurrentPath = true,
 }: {
-  redirectPath?: string | null;
+  returnToCurrentPath?: boolean;
 } = {}) {
   const { session } = await getServerSession();
 
   if (!session) {
-    if (!redirectPath) {
-      redirect('/signin');
+    if (returnToCurrentPath) {
+      const headerList = headers();
+      const redirectPath = headerList.get('x-current-path');
+      redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath!));
     }
 
-    redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath!));
+    redirect('/signin');
   }
-  return session;
 }
 
-export async function requireApiAuth() {
+export async function requireServerSession() {
   const { session } = await getServerSession();
 
   if (!session) {
