@@ -1,6 +1,6 @@
 'use server';
 
-import { createAuthedAction } from '~/lib/createAuthedAction';
+import { createAuthedAction } from '~/lib/auth/createAuthedAction';
 
 const insecureAction = async () => {
   await new Promise((resolve) => setTimeout(resolve, 100)); // simulate db call

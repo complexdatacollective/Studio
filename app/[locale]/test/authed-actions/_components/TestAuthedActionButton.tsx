@@ -2,10 +2,8 @@
 
 import { useFormState } from 'react-dom';
 import { Button } from '~/components/ui/Button';
-import {
-  myAuthedAction,
-  myRolesBasedAuthedAction,
-} from '~/server/actions/test';
+import { myAuthedAction, myRolesBasedAuthedAction } from '../_actions';
+import { SubmitButton } from '~/components/form/SubmitButton';
 
 /*
 Demonstration of a button that triggers an action that requires basic authentication.
@@ -19,7 +17,7 @@ export function TestAuthedActionButton() {
   });
   return (
     <form action={formAction}>
-      <Button type="submit">Test authed action</Button>
+      <SubmitButton>Test authed action</SubmitButton>
       {formState.data && (
         <div className="text-success">
           Success: {JSON.stringify(formState.data)}
