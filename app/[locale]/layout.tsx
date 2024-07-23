@@ -2,9 +2,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { Inter } from 'next/font/google';
 import { getMessages } from 'next-intl/server';
 import { type Metadata } from 'next';
-import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
-import LanguageSwitcher from '../_components/LanguageSwitcher';
+import MainNavigation from './_components/MainNavigation';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,10 +27,8 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
-          <div className="m-2">
-            <LanguageSwitcher />
-          </div>
-          <ResponsiveContainer>{children}</ResponsiveContainer>
+          <MainNavigation />
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

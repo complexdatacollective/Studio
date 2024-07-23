@@ -10,26 +10,29 @@ import {
 } from './customErrors';
 import { ensureError } from '../utils';
 
-export type ActionResponse =
-  | {
-      data: null;
-      error: string;
-    }
-  | {
-      data: unknown;
-      error: null;
-    };
+type ActionWithError = {
+  data: null;
+  error: string;
+};
 
-const checkUserRoles = async ({
+type ActionWithData = {
+  data: unknown;
+  error: null;
+};
+
+export type ActionPayload = ActionWithError | ActionWithData;
+
+export type ActionResponse = Promise<ActionPayload>;
+
+export const checkUserRoles = async ({
   requireRole,
   publicStudyId,
-  session,
 }: {
   requireRole: Role;
   publicStudyId: string;
-  session: { userId: string };
 }) => {
-  const studyUser = await getStudyUser(session.userId, publicStudyId);
+  const { session } = await getServerSession();
+  const studyUser = await getStudyUser(session!.userId, publicStudyId);
   console.log('studyUser', studyUser);
 
   if (!studyUser) {

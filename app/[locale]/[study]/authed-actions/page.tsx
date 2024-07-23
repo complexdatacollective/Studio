@@ -1,13 +1,15 @@
-import Heading from '~/components/typography/Heading';
-import { roleAuthedAction } from './_actions';
+import { getServerPath } from '~/lib/serverUtils';
+import { TestAction } from './_actions';
 import Form from './_components/Form';
 import {
   TestAuthedActionButton,
   TestAdminActionButton,
 } from './_components/TestAuthedActionButton';
 import PageHeader from '~/components/typography/PageHeader';
+import Paragraph from '~/components/typography/Paragraph';
 
 export default function TestPage() {
+  const serverPath = getServerPath();
   return (
     <div>
       <PageHeader
@@ -15,6 +17,7 @@ export default function TestPage() {
         subHeaderText="This page demonstrates the use of authenticated server actions. Delete
         this page when work is complete."
       />
+      <Paragraph>Server Path: {serverPath}</Paragraph>
       {/* <TestAuthedActionButton />
       <TestAdminActionButton /> */}
       <Form
@@ -25,9 +28,9 @@ export default function TestPage() {
           label: 'Additional data to pass to the action',
           name: 'name',
           type: 'text',
-          defaultValue: 'Thie is a default value',
+          defaultValue: 'This is a default value',
         }}
-        handleSubmit={roleAuthedAction}
+        handleSubmit={TestAction}
       />
     </div>
   );

@@ -19,5 +19,5 @@ export async function createStudy(formData: FormData) {
     },
   });
 
-  safeRevalidateTag('getOrganizations');
+  safeRevalidateTag('studies:get');
 }

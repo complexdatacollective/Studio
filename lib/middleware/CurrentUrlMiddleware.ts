@@ -1,18 +1,26 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { SUPPORTED_LOCALES } from '../localisation/locales';
 
 function handler(request: NextRequest) {
-  // Add a new header x-current-path which passes the path to downstream components
-  const headers = new Headers(request.headers);
-  headers.set('x-current-path', request.nextUrl.pathname);
+  // This _should_ work, but doesn't. i18n header is changed into
+  // x-middleware-request as per here: https://github.com/vercel/next.js/issues/49442
 
-  return NextResponse.next({
-    headers,
-  });
+  // const requestHeaders = new Headers(request.headers);
+  // requestHeaders.set('x-current-path', request.nextUrl.pathname);
+
+  // // You can also set request headers in NextResponse.rewrite
+  // return NextResponse.next({
+  //   headers: requestHeaders,
+  // });
+
+  // This "works", but shouldn't. It clobbers all other headers.
+  const response = NextResponse.next();
+
+  response.headers.set('x-current-path', request.nextUrl.pathname);
+  return response;
 }
 
 export default {
   name: 'CurrentUrlMiddleware',
   handler,
-  matcher: ['/', `/(${SUPPORTED_LOCALES.join('|')})/:path*`],
+  matcher: '/*',
 };

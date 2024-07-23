@@ -4,8 +4,8 @@ import CSRFMiddleware from './lib/middleware/CSRFMiddleware';
 import CurrentUrlMiddleware from './lib/middleware/CurrentUrlMiddleware';
 
 export default middlewareStacker([
-  nextIntlMiddleware,
   CurrentUrlMiddleware,
+  nextIntlMiddleware,
   CSRFMiddleware,
 ]);
 

@@ -80,8 +80,11 @@ export default function middlewareStacker(
         const result = await middleware.handler(request, event);
 
         if (result) {
+          console.log('got result', result);
           if (response) {
+            console.log('had response', response);
             response.headers.forEach((value, key) => {
+              console.log('setting header', key, value);
               result.headers.set(key, value);
             });
           }
@@ -91,7 +94,7 @@ export default function middlewareStacker(
           }
 
           response = result;
-          request = updateRequestWithResponse(request, response);
+          request = updateRequestWithResponse(request, result);
         }
       }
     }

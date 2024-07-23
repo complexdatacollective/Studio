@@ -1,12 +1,17 @@
 'use client';
 
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { useParams } from 'next/navigation';
+import { useState } from 'react';
 import { SubmitButton } from '~/components/form/SubmitButton';
 import Section from '~/components/layout/Section';
 import Heading from '~/components/typography/Heading';
 import Paragraph from '~/components/typography/Paragraph';
 import { Input } from '~/components/ui/form/Input';
-import { type ActionResponse } from '~/lib/auth/createAuthedAction';
+import {
+  ActionPayload,
+  type ActionResponse,
+} from '~/lib/auth/createAuthedAction';
 import { useRouter } from '~/lib/localisation/navigation';
 
 export default function Form({
@@ -27,12 +32,13 @@ export default function Form({
     maxLength?: number;
     pattern?: string;
   };
-  handleSubmit: (
-    data: FormData,
-    id: string,
-    key: string,
-  ) => Promise<ActionResponse>;
+  handleSubmit: (data: FormData, params: Params) => ActionResponse;
 }) {
+  const [response, setResponse] = useState<ActionPayload>({
+    data: null,
+    error: null,
+  });
+
   const params = useParams();
   const router = useRouter();
 
@@ -40,21 +46,21 @@ export default function Form({
   return (
     <form
       action={async (payload: FormData) => {
-        const { data, error } = await handleSubmit(
-          payload,
-          params.study,
-          inputAttrs.name,
-        );
+        const result = await handleSubmit(payload, params);
 
-        if (error) {
-          alert(error);
-          return;
-        }
+        console.log(result);
 
-        if (data) {
-          router.refresh();
-          alert(`Successfully updated ${inputAttrs.name}!`);
-        }
+        setResponse(result);
+
+        // if (error) {
+        //   alert(error);
+        //   return;
+        // }
+
+        // if (data) {
+        //   router.refresh();
+        //   alert(`Successfully updated ${inputAttrs.name}!`);
+        // }
       }}
     >
       <Section
@@ -68,6 +74,12 @@ export default function Form({
         <Heading variant="h3">{title}</Heading>
         <Paragraph>{description}</Paragraph>
         <Input {...inputAttrs} required />
+        {response.data && (
+          <div className="text-success">Success: {response.data}</div>
+        )}
+        {response.error && (
+          <div className="text-destructive">Denied: {response.error}</div>
+        )}
       </Section>
     </form>
   );

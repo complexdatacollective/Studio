@@ -7,6 +7,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    serverComponentsExternalPackages: ['@node-rs/argon2'],
+  },
 };
 
 export default withNextIntl(nextConfig);
