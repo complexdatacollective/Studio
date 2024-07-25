@@ -3,6 +3,14 @@ import { getTranslations } from 'next-intl/server';
 import { SubmitButton } from '~/components/form/SubmitButton';
 import { Input } from '~/components/ui/form/Input';
 import Section from '~/components/layout/Section';
+import {
+  Select,
+  SelectContent,
+  SelectValue,
+  SelectTrigger,
+  SelectItem,
+} from '~/components/ui/select';
+import { Role } from '@prisma/client';
 
 export default async function CreateStudyForm() {
   const t = await getTranslations('CreateStudyForm');
@@ -20,7 +28,20 @@ export default async function CreateStudyForm() {
           id="studyName"
           name="studyName"
           placeholder={t('inputPlaceholder')}
+          required
         />
+        <Select id="role" name="role" required label="Select a role">
+          <SelectTrigger>
+            <SelectValue placeholder={t('roleSelectPlaceholder')} />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.values(Role).map((role) => (
+              <SelectItem key={role} value={role}>
+                {role}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </Section>
     </form>
   );

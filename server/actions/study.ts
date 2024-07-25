@@ -1,5 +1,6 @@
 'use server';
 
+import { Role } from '@prisma/client';
 import { getServerSession } from '~/lib/auth';
 import { safeRevalidateTag } from '~/lib/cache';
 import { db } from '~/lib/db';
@@ -13,9 +14,15 @@ export async function createStudy(formData: FormData) {
   }
 
   const name = formData.get('studyName') as string;
+  const role = formData.get('role') as Role;
 
+  // Todo: return action error object, with localised error messages.
   if (!name) {
     throw new Error('Study name is required');
+  }
+
+  if (!role) {
+    throw new Error('Role is required');
   }
 
   // Create a new study, and add the current user as an admin via studyUser
@@ -27,7 +34,7 @@ export async function createStudy(formData: FormData) {
       users: {
         create: {
           userId: user.id,
-          role: 'ADMIN',
+          role: role,
         },
       },
     },

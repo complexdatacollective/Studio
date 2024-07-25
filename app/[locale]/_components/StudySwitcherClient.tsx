@@ -10,8 +10,10 @@ import {
 } from '~/components/ui/select';
 import { useParams } from 'next/navigation';
 import { useRouter } from '~/lib/localisation/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function StudySwitcherClient({ studies }: { studies: Study[] }) {
+  const t = useTranslations('StudySwitcher');
   const router = useRouter();
   const { study } = useParams();
 
@@ -23,12 +25,10 @@ export default function StudySwitcherClient({ studies }: { studies: Study[] }) {
 
   return (
     <Select onValueChange={handleStudyChange}>
-      <SelectTrigger
-        className={`hover:bg-stone-100 w-[200px] space-x-1 bg-white text-xs sm:text-sm`}
-      >
-        <SelectValue placeholder="Select a study..." />
+      <SelectTrigger>
+        <SelectValue placeholder={t('placeholder')} />
       </SelectTrigger>
-      <SelectContent className="dark:bg-slate-700 bg-white">
+      <SelectContent>
         {studies.map((study) => (
           <SelectItem key={study.id} value={study.slug}>
             {study.name}
