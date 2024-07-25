@@ -5,6 +5,7 @@ import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,7 +32,9 @@ export default async function LocaleLayout({
           <div className="m-2">
             <LanguageSwitcher />
           </div>
-          <ResponsiveContainer>{children}</ResponsiveContainer>
+          <ResponsiveContainer>
+            {children} <Analytics />
+          </ResponsiveContainer>
         </NextIntlClientProvider>
       </body>
     </html>
