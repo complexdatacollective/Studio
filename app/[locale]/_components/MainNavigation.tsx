@@ -8,8 +8,10 @@ import StudySwitcher from './StudySwitcher';
 export default function MainNavigation() {
   const t = useTranslations('MainNavigation');
   return (
-    <nav className="sticky top-0 flex w-full items-center justify-between bg-slate-blue-dark p-2 text-white">
-      <Link href={routes.home()}>{t('home')}</Link>
+    <nav className="sticky top-0 flex w-full items-center justify-between bg-slate-blue-dark p-2">
+      <Link href={routes.home()} className="text-white">
+        {t('home')}
+      </Link>
       <StudySwitcher />
       <LanguageSwitcher />
       <SignOutBtn />

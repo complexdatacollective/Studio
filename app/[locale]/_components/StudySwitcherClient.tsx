@@ -26,7 +26,7 @@ export default function StudySwitcherClient({ studies }: { studies: Study[] }) {
       <SelectTrigger
         className={`hover:bg-stone-100 w-[200px] space-x-1 bg-white text-xs sm:text-sm`}
       >
-        <SelectValue />
+        <SelectValue placeholder="Select a study..." />
       </SelectTrigger>
       <SelectContent className="dark:bg-slate-700 bg-white">
         {studies.map((study) => (

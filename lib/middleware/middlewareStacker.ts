@@ -73,18 +73,11 @@ export default function middlewareStacker(
 
     for (const middleware of middlewareStack) {
       if (matches(request, middleware.matcher)) {
-        // eslint-disable-next-line no-console
-        console.log(
-          `Running middleware: ${middleware.name} for ${request.url}`,
-        );
         const result = await middleware.handler(request, event);
 
         if (result) {
-          console.log('got result', result);
           if (response) {
-            console.log('had response', response);
             response.headers.forEach((value, key) => {
-              console.log('setting header', key, value);
               result.headers.set(key, value);
             });
           }

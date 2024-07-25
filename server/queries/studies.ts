@@ -1,12 +1,7 @@
 import 'server-only';
 import { db } from '~/lib/db';
-import { createCachedFunction } from '~/lib/cache';
 import { getServerSession } from '~/lib/auth';
-
-export const getStudies = () =>
-  createCachedFunction(async () => {
-    return await db.study.findMany();
-  }, ['studies:get'])();
+import { createCachedFunction } from '~/lib/cache';
 
 export const getStudyUser = async (userId: string, publicStudyId: string) => {
   const studyUser = await db.studyUser.findFirst({
@@ -20,10 +15,10 @@ export const getStudyUser = async (userId: string, publicStudyId: string) => {
   return studyUser;
 };
 
-export const getUserStudies = async () => {
-  const { session } = await getServerSession();
+export const getUserStudies = createCachedFunction(async () => {
+  const { session, user } = await getServerSession();
 
-  if (!session) {
+  if (!session || !user) {
     throw new Error('Unauthorized');
   }
 
@@ -31,14 +26,14 @@ export const getUserStudies = async () => {
     where: {
       users: {
         some: {
-          userId: session.userId,
+          userId: user.id,
         },
       },
     },
   });
 
   return userStudies;
-};
+}, ['studies:get']);
 
 export const getStudyData = async (studySlug: string) => {
   const study = await db.study.findFirst({

@@ -1,7 +1,6 @@
-import { getStudies } from '~/server/queries/studies';
+import { getUserStudies } from '~/server/queries/studies';
 import CreateStudyForm from './_components/CreateStudyForm';
 import { requirePageAuth } from '~/lib/auth';
-import SignOutBtn from './_components/SignOutBtn';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
@@ -15,7 +14,7 @@ export default async function Home() {
 
   const t = await getTranslations('Home');
 
-  const studies = await getStudies();
+  const studies = await getUserStudies();
 
   return (
     <ResponsiveContainer className="flex flex-col gap-4">
