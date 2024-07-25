@@ -2,10 +2,10 @@ import type { Preview } from '@storybook/react';
 import '../app/globals.scss';
 import React, { Suspense, useState, useEffect } from 'react';
 import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
-import { type Locales, getDirection } from '../lib/localisation/locales';
+import { type Locale, getDirection } from '../lib/localisation/locales';
 
 const loadMessages = async (
-  locale: Locales,
+  locale: Locale,
 ): Promise<AbstractIntlMessages | undefined> => {
   try {
     const messages = (

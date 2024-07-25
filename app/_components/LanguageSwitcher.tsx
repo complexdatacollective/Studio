@@ -8,16 +8,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import { type Locales, SUPPORTED_LOCALES } from '~/lib/localisation/locales';
+import { type Locale, SUPPORTED_LOCALES } from '~/lib/localisation/locales';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
 
 const LanguageSwitcher = () => {
-  const currentLocale = useLocale() as unknown as Locales;
+  const currentLocale = useLocale() as unknown as Locale;
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('LanguageSwitcher');
 
-  function handleLanguageChange(value: Locales) {
+  function handleLanguageChange(value: Locale) {
     router.push(pathname, { locale: value });
   }
 

@@ -5,7 +5,7 @@ import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
-import { getDirection, type Locales } from '~/lib/localisation/locales';
+import { getDirection, type Locale } from '~/lib/localisation/locales';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,7 +19,7 @@ export default async function LocaleLayout({
   params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: Locales };
+  params: { locale: Locale };
 }) {
   // Providing all messages to the client
   // side is the easiest way to get started
