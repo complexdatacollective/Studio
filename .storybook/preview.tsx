@@ -19,9 +19,7 @@ const loadMessages = async (
 };
 
 const withIntl = (Story, context) => {
-  const [messages, setMessages] = useState<AbstractIntlMessages | undefined>(
-    undefined,
-  );
+  const [messages, setMessages] = useState<AbstractIntlMessages>();
 
   useEffect(() => {
     const fetchMessages = async () => {
