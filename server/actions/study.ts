@@ -1,6 +1,6 @@
 'use server';
 
-import { Role } from '@prisma/client';
+import { type Role } from '@prisma/client';
 import { getServerSession } from '~/lib/auth';
 import { safeRevalidateTag } from '~/lib/cache';
 import { db } from '~/lib/db';

@@ -29,7 +29,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const id = props.id ?? props.name;
     return (
-      <div className={cn('relative mt-4 grid items-center gap-2', className)}>
+      <div className={cn('relative grid items-center gap-2', className)}>
         {label && (
           <Label htmlFor={id} required={props.required}>
             {label}

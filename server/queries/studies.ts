@@ -1,6 +1,6 @@
 import 'server-only';
 import { db } from '~/lib/db';
-import { getServerSession } from '~/lib/auth';
+import createAction from '~/lib/createAction';
 import { createCachedFunction } from '~/lib/cache';
 
 export const getStudyUser = async (userId: string, publicStudyId: string) => {
@@ -15,25 +15,29 @@ export const getStudyUser = async (userId: string, publicStudyId: string) => {
   return studyUser;
 };
 
-export const getUserStudies = createCachedFunction(async () => {
-  const { session, user } = await getServerSession();
+const INTERNAL_cachedGetUserStudies = (_input, context) =>
+  createCachedFunction(
+    async (_input, context) => {
+      const { userId } = context.user;
 
-  if (!session || !user) {
-    throw new Error('Unauthorized');
-  }
-
-  const userStudies = await db.study.findMany({
-    where: {
-      users: {
-        some: {
-          userId: user.id,
+      const userStudies = await db.study.findMany({
+        where: {
+          users: {
+            some: {
+              userId: userId,
+            },
+          },
         },
-      },
-    },
-  });
+      });
 
-  return userStudies;
-}, ['studies:get']);
+      return userStudies;
+    },
+    ['studies:getByUser', `studies:getByUser-${context.userId}`],
+  )(_input, context);
+
+export const getUserStudies = createAction()
+  .requireAuth()
+  .handler(INTERNAL_cachedGetUserStudies);
 
 export const getStudyData = async (studySlug: string) => {
   const study = await db.study.findFirst({

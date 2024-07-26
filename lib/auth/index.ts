@@ -5,7 +5,7 @@ import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
 import { env } from '~/env';
 import { cache } from 'react';
 import { redirect } from '~/lib/localisation/navigation';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import 'server-only';
 import { getServerPath } from '../serverUtils';
 
@@ -87,7 +87,7 @@ export async function requirePageAuth({
 }
 
 export async function requireServerSession() {
-  const { session } = await getServerSession();
+  const session = await getServerSession();
 
   if (!session) {
     throw new Error('Unauthorized');

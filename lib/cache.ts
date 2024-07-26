@@ -5,7 +5,7 @@ const CACHE_TAGS = ['studies:get', 'studies:getByUser'] as const;
 type StaticTag = (typeof CACHE_TAGS)[number];
 type DynamicTag = `${StaticTag}-${string}`;
 
-type CacheTag = StaticTag | DynamicTag;
+export type CacheTag = StaticTag | DynamicTag;
 
 export function safeRevalidateTag(tag: CacheTag) {
   revalidateTag(tag);

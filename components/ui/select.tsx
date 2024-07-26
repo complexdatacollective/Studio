@@ -3,7 +3,6 @@
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
-
 import { cn } from '~/lib/utils';
 import { Label } from './form/Label';
 
@@ -19,9 +18,7 @@ const Select = React.forwardRef<SelectPrimitive.SelectProps, SelectProps>(
   (props, ref) => {
     const id = props.id ?? props.name;
     return (
-      <div
-        className={cn('relative mt-4 grid items-center gap-2', props.className)}
-      >
+      <div className={cn('relative grid items-center gap-2', props.className)}>
         {props.label && (
           <Label htmlFor={id} required={props.required}>
             {props.label}

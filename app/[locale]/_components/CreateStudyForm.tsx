@@ -20,9 +20,9 @@ export default async function CreateStudyForm() {
       <Section
         title={t('formTitle')}
         Footer={<SubmitButton>{t('formButton')}</SubmitButton>}
+        className="flex flex-col gap-2"
       >
         <Input
-          className="mb-4"
           label={t('inputLabel')}
           type="text"
           id="studyName"
