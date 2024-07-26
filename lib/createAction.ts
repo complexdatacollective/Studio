@@ -16,12 +16,15 @@ type TContext = {
   session: Session;
 };
 
-type THandlerFunc<TSchemaInput, TReturn> = (params: {
+type THandlerFunc<TSchemaInput, TReturn, TContext> = (params: {
   input: TSchemaInput;
-  context?: TContext;
+  context: TContext;
 }) => Promise<TReturn>;
 
-class ActionBuilder<TInputSchema extends z.ZodType | undefined> {
+class ActionBuilder<
+  TInputSchema extends z.ZodType | undefined,
+  TInjectAuthContext extends boolean = false,
+> {
   public $internals: TInternals<TInputSchema>;
 
   constructor(internals: TInternals<TInputSchema>) {
@@ -33,31 +36,41 @@ class ActionBuilder<TInputSchema extends z.ZodType | undefined> {
       throw new Error('Input schema must be a ZodType');
     }
 
-    return new ActionBuilder<T>({
+    return new ActionBuilder<T, TInjectAuthContext>({
       ...this.$internals,
       inputSchema,
     });
   }
 
   public injectAuthContext() {
-    return new ActionBuilder<TInputSchema>({
+    return new ActionBuilder<TInputSchema, true>({
       ...this.$internals,
       injectAuthContext: true,
     });
   }
 
-  public handler<T>(fn: THandlerFunc<TSchemaInput<TInputSchema>, T>) {
+  public handler<T>(
+    fn: THandlerFunc<
+      TSchemaInput<TInputSchema>,
+      T,
+      TInjectAuthContext extends true ? TContext : undefined
+    >,
+  ) {
     return async ($args: TSchemaInput<TInputSchema>) => {
-      let context;
-      if (this.$internals.injectAuthContext) {
-        context = await requireServerSession();
-      }
+      const context = this.$internals.injectAuthContext
+        ? await requireServerSession()
+        : undefined;
 
       const input = this.$internals.inputSchema!.parse(
         $args,
       ) as TSchemaInput<TInputSchema>;
 
-      return fn({ input, context });
+      return fn({
+        input,
+        context: context as TInjectAuthContext extends true
+          ? TContext
+          : undefined,
+      });
     };
   }
 }
@@ -79,7 +92,7 @@ export const myAction = createAction()
 
     const data = {
       greeting: `Hello, ${functionParameter}!`,
-      userId: context.user.id,
+      userId: context?.user.id,
     };
 
     return data;
