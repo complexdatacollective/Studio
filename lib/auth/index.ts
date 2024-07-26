@@ -89,7 +89,7 @@ export async function requirePageAuth({
 export async function requireServerSession() {
   const session = await getServerSession();
 
-  if (!session) {
+  if (!session?.user || !session?.session) {
     throw new Error('Unauthorized');
   }
 

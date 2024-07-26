@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { requireServerSession } from './auth';
+import type { Session, User } from 'lucia';
 
 type TSchemaInput<T extends z.ZodType | undefined> = T extends z.ZodType
   ? T['_input']
@@ -6,11 +8,18 @@ type TSchemaInput<T extends z.ZodType | undefined> = T extends z.ZodType
 
 type TInternals<TInputSchema extends z.ZodType | undefined> = {
   inputSchema: TInputSchema;
+  injectAuthContext?: boolean;
 };
 
-type THandlerFunc<TSchemaInput, TReturn> = (
-  input: TSchemaInput,
-) => Promise<TReturn>;
+type TContext = {
+  user: User;
+  session: Session;
+};
+
+type THandlerFunc<TSchemaInput, TReturn> = (params: {
+  input: TSchemaInput;
+  context?: TContext;
+}) => Promise<TReturn>;
 
 class ActionBuilder<TInputSchema extends z.ZodType | undefined> {
   public $internals: TInternals<TInputSchema>;
@@ -25,17 +34,30 @@ class ActionBuilder<TInputSchema extends z.ZodType | undefined> {
     }
 
     return new ActionBuilder<T>({
+      ...this.$internals,
       inputSchema,
+    });
+  }
+
+  public injectAuthContext() {
+    return new ActionBuilder<TInputSchema>({
+      ...this.$internals,
+      injectAuthContext: true,
     });
   }
 
   public handler<T>(fn: THandlerFunc<TSchemaInput<TInputSchema>, T>) {
     return async ($args: TSchemaInput<TInputSchema>) => {
+      let context;
+      if (this.$internals.injectAuthContext) {
+        context = await requireServerSession();
+      }
+
       const input = this.$internals.inputSchema!.parse(
         $args,
       ) as TSchemaInput<TInputSchema>;
 
-      return fn(input);
+      return fn({ input, context });
     };
   }
 }
@@ -46,15 +68,18 @@ export default function createAction() {
   });
 }
 
+// Example usage
 export const myAction = createAction()
   .input(z.object({ functionParameter: z.string() }))
-  .handler(async (input) => {
+  .injectAuthContext()
+  .handler(async ({ input, context }) => {
     const { functionParameter } = input;
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const data = {
       greeting: `Hello, ${functionParameter}!`,
+      userId: context.user.id,
     };
 
     return data;
