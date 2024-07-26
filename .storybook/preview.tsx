@@ -1,8 +1,9 @@
 import type { Preview } from '@storybook/react';
-import '../app/globals.scss';
+import '~/app/globals.scss';
 import React, { Suspense, useState, useEffect } from 'react';
 import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
-import { type Locale, getDirection } from '../lib/localisation/locales';
+import { type Locale } from '~/lib/localisation/locales';
+import { getLangDir } from 'rtl-detect';
 
 const loadMessages = async (
   locale: Locale,
@@ -26,7 +27,7 @@ const withIntl = (Story, context) => {
       const locale = context.globals.locale;
       const loadedMessages = await loadMessages(locale);
       setMessages(loadedMessages);
-      document.dir = getDirection(locale);
+      document.dir = getLangDir(locale);
     };
 
     fetchMessages();
