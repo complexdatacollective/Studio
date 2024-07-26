@@ -6,6 +6,8 @@ import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
 import { getDirection, type Locale } from '~/lib/localisation/locales';
+import { Analytics } from '@vercel/analytics/react';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,8 +23,6 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: Locale };
 }) {
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
@@ -32,7 +32,9 @@ export default async function LocaleLayout({
           <div className="m-2">
             <LanguageSwitcher />
           </div>
-          <ResponsiveContainer>{children}</ResponsiveContainer>
+          <ResponsiveContainer>
+            {children} <Analytics />
+          </ResponsiveContainer>
         </NextIntlClientProvider>
       </body>
     </html>
