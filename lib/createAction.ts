@@ -8,7 +8,7 @@ type TSchemaInput<T extends z.ZodType | undefined> = T extends z.ZodType
 
 type TInternals<TInputSchema extends z.ZodType | undefined> = {
   inputSchema: TInputSchema;
-  injectAuthContext?: boolean;
+  requireAuthContext?: boolean;
 };
 
 type TContext = {
@@ -23,7 +23,7 @@ type THandlerFunc<TSchemaInput, TReturn, TContext> = (params: {
 
 class ActionBuilder<
   TInputSchema extends z.ZodType | undefined,
-  TInjectAuthContext extends boolean = false,
+  TRequireAuthContext extends boolean = false,
 > {
   public $internals: TInternals<TInputSchema>;
 
@@ -36,16 +36,16 @@ class ActionBuilder<
       throw new Error('Input schema must be a ZodType');
     }
 
-    return new ActionBuilder<T, TInjectAuthContext>({
+    return new ActionBuilder<T, TRequireAuthContext>({
       ...this.$internals,
       inputSchema,
     });
   }
 
-  public injectAuthContext() {
+  public requireAuthContext() {
     return new ActionBuilder<TInputSchema, true>({
       ...this.$internals,
-      injectAuthContext: true,
+      requireAuthContext: true,
     });
   }
 
@@ -53,21 +53,21 @@ class ActionBuilder<
     fn: THandlerFunc<
       TSchemaInput<TInputSchema>,
       T,
-      TInjectAuthContext extends true ? TContext : undefined
+      TRequireAuthContext extends true ? TContext : undefined
     >,
   ) {
     return async ($args: TSchemaInput<TInputSchema>) => {
-      const context = this.$internals.injectAuthContext
+      const context = this.$internals.requireAuthContext
         ? await requireServerSession()
         : undefined;
 
       const input = this.$internals.inputSchema!.parse(
-        $args,
+        $args.input as TSchemaInput<TInputSchema>,
       ) as TSchemaInput<TInputSchema>;
 
       return fn({
         input,
-        context: context as TInjectAuthContext extends true
+        context: context as TRequireAuthContext extends true
           ? TContext
           : undefined,
       });
@@ -84,7 +84,7 @@ export default function createAction() {
 // Example usage
 export const myAction = createAction()
   .input(z.object({ functionParameter: z.string() }))
-  .injectAuthContext()
+  .requireAuthContext()
   .handler(async ({ input, context }) => {
     const { functionParameter } = input;
 
