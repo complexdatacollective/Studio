@@ -7,7 +7,7 @@ import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
 import { type Locale } from '~/lib/localisation/locales';
 import { Analytics } from '@vercel/analytics/react';
-import rtlDetect from 'rtl-detect';
+import { getLangDir } from 'rtl-detect';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,7 +26,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir={rtlDetect.getLangDir(locale)}>
+    <html lang={locale} dir={getLangDir(locale)}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <div className="m-2">
