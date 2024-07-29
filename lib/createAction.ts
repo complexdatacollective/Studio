@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { requireServerSession } from './auth';
 import type { Session, User } from 'lucia';
+import { createCachedFunction } from './cache';
 
 type TSchemaInput<T extends z.ZodType | undefined> = T extends z.ZodType
   ? T['_input']
@@ -85,15 +86,23 @@ export default function createAction() {
 export const myAction = createAction()
   .input(z.object({ functionParameter: z.string() }))
   .requireAuthContext()
-  .handler(async ({ input, context }) => {
-    const { functionParameter } = input;
+  // .cache({
+  //   tags: (input) => ['myAction', `myAction-${input.functionParameter}`],
+  // })
+  .handler(
+    createCachedFunction(
+      async ({ input, context }) => {
+        const { functionParameter } = input;
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const data = {
-      greeting: `Hello, ${functionParameter}!`,
-      userId: context?.user.id,
-    };
+        const data = {
+          greeting: `Hello, ${functionParameter}!`,
+          userId: context.user.id,
+        };
 
-    return data;
-  });
+        return data;
+      },
+      ['studies:get'],
+    ),
+  );
