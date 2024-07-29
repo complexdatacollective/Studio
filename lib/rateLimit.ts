@@ -2,8 +2,11 @@
 import { Ratelimit } from '@upstash/ratelimit';
 import { kv } from '@vercel/kv';
 
-export const rateLimit = async (request: Request) => {
-  const ip = request.headers.get('x-forwarded-for') ?? '';
+export const rateLimit = async (headers: Headers) => {
+  // on Vercel, can do request.ip. But for self-hosting use x-forwarded-for.
+  // https://nextjs.org/docs/app/api-reference/functions/next-request#ip
+  // Implementing as x-forwarded-for for flexibility.
+  const ip = headers.get('x-forwarded-for') ?? '';
 
   const ratelimit = new Ratelimit({
     redis: kv,
