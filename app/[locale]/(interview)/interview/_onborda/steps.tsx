@@ -11,7 +11,7 @@ export const steps: Step[] = [
       </>
     ),
     selector: '#nameGenerator-1',
-    side: 'top',
+    side: 'bottom',
     showControls: true,
     pointerPadding: -1,
     pointerRadius: 24,

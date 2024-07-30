@@ -2,6 +2,9 @@ import { getStage, getStageCount } from '~/server/queries/stages';
 import Navigation from './Navigation';
 import StageShell from './StageShell';
 import type { Interview } from '@prisma/client';
+import { Onborda } from 'onborda';
+import { steps } from '~/app/[locale]/(interview)/interview/_onborda/steps';
+import card from '~/app/[locale]/(interview)/interview/_onborda/card';
 
 // This is the shell for the interview. It contains the navigation and the current stage shell.
 export default async function InterviewShell({
@@ -24,12 +27,14 @@ export default async function InterviewShell({
   const progress = (currentStage / stageCount) * 100;
 
   return (
-    <div className="flex h-screen bg-navy-taupe text-white">
-      <Navigation pulseNext={isReadyForNextStage} progress={progress} />
+    <Onborda steps={steps} cardComponent={card} shadowOpacity="0.6">
+      <div className="flex h-screen bg-navy-taupe text-white">
+        <Navigation pulseNext={isReadyForNextStage} progress={progress} />
 
-      <div className="flex-1 overflow-hidden overflow-y-auto">
-        {stage ? <StageShell stage={stage} /> : <div>Stage not found</div>}
+        <div className="flex-1 overflow-hidden overflow-y-auto">
+          {stage ? <StageShell stage={stage} /> : <div>Stage not found</div>}
+        </div>
       </div>
-    </div>
+    </Onborda>
   );
 }

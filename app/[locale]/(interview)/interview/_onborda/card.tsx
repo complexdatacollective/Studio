@@ -16,7 +16,8 @@ const CustomCard: React.FC<CardComponentProps> = ({
   const { closeOnborda } = useOnborda();
 
   return (
-    <div className="max-w-vw z-10 rounded-lg bg-accent p-4 text-white">
+    // need to add pointer-events-auto to allow the user to interact with the card
+    <div className="max-w-vw pointer-events-auto rounded-lg bg-accent p-4 text-white">
       <div className="flex w-full items-start justify-between">
         <div>
           <div className="text-lg font-bold">
@@ -32,7 +33,7 @@ const CustomCard: React.FC<CardComponentProps> = ({
       </div>
       <div>{step.content}</div>
       <div>
-        <div className="flex w-full justify-between">
+        <div className="flex w-full justify-between space-x-4">
           {currentStep !== 0 && (
             <Button onClick={() => prevStep()}>Previous</Button>
           )}
