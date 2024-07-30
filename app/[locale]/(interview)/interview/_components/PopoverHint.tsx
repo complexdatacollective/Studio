@@ -5,6 +5,8 @@ import { Info, X } from 'lucide-react';
 import { motion, type Variants, useCycle } from 'framer-motion';
 import TooltipHint from '~/components/ui/TooltipHint';
 import { useTranslations } from 'next-intl';
+import { Button } from '~/components/ui/Button';
+import { useOnborda } from 'onborda';
 
 export default function PopoverHint({
   hint,
@@ -15,6 +17,12 @@ export default function PopoverHint({
 }) {
   const [showHint, toggleShowHint] = useCycle(false, true);
   const t = useTranslations('PopoverHint');
+
+  const { startOnborda } = useOnborda();
+  const handleStartOnborda = () => {
+    toggleShowHint();
+    startOnborda();
+  };
 
   // Keyboard shortcut to toggle hint
   useEffect(() => {
@@ -80,6 +88,9 @@ export default function PopoverHint({
           <div className="flex flex-col">
             <h2 className="font-bold">{title}</h2>
             <p>{hint}</p>
+            <Button onClick={handleStartOnborda}>
+              Start Instruction Wizard
+            </Button>
           </div>
           <button
             onClick={() => toggleShowHint()}

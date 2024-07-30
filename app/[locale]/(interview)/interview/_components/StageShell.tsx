@@ -4,18 +4,12 @@ import PopoverHint from './PopoverHint';
 import TooltipHint from '~/components/ui/TooltipHint';
 import { useTranslations } from 'next-intl';
 import type { Stage } from '@prisma/client';
-import { useOnborda } from 'onborda';
 
 // This is the shell for the interview stage. It contains the main task area and interview task hints/participant instructions.
 export default function StageShell({ stage }: { stage: Stage }) {
   const tTooltip = useTranslations('ExampleTooltip');
   const tInformationPopover = useTranslations('InformationPopover');
   const tNameGeneratorPopover = useTranslations('NameGeneratorPopover');
-
-  const { startOnborda } = useOnborda();
-  const handleStartOnborda = () => {
-    startOnborda();
-  };
 
   const popoverContent =
     stage.type === 'NameGenerator'
@@ -44,7 +38,6 @@ export default function StageShell({ stage }: { stage: Stage }) {
           Example node
         </div>
       </TooltipHint>
-      <button onClick={handleStartOnborda}>start tour</button>
     </div>
   );
 }
