@@ -1,5 +1,4 @@
 import { type StageTypes } from '@prisma/client';
-import type { Step } from 'onborda';
 
 export function getSteps(stageType: StageTypes) {
   switch (stageType) {
@@ -12,42 +11,21 @@ export function getSteps(stageType: StageTypes) {
   }
 }
 
-const nameGeneratorSteps: Step[] = [
+const nameGeneratorSteps = [
   {
-    icon: <></>, // required, so use an empty fragment if you don't want an icon
-    title: 'Name Generator',
-    content: (
-      <>
-        This is a name generator. It is used to nominate people in your network
-      </>
-    ),
-    selector: '#nameGenerator-1',
-    side: 'bottom',
-    showControls: true,
-    pointerPadding: -1,
-    pointerRadius: 24,
+    content:
+      'This is a name generator. It is used to nominate people in your network',
+    target: '#nameGenerator-1',
   },
   {
-    icon: <></>,
-    title: 'Add a person.',
     content: <>Click this button to add a person to your network.</>,
-    selector: '#nameGenerator-2',
-    side: 'top',
-    showControls: true,
-    pointerPadding: -1,
-    pointerRadius: 24,
+    target: '#nameGenerator-2',
   },
 ];
 
-const informationSteps: Step[] = [
+const informationSteps = [
   {
-    icon: <></>, // required, so use an empty fragment if you don't want an icon
-    title: 'Information Interface',
-    content: <>This is an information interface. Read the information below.</>,
-    selector: '#nameGenerator-1',
-    side: 'bottom',
-    showControls: true,
-    pointerPadding: -1,
-    pointerRadius: 24,
+    content: <>Read the information</>,
+    target: '#nameGenerator-2',
   },
 ];

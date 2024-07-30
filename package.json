@@ -47,6 +47,7 @@
     "prettier-plugin-tailwindcss": "^0.6.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-joyride": "^2.8.2",
     "sharp": "^0.33.4",
     "tailwind-merge": "^2.3.0",
     "tailwind-variants": "^0.2.1",

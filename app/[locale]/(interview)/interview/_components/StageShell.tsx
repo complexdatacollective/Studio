@@ -4,6 +4,9 @@ import PopoverHint from './PopoverHint';
 import TooltipHint from '~/components/ui/TooltipHint';
 import { useTranslations } from 'next-intl';
 import type { Stage } from '@prisma/client';
+import { getSteps } from '~/lib/onborda/steps';
+import Joyride from 'react-joyride';
+import CustomCard from 'lib/onborda/card';
 
 // This is the shell for the interview stage. It contains the main task area and interview task hints/participant instructions.
 export default function StageShell({ stage }: { stage: Stage }) {
@@ -24,6 +27,7 @@ export default function StageShell({ stage }: { stage: Stage }) {
 
   return (
     <div className="space-y-4 p-8">
+      <Joyride steps={stage ? getSteps(stage.type) : []} />
       <h1 id="nameGenerator-1" className="mb-4 text-2xl font-bold">
         Interview Stage {stage.id}
       </h1>
