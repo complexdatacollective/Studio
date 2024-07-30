@@ -28,6 +28,12 @@ type CacheConfig<
   revalidate?: CacheOptions['revalidate'];
 };
 
+// Void is the only way we can have an argument, but not require it
+// to have a value. Undefined/null etc, still require passing the argument.
+type HandlerArgs<TInputSchema> = TInputSchema extends z.ZodType
+  ? TSchemaInput<TInputSchema>
+  : void;
+
 class ActionBuilder<
   TInputSchema extends z.ZodType | undefined,
   TRequireAuthContext extends boolean = false,
@@ -63,15 +69,14 @@ class ActionBuilder<
     });
   }
 
-  // handler is a function that takes a function as an argument.
-  // the function passed as an argument should be async, and should optionally accept a single argument, which is an object with two properties: input and context.
   public handler<T>(
     fn: (args: {
       input: TSchemaInput<TInputSchema>;
       context: TRequireAuthContext extends true ? TContext : undefined;
     }) => T | Promise<T>,
   ) {
-    return async ($args?: { input: unknown; context?: unknown }) => {
+    // What we return here will be the call signature of the created action
+    return async ($args: HandlerArgs<TInputSchema>): Promise<T> => {
       let input: TSchemaInput<TInputSchema>;
       let context: TContext | undefined;
 
@@ -84,25 +89,12 @@ class ActionBuilder<
         ? this.$internals.inputSchema.parse($args?.input)
         : undefined;
 
-      const handlerFunction = async () =>
-        fn({
-          input,
-          context: context as TRequireAuthContext extends true
-            ? TContext
-            : undefined,
-        });
-
-      // if (this.$internals.cacheConfig) {
-      //   const { tags, revalidate } = this.$internals.cacheConfig;
-      //   const resolvedTags = tags({ input, context: context as TContext });
-      //   return ($args) => createCachedFunction(
-      //     handlerFunction,
-      //     resolvedTags,
-      //     revalidate,
-      //   )($args);
-      // }
-
-      return handlerFunction();
+      return fn({
+        input,
+        context: context as TRequireAuthContext extends true
+          ? TContext
+          : undefined,
+      });
     };
   }
 }

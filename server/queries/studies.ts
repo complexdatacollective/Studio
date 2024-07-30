@@ -43,13 +43,26 @@ export const testActionWithParameter = createAction()
       name: z.string(),
     }),
   )
+  .requireAuthContext()
   .handler(async ({ input, context }) => {
     return input.name;
   });
 
 export const getUserStudies = createAction()
   .requireAuthContext()
-  .handler(({ context, input }) => INTERNAL_cachedGetUserStudies({ context }));
+  .handler(async ({ context }: { context: TContext }) => {
+    const userStudies = await db.study.findMany({
+      where: {
+        users: {
+          some: {
+            userId: context.user.id,
+          },
+        },
+      },
+    });
+
+    return userStudies;
+  });
 
 export const vanillaGetUserStudies = async () => {
   const session = await requireServerSession();

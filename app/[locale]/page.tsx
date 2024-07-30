@@ -1,5 +1,6 @@
 import {
   getUserStudies,
+  testActionWithParameter,
   vanillaGetUserStudies,
 } from '~/server/queries/studies';
 import CreateStudyForm from './_components/CreateStudyForm';
@@ -17,7 +18,9 @@ export default async function Home() {
 
   const t = await getTranslations('Home');
 
-  const studies = await vanillaGetUserStudies();
+  const studies = await getUserStudies();
+
+  const test = await testActionWithParameter({ name: 'test' });
 
   return (
     <ResponsiveContainer className="flex flex-col gap-4">
