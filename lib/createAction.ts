@@ -86,7 +86,7 @@ class ActionBuilder<
 
       // Will throw if input is invalid!
       input = this.$internals.inputSchema
-        ? this.$internals.inputSchema.parse($args?.input)
+        ? this.$internals.inputSchema.parse($args)
         : undefined;
 
       return fn({

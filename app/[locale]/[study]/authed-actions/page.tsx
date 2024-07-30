@@ -1,10 +1,6 @@
 import { getServerPath } from '~/lib/serverUtils';
 import { TestAction } from './_actions';
 import Form from './_components/Form';
-import {
-  TestAuthedActionButton,
-  TestAdminActionButton,
-} from './_components/TestAuthedActionButton';
 import PageHeader from '~/components/typography/PageHeader';
 import Paragraph from '~/components/typography/Paragraph';
 
@@ -18,8 +14,6 @@ export default function TestPage() {
         this page when work is complete."
       />
       <Paragraph>Server Path: {serverPath}</Paragraph>
-      {/* <TestAuthedActionButton />
-      <TestAdminActionButton /> */}
       <Form
         title="Form Requiring Admin Role"
         description="This form uses a server action that requires the user to be an admin in the current study."
