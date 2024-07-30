@@ -30,7 +30,7 @@ export default async function CreateStudyForm() {
           placeholder={t('inputPlaceholder')}
           required
         />
-        <Select id="role" name="role" required label="Select a role">
+        <Select id="role" name="role" required label={t('roleSelectLabel')}>
           <SelectTrigger>
             <SelectValue placeholder={t('roleSelectPlaceholder')} />
           </SelectTrigger>

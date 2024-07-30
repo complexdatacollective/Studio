@@ -1,26 +1,32 @@
-import { z } from 'zod';
+import { z, ZodType, ZodTypeDef } from 'zod';
 import { requireServerSession } from './auth';
 import type { Session, User } from 'lucia';
-import { createCachedFunction } from './cache';
+import { CacheOptions, createCachedFunction, type CacheTag } from './cache';
 
 type TSchemaInput<T extends z.ZodType | undefined> = T extends z.ZodType
-  ? T['_input']
+  ? z.infer<T>
   : undefined;
 
 type TInternals<TInputSchema extends z.ZodType | undefined> = {
   inputSchema: TInputSchema;
   requireAuthContext?: boolean;
+  cacheConfig?: CacheConfig<TInputSchema>;
 };
 
-type TContext = {
+export type TContext = {
   user: User;
   session: Session;
 };
 
-type THandlerFunc<TSchemaInput, TReturn, TContext> = (params: {
-  input: TSchemaInput;
-  context: TContext;
-}) => Promise<TReturn>;
+type CacheConfig<
+  TInputSchema extends ZodType<unknown, ZodTypeDef, unknown> | undefined,
+> = {
+  tags: (params: {
+    input: TSchemaInput<TInputSchema>;
+    context: TContext;
+  }) => CacheTag[];
+  revalidate?: CacheOptions['revalidate'];
+};
 
 class ActionBuilder<
   TInputSchema extends z.ZodType | undefined,
@@ -50,28 +56,53 @@ class ActionBuilder<
     });
   }
 
+  public cache(config: CacheConfig<TInputSchema>) {
+    return new ActionBuilder<TInputSchema, TRequireAuthContext>({
+      ...this.$internals,
+      cacheConfig: config,
+    });
+  }
+
+  // handler is a function that takes a function as an argument.
+  // the function passed as an argument should be async, and should optionally accept a single argument, which is an object with two properties: input and context.
   public handler<T>(
-    fn: THandlerFunc<
-      TSchemaInput<TInputSchema>,
-      T,
-      TRequireAuthContext extends true ? TContext : undefined
-    >,
+    fn: (args: {
+      input: TSchemaInput<TInputSchema>;
+      context: TRequireAuthContext extends true ? TContext : undefined;
+    }) => T | Promise<T>,
   ) {
-    return async ($args: TSchemaInput<TInputSchema>) => {
-      const context = this.$internals.requireAuthContext
-        ? await requireServerSession()
+    return async ($args?: { input: unknown; context?: unknown }) => {
+      let input: TSchemaInput<TInputSchema>;
+      let context: TContext | undefined;
+
+      context = this.$internals.requireAuthContext
+        ? await requireServerSession() // Will throw if not authenticated!
         : undefined;
 
-      const input = this.$internals.inputSchema!.parse(
-        $args.input as TSchemaInput<TInputSchema>,
-      ) as TSchemaInput<TInputSchema>;
+      // Will throw if input is invalid!
+      input = this.$internals.inputSchema
+        ? this.$internals.inputSchema.parse($args?.input)
+        : undefined;
 
-      return fn({
-        input,
-        context: context as TRequireAuthContext extends true
-          ? TContext
-          : undefined,
-      });
+      const handlerFunction = async () =>
+        fn({
+          input,
+          context: context as TRequireAuthContext extends true
+            ? TContext
+            : undefined,
+        });
+
+      // if (this.$internals.cacheConfig) {
+      //   const { tags, revalidate } = this.$internals.cacheConfig;
+      //   const resolvedTags = tags({ input, context: context as TContext });
+      //   return ($args) => createCachedFunction(
+      //     handlerFunction,
+      //     resolvedTags,
+      //     revalidate,
+      //   )($args);
+      // }
+
+      return handlerFunction();
     };
   }
 }
@@ -81,28 +112,3 @@ export default function createAction() {
     inputSchema: undefined,
   });
 }
-
-// Example usage
-export const myAction = createAction()
-  .input(z.object({ functionParameter: z.string() }))
-  .requireAuthContext()
-  // .cache({
-  //   tags: (input) => ['myAction', `myAction-${input.functionParameter}`],
-  // })
-  .handler(
-    createCachedFunction(
-      async ({ input, context }) => {
-        const { functionParameter } = input;
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        const data = {
-          greeting: `Hello, ${functionParameter}!`,
-          userId: context.user.id,
-        };
-
-        return data;
-      },
-      ['studies:get'],
-    ),
-  );

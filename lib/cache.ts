@@ -13,16 +13,20 @@ export function safeRevalidateTag(tag: CacheTag) {
 
 type UnstableCacheParams = Parameters<typeof unstable_cache>;
 
+export type CacheOptions = {
+  // keyParts?: string[]; // Not exposed to consumers
+  revalidate?: number | false;
+};
+
+export type CachedFunctionParams = Parameters<typeof createCachedFunction>;
+
 export function createCachedFunction<T extends UnstableCacheParams[0]>(
   func: T,
   tags: CacheTag[],
-  options?: {
-    keyParts?: string[];
-    revalidate?: number | false;
-  },
+  revalidate?: CacheOptions['revalidate'],
 ): T {
-  return unstable_cache(func, options?.keyParts, {
+  return unstable_cache(func, undefined, {
     tags,
-    revalidate: options?.revalidate,
+    revalidate,
   });
 }

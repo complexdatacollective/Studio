@@ -18,7 +18,9 @@ const LanguageSwitcher = () => {
   const t = useTranslations('LanguageSwitcher');
 
   function handleLanguageChange(value: Locales) {
+    console.log('CHANGE LANGUAGE', value);
     router.push(pathname, { locale: value });
+    router.refresh();
   }
 
   return (

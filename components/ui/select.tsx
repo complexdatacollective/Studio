@@ -12,32 +12,33 @@ type SelectProps = {
   hint?: React.ReactNode;
   id?: string;
   error?: string;
-} & React.SelectHTMLAttributes<HTMLInputElement>;
+} & SelectPrimitive.SelectProps &
+  React.SelectHTMLAttributes<HTMLSelectElement>;
 
-const Select = React.forwardRef<SelectPrimitive.SelectProps, SelectProps>(
-  (props, ref) => {
-    const id = props.id ?? props.name;
-    return (
-      <div className={cn('relative grid items-center gap-2', props.className)}>
-        {props.label && (
-          <Label htmlFor={id} required={props.required}>
-            {props.label}
-          </Label>
-        )}
-        {props.hint && (
-          <span className="text-sm leading-5 text-muted-foreground">
-            {props.hint}
-          </span>
-        )}
-        <SelectPrimitive.Root name={props.name} required={props.required}>
-          {props.children}
-        </SelectPrimitive.Root>
-      </div>
-    );
-  },
-);
-
-Select.displayName = 'Select';
+const Select = (props: SelectProps) => {
+  const id = props.id ?? props.name;
+  return (
+    <div className={cn('relative grid items-center gap-2', props.className)}>
+      {props.label && (
+        <Label htmlFor={id} required={props.required}>
+          {props.label}
+        </Label>
+      )}
+      {props.hint && (
+        <span className="text-sm leading-5 text-muted-foreground">
+          {props.hint}
+        </span>
+      )}
+      <SelectPrimitive.Root
+        name={props.name}
+        required={props.required}
+        onValueChange={props.onValueChange}
+      >
+        {props.children}
+      </SelectPrimitive.Root>
+    </div>
+  );
+};
 
 const SelectValue = SelectPrimitive.Value;
 

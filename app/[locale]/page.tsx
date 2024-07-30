@@ -1,4 +1,7 @@
-import { getUserStudies } from '~/server/queries/studies';
+import {
+  getUserStudies,
+  vanillaGetUserStudies,
+} from '~/server/queries/studies';
 import CreateStudyForm from './_components/CreateStudyForm';
 import { requirePageAuth } from '~/lib/auth';
 import { routes } from '~/lib/routes';
@@ -14,7 +17,7 @@ export default async function Home() {
 
   const t = await getTranslations('Home');
 
-  const studies = await getUserStudies();
+  const studies = await vanillaGetUserStudies();
 
   return (
     <ResponsiveContainer className="flex flex-col gap-4">
