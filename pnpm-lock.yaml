@@ -77,6 +77,9 @@ dependencies:
   next-safe-navigation:
     specifier: ^0.3.2
     version: 0.3.2(next@14.2.4)(typescript@5.5.3)(zod@3.23.8)
+  onborda:
+    specifier: ^1.2.2
+    version: 1.2.2(framer-motion@11.2.13)(next@14.2.4)(react-dom@18.3.1)(react@18.3.1)
   prettier:
     specifier: ^3.3.2
     version: 3.3.3
@@ -8518,6 +8521,20 @@ packages:
     dependencies:
       ee-first: 1.1.1
     dev: true
+
+  /onborda@1.2.2(framer-motion@11.2.13)(next@14.2.4)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-0TMg1d/i13jB0/1OQR0UCe9jqYBTt+9FYUz2ec8aEKDncPGC6y0hlfhrWkfrw/eDrtfPby+XH4gVCiqL2mDJ/Q==}
+    peerDependencies:
+      framer-motion: '>=11'
+      next: '>=13'
+      react: '>=18'
+      react-dom: '>=18'
+    dependencies:
+      framer-motion: 11.2.13(react-dom@18.3.1)(react@18.3.1)
+      next: 14.2.4(@babel/core@7.24.9)(react-dom@18.3.1)(react@18.3.1)(sass@1.77.8)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
 
   /once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
