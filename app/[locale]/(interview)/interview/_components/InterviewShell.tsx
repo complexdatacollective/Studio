@@ -28,7 +28,7 @@ export default async function InterviewShell({
 
   return (
     <Onborda
-      steps={getSteps(stage?.type)}
+      steps={stage ? getSteps(stage.type) : []}
       cardComponent={card}
       shadowOpacity="0.6"
     >
