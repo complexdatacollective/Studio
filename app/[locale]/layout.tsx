@@ -5,8 +5,10 @@ import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
+import { type Locale } from '~/lib/localisation/locales';
 import { Analytics } from '@vercel/analytics/react';
 import DialogManager from '~/lib/dialogs/DialogManager';
+import { getLangDir } from 'rtl-detect';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,24 +22,23 @@ export default async function LocaleLayout({
   params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: Locale };
 }) {
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={getLangDir(locale)}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <div className="m-2">
             <LanguageSwitcher />
           </div>
           <ResponsiveContainer>
-            {children} <Analytics />
+            {children} 
             <DialogManager />
           </ResponsiveContainer>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
