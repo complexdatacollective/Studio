@@ -76,11 +76,6 @@
     "title": "Página de participantes",
     "description": "slug:"
   },
-  "LanguageSwitcher": {
-    "en": "English",
-    "es": "Español",
-    "ar": "عربى"
-  },
   "Navigation": {
     "forward": "Avanzar",
     "back": "Retroceder",

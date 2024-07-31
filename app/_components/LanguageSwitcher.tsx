@@ -1,6 +1,6 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import {
   Select,
   SelectContent,
@@ -8,30 +8,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import { type Locale, SUPPORTED_LOCALES } from '~/lib/localisation/locales';
+import { type Locale, LOCALES_DICT } from '~/lib/localisation/locales';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
 
 const LanguageSwitcher = () => {
   const currentLocale = useLocale() as unknown as Locale;
   const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations('LanguageSwitcher');
 
   function handleLanguageChange(value: Locale) {
     router.push(pathname, { locale: value });
   }
 
   return (
-    <Select onValueChange={handleLanguageChange}>
+    <Select onValueChange={handleLanguageChange} value={currentLocale}>
       <SelectTrigger
         className={`hover:bg-stone-100 w-[200px] space-x-1 bg-white text-xs sm:text-sm`}
       >
-        <SelectValue placeholder={t(currentLocale)} />
+        <SelectValue />
       </SelectTrigger>
       <SelectContent className="dark:bg-slate-700 bg-white">
-        {SUPPORTED_LOCALES.map((locale) => (
+        {LOCALES_DICT.map(([locale, name]) => (
           <SelectItem key={locale} value={locale}>
-            {t(locale)}
+            {name}
           </SelectItem>
         ))}
       </SelectContent>
