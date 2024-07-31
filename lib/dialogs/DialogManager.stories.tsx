@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import Paragraph from '~/components/typography/Paragraph';
 import { Button } from '~/components/ui/Button';
-import { useDialogStore } from './store';
+import useDialog from './useDialog';
 import DialogManager from './DialogManager';
 
 const meta = {
@@ -31,9 +31,9 @@ type Story = StoryObj<typeof meta>;
 
 export const DialogManagerComponent: Story = {
   render: () => {
-    const { openDialog } = useDialogStore();
+    const { showDialog } = useDialog();
     const createDialog = () => {
-      openDialog({
+      showDialog({
         type: 'Info',
         title: 'Important Information',
         content: (
@@ -53,7 +53,7 @@ export const DialogManagerComponent: Story = {
         ),
         confirmLabel: 'Got it',
       });
-      openDialog({
+      showDialog({
         type: 'Error',
         title: 'Oops, something went wrong',
         content: 'We encountered an unexpected error. Please try again later.',

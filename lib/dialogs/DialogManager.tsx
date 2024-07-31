@@ -2,10 +2,10 @@
 
 import { AnimatePresence } from 'framer-motion';
 import Dialog from '~/components/ui/Dialog';
-import { useDialogStore } from './store';
+import useDialog from './useDialog';
 
 const DialogManager = () => {
-  const { closeDialog, dialogs } = useDialogStore();
+  const { dialogs, cancelDialog, confirmDialog, closeDialog } = useDialog();
 
   const handleOpenChange = async (dialogId: string) => {
     const dialog = dialogs.find((dialog) => dialog.id === dialogId)!;
@@ -14,25 +14,7 @@ const DialogManager = () => {
       closeDialog(dialog.id);
       return;
     }
-    await handleConfirmDialog(dialog.id);
-  };
-
-  const handleConfirmDialog = async (dialogId: string) => {
-    const dialog = dialogs.find((dialog) => dialog.id === dialogId)!;
-    const result = await dialog?.onConfirm?.();
-    // close the dialog if it's not a prompt dialog or
-    // the prompt dialog onConfirm resolves to a truthy value
-    if (dialog?.type !== 'Prompt' || result) {
-      closeDialog(dialog.id);
-    }
-  };
-
-  const handleCancelDialog = (dialogId: string) => {
-    const dialog = dialogs.find((dialog) => dialog.id === dialogId)!;
-    if (dialog?.type === 'Confirm') {
-      dialog.onCancel?.();
-    }
-    closeDialog(dialog.id);
+    await confirmDialog(dialog.id);
   };
 
   return (
@@ -42,8 +24,8 @@ const DialogManager = () => {
           key={dialog.id}
           dialogOrder={index}
           handleOpenChange={handleOpenChange}
-          handleCancelDialog={handleCancelDialog}
-          handleConfirmDialog={handleConfirmDialog}
+          handleCancelDialog={cancelDialog}
+          handleConfirmDialog={confirmDialog}
           {...dialog}
         />
       ))}
