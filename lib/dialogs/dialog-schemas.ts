@@ -16,7 +16,7 @@ const SharedDialogProperties = z.object({
   title: z.string(),
   content: z.custom<ReactNode>(),
   confirmLabel: z.string().optional(),
-  onConfirm: z.function().returns(z.undefined()).optional(),
+  onConfirm: z.function().optional(),
 });
 
 const InfoDialogSchema = SharedDialogProperties.extend({
@@ -28,7 +28,8 @@ type InfoDialog = z.infer<typeof InfoDialogSchema>;
 const ConfirmDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Confirm),
   cancelLabel: z.string().optional(),
-  onCancel: z.function().returns(z.undefined()).optional(),
+  onConfirm: z.function(),
+  onCancel: z.function(),
 });
 
 type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
