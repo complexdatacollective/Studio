@@ -53,7 +53,7 @@ export default function PopoverHint({
   };
 
   return (
-    <div>
+    <>
       <TooltipHint
         hint={
           <div className="flex">
@@ -64,14 +64,14 @@ export default function PopoverHint({
       >
         <button
           onClick={() => toggleShowHint()}
-          className="focusable fixed right-6 top-6 z-10 flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-accent p-2 text-accent-foreground transition-transform hover:scale-105 sm:h-20 sm:w-20 sm:p-6"
+          className="focusable z-10 flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-accent p-2 text-accent-foreground transition-transform hover:scale-105 sm:h-20 sm:w-20 sm:p-6"
           aria-label={t('open')}
         >
           <Info className="h-6 w-6 sm:h-8 sm:w-8" />
         </button>
       </TooltipHint>
       <motion.div
-        className="fixed right-0 top-0 z-50 p-6"
+        className="z-50 p-6"
         initial={false}
         animate={showHint ? 'open' : 'closed'}
         variants={variants}
@@ -90,7 +90,7 @@ export default function PopoverHint({
           </button>
         </div>
       </motion.div>
-    </div>
+    </>
   );
 }
 

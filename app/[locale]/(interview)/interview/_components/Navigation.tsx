@@ -5,32 +5,30 @@ import { ChevronUp, ChevronDown, Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
-
 import { cn } from '~/lib/utils';
 import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
 import ProgressBar from './ProgressBar';
+import type { IntRange } from '~/lib/ts-utils';
 
-const NavigationButton = ({
-  onClick,
-  className,
-  ariaLabel,
-  children,
-}: {
+export type NavigationButtonProps = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
-  ariaLabel?: string;
   children: React.ReactNode;
-}) => {
+} & React.HTMLAttributes<HTMLButtonElement>;
+
+const NavigationButton = (props: NavigationButtonProps) => {
+  const { className, children, ...rest } = props;
   return (
     <button
       className={cn(
-        `m-4 flex h-[4.8rem] w-[4.8rem] basis-[4.8rem] cursor-pointer items-center justify-center rounded-full transition-all`,
-        'hover:bg-primary',
+        'm-4 flex h-20 w-20 basis-20 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
+        'hover:bg-success',
+        'focus:ring-fox focus:outline-none focus:ring-2',
         className,
       )}
       tabIndex={0}
-      onClick={onClick}
-      aria-label={ariaLabel}
+      onClick={props.onClick}
+      {...rest}
     >
       {children}
     </button>
@@ -39,7 +37,7 @@ const NavigationButton = ({
 
 type NavigationProps = {
   pulseNext: boolean;
-  progress: number;
+  progress: IntRange<0, 100>;
 };
 
 const Navigation = ({ pulseNext, progress }: NavigationProps) => {
@@ -47,7 +45,6 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const stage = searchParams.get('stage');
-  const [expanded, setExpanded] = useState(false);
 
   const moveBackward = () => {
     if (!stage) return;
@@ -61,54 +58,49 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
     router.push(`${pathname}/?stage=${newStage}`);
   };
 
-  const toggleMenu = () => {
-    setExpanded(!expanded);
-  };
-
   const t = useTranslations('Navigation');
 
+  //   // Expanded settings menu
+  // <div className="p-4">
+  //   <div>Select language </div>
+  //   <div className="text-foreground">
+  //     <LanguageSwitcher />
+  //   </div>
+  // </div>
+
   return (
-    <div
+    <nav
       role="navigation"
       className={cn(
-        'flex h-full flex-shrink-0 flex-grow-0 flex-col items-center bg-cyber-grape text-white',
-        expanded && 'w-full',
+        'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-cyber-grape text-white',
       )}
     >
-      <NavigationButton onClick={toggleMenu} ariaLabel={t('menu')}>
-        {expanded ? (
-          <X className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
-        ) : (
-          <Menu className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
-        )}
+      <NavigationButton aria-label={t('menu')} title={t('menu')}>
+        <Menu className="h-10 w-10 stroke-[3px]" />
       </NavigationButton>
-      {!expanded ? (
-        <div className="flex h-full flex-col items-center justify-between">
-          <NavigationButton onClick={moveBackward} ariaLabel={t('back')}>
-            <ChevronUp className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
-          </NavigationButton>
-          <ProgressBar percentProgress={progress} />
-          <NavigationButton
-            className={cn(
-              pulseNext && 'animate-pulse bg-success',
-              'hover:bg-success',
-            )}
-            onClick={moveForward}
-            ariaLabel={t('forward')}
-          >
-            <ChevronDown className="h-[2.4rem] w-[2.4rem]" strokeWidth="3px" />
-          </NavigationButton>
-        </div>
-      ) : (
-        // Expanded settings menu
-        <div className="p-4">
-          <div>Select language </div>
-          <div className="text-foreground">
-            <LanguageSwitcher />
-          </div>
-        </div>
-      )}
-    </div>
+      <NavigationButton
+        onClick={moveBackward}
+        aria-label={t('back')}
+        title={t('back')}
+      >
+        <ChevronUp className="h-10 w-10 stroke-[3px]" />
+      </NavigationButton>
+      <ProgressBar
+        value={progress}
+        className="bg-white/15"
+        ariaLabel="Interview Progress"
+      />
+      <NavigationButton
+        className={cn(
+          pulseNext && 'animate-pulse-bg from-cyber-grape to-success',
+        )}
+        onClick={moveForward}
+        aria-label={t('forward')}
+        title={t('forward')}
+      >
+        <ChevronDown className="h-10 w-10 stroke-[3px]" />
+      </NavigationButton>
+    </nav>
   );
 };
 

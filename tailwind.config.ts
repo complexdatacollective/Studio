@@ -130,6 +130,8 @@ export default {
       },
       'border': 'hsl(var(--border) / <alpha-value>)',
       'link': 'hsl(var(--link) / <alpha-value>)',
+
+      'focus': 'hsl(var(--focus) / <alpha-value>)',
     },
     borderRadius: {
       ...defaultTheme.borderRadius,
@@ -164,6 +166,11 @@ export default {
           '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
           '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
         },
+        'pulse-bg': {
+          '0%': { backgroundColor: 'var(--tw-gradient-from)' },
+          '50%': { backgroundColor: 'var(--tw-gradient-to)' },
+          '100%': { backgroundColor: 'var(--tw-gradient-from)' },
+        },
       },
       animation: {
         'wiggle': 'wiggle 1s ease-in-out infinite',
@@ -173,6 +180,7 @@ export default {
         'indeterminate-progress-bar':
           'indeterminate-progress-bar 1s infinite linear',
         'background-gradient': 'background-gradient 5s infinite ease-in-out',
+        'pulse-bg': 'pulse-bg 1.5s infinite',
       },
       transformOrigin: {
         'left-right': '0% 50%',
@@ -184,6 +192,5 @@ export default {
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/container-queries'),
-    require('tailwindcss-animate'),
   ],
 } satisfies Config;

@@ -22,10 +22,10 @@ const config = {
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/stylistic', 'plugin:@typescript-eslint/recommended', 'next/core-web-vitals', 'prettier', 'plugin:storybook/recommended'],
   ignorePatterns: [
     'node_modules',
-    '*.stories.*',
     '*.test.*',
     'public',
-    '.eslintrc.cjs',
+    '!.eslintrc.cjs',
+    '!.storybook',
   ],
   rules: {
     '@next/next/no-img-element': 'off',

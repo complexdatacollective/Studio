@@ -1,45 +1,45 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
 import Navigation from './Navigation';
-import { NextIntlClientProvider } from 'next-intl';
 
 const meta: Meta<typeof Navigation> = {
   title: 'Interview/Navigation',
   component: Navigation,
   parameters: {
-    layout: 'centered',
     nextjs: {
       appDirectory: 'true',
     },
+    layout: 'fullscreen',
   },
   decorators: [
-    (Story, context) => {
+    (Story, _context) => {
       return (
-        <NextIntlClientProvider locale="en">
-          <div className="h-screen">
-            <Story />
-          </div>
-        </NextIntlClientProvider>
+        <div className="h-screen">
+          <Story />
+        </div>
       );
     },
   ],
   argTypes: {
-    pulseNext: { control: 'boolean', defaultValue: false },
-    progress: { control: 'number', defaultValue: 0 },
+    pulseNext: {
+      control: 'boolean',
+      defaultValue: false,
+      description:
+        'Whether the next button should pulse. Used to indicate that the current task is complete.',
+    },
+    progress: {
+      control: 'range',
+      defaultValue: 50,
+      description:
+        'Whole integer between 0-100 representing progress through the interview.',
+    },
   },
   args: {
     pulseNext: false,
-    progress: 0,
+    progress: 50,
   },
-  tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    pulseNext: false,
-    progress: 0,
-  },
-};
+export const Default: Story = {};

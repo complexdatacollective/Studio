@@ -7,6 +7,11 @@ const meta: Meta<typeof TooltipHint> = {
   component: TooltipHint,
   parameters: {
     layout: 'centered',
+    docs: {
+      story: {
+        iframeHeight: '300px',
+      },
+    },
   },
   argTypes: {
     hint: { control: 'text', defaultValue: 'This is a tooltip hint!' },
@@ -14,7 +19,6 @@ const meta: Meta<typeof TooltipHint> = {
   args: {
     hint: 'This is a tooltip hint!',
   },
-  tags: ['autodocs'],
 };
 
 export default meta;

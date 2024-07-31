@@ -1,19 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import PopoverHint from '~/app/[locale]/(interview)/interview/_components/PopoverHint';
-import { NextIntlClientProvider } from 'next-intl';
 
 const meta: Meta<typeof PopoverHint> = {
   title: 'Interview/PopoverHint',
   component: PopoverHint,
-  decorators: [
-    (Story, context) => {
-      return (
-        <NextIntlClientProvider locale="en">
-          <Story />
-        </NextIntlClientProvider>
-      );
-    },
-  ],
+  parameters: {
+    layout: 'centered',
+  },
   argTypes: {
     hint: {
       control: 'text',
@@ -24,7 +17,6 @@ const meta: Meta<typeof PopoverHint> = {
   args: {
     hint: 'This is a longer hint. It is intended for stage-level instructions.',
   },
-  tags: ['autodocs'],
 };
 
 export default meta;
