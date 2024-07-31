@@ -2,7 +2,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { Inter } from 'next/font/google';
 import { getMessages } from 'next-intl/server';
 import '~/app/globals.scss';
-import { OnbordaProvider } from 'onborda';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,7 +27,7 @@ export default async function InterviewLayout({
         className={`${inter.className} flex h-screen bg-navy-taupe text-white`}
       >
         <NextIntlClientProvider messages={messages}>
-          <OnbordaProvider>{children}</OnbordaProvider>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
