@@ -24,18 +24,11 @@ export default async function InterviewShell({
   const progress = (currentStage / stageCount) * 100;
 
   return (
-    // <Onborda
-    //   steps={stage ? getSteps(stage.type) : []}
-    //   cardComponent={card}
-    //   shadowOpacity="0.6"
-    // >
     <div className="flex h-screen bg-navy-taupe text-white">
       <Navigation pulseNext={isReadyForNextStage} progress={progress} />
-
       <div className="flex-1 overflow-hidden overflow-y-auto">
         {stage ? <StageShell stage={stage} /> : <div>Stage not found</div>}
       </div>
     </div>
-    // </Onborda>
   );
 }

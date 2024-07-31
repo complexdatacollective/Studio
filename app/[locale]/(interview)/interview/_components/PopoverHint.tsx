@@ -81,13 +81,6 @@ export default function PopoverHint({
           <div className="flex flex-col">
             <h2 className="font-bold">{title}</h2>
             <p>{hint}</p>
-            <Button
-              onClick={() => {
-                console.log('start wizard');
-              }}
-            >
-              Start Instruction Wizard
-            </Button>
           </div>
           <button
             onClick={() => toggleShowHint()}

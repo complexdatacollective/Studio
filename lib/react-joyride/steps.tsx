@@ -17,11 +17,14 @@ const nameGeneratorSteps = [
     content:
       'This is a name generator. It is used to nominate people in your network',
     target: '#nameGenerator-1',
+    // disableBeacon makes the steps run automatically
+    disableBeacon: true,
   },
   {
     title: 'Add a person.',
     content: 'Click this button to add a person to your network.',
     target: '#nameGenerator-2',
+    disableBeacon: true,
   },
 ];
 
@@ -30,5 +33,6 @@ const informationSteps = [
     title: 'Information Interface',
     content: 'This is an information interface. Read the information below.',
     target: '#information-1',
+    disableBeacon: true,
   },
 ];

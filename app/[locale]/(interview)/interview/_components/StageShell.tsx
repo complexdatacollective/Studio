@@ -5,9 +5,11 @@ import TooltipHint from '~/components/ui/TooltipHint';
 import { useTranslations } from 'next-intl';
 import type { Stage } from '@prisma/client';
 import { getSteps } from '~/lib/react-joyride/steps';
-import Joyride from 'react-joyride';
 import Tooltip, { floaterProps } from '~/lib/react-joyride/tooltip';
-import Beacon from '~/lib/react-joyride/beacon';
+import { withNoSSRWrapper } from '~/lib/noSSRWrapper';
+import Joyride from 'react-joyride';
+
+const JoyRideNoSSR = withNoSSRWrapper(Joyride);
 
 // This is the shell for the interview stage. It contains the main task area and interview task hints/participant instructions.
 export default function StageShell({ stage }: { stage: Stage }) {
@@ -28,12 +30,12 @@ export default function StageShell({ stage }: { stage: Stage }) {
 
   return (
     <div className="space-y-4 p-8">
-      <Joyride
+      <JoyRideNoSSR
         steps={stage ? getSteps(stage.type) : []}
         continuous
         tooltipComponent={Tooltip}
         floaterProps={floaterProps}
-        beaconComponent={Beacon}
+        run={false}
       />
       <h1 id="nameGenerator-1" className="mb-4 text-2xl font-bold">
         Interview Stage {stage.id}
