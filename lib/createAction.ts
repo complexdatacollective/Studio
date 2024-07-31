@@ -21,12 +21,10 @@ export type TContext = {
 type CacheConfig<
   TInputSchema extends ZodType<unknown, ZodTypeDef, unknown> | undefined,
 > = {
-  tags:
-    | ((params: {
-        input: TSchemaInput<TInputSchema>;
-        context: TContext;
-      }) => CacheTag[])
-    | CacheTag[];
+  tags: (params: {
+    input: TSchemaInput<TInputSchema>;
+    context: TContext;
+  }) => CacheTag[] | CacheTag[];
   revalidate?: CacheOptions['revalidate'];
 };
 
@@ -36,6 +34,10 @@ type HandlerArgs<TInputSchema> = TInputSchema extends z.ZodType
   ? TSchemaInput<TInputSchema>
   : void;
 
+type HandlerResult<T> =
+  | { data: T; error: null }
+  | { data: null; error: string };
+
 type HandlerFn<
   T,
   TInputSchema extends z.ZodType | undefined,
@@ -43,7 +45,7 @@ type HandlerFn<
 > = (args: {
   input: TSchemaInput<TInputSchema>;
   context: TRequireAuthContext extends true ? TContext : undefined;
-}) => T | Promise<T>;
+}) => HandlerResult<T> | Promise<HandlerResult<T>>;
 
 class ActionBuilder<
   TInputSchema extends z.ZodType | undefined,
@@ -82,7 +84,9 @@ class ActionBuilder<
 
   public handler<T>(fn: HandlerFn<T, TInputSchema, TRequireAuthContext>) {
     // What we return here will be the call signature of the created action
-    return async ($args: HandlerArgs<TInputSchema>): Promise<T> => {
+    return async (
+      $args: HandlerArgs<TInputSchema>,
+    ): Promise<HandlerResult<T>> => {
       let input: TSchemaInput<TInputSchema>;
       let context: TContext | undefined;
 
