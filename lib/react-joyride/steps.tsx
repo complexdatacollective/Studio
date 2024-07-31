@@ -13,19 +13,22 @@ export function getSteps(stageType: StageTypes) {
 
 const nameGeneratorSteps = [
   {
+    title: 'Name Generator',
     content:
       'This is a name generator. It is used to nominate people in your network',
     target: '#nameGenerator-1',
   },
   {
-    content: <>Click this button to add a person to your network.</>,
+    title: 'Add a person.',
+    content: 'Click this button to add a person to your network.',
     target: '#nameGenerator-2',
   },
 ];
 
 const informationSteps = [
   {
-    content: <>Read the information</>,
-    target: '#nameGenerator-2',
+    title: 'Information Interface',
+    content: 'This is an information interface. Read the information below.',
+    target: '#information-1',
   },
 ];
