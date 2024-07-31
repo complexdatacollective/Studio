@@ -5,7 +5,6 @@ import { Info, X } from 'lucide-react';
 import { motion, type Variants, useCycle } from 'framer-motion';
 import TooltipHint from '~/components/ui/TooltipHint';
 import { useTranslations } from 'next-intl';
-import { Button } from '~/components/ui/Button';
 
 export default function PopoverHint({
   hint,
