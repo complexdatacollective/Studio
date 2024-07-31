@@ -7,6 +7,7 @@ import type { Stage } from '@prisma/client';
 import { getSteps } from '~/lib/react-joyride/steps';
 import Joyride from 'react-joyride';
 import Tooltip, { floaterProps } from '~/lib/react-joyride/tooltip';
+import Beacon from '~/lib/react-joyride/beacon';
 
 // This is the shell for the interview stage. It contains the main task area and interview task hints/participant instructions.
 export default function StageShell({ stage }: { stage: Stage }) {
@@ -32,6 +33,7 @@ export default function StageShell({ stage }: { stage: Stage }) {
         continuous
         tooltipComponent={Tooltip}
         floaterProps={floaterProps}
+        beaconComponent={Beacon}
       />
       <h1 id="nameGenerator-1" className="mb-4 text-2xl font-bold">
         Interview Stage {stage.id}
