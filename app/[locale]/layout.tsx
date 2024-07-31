@@ -7,7 +7,6 @@ import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
 import { Analytics } from '@vercel/analytics/react';
 import DialogManager from '~/lib/dialogs/DialogManager';
-import { DialogStoreProvider } from '~/lib/dialogs/dialog-store-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,17 +29,15 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <DialogStoreProvider>
-          <NextIntlClientProvider messages={messages}>
-            <div className="m-2">
-              <LanguageSwitcher />
-            </div>
-            <ResponsiveContainer>
-              {children} <Analytics />
-              <DialogManager />
-            </ResponsiveContainer>
-          </NextIntlClientProvider>
-        </DialogStoreProvider>
+        <NextIntlClientProvider messages={messages}>
+          <div className="m-2">
+            <LanguageSwitcher />
+          </div>
+          <ResponsiveContainer>
+            {children} <Analytics />
+            <DialogManager />
+          </ResponsiveContainer>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

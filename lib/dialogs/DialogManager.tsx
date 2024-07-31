@@ -2,7 +2,7 @@
 
 import { AnimatePresence } from 'framer-motion';
 import Dialog from '~/components/ui/Dialog';
-import { useDialogStore } from './dialog-store-provider';
+import { useDialogStore } from './store';
 
 const DialogManager = () => {
   const { closeDialog, dialogs } = useDialogStore();

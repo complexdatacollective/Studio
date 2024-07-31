@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { createStore } from 'zustand/vanilla';
+import { create } from 'zustand';
 import { type Dialog, type DialogWithoutId } from './dialog-schemas';
 
 type DialogState = {
@@ -13,21 +13,16 @@ type DialogActions = {
 
 export type DialogStore = DialogState & DialogActions;
 
-const defaultInitState: DialogState = {
+export const useDialogStore = create<DialogStore>((set) => ({
   dialogs: [],
-};
-
-export const createDialogStore = (initState: DialogState = defaultInitState) =>
-  createStore<DialogStore>((set) => ({
-    ...initState,
-    openDialog: (dialog) => {
-      const id = nanoid();
-      return set((state) => ({
-        dialogs: [...state.dialogs, { id, ...dialog }],
-      }));
-    },
-    closeDialog: (dialogId) =>
-      set((state) => ({
-        dialogs: state.dialogs.filter((dialog) => dialog.id !== dialogId),
-      })),
-  }));
+  openDialog: (dialog) => {
+    const id = nanoid();
+    return set((state) => ({
+      dialogs: [...state.dialogs, { id, ...dialog }],
+    }));
+  },
+  closeDialog: (dialogId) =>
+    set((state) => ({
+      dialogs: state.dialogs.filter((dialog) => dialog.id !== dialogId),
+    })),
+}));

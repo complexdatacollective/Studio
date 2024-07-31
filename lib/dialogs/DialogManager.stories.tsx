@@ -1,10 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { AnimatePresence } from 'framer-motion';
 import Paragraph from '~/components/typography/Paragraph';
 import { Button } from '~/components/ui/Button';
-import Dialog from '~/components/ui/Dialog';
-import { DialogStoreProvider, useDialogStore } from './dialog-store-provider';
+import { useDialogStore } from './store';
 import DialogManager from './DialogManager';
 
 const meta = {
@@ -26,13 +24,6 @@ const meta = {
     handleConfirmDialog: fn(),
     handleCancelDialog: fn(),
   },
-  decorators: [
-    (Story) => (
-      <DialogStoreProvider>
-        <Story />
-      </DialogStoreProvider>
-    ),
-  ],
 } satisfies Meta<typeof DialogManager>;
 
 export default meta;
@@ -40,7 +31,7 @@ type Story = StoryObj<typeof meta>;
 
 export const DialogManagerComponent: Story = {
   render: () => {
-    const { closeDialog, dialogs, openDialog } = useDialogStore();
+    const { openDialog } = useDialogStore();
     const createDialog = () => {
       openDialog({
         type: 'Info',
@@ -90,28 +81,7 @@ export const DialogManagerComponent: Story = {
             just putting there to showcase what the component renders
          */}
         <Button onClick={createDialog}>Show Dialogs</Button>
-
-        <AnimatePresence>
-          {dialogs.map((dialog, index) => (
-            <Dialog
-              key={dialog.id}
-              dialogOrder={index}
-              handleOpenChange={() => {
-                console.log('handleOpenChange action');
-                closeDialog(dialog.id);
-              }}
-              handleCancelDialog={() => {
-                console.log('handleCancelDialog action');
-                closeDialog(dialog.id);
-              }}
-              handleConfirmDialog={() => {
-                console.log('handleConfirmDialog action');
-                closeDialog(dialog.id);
-              }}
-              {...dialog}
-            />
-          ))}
-        </AnimatePresence>
+        <DialogManager />
       </>
     );
   },
