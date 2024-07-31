@@ -11,7 +11,7 @@ type DialogActions = {
   closeDialog: (dialogId: string) => void;
 };
 
-export type DialogStore = DialogState & DialogActions;
+type DialogStore = DialogState & DialogActions;
 
 export const useDialogStore = create<DialogStore>((set) => ({
   dialogs: [],
