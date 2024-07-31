@@ -11,7 +11,6 @@ import {
   X,
   Loader2,
 } from 'lucide-react';
-import * as React from 'react';
 import { tv } from 'tailwind-variants';
 import {
   DialogVariants,
@@ -21,25 +20,23 @@ import {
 import { Button } from './Button';
 import Heading, { headingVariants } from '../typography/Heading';
 import { paragraphVariants } from '../typography/Paragraph';
+import { cn } from '~/lib/utils';
+import { FC, useState } from 'react';
 
-// following this docs to implement this
-// https://www.tailwind-variants.org/docs/slots#slots-with-variants
-export const dialogElements = tv({
+
+export const dialogVariants = tv({
   slots: {
-    overlay: 'fixed inset-0 z-50 bg-rich-black/50',
-    content:
+    overlaySlot: 'fixed inset-0 z-50 bg-rich-black/50',
+    contentSlot:
       'fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-2 border bg-background p-5 shadow-lg rounded-md sm:rounded-lg',
-    close:
+    closeButtonSlot:
       'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none',
-    title: `flex items-center gap-1.5 ${headingVariants({ variant: 'h2' })}`,
-    footer: 'flex flex-col-reverse sm:flex-row sm:justify-end gap-2',
+    titleSlot: cn('flex items-center gap-1.5', headingVariants({ variant: 'h2' })),
+    footerSlot: 'flex flex-col-reverse sm:flex-row sm:justify-end gap-2',
   },
   variants: {
     type: {
       [DialogVariants.Error]: {
-        // can be used to override the default styles based on Dialog type
-      },
-      [DialogVariants.Prompt]: {
         // can be used to override the default styles based on Dialog type
       },
       [DialogVariants.Confirm]: {
@@ -52,123 +49,9 @@ export const dialogElements = tv({
   },
 });
 
-// Main Dialog Component
-const Dialog = ({
-  handleOpenChange,
-  handleCancelDialog,
-  handleConfirmDialog,
-  dialogOrder,
-  ...dialog
-}: {
-  dialogOrder: number;
-  handleOpenChange: (dialogId: string) => Promise<void> | void;
-  handleConfirmDialog: (dialogId: string) => Promise<void> | void;
-  handleCancelDialog: (dialogId: string) => void;
-} & DialogType) => {
-  const { title, overlay, content, footer, close } = dialogElements({
-    type: dialog.type,
-  });
 
-  return (
-    <DialogPrimitive.Root open onOpenChange={() => handleOpenChange(dialog.id)}>
-      <DialogPrimitive.Portal>
-        <DialogOverlay className={overlay()}>
-          <DialogContent delay={dialogOrder * 0.1} className={content()}>
-            <DialogPrimitive.Title className={title()}>
-              <DialogIcon variant={dialog.type} />
-              {dialog.title}
-            </DialogPrimitive.Title>
-            <section>
-              {dialog.content}
-              {dialog.type === 'Error' && <DialogError {...dialog.error} />}
-            </section>
-            <DialogFooter
-              className={footer()}
-              dialog={dialog}
-              handleCancelDialog={handleCancelDialog}
-              handleConfirmDialog={handleConfirmDialog}
-            />
-            {dialog.type !== 'Prompt' && <DialogClose className={close()} />}
-          </DialogContent>
-        </DialogOverlay>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
-  );
-};
-export default Dialog;
-
-// Dialog Overlay Section
-const DialogOverlay = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ children, ...props }, ref) => {
-  const variants: Variants = React.useMemo(
-    () => ({
-      visible: {
-        opacity: 1,
-      },
-      hidden: {
-        opacity: 0,
-      },
-    }),
-    [],
-  );
-
-  return (
-    <DialogPrimitive.Overlay ref={ref} {...props} asChild>
-      <motion.main
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        variants={variants}
-      >
-        {children}
-      </motion.main>
-    </DialogPrimitive.Overlay>
-  );
-});
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
-
-// Dialog Content Section
-export const DialogContent = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  { delay: number } & React.ComponentPropsWithoutRef<
-    typeof DialogPrimitive.Content
-  >
->(({ children, delay, ...props }, ref) => {
-  const variants: Variants = React.useMemo(
-    () => ({
-      visible: {
-        opacity: 1,
-        translateY: '-50%',
-        translateX: '-50%',
-        scale: 1,
-        transition: { delay },
-      },
-      hidden: {
-        opacity: 0,
-        translateY: '-50%',
-        translateX: '-50%',
-        scale: 0.8,
-      },
-    }),
-    [delay],
-  );
-
-  return (
-    <DialogPrimitive.Content ref={ref} {...props} asChild>
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        variants={variants}
-      >
-        {children}
-      </motion.div>
-    </DialogPrimitive.Content>
-  );
-});
-DialogContent.displayName = DialogPrimitive.Content.displayName;
+const DialogOverlay = motion(DialogPrimitive.Overlay);
+const DialogContent = motion(DialogPrimitive.Content);
 
 // Dialog Close Button
 export const DialogClose = ({ className }: { className: string }) => (
@@ -177,6 +60,60 @@ export const DialogClose = ({ className }: { className: string }) => (
     <span className="sr-only">Close</span>
   </DialogPrimitive.Close>
 );
+
+
+export type DialogProps = {
+  portalContainer?: HTMLElement;
+} & DialogType;
+
+// Main Dialog Component
+const Dialog = ({
+  type,
+  title,
+  id,
+  content,
+  portalContainer,
+  onConfirm,
+  onCancel,
+}: DialogProps) => {
+  const { titleSlot, overlaySlot, contentSlot, footerSlot, closeButtonSlot } = dialogVariants({type});
+
+  const handleOpenChange = async (isOpen: boolean, dialogId: string) => {
+    if (!isOpen) {
+      await onCancel?.(id);
+      return;
+    }
+
+    await onConfirm?.(id);
+  }
+
+  return (
+    <DialogPrimitive.Root open onOpenChange={(isOpen) => handleOpenChange(isOpen, id)}>
+      <DialogPrimitive.Portal forceMount container={portalContainer}>
+        <DialogOverlay className={overlaySlot()}>
+          <DialogContent
+            className={contentSlot()}
+          >
+            { title && (
+              <DialogPrimitive.Title className={titleSlot()}>
+                {title}
+              </DialogPrimitive.Title>
+            )}
+            <DialogPrimitive.Description>
+              {content}
+            </DialogPrimitive.Description>
+            <div className={footerSlot()}>
+              <Button>Close</Button>
+            </div>
+            <DialogClose className={closeButtonSlot()} />
+          </DialogContent>
+        </DialogOverlay>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  );
+};
+
+export default Dialog;
 
 // Dialog Footer Section
 export const DialogFooter = ({
@@ -190,7 +127,7 @@ export const DialogFooter = ({
   handleConfirmDialog: (dialogId: string) => Promise<void> | void;
   handleCancelDialog: (dialogId: string) => void;
 }) => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className={className}>
@@ -221,47 +158,4 @@ export const DialogFooter = ({
       </Button>
     </div>
   );
-};
-
-// Dialog Error Section
-export const DialogError = ({ name, message, stack }: Error) => (
-  <div className="grid gap-4 py-4">
-    <div className="grid gap-2">
-      <div className="flex items-center justify-between">
-        <Heading variant="h4">Name:</Heading>
-        <span className="text-destructive">{name}</span>
-      </div>
-      <div className="flex items-center justify-between">
-        <Heading variant="h4">Message:</Heading>
-        <span className="text-destructive">{message}</span>
-      </div>
-    </div>
-    <details className="group">
-      <summary className="flex cursor-pointer select-none list-none items-center justify-between">
-        <Heading variant="h4">Stack Trace</Heading>
-        <span className="transition-transform duration-300 group-open:rotate-180">
-          <ChevronDown className="h-4 w-4 text-destructive" />
-        </span>
-      </summary>
-      <pre className={paragraphVariants({ variant: 'inlineCode' })}>
-        {stack}
-      </pre>
-    </details>
-  </div>
-);
-
-// Show different icons based on the dialog variant
-export const DialogIcon: React.FC<{ variant: DialogVariant }> = ({
-  variant,
-}) => {
-  switch (variant) {
-    case 'Error':
-      return <OctagonAlert className="h-5 w-5 text-destructive" />;
-    case 'Info':
-      return <Info className="h-5 w-5" />;
-    case 'Confirm':
-      return <BookmarkCheck className="h-5 w-5 text-mustard-dark" />;
-    case 'Prompt':
-      return <TriangleAlert className="h-5 w-5 text-mustard" />;
-  }
 };

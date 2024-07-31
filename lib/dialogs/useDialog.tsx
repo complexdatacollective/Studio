@@ -3,7 +3,7 @@ import { useDialogStore } from './store';
 import { type DialogWithoutId } from './dialog-schemas';
 
 const useDialog = () => {
-  const { openDialog, closeDialog, dialogs } = useDialogStore();
+  const { addDialog: openDialog, removeDialog: closeDialog, dialogs } = useDialogStore();
 
   const showDialog = (dialog: DialogWithoutId) => {
     const id = nanoid();
@@ -29,7 +29,21 @@ const useDialog = () => {
     closeDialog(dialog.id);
   };
 
+  const createDialog = async (dialog: DialogWithoutId) => {
+    const id = showDialog(dialog);
+    return new Promise<boolean>((resolve) => {
+      const handleConfirm = () => {
+        resolve(true);
+      };
+      const handleCancel = () => {
+        resolve(false);
+      };
+      openDialog({ id, ...dialog, onConfirm: handleConfirm, onCancel: handleCancel });
+    });
+  }
+
   return {
+    createDialog,
     showDialog,
     confirmDialog,
     cancelDialog,
@@ -39,3 +53,7 @@ const useDialog = () => {
 };
 
 export default useDialog;
+
+
+
+

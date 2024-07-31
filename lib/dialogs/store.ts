@@ -6,19 +6,19 @@ type DialogState = {
 };
 
 type DialogActions = {
-  openDialog: (dialog: Dialog) => void;
-  closeDialog: (dialogId: string) => void;
+  addDialog: (dialog: Dialog) => void;
+  removeDialog: (dialogId: string) => void;
 };
 
 type DialogStore = DialogState & DialogActions;
 
 export const useDialogStore = create<DialogStore>((set) => ({
   dialogs: [],
-  openDialog: (dialog) =>
+  addDialog: (dialog) =>
     set((state) => ({
       dialogs: [...state.dialogs, dialog],
     })),
-  closeDialog: (dialogId) =>
+  removeDialog: (dialogId) =>
     set((state) => ({
       dialogs: state.dialogs.filter((dialog) => dialog.id !== dialogId),
     })),
