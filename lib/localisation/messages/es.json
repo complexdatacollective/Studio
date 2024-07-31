@@ -80,5 +80,26 @@
     "en": "English",
     "es": "Español",
     "ar": "عربى"
+  },
+  "Navigation": {
+    "forward": "Avanzar",
+    "back": "Retroceder",
+    "menu": "Menú"
+  },
+  "PopoverHint": {
+    "hint": "Haz clic aquí para las instrucciones de la etapa",
+    "close": "Cerrar",
+    "open": "Abrir"
+  },
+  "ExampleTooltip": {
+    "hint": "Arrastra y suelta este nodo en un contenedor debajo."
+  },
+  "NameGeneratorPopover": {
+    "title": "Generador de Nombres",
+    "hint": "Toque el icono para nominar a una persona. Escriba un nombre y presione enter para agregarlo. Haga clic en siguiente para continuar. Para eliminar a una persona, arrastre y suelte el círculo en la papelera."
+  },
+  "InformationPopover": {
+    "title": "Interfaz de Información",
+    "hint": "Esta interfaz se utiliza para mostrar información en formato de texto, imagen o video. Lea la información y haga clic en siguiente para continuar."
   }
 }
