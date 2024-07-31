@@ -1,7 +1,7 @@
-import createMiddleware from "next-intl/middleware";
-import { SUPPORTED_LOCALES } from "../localisation/locales";
+import createMiddleware from 'next-intl/middleware';
+import { SUPPORTED_LOCALES } from '../localisation/locales';
 
-const handler =  createMiddleware({
+const handler = createMiddleware({
   // A list of all locales that are supported
   locales: SUPPORTED_LOCALES,
 
@@ -12,4 +12,4 @@ const handler =  createMiddleware({
 export default {
   handler,
   matcher: ['/', `/(${SUPPORTED_LOCALES.join('|')})/:path*`],
-}
+};
