@@ -80,5 +80,26 @@
     "en": "English",
     "es": "Español",
     "ar": "عربى"
+  },
+  "Navigation": {
+    "forward": "Move forward",
+    "back": "Move backward",
+    "menu": "Menu"
+  },
+  "PopoverHint": {
+    "hint": "Click this for stage instructions",
+    "close": "Close",
+    "open": "Open"
+  },
+  "ExampleTooltip": {
+    "hint": "Drag and drop this node into a bin below."
+  },
+  "NameGeneratorPopover": {
+    "title": "Name Generator",
+    "hint": "Tap the icon to nominate a person. Type in a name and press enter to add it. Click next to continue. To remove a person, drag and drop the circle into the trash bin."
+  },
+  "InformationPopover": {
+    "title": "Information Interface",
+    "hint": "This interface is used to display information in text, image, or video format. Read the information and click next to continue."
   }
 }
