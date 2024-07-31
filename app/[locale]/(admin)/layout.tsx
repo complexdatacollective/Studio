@@ -5,6 +5,9 @@ import { Inter } from 'next/font/google';
 import { getMessages } from 'next-intl/server';
 import { type Metadata } from 'next';
 import '~/app/globals.scss';
+import { type Locale } from '~/lib/localisation/locales';
+import { Analytics } from '@vercel/analytics/react';
+import { getLangDir } from 'rtl-detect';
 
 const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
@@ -17,19 +20,19 @@ export default async function AdminLayout({
   params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: Locale };
 }) {
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={getLangDir(locale)}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <div className="m-2">
             <LanguageSwitcher />
           </div>
-          <ResponsiveContainer>{children}</ResponsiveContainer>
+          <ResponsiveContainer>
+            {children} <Analytics />
+          </ResponsiveContainer>
         </NextIntlClientProvider>
       </body>
     </html>
