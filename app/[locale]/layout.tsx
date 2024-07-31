@@ -5,6 +5,7 @@ import { type Metadata } from 'next';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import '../globals.scss';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
+import { Analytics } from '@vercel/analytics/react';
 import DialogManager from '~/lib/dialogs/DialogManager';
 import { DialogStoreProvider } from '~/lib/dialogs/dialog-store-provider';
 
@@ -37,6 +38,7 @@ export default async function LocaleLayout({
             <ResponsiveContainer>
               {children}
               <DialogManager />
+              <Analytics />
             </ResponsiveContainer>
           </NextIntlClientProvider>
         </DialogStoreProvider>
