@@ -1,8 +1,8 @@
-import type { Preview, StoryContext } from '@storybook/react';
+import type { Preview } from '@storybook/react';
 import '~/app/globals.scss';
 import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
-import { type Locale } from '~/lib/localisation/locales';
+import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
 
 const loadMessages = async (
@@ -37,9 +37,10 @@ const preview: Preview = {
       toolbar: {
         icon: 'globe',
         items: [
-          { value: 'en', title: 'English' },
-          { value: 'es', title: 'Español' },
-          { value: 'ar', title: 'عربي' },
+          ...LOCALES_DICT.map(([locale, name]) => ({
+            value: locale,
+            title: name,
+          })),
         ],
         showName: true,
         dynamicTitle: true,
