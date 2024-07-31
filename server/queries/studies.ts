@@ -41,15 +41,21 @@ export const testActionWithParameter = createAction()
   .input(
     z.object({
       name: z.string(),
+      age: z.number().optional(),
     }),
   )
-  .requireAuthContext()
   .handler(async ({ input, context }) => {
     return input.name;
   });
 
 export const getUserStudies = createAction()
   .requireAuthContext()
+  .cache({
+    tags: ({ context }) => [
+      'studies:get',
+      `studies:getByUser-${context.user.id}`,
+    ],
+  })
   .handler(async ({ context }: { context: TContext }) => {
     const userStudies = await db.study.findMany({
       where: {

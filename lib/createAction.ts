@@ -21,10 +21,12 @@ export type TContext = {
 type CacheConfig<
   TInputSchema extends ZodType<unknown, ZodTypeDef, unknown> | undefined,
 > = {
-  tags: (params: {
-    input: TSchemaInput<TInputSchema>;
-    context: TContext;
-  }) => CacheTag[];
+  tags:
+    | ((params: {
+        input: TSchemaInput<TInputSchema>;
+        context: TContext;
+      }) => CacheTag[])
+    | CacheTag[];
   revalidate?: CacheOptions['revalidate'];
 };
 
@@ -33,6 +35,15 @@ type CacheConfig<
 type HandlerArgs<TInputSchema> = TInputSchema extends z.ZodType
   ? TSchemaInput<TInputSchema>
   : void;
+
+type HandlerFn<
+  T,
+  TInputSchema extends z.ZodType | undefined,
+  TRequireAuthContext extends boolean = false,
+> = (args: {
+  input: TSchemaInput<TInputSchema>;
+  context: TRequireAuthContext extends true ? TContext : undefined;
+}) => T | Promise<T>;
 
 class ActionBuilder<
   TInputSchema extends z.ZodType | undefined,
@@ -69,12 +80,7 @@ class ActionBuilder<
     });
   }
 
-  public handler<T>(
-    fn: (args: {
-      input: TSchemaInput<TInputSchema>;
-      context: TRequireAuthContext extends true ? TContext : undefined;
-    }) => T | Promise<T>,
-  ) {
+  public handler<T>(fn: HandlerFn<T, TInputSchema, TRequireAuthContext>) {
     // What we return here will be the call signature of the created action
     return async ($args: HandlerArgs<TInputSchema>): Promise<T> => {
       let input: TSchemaInput<TInputSchema>;
@@ -89,12 +95,24 @@ class ActionBuilder<
         ? this.$internals.inputSchema.parse($args)
         : undefined;
 
-      return fn({
-        input,
-        context: context as TRequireAuthContext extends true
-          ? TContext
-          : undefined,
-      });
+      const handlerFn = async () =>
+        fn({
+          input,
+          context: context as TRequireAuthContext extends true
+            ? TContext
+            : undefined,
+        });
+
+      if (this.$internals.cacheConfig) {
+        const { tags, revalidate } = this.$internals.cacheConfig;
+        const cacheTags =
+          typeof tags === 'function'
+            ? tags({ input, context: context as TContext })
+            : tags;
+        return createCachedFunction(handlerFn, cacheTags, revalidate)();
+      }
+
+      return handlerFn();
     };
   }
 }
