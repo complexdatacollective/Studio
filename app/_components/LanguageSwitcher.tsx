@@ -8,29 +8,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import { SUPPORTED_LOCALES } from '~/lib/localisation/locales';
+import { type Locale, SUPPORTED_LOCALES } from '~/lib/localisation/locales';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
 
-type Locales = (typeof SUPPORTED_LOCALES)[number];
-
 const LanguageSwitcher = () => {
-  const currentLocale = useLocale() as unknown as Locales;
+  const currentLocale = useLocale() as unknown as Locale;
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations('LanguageSwitcher');
 
-  function handleLanguageChange(value: Locales) {
+  function handleLanguageChange(value: Locale) {
     router.push(pathname, { locale: value });
   }
 
   return (
     <Select onValueChange={handleLanguageChange}>
       <SelectTrigger
-        className={`w-[200px] space-x-1 bg-white text-xs hover:bg-stone-100 sm:text-sm`}
+        className={`hover:bg-stone-100 w-[200px] space-x-1 bg-white text-xs sm:text-sm`}
       >
         <SelectValue placeholder={t(currentLocale)} />
       </SelectTrigger>
-      <SelectContent className="bg-white dark:bg-slate-700">
+      <SelectContent className="dark:bg-slate-700 bg-white">
         {SUPPORTED_LOCALES.map((locale) => (
           <SelectItem key={locale} value={locale}>
             {t(locale)}
