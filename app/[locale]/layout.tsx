@@ -36,9 +36,8 @@ export default async function LocaleLayout({
               <LanguageSwitcher />
             </div>
             <ResponsiveContainer>
-              {children}
+              {children} <Analytics />
               <DialogManager />
-              <Analytics />
             </ResponsiveContainer>
           </NextIntlClientProvider>
         </DialogStoreProvider>
