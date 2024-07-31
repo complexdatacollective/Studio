@@ -24,11 +24,11 @@ import { paragraphVariants } from '../typography/Paragraph';
 
 // following this docs to implement this
 // https://www.tailwind-variants.org/docs/slots#slots-with-variants
-const dialogElements = tv({
+export const dialogElements = tv({
   slots: {
     overlay: 'fixed inset-0 z-50 bg-rich-black/50',
     content:
-      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-2 border bg-background p-5 shadow-lg rounded-md sm:rounded-lg',
+      'fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-50 grid w-full max-w-sm sm:max-w-lg gap-2 border bg-background p-5 shadow-lg rounded-md sm:rounded-lg',
     close:
       'focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none',
     title: `flex items-center gap-1.5 ${headingVariants({ variant: 'h2' })}`,
@@ -130,7 +130,7 @@ const DialogOverlay = React.forwardRef<
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 // Dialog Content Section
-const DialogContent = React.forwardRef<
+export const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   { delay: number } & React.ComponentPropsWithoutRef<
     typeof DialogPrimitive.Content
@@ -171,7 +171,7 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 // Dialog Close Button
-const DialogClose = ({ className }: { className: string }) => (
+export const DialogClose = ({ className }: { className: string }) => (
   <DialogPrimitive.Close className={className}>
     <X className="h-4 w-4" />
     <span className="sr-only">Close</span>
@@ -179,7 +179,7 @@ const DialogClose = ({ className }: { className: string }) => (
 );
 
 // Dialog Footer Section
-const DialogFooter = ({
+export const DialogFooter = ({
   dialog,
   className,
   handleConfirmDialog,
@@ -216,7 +216,7 @@ const DialogFooter = ({
             <span>Submitting...</span>
           </>
         ) : (
-          dialog.confirmLabel ?? 'OK'
+          (dialog.confirmLabel ?? 'OK')
         )}
       </Button>
     </div>
@@ -224,7 +224,7 @@ const DialogFooter = ({
 };
 
 // Dialog Error Section
-const DialogError = ({ name, message, stack }: Error) => (
+export const DialogError = ({ name, message, stack }: Error) => (
   <div className="grid gap-4 py-4">
     <div className="grid gap-2">
       <div className="flex items-center justify-between">
@@ -251,7 +251,9 @@ const DialogError = ({ name, message, stack }: Error) => (
 );
 
 // Show different icons based on the dialog variant
-const DialogIcon: React.FC<{ variant: DialogVariant }> = ({ variant }) => {
+export const DialogIcon: React.FC<{ variant: DialogVariant }> = ({
+  variant,
+}) => {
   switch (variant) {
     case 'Error':
       return <OctagonAlert className="h-5 w-5 text-destructive" />;
