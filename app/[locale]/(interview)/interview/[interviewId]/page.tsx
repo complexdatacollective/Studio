@@ -1,4 +1,4 @@
-import { interview:getById } from '~/server/queries/interviews';
+import { getInterviewById } from '~/server/queries/interviews';
 import InterviewShell from '../_components/InterviewShell';
 import { redirect } from '~/lib/localisation/navigation';
 
@@ -17,7 +17,7 @@ export default async function Page({
     stage = parseInt(searchParams.stage as string);
   }
 
-  const interviewData = await interview:getById({ interviewId });
+  const interviewData = await getInterviewById({ interviewId });
   if (!interviewData) {
     return <div>Interview not found</div>;
   }

@@ -22,8 +22,6 @@ export type CacheOptions = {
   revalidate?: number | false;
 };
 
-export type CachedFunctionParams = Parameters<typeof createCachedFunction>;
-
 export function createCachedFunction<T extends UnstableCacheParams[0]>(
   func: T,
   tags: CacheTag[],

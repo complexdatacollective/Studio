@@ -1,30 +1,6 @@
 import 'server-only';
 import { db } from '~/lib/db';
 import createAction, { type TContext } from '~/lib/createAction';
-import { z } from 'zod';
-
-export const getStudyUser = async (userId: string, publicStudyId: string) => {
-  const studyUser = await db.studyUser.findFirst({
-    where: {
-      userId,
-      study: {
-        publicId: publicStudyId,
-      },
-    },
-  });
-  return studyUser;
-};
-
-export const testActionWithParameter = createAction()
-  .input(
-    z.object({
-      name: z.string(),
-      age: z.number().optional(),
-    }),
-  )
-  .handler(async ({ input, context }) => {
-    return input.name;
-  });
 
 export const getUserStudies = createAction()
   .requireAuthContext()
