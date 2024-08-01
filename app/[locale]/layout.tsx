@@ -7,6 +7,7 @@ import { type Locale } from '~/lib/localisation/locales';
 import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
 import { TooltipProvider } from '~/components/ui/Tooltip';
+import { DirectionProvider } from '@radix-ui/react-direction';
 
 const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
@@ -22,11 +23,14 @@ export default async function RootLayout({
   params: { locale: Locale };
 }) {
   const messages = await getMessages();
+  const dir = getLangDir(locale);
   return (
-    <html lang={locale} dir={getLangDir(locale)}>
+    <html lang={locale} dir={dir}>
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
-          <TooltipProvider>{children}</TooltipProvider>
+          <DirectionProvider dir={dir}>
+            <TooltipProvider>{children}</TooltipProvider>
+          </DirectionProvider>
         </NextIntlClientProvider>
         <Analytics />
       </body>

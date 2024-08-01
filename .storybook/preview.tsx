@@ -1,10 +1,11 @@
 import type { Preview } from '@storybook/react';
 import '~/app/globals.scss';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
 import { TooltipProvider } from '~/components/ui/Tooltip';
+import { DirectionProvider } from '@radix-ui/react-direction';
 
 const loadMessages = async (
   locale: Locale,
@@ -49,6 +50,37 @@ const preview: Preview = {
     },
   },
   decorators: [
+    (Story, context) => {
+      const [messages, setMessages] = useState<AbstractIntlMessages>();
+      const [langDir, setLandDir] =
+        useState<ReturnType<typeof getLangDir>>('ltr');
+
+      useEffect(() => {
+        const fetchMessages = async () => {
+          const locale = context.globals.locale as Locale;
+          const loadedMessages = await loadMessages(locale);
+          setMessages(loadedMessages);
+          setLandDir(getLangDir(locale));
+        };
+
+        void fetchMessages();
+      }, [context.globals.locale]);
+
+      useEffect(() => {
+        document.documentElement.dir = langDir;
+      }, [langDir]);
+
+      return (
+        <DirectionProvider dir={langDir}>
+          <NextIntlClientProvider
+            messages={messages}
+            locale={context.globals.locale as Locale}
+          >
+            <Story />
+          </NextIntlClientProvider>
+        </DirectionProvider>
+      );
+    },
     (Story) => {
       return (
         <TooltipProvider>
@@ -56,29 +88,6 @@ const preview: Preview = {
             <Story />
           </div>
         </TooltipProvider>
-      );
-    },
-    (Story, context) => {
-      const [messages, setMessages] = useState<AbstractIntlMessages>();
-
-      useEffect(() => {
-        const fetchMessages = async () => {
-          const locale = context.globals.locale as Locale;
-          const loadedMessages = await loadMessages(locale);
-          setMessages(loadedMessages);
-          document.dir = getLangDir(locale);
-        };
-
-        void fetchMessages();
-      }, [context.globals.locale]);
-
-      return (
-        <NextIntlClientProvider
-          messages={messages}
-          locale={context.globals.locale as Locale}
-        >
-          <Story />
-        </NextIntlClientProvider>
       );
     },
   ],
