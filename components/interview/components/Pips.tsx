@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { cn } from 'lib/utils';
 
 const container = {
   initial: { opacity: 0 },
@@ -37,9 +38,12 @@ export default function Pips({
       {Array.from({ length: count }).map((_, index) => (
         <motion.div
           key={index}
-          className={`h-4 w-4 rounded-full border-2 border-white border-opacity-15 transition-colors ease-in ${
-            index === currentIndex ? 'bg-white bg-opacity-15' : 'bg-transparent'
-          }`}
+          className={cn(
+            'h-4 w-4 rounded-full border-2 border-white border-opacity-15 transition-colors ease-in',
+            index === currentIndex
+              ? 'bg-white bg-opacity-15'
+              : 'bg-transparent',
+          )}
           variants={item}
         />
       ))}
