@@ -23,7 +23,7 @@ export default function Prompts({
   );
 
   return (
-    <motion.div className="flex w-full flex-col items-center justify-center text-balance text-center leading-tight">
+    <motion.div className="flex w-full flex-col items-center justify-center text-balance pb-2 text-center leading-tight">
       <Pips count={prompts.length} currentIndex={currentIndex} />
       <AnimatePresence mode="wait" initial={false}>
         {prompts.map(
@@ -33,7 +33,6 @@ export default function Prompts({
             ),
         )}
       </AnimatePresence>
-      {/* prompts spacer class? */}
     </motion.div>
   );
 }
