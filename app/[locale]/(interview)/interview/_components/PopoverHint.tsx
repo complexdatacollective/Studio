@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { Info, X } from 'lucide-react';
 import { motion, type Variants, useCycle } from 'framer-motion';
-import TooltipHint from '~/components/ui/TooltipHint';
+import Tooltip from '~/components/ui/Tooltip';
 import { useTranslations } from 'next-intl';
 
 export default function PopoverHint({
@@ -54,8 +54,8 @@ export default function PopoverHint({
 
   return (
     <>
-      <TooltipHint
-        hint={
+      <Tooltip
+        tooltip={
           <div className="flex">
             {t('hint')}
             {tooltipKeyboardShortcut()}
@@ -69,7 +69,7 @@ export default function PopoverHint({
         >
           <Info className="h-6 w-6 sm:h-8 sm:w-8" />
         </button>
-      </TooltipHint>
+      </Tooltip>
       <motion.div
         className="z-50 p-6"
         initial={false}

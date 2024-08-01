@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
+import { TooltipProvider } from '~/components/ui/Tooltip';
 
 const loadMessages = async (
   locale: Locale,
@@ -48,6 +49,15 @@ const preview: Preview = {
     },
   },
   decorators: [
+    (Story) => {
+      return (
+        <TooltipProvider>
+          <div className="h-screen">
+            <Story />
+          </div>
+        </TooltipProvider>
+      );
+    },
     (Story, context) => {
       const [messages, setMessages] = useState<AbstractIntlMessages>();
 

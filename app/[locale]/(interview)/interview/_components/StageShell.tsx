@@ -1,5 +1,5 @@
 import PopoverHint from './PopoverHint';
-import TooltipHint from '~/components/ui/TooltipHint';
+import Tooltip from '~/components/ui/Tooltip';
 import { useTranslations } from 'next-intl';
 import type { Stage } from '@prisma/client';
 
@@ -26,11 +26,11 @@ export default function StageShell({ stage }: { stage: Stage }) {
       <h1 className="mb-4 text-2xl font-bold">{stage.type}</h1>
       <PopoverHint title={popoverContent.title} hint={popoverContent.hint} />
       {/* example stage components */}
-      <TooltipHint hint={tTooltip('hint')}>
+      <Tooltip tooltip={tTooltip('hint')}>
         <div className="flex h-48 w-48 items-center justify-center rounded-full bg-neon-coral-dark text-center text-white">
           Example node
         </div>
-      </TooltipHint>
+      </Tooltip>
     </div>
   );
 }

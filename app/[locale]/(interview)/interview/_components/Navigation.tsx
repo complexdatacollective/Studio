@@ -8,17 +8,21 @@ import { cn } from '~/lib/utils';
 import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
 import ProgressBar from './ProgressBar';
 import type { IntRange } from '~/lib/ts-utils';
+import { withTooltip } from '~/components/ui/Tooltip';
+import { forwardRef } from 'react';
 
-export type NavigationButtonProps = {
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+type NavigationButtonProps = {
   className?: string;
-  children: React.ReactNode;
 } & React.HTMLAttributes<HTMLButtonElement>;
 
-const NavigationButton = (props: NavigationButtonProps) => {
+const RawNavigationButton = forwardRef<
+  HTMLButtonElement,
+  NavigationButtonProps
+>((props, ref) => {
   const { className, children, ...rest } = props;
   return (
     <button
+      ref={ref}
       className={cn(
         'm-4 flex h-20 w-20 basis-20 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
         'hover:bg-success',
@@ -32,12 +36,16 @@ const NavigationButton = (props: NavigationButtonProps) => {
       {children}
     </button>
   );
-};
+});
+
+RawNavigationButton.displayName = 'RawNavigationButton';
 
 type NavigationProps = {
   pulseNext: boolean;
   progress: IntRange<0, 100>;
 };
+
+const NavigationButton = withTooltip(RawNavigationButton);
 
 const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const router = useRouter();
@@ -74,13 +82,14 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-cyber-grape text-white',
       )}
     >
-      <NavigationButton aria-label={t('menu')} title={t('menu')}>
+      <NavigationButton aria-label={t('menu')} title={t('menu')} side="right">
         <Menu className="h-10 w-10 stroke-[3px]" />
       </NavigationButton>
       <NavigationButton
         onClick={moveBackward}
         aria-label={t('back')}
         title={t('back')}
+        side="right"
       >
         <ChevronUp className="h-10 w-10 stroke-[3px]" />
       </NavigationButton>
@@ -96,6 +105,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         onClick={moveForward}
         aria-label={t('forward')}
         title={t('forward')}
+        side="right"
       >
         <ChevronDown className="h-10 w-10 stroke-[3px]" />
       </NavigationButton>
