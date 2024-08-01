@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronUp, ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronUp, ChevronDown, Settings2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
@@ -10,6 +10,8 @@ import ProgressBar from './ProgressBar';
 import type { IntRange } from '~/lib/ts-utils';
 import { withTooltip } from '~/components/ui/Tooltip';
 import { forwardRef } from 'react';
+import Popover from '~/components/ui/Popover';
+import Heading from '~/components/typography/Heading';
 
 type NavigationButtonProps = {
   className?: string;
@@ -67,14 +69,6 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
 
   const t = useTranslations('Navigation');
 
-  //   // Expanded settings menu
-  // <div className="p-4">
-  //   <div>Select language </div>
-  //   <div className="text-foreground">
-  //     <LanguageSwitcher />
-  //   </div>
-  // </div>
-
   return (
     <nav
       role="navigation"
@@ -82,9 +76,25 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-cyber-grape text-white',
       )}
     >
-      <NavigationButton aria-label={t('menu')} title={t('menu')} side="right">
-        <Menu className="h-10 w-10 stroke-[3px]" />
-      </NavigationButton>
+      <Popover
+        side="right"
+        content={
+          <>
+            <Heading variant="label">Select language</Heading>
+            <LanguageSwitcher />
+          </>
+        }
+      >
+        <span className="rounded-full">
+          <NavigationButton
+            aria-label={t('menu')}
+            title={t('menu')}
+            side="right"
+          >
+            <Settings2 className="h-10 w-10 stroke-[2px]" />
+          </NavigationButton>
+        </span>
+      </Popover>
       <NavigationButton
         onClick={moveBackward}
         aria-label={t('back')}

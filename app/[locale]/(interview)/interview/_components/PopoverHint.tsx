@@ -15,7 +15,7 @@ export default function PopoverHint({
   const t = useTranslations('PopoverHint');
 
   return (
-    <Popover>
+    <Popover content={hint}>
       <span>
         <Tooltip
           tooltip={
