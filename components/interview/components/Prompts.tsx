@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Prompt from './Prompt';
 import { findIndex } from 'lodash';
+import Pips from './Pips';
 
 type Prompt = {
   id: number;
@@ -23,7 +24,7 @@ export default function Prompts({
 
   return (
     <motion.div className="flex w-full flex-col items-center justify-center text-balance text-center leading-tight">
-      {/* Pips component */}
+      <Pips count={prompts.length} currentIndex={currentIndex} />
       <AnimatePresence mode="wait" initial={false}>
         {prompts.map(
           ({ id, text }) =>
