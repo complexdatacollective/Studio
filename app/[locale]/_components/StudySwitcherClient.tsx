@@ -15,18 +15,19 @@ import { useTranslations } from 'next-intl';
 export default function StudySwitcherClient({ studies }: { studies: Study[] }) {
   const t = useTranslations('StudySwitcher');
   const router = useRouter();
-  const { study } = useParams();
+  const { study: currentStudy } = useParams();
 
   function handleStudyChange(value: Study['slug']) {
-    router.push(pathname, { study: value });
+    router.push(value);
   }
-
-  console.log('current study', study);
 
   return (
     <Select onValueChange={handleStudyChange}>
       <SelectTrigger>
-        <SelectValue placeholder={t('placeholder')} />
+        <SelectValue
+          placeholder={t('placeholder')}
+          defaultValue={currentStudy}
+        />
       </SelectTrigger>
       <SelectContent>
         {studies.map((study) => (

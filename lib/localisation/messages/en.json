@@ -100,5 +100,8 @@
   "InformationPopover": {
     "title": "Information Interface",
     "hint": "This interface is used to display information in text, image, or video format. Read the information and click next to continue."
+  },
+  "StudySwitcher": {
+    "placeholder": "Select a study"
   }
 }

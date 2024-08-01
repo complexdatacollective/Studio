@@ -1,6 +1,6 @@
 import 'server-only';
 import { db } from '~/lib/db';
-import createAction, { type TContext } from '~/lib/createAction';
+import createAction from '~/lib/createAction';
 
 export const getUserStudies = createAction()
   .requireAuthContext()
@@ -10,7 +10,7 @@ export const getUserStudies = createAction()
       `study:getByUser-${context.user.id}`,
     ],
   })
-  .handler(async ({ context }: { context: TContext }) => {
+  .handler(async ({ context }) => {
     const userStudies = await db.study.findMany({
       where: {
         users: {
