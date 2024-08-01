@@ -7,7 +7,7 @@ import { usePathname, useRouter } from '~/lib/localisation/navigation';
 import { cn } from '~/lib/utils';
 import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
 import ProgressBar from './ProgressBar';
-import type { IntRange } from '~/lib/ts-utils';
+import type { IntRange } from 'type-fest';
 import { withTooltip } from '~/components/ui/Tooltip';
 import { forwardRef } from 'react';
 import Popover from '~/components/ui/Popover';
@@ -17,37 +17,35 @@ type NavigationButtonProps = {
   className?: string;
 } & React.HTMLAttributes<HTMLButtonElement>;
 
-const RawNavigationButton = forwardRef<
-  HTMLButtonElement,
-  NavigationButtonProps
->((props, ref) => {
-  const { className, children, ...rest } = props;
-  return (
-    <button
-      ref={ref}
-      className={cn(
-        'm-4 flex h-20 w-20 basis-20 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
-        'hover:bg-success',
-        'focus:ring-fox focus:outline-none focus:ring-2',
-        className,
-      )}
-      tabIndex={0}
-      onClick={props.onClick}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
-});
+const NavigationButton = forwardRef<HTMLButtonElement, NavigationButtonProps>(
+  (props, ref) => {
+    const { className, children, ...rest } = props;
+    return (
+      <button
+        ref={ref}
+        className={cn(
+          'm-4 flex h-20 w-20 basis-20 cursor-pointer items-center justify-center rounded-full transition-colors duration-200',
+          'hover:bg-success',
+          'focus:ring-fox focus:outline-none focus:ring-2',
+          className,
+        )}
+        tabIndex={0}
+        onClick={props.onClick}
+        {...rest}
+      >
+        {children}
+      </button>
+    );
+  },
+);
+NavigationButton.displayName = 'NavigationButton';
 
-RawNavigationButton.displayName = 'RawNavigationButton';
+const NavButtonWithTooltip = withTooltip(NavigationButton);
 
 type NavigationProps = {
   pulseNext: boolean;
   progress: IntRange<0, 100>;
 };
-
-const NavigationButton = withTooltip(RawNavigationButton);
 
 const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const router = useRouter();
@@ -86,39 +84,39 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         }
       >
         <span className="rounded-full">
-          <NavigationButton
+          <NavButtonWithTooltip
             aria-label={t('menu')}
             title={t('menu')}
-            side="right"
+            tooltipSide="right"
           >
             <Settings2 className="h-10 w-10 stroke-[2px]" />
-          </NavigationButton>
+          </NavButtonWithTooltip>
         </span>
       </Popover>
-      <NavigationButton
+      <NavButtonWithTooltip
         onClick={moveBackward}
         aria-label={t('back')}
         title={t('back')}
-        side="right"
+        tooltipSide="right"
       >
         <ChevronUp className="h-10 w-10 stroke-[3px]" />
-      </NavigationButton>
+      </NavButtonWithTooltip>
       <ProgressBar
         value={progress}
         className="bg-white/15"
         ariaLabel="Interview Progress"
       />
-      <NavigationButton
+      <NavButtonWithTooltip
         className={cn(
           pulseNext && 'animate-pulse-bg from-cyber-grape to-success',
         )}
         onClick={moveForward}
         aria-label={t('forward')}
         title={t('forward')}
-        side="right"
+        tooltipSide="right"
       >
         <ChevronDown className="h-10 w-10 stroke-[3px]" />
-      </NavigationButton>
+      </NavButtonWithTooltip>
     </nav>
   );
 };

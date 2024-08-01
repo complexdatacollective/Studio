@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from 'react';
+import React, { type PropsWithChildren, type ReactNode } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { cn } from '~/lib/utils';
 
@@ -37,22 +37,49 @@ const Tooltip = ({
   );
 };
 
+// function withTooltip<T extends { title?: string }, RefType>(
+//   WrappedComponent: React.ForwardRefExoticComponent<
+//     React.PropsWithoutRef<T> & React.RefAttributes<RefType>
+//   >,
+// ) {
+//   // Define the props for the HOC
+//   type WithTooltipProps = T & {
+//     tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
+//     tooltipContent?: ReactNode;
+//   };
+
 // HOC version of Tooltip that wraps a component with a Tooltip
 // and uses the value of the 'title' prop as the tooltip content
-export function withTooltip(WrappedComponent) {
-  const Component = (props: { side: 'top' | 'right' | 'bottom' | 'left' }) => {
-    const { title, side, ...restProps } = props;
+export function withTooltip<T>(WrappedComponent: React.ComponentType<T>) {
+  // Define the props for the HOC
+  type WithTooltipProps = T & {
+    tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
+    tooltipContent?: ReactNode;
+  };
+
+  // Create a new component with forwardRef
+  const WithTooltip = ({
+    tooltipSide = 'top',
+    tooltipContent,
+    ...props
+  }: WithTooltipProps) => {
+    // Extract the title prop for tooltip fallback
+    const { title, ...restProps } = props as T & { title?: string };
 
     return (
-      <Tooltip tooltip={title} side={side}>
-        <WrappedComponent {...restProps} />
+      <Tooltip tooltip={tooltipContent ?? title} side={tooltipSide}>
+        {/* Pass down all original props, including ref */}
+        <WrappedComponent title={title} {...(restProps as T)} />
       </Tooltip>
     );
   };
 
-  Component.displayName = `withTooltip(${WrappedComponent.displayName ?? WrappedComponent.name})`;
+  // Set the display name for easier debugging
+  const wrappedComponentName =
+    (WrappedComponent.displayName ?? WrappedComponent.name) || 'Component';
+  WithTooltip.displayName = `WithTooltip(${wrappedComponentName})`;
 
-  return Component;
+  return WithTooltip;
 }
 
 export default Tooltip;

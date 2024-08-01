@@ -1,21 +1,23 @@
 'use client';
 
-import { Info } from 'lucide-react';
+import { CircleHelp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { type ReactNode } from 'react';
 import Popover from '~/components/ui/Popover';
 import Tooltip from '~/components/ui/Tooltip';
 
+/**
+ * Component for Interview screen to show stage level instructions.
+ */
 export default function PopoverHint({
-  hint,
-  title,
+  popoverContent,
 }: {
-  hint: string;
-  title?: string;
+  popoverContent: ReactNode;
 }) {
   const t = useTranslations('PopoverHint');
 
   return (
-    <Popover content={hint}>
+    <Popover content={popoverContent}>
       <span>
         <Tooltip
           tooltip={
@@ -29,7 +31,7 @@ export default function PopoverHint({
             className="z-10 flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-accent p-2 text-accent-foreground sm:h-20 sm:w-20 sm:p-6"
             aria-label={t('open')}
           >
-            <Info className="h-6 w-6 sm:h-8 sm:w-8" />
+            <CircleHelp />
           </button>
         </Tooltip>
       </span>
