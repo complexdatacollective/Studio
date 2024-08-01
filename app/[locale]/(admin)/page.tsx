@@ -1,9 +1,5 @@
-import {
-  getUserStudies,
-  testActionWithParameter,
-  vanillaGetUserStudies,
-} from '~/server/queries/studies';
-import CreateStudyForm from './_components/CreateStudyForm';
+import { getUserStudies } from '~/server/queries/studies';
+import CreateStudyForm from '../_components/CreateStudyForm';
 import { requirePageAuth } from '~/lib/auth';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
@@ -17,10 +13,7 @@ export default async function Home() {
   await requirePageAuth();
 
   const t = await getTranslations('Home');
-
   const studies = await getUserStudies();
-
-  const test = await testActionWithParameter({ name: 'test' });
 
   return (
     <ResponsiveContainer className="flex flex-col gap-4">

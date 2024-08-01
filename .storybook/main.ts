@@ -6,7 +6,7 @@ const config: StorybookConfig = {
     '../(app|components)/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: [
-    '@storybook/addon-onboarding',
+    '@storybook/addon-viewport',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',

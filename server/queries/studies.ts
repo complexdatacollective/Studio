@@ -1,8 +1,6 @@
 import 'server-only';
 import { db } from '~/lib/db';
-import createAction, { TContext } from '~/lib/createAction';
-import { createCachedFunction } from '~/lib/cache';
-import { requireServerSession } from '~/lib/auth';
+import createAction, { type TContext } from '~/lib/createAction';
 import { z } from 'zod';
 
 export const getStudyUser = async (userId: string, publicStudyId: string) => {
@@ -16,26 +14,6 @@ export const getStudyUser = async (userId: string, publicStudyId: string) => {
   });
   return studyUser;
 };
-
-const INTERNAL_getUserStudies = async ({ context }: { context: TContext }) => {
-  const userStudies = await db.study.findMany({
-    where: {
-      users: {
-        some: {
-          userId: context.user.id,
-        },
-      },
-    },
-  });
-
-  return userStudies;
-};
-
-const INTERNAL_cachedGetUserStudies = (args: { context: TContext }) =>
-  createCachedFunction(INTERNAL_getUserStudies, [
-    'studies:getByUser',
-    `studies:getByUser-${args.context.session.userId}`,
-  ])(args);
 
 export const testActionWithParameter = createAction()
   .input(
@@ -52,8 +30,8 @@ export const getUserStudies = createAction()
   .requireAuthContext()
   .cache({
     tags: ({ context }) => [
-      'studies:get',
-      `studies:getByUser-${context.user.id}`,
+      'study:getByUser',
+      `study:getByUser-${context.user.id}`,
     ],
   })
   .handler(async ({ context }: { context: TContext }) => {
@@ -69,18 +47,6 @@ export const getUserStudies = createAction()
 
     return userStudies;
   });
-
-export const vanillaGetUserStudies = async () => {
-  const session = await requireServerSession();
-
-  if (!session) {
-    throw new Error('No session found');
-  }
-
-  return INTERNAL_cachedGetUserStudies({
-    context: session,
-  });
-};
 
 export const getStudyData = async (studySlug: string) => {
   const study = await db.study.findFirst({

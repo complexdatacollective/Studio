@@ -14,26 +14,70 @@ async function seed() {
     },
     update: {},
   });
-  await db.study.upsert({
-    where: {
-      publicId: 'nc',
-    },
-    create: {
-      publicId: 'nc',
-      name: 'Network Canvas',
-      slug: 'network-canvas',
+
+  const study = await db.study.create({
+    data: {
+      publicId: generateIdFromEntropySize(6),
+      name: 'Sample Study',
+      slug: 'sample-study',
+      description: 'This is a sample study.',
       users: {
         create: {
-          role: 'ADMIN',
           user: {
             connect: {
               username: 'admin',
             },
           },
+          role: 'ADMIN',
         },
       },
     },
-    update: {},
+  });
+
+  const protocol = await db.protocol.create({
+    data: {
+      publicId: 'protocol123',
+      studyId: study.publicId,
+      revisions: {
+        create: [
+          {
+            revision: 1,
+            name: 'First Revision',
+            description: 'This is the first revision of the protocol.',
+            stages: {
+              create: [
+                {
+                  publicId: generateIdFromEntropySize(6),
+                  name: 'Stage 1',
+                  type: 'Information',
+                },
+                {
+                  publicId: generateIdFromEntropySize(6),
+                  name: 'Stage 2',
+                  type: 'NameGenerator',
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+
+  const protocolRevision = await db.protocolRevision.findFirst({
+    where: { protocolId: protocol.publicId },
+  });
+
+  if (!protocolRevision) {
+    throw new Error('No protocol revision found');
+  }
+
+  await db.interview.create({
+    data: {
+      publicId: 'interview123',
+      protocolRevisionId: protocolRevision.revision,
+      startedAt: new Date(),
+    },
   });
 }
 

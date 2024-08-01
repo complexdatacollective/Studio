@@ -1,6 +1,10 @@
 import { revalidateTag, unstable_cache } from 'next/cache';
 
-const CACHE_TAGS = ['studies:get', 'studies:getByUser'] as const;
+const CACHE_TAGS = [
+  'interview:getById',
+  'stage:getAll',
+  'study:getByUser',
+] as const;
 
 type StaticTag = (typeof CACHE_TAGS)[number];
 type DynamicTag = `${StaticTag}-${string}`;
