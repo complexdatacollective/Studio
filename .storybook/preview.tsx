@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react';
 import '~/app/globals.scss';
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
