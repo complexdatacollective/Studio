@@ -5,18 +5,17 @@ type ProgressBarProps = {
   indeterminate?: boolean;
   onClick?: () => void;
   orientation?: 'horizontal' | 'vertical';
-  percentProgress?: number;
+  value?: number;
   nudge?: boolean;
+  className?: string;
+  ariaLabel: string;
 };
 
-const fillerValue = (
-  orientation: 'horizontal' | 'vertical',
-  percentProgress: number,
-) => {
+const fillerValue = (orientation: 'horizontal' | 'vertical', value: number) => {
   const property = orientation === 'horizontal' ? 'width' : 'height';
 
   return {
-    [property]: `${percentProgress}%`,
+    [property]: `${value}%`,
   };
 };
 
@@ -24,8 +23,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   indeterminate = false,
   onClick,
   orientation = 'vertical',
-  percentProgress = 0,
+  value = 0,
   nudge = true,
+  ariaLabel,
+  className,
 }) => (
   <div
     className={cx(
@@ -33,10 +34,16 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       orientation === 'horizontal' ? 'h-3' : 'w-3',
       {
         'bg-muted opacity-20': indeterminate,
-        'bg-muted opacity-50': percentProgress === 100 && nudge,
+        'bg-muted opacity-50': value === 100 && nudge,
       },
+      className,
     )}
     onClick={onClick}
+    role="progressbar"
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={value}
+    aria-label={ariaLabel}
   >
     <div
       className={cx(
@@ -45,7 +52,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           ? 'h-full transition-all duration-300 ease-in-out'
           : 'w-full transition-all duration-300 ease-in-out',
       )}
-      style={fillerValue(orientation, percentProgress)}
+      style={fillerValue(orientation, value)}
     />
   </div>
 );

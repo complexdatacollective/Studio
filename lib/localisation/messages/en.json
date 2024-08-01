@@ -76,11 +76,6 @@
     "title": "Participants Page",
     "description": "slug:"
   },
-  "LanguageSwitcher": {
-    "en": "English",
-    "es": "Español",
-    "ar": "عربى"
-  },
   "Navigation": {
     "forward": "Move forward",
     "back": "Move backward",

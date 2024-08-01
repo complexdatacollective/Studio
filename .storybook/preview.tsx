@@ -1,48 +1,25 @@
 import type { Preview } from '@storybook/react';
 import '~/app/globals.scss';
-import React, { Suspense, useState, useEffect } from 'react';
-import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
-import { type Locale } from '~/lib/localisation/locales';
+import React, { useEffect, useState } from 'react';
+import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
+import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
+import { TooltipProvider } from '~/components/ui/Tooltip';
+import { DirectionProvider } from '@radix-ui/react-direction';
 
 const loadMessages = async (
   locale: Locale,
 ): Promise<AbstractIntlMessages | undefined> => {
   try {
-    const messages = (
-      await import(`../lib/localisation/messages/${locale}.json`)
-    ).default;
+    const { default: messages } = (await import(
+      `../lib/localisation/messages/${locale}.json`
+    )) as { default: AbstractIntlMessages };
     return messages;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(`Could not load messages for locale ${locale}`, error);
     return undefined;
   }
-};
-
-const withIntl = (Story, context) => {
-  const [messages, setMessages] = useState<AbstractIntlMessages>();
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      const locale = context.globals.locale;
-      const loadedMessages = await loadMessages(locale);
-      setMessages(loadedMessages);
-      document.dir = getLangDir(locale);
-    };
-
-    fetchMessages();
-  }, [context.globals.locale]);
-
-  return (
-    <Suspense fallback={<div>Loading Translations...</div>}>
-      <NextIntlClientProvider
-        messages={messages}
-        locale={context.globals.locale}
-      >
-        <Story />
-      </NextIntlClientProvider>
-    </Suspense>
-  );
 };
 
 const preview: Preview = {
@@ -62,16 +39,58 @@ const preview: Preview = {
       toolbar: {
         icon: 'globe',
         items: [
-          { value: 'en', title: 'English' },
-          { value: 'es', title: 'Español' },
-          { value: 'ar', title: 'عربي' },
+          ...LOCALES_DICT.map(([locale, name]) => ({
+            value: locale,
+            title: name,
+          })),
         ],
         showName: true,
         dynamicTitle: true,
       },
     },
   },
-  decorators: [withIntl],
+  decorators: [
+    (Story, context) => {
+      const [messages, setMessages] = useState<AbstractIntlMessages>();
+      const [langDir, setLandDir] =
+        useState<ReturnType<typeof getLangDir>>('ltr');
+
+      useEffect(() => {
+        const fetchMessages = async () => {
+          const locale = context.globals.locale as Locale;
+          const loadedMessages = await loadMessages(locale);
+          setMessages(loadedMessages);
+          setLandDir(getLangDir(locale));
+        };
+
+        void fetchMessages();
+      }, [context.globals.locale]);
+
+      useEffect(() => {
+        document.documentElement.dir = langDir;
+      }, [langDir]);
+
+      return (
+        <DirectionProvider dir={langDir}>
+          <NextIntlClientProvider
+            messages={messages}
+            locale={context.globals.locale as Locale}
+          >
+            <Story />
+          </NextIntlClientProvider>
+        </DirectionProvider>
+      );
+    },
+    (Story) => {
+      return (
+        <TooltipProvider>
+          <div className="h-screen">
+            <Story />
+          </div>
+        </TooltipProvider>
+      );
+    },
+  ],
 };
 
 export default preview;

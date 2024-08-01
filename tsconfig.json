@@ -34,15 +34,15 @@
     ]
   },
   "include": [
-    ".eslintrc.mjs",
-    "next-env.d.ts",
+    ".eslintrc.cjs",
     "**/*.js",
+    "**/*.jsx",
+    "**/*.mjs",
+    "**/*.cjs",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.jsx",
-    "**/*.cjs",
-    "**/*.mjs",
-    ".next/types/**/*.ts",
+    ".storybook/**/*",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
