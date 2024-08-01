@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import PopoverHint from '~/app/[locale]/(interview)/interview/_components/PopoverHint';
+import PopoverHint from './PopoverHint';
 
 const meta: Meta<typeof PopoverHint> = {
   title: 'Interview/PopoverHint',

@@ -171,20 +171,20 @@ export default {
           '50%': { backgroundColor: 'var(--tw-gradient-to)' },
           '100%': { backgroundColor: 'var(--tw-gradient-from)' },
         },
-        'tooltipSlideDownAndFade': {
-          from: { opacity: '0', transform: 'translateY(-2px)' },
+        'slideDownAndFade': {
+          from: { opacity: '0', transform: 'translateY(-4px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
-        'tooltipSlideLeftAndFade': {
-          from: { opacity: '0', transform: 'translateX(2px)' },
+        'slideLeftAndFade': {
+          from: { opacity: '0', transform: 'translateX(4px)' },
           to: { opacity: '1', transform: 'translateX(0)' },
         },
-        'tooltipSlideUpAndFade': {
-          from: { opacity: '0', transform: 'translateY(2px)' },
+        'slideUpAndFade': {
+          from: { opacity: '0', transform: 'translateY(4px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
-        'tooltipSlideRightAndFade': {
-          from: { opacity: '0', transform: 'translateX(-2px)' },
+        'slideRightAndFade': {
+          from: { opacity: '0', transform: 'translateX(-4px)' },
           to: { opacity: '1', transform: 'translateX(0)' },
         },
       },
@@ -197,14 +197,11 @@ export default {
           'indeterminate-progress-bar 1s infinite linear',
         'background-gradient': 'background-gradient 5s infinite ease-in-out',
         'pulse-bg': 'pulse-bg 1.5s infinite',
-        'tooltipSlideDownAndFade':
-          'tooltipSlideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        'tooltipSlideLeftAndFade':
-          'tooltipSlideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        'tooltipSlideUpAndFade':
-          'tooltipSlideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        'tooltipSlideRightAndFade':
-          'tooltipSlideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'slideDownAndFade': 'slideDownAndFade 1s cubic-bezier(0.16, 1, 0.3, 1)',
+        'slideLeftAndFade': 'slideLeftAndFade 1s cubic-bezier(0.16, 1, 0.3, 1)',
+        'slideUpAndFade': 'slideUpAndFade 1s cubic-bezier(0.16, 1, 0.3, 1)',
+        'slideRightAndFade':
+          'slideRightAndFade 1s cubic-bezier(0.16, 1, 0.3, 1)',
       },
       transformOrigin: {
         'left-right': '0% 50%',

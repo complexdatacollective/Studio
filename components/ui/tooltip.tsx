@@ -18,10 +18,10 @@ const Tooltip = ({
       <TooltipPrimitive.Portal>
         <TooltipPrimitive.Content
           className={cn(
-            'data-[state=delayed-open]:data-[side=top]:animate-tooltipSlideDownAndFade',
-            'data-[state=delayed-open]:data-[side=right]:animate-tooltipSlideLeftAndFade',
+            'data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade',
+            'data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade',
             'data-[state=delayed-open]:data-[side=left]:animate-tooltipSlideRightAndFade',
-            'data-[state=delayed-open]:data-[side=bottom]:animate-tooltipSlideUpAndFade',
+            'data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade',
             'shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]',
             'select-none rounded-sm bg-white px-2 py-2 text-sm text-slate-blue will-change-[transform,opacity]',
           )}
