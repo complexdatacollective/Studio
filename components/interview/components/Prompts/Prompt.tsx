@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import MarkdownLabel from './MarkdownLabel';
+import MarkdownLabel from '../Fields/MarkdownLabel';
 
 /**
  * Building block for Prompt component

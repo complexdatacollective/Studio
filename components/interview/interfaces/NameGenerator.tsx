@@ -2,7 +2,7 @@
  * Building blocks for NameGenerator interface
  */
 
-import Prompts from '../components/Prompts';
+import Prompts from '../components/Prompts/Prompts';
 
 const demoPrompts = [
   {
