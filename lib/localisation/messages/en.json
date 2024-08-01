@@ -103,5 +103,10 @@
   },
   "StudySwitcher": {
     "placeholder": "Select a study"
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "homeText": "Home"
   }
 }

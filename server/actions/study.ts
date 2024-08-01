@@ -15,7 +15,6 @@ export async function createStudy(formData: FormData) {
     // todo: what is the best thing to do here?
     throw new Error('Rate limit exceeded. Too many requests');
   }
-  const name = formData.get('studyName') as string;
 
   if (!session || !user) {
     throw new Error('Unauthorized');
