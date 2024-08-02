@@ -1,5 +1,5 @@
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
-import LanguageSwitcher from '../_components/LanguageSwitcher';
+import MainNavigation from '../_components/MainNavigation';
 
 export default function AdminLayout({
   children,
@@ -8,7 +8,7 @@ export default function AdminLayout({
 }) {
   return (
     <ResponsiveContainer>
-      <LanguageSwitcher />
+      <MainNavigation />
       {children}
     </ResponsiveContainer>
   );
