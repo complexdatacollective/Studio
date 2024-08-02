@@ -19,6 +19,8 @@ export default async function InterviewShell({
     protocolRevisionId: interview.protocolRevisionId,
   });
 
+  console.log('stage', stage, currentStage, interview.protocolRevisionId);
+
   const stageCount = await getStageCount({
     protocolRevisionId: interview.protocolRevisionId,
   });
