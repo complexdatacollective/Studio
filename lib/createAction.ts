@@ -17,7 +17,7 @@ type TInternals<TInputSchema extends z.ZodType | undefined> = {
   cacheConfig?: CacheConfig<TInputSchema>;
 };
 
-export type TContext = {
+type TContext = {
   user: User;
   session: Session;
 };
