@@ -1,22 +1,16 @@
 import 'server-only';
 import { db } from '~/lib/db';
 import createAction from '~/lib/createAction';
-import { z } from 'zod';
 
 export const getUserStudies = createAction()
-  .input(
-    z.object({
-      age: z.number(),
-    }),
-  )
   .requireAuthContext()
   .cache({
-    tags: ({ context, input }) => [
+    tags: ({ context }) => [
       'study:getByUser',
       `study:getByUser-${context.user.id}`,
     ],
   })
-  .handler(async ({ context, input }) => {
+  .handler(async ({ context }) => {
     const userStudies = await db.study.findMany({
       where: {
         users: {
