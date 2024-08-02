@@ -1,3 +1,4 @@
+import { generatePublicId } from '~/lib/generatePublicId';
 import { create } from 'zustand';
 
 type Dialog = {
@@ -9,7 +10,7 @@ type DialogState = {
 };
 
 type DialogActions = {
-  addDialog: (dialog: Dialog) => void;
+  addDialog: (dialog: Omit<Dialog, 'id'>) => void;
   removeDialog: (dialogId: string) => void;
 };
 
@@ -17,10 +18,13 @@ type DialogStore = DialogState & DialogActions;
 
 export const useDialogStore = create<DialogStore>((set) => ({
   dialogs: [],
-  addDialog: (dialog) =>
-    set((state) => ({
-      dialogs: [...state.dialogs, dialog],
-    })),
+  addDialog: (dialog) => {
+    const id = generatePublicId();
+
+    return set((state) => ({
+      dialogs: [...state.dialogs, { id, ...dialog }],
+    }));
+  },
   removeDialog: (dialogId) =>
     set((state) => ({
       dialogs: state.dialogs.filter((dialog) => dialog.id !== dialogId),
