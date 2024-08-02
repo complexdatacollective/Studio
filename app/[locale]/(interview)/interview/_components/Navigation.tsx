@@ -5,13 +5,13 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
 import { cn } from '~/lib/utils';
-import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
 import ProgressBar from './ProgressBar';
 import type { IntRange } from 'type-fest';
 import { withTooltip } from '~/components/ui/Tooltip';
 import { forwardRef } from 'react';
 import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
+import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
 
 type NavigationButtonProps = {
   className?: string;

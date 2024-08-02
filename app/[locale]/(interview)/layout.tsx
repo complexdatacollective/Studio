@@ -10,6 +10,8 @@ export const metadata = {
   description: 'Network Canvas Interview',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function InterviewLayout({
   children,
   params: { locale },

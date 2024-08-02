@@ -2,7 +2,7 @@ import { generateIdFromEntropySize } from 'lucia';
 import { db } from '~/lib/db';
 
 async function seed() {
-  const user = await db.user.upsert({
+  await db.user.upsert({
     where: {
       username: 'admin',
     },
@@ -14,6 +14,7 @@ async function seed() {
     },
     update: {},
   });
+
   const study = await db.study.create({
     data: {
       publicId: generateIdFromEntropySize(6),
@@ -22,12 +23,17 @@ async function seed() {
       description: 'This is a sample study.',
       users: {
         create: {
-          userId: user.id,
+          user: {
+            connect: {
+              username: 'admin',
+            },
+          },
           role: 'ADMIN',
         },
       },
     },
   });
+
   const protocol = await db.protocol.create({
     data: {
       publicId: 'protocol123',
@@ -57,6 +63,7 @@ async function seed() {
       },
     },
   });
+
   const protocolRevision = await db.protocolRevision.findFirst({
     where: { protocolId: protocol.publicId },
   });

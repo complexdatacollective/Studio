@@ -1,4 +1,5 @@
 import { createCachedFunction } from '~/lib/cache';
+import createAction from '~/lib/createAction';
 import { db } from '~/lib/db';
 
 export const getInterviewById = ({ interviewId }: { interviewId: string }) =>
@@ -9,4 +10,10 @@ export const getInterviewById = ({ interviewId }: { interviewId: string }) =>
         protocolRevision: true,
       },
     });
-  }, [`getInterview-${interviewId}`])();
+  }, ['interview:getById', `interview:getById-${interviewId}`])();
+
+export const getInterviews = createAction()
+  .requireAuthContext()
+  .handler(async () => {
+    return await db.interview.findMany();
+  });

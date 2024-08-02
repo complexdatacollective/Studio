@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import Prompt from './Prompt';
-import { findIndex } from 'lodash';
 import Pips from './Pips';
 
 type Prompt = {
@@ -17,10 +16,7 @@ export default function Prompts({
   prompts: Prompt[];
   currentPromptId: number;
 }) {
-  const currentIndex = findIndex(
-    prompts,
-    (prompt) => prompt.id === currentPromptId,
-  );
+  const currentIndex = prompts.findIndex(({ id }) => id === currentPromptId);
 
   return (
     <motion.div className="flex w-full flex-col items-center justify-center text-balance pb-2 text-center leading-tight">

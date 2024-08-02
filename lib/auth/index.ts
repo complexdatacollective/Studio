@@ -7,6 +7,7 @@ import { cache } from 'react';
 import { redirect } from '~/lib/localisation/navigation';
 import { cookies } from 'next/headers';
 import 'server-only';
+import { getServerPath } from '../serverUtils';
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -69,28 +70,28 @@ export const getServerSession = cache(async () => {
 });
 
 export async function requirePageAuth({
-  redirectPath,
+  returnToCurrentPath = true,
 }: {
-  redirectPath?: string | null;
+  returnToCurrentPath?: boolean;
 } = {}) {
   const { session } = await getServerSession();
 
   if (!session) {
-    if (!redirectPath) {
-      redirect('/signin');
+    if (returnToCurrentPath) {
+      const redirectPath = getServerPath();
+      redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath));
     }
 
-    redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath!));
+    redirect('/signin');
   }
-  return session;
 }
 
-// export async function requireApiAuth() {
-//   const { session } = await getServerSession();
+export async function requireServerSession() {
+  const session = await getServerSession();
 
-//   if (!session) {
-//     throw new Error('Unauthorized');
-//   }
+  if (!session?.user || !session?.session) {
+    throw new Error('Unauthorized');
+  }
 
-//   return session;
-// }
+  return session;
+}
