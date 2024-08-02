@@ -64,6 +64,19 @@ export default {
       link: 'hsl(var(--link) / <alpha-value>)',
 
       focus: 'hsl(var(--focus) / <alpha-value>)',
+
+      // ----------------------------
+      // Sequences
+      // Used for situations where we want to show a sequence of colors, such
+      // as node types, categorical bins etc
+      // ----------------------------
+
+      nodeSequence: {
+        1: 'hsl(var(--node-sequence-1) / <alpha-value>)',
+        2: 'hsl(var(--node-sequence-2) / <alpha-value>)',
+        3: 'hsl(var(--node-sequence-3) / <alpha-value>)',
+        4: 'hsl(var(--node-sequence-4) / <alpha-value>)',
+      },
     },
     borderRadius: {
       ...defaultTheme.borderRadius,
