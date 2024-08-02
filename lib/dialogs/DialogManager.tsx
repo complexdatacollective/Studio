@@ -1,3 +1,4 @@
+'use client';
 import { type RefObject } from 'react';
 import Dialog from '~/components/ui/Dialog';
 import { useDialogStore } from './store';
@@ -19,7 +20,5 @@ const DialogManager = ({
     </>
   );
 };
-
-DialogManager.displayName = 'DialogManager';
 
 export default DialogManager;
