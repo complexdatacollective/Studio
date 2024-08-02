@@ -30,9 +30,7 @@ export default async function Page() {
           <CardTitle>{t('cardTitle')}</CardTitle>
           <CardDescription>
             {t('cardDescription')}{' '}
-            <Link className="text-blue-400 underline" href={routes.signUp()}>
-              {t('linkText')}
-            </Link>
+            <Link href={routes.signUp()}>{t('linkText')}</Link>
           </CardDescription>
         </CardHeader>
         <CardContent>

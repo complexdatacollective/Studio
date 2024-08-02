@@ -15,11 +15,7 @@ export default function SignUpForm() {
 
   return (
     <form action={formAction}>
-      {formState.error && (
-        <div className="text-red-500 text-center text-sm">
-          {formState.error}
-        </div>
-      )}
+      {formState.error && <div className="text-center">{formState.error}</div>}
 
       <div className="flex flex-col gap-3 p-2">
         <Label htmlFor="username">{t('usernameInput')}</Label>

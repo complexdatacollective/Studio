@@ -15,7 +15,7 @@ const Layout = async ({
 
   return (
     <div className="flex flex-col">
-      <nav className="flex flex-row space-x-2 bg-cyber-grape px-4 pt-4 text-lg text-white">
+      <nav className="flex flex-row space-x-2 px-4 pt-4">
         <div>
           <Link href={`/`}>{t('home')}</Link> &#x2794;
         </div>

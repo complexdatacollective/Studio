@@ -36,7 +36,7 @@ export default function StageShell({ stage }: { stage: Stage }) {
       />
       {/* example stage components */}
       <Tooltip tooltip={tTooltip('hint')}>
-        <div className="flex h-48 w-48 items-center justify-center rounded-full bg-neon-coral-dark text-center text-white">
+        <div className="flex h-48 w-48 items-center justify-center rounded-full text-center">
           Example node
         </div>
       </Tooltip>

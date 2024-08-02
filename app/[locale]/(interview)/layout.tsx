@@ -25,9 +25,7 @@ export default async function InterviewLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={`${inter.className} flex h-screen bg-navy-taupe text-white`}
-      >
+      <body className={`${inter.className} flex h-screen`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

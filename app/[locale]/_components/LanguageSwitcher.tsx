@@ -23,12 +23,10 @@ const LanguageSwitcher = () => {
 
   return (
     <Select onValueChange={handleLanguageChange} value={currentLocale}>
-      <SelectTrigger
-        className={`hover:bg-stone-100 w-[200px] space-x-1 bg-white text-xs sm:text-sm`}
-      >
+      <SelectTrigger>
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="dark:bg-slate-700 bg-white">
+      <SelectContent>
         {LOCALES_DICT.map(([locale, name]) => (
           <SelectItem key={locale} value={locale}>
             {name}

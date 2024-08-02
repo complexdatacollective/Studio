@@ -37,13 +37,13 @@ importers:
         version: 0.11.0(typescript@5.5.3)(zod@3.23.8)
       '@tailwindcss/aspect-ratio':
         specifier: ^0.4.2
-        version: 0.4.2(tailwindcss@3.4.6)
+        version: 0.4.2(tailwindcss@3.4.7)
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
-        version: 0.1.1(tailwindcss@3.4.6)
+        version: 0.1.1(tailwindcss@3.4.7)
       '@tailwindcss/forms':
         specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.4.6)
+        version: 0.5.7(tailwindcss@3.4.7)
       '@types/rtl-detect':
         specifier: ^1.0.3
         version: 1.0.3
@@ -121,7 +121,7 @@ importers:
         version: 2.4.0
       tailwind-variants:
         specifier: ^0.2.1
-        version: 0.2.1(tailwindcss@3.4.6)
+        version: 0.2.1(tailwindcss@3.4.7)
       type-fest:
         specifier: ^4.23.0
         version: 4.23.0
@@ -202,8 +202,8 @@ importers:
         specifier: ^8.2.6
         version: 8.2.6(@babel/preset-env@7.24.8(@babel/core@7.24.9))
       tailwindcss:
-        specifier: ^3.4.6
-        version: 3.4.6
+        specifier: ^3.4.7
+        version: 3.4.7
       tsx:
         specifier: ^4.16.2
         version: 4.16.2
@@ -4884,8 +4884,8 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
 
-  postcss-nested@6.0.1:
-    resolution: {integrity: sha512-mEp4xPMi5bSWiMbsgoPfcP74lsWLHkQbZc3sY+jWYd65CUwXrUaTp0fmNpa01ZcETKlIgUdFN/MpS2xZtqL9dQ==}
+  postcss-nested@6.2.0:
+    resolution: {integrity: sha512-HQbt28KulC5AJzG+cZtj9kvKB93CFCdLvog1WFLf1D+xmMvPGlBstkpTEZfK5+AN9hfJocyBFCNiqyS48bpgzQ==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
@@ -5555,8 +5555,8 @@ packages:
     peerDependencies:
       tailwindcss: '*'
 
-  tailwindcss@3.4.6:
-    resolution: {integrity: sha512-1uRHzPB+Vzu57ocybfZ4jh5Q3SdlH7XW23J5sQoM9LhE9eIOlzxer/3XPSsycvih3rboRsvt0QCmzSrqyOYUIA==}
+  tailwindcss@3.4.7:
+    resolution: {integrity: sha512-rxWZbe87YJb4OcSopb7up2Ba4U82BoiSGUdoDr3Ydrg9ckxFS/YWsvhN323GMcddgU65QRy7JndC7ahhInhvlQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -5961,8 +5961,8 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
 
-  yaml@2.4.5:
-    resolution: {integrity: sha512-aBx2bnqDzVOyNKfsysjA2ms5ZlnjSAW2eG3/L5G/CSujfjLJTJsEw1bGw8kCf04KodQWk1pxlGnZ56CRxiawmg==}
+  yaml@2.5.0:
+    resolution: {integrity: sha512-2wWLbGbYDiSqqIKoPjar3MPgB94ErzCtrNE1FdqGuaO0pi2JGjmE8aW8TDZwzU7vuxcGRdL/4gPQwQ7hD5AMSw==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -8198,18 +8198,18 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.3
 
-  '@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.4.6)':
+  '@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.4.7)':
     dependencies:
-      tailwindcss: 3.4.6
+      tailwindcss: 3.4.7
 
-  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.6)':
+  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.7)':
     dependencies:
-      tailwindcss: 3.4.6
+      tailwindcss: 3.4.7
 
-  '@tailwindcss/forms@0.5.7(tailwindcss@3.4.6)':
+  '@tailwindcss/forms@0.5.7(tailwindcss@3.4.7)':
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.4.6
+      tailwindcss: 3.4.7
 
   '@testing-library/dom@10.1.0':
     dependencies:
@@ -11281,7 +11281,7 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.38):
     dependencies:
       lilconfig: 3.1.2
-      yaml: 2.4.5
+      yaml: 2.5.0
     optionalDependencies:
       postcss: 8.4.38
 
@@ -11317,7 +11317,7 @@ snapshots:
       icss-utils: 5.1.0(postcss@8.4.38)
       postcss: 8.4.38
 
-  postcss-nested@6.0.1(postcss@8.4.38):
+  postcss-nested@6.2.0(postcss@8.4.38):
     dependencies:
       postcss: 8.4.38
       postcss-selector-parser: 6.1.1
@@ -12064,12 +12064,12 @@ snapshots:
 
   tailwind-merge@2.4.0: {}
 
-  tailwind-variants@0.2.1(tailwindcss@3.4.6):
+  tailwind-variants@0.2.1(tailwindcss@3.4.7):
     dependencies:
       tailwind-merge: 2.4.0
-      tailwindcss: 3.4.6
+      tailwindcss: 3.4.7
 
-  tailwindcss@3.4.6:
+  tailwindcss@3.4.7:
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -12089,7 +12089,7 @@ snapshots:
       postcss-import: 15.1.0(postcss@8.4.38)
       postcss-js: 4.0.1(postcss@8.4.38)
       postcss-load-config: 4.0.2(postcss@8.4.38)
-      postcss-nested: 6.0.1(postcss@8.4.38)
+      postcss-nested: 6.2.0(postcss@8.4.38)
       postcss-selector-parser: 6.1.1
       resolve: 1.22.8
       sucrase: 3.35.0
@@ -12518,7 +12518,7 @@ snapshots:
 
   yaml@1.10.2: {}
 
-  yaml@2.4.5: {}
+  yaml@2.5.0: {}
 
   yocto-queue@0.1.0: {}
 

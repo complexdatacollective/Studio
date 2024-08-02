@@ -30,7 +30,7 @@ const Popover = ({
       >
         <div className="flex flex-col gap-2.5">{content}</div>
         <PopoverPrimitive.Close
-          className="hover:bg-violet4 absolute top-2 inline-flex h-[25px] w-[25px] cursor-default items-center justify-center rounded-full text-cyber-grape outline-none focus:shadow-[0_0_0_2px] focus:shadow-slate-blue ltr:right-2 rtl:left-2"
+          className="absolute top-2 inline-flex h-[25px] w-[25px] cursor-default items-center justify-center rounded-full outline-none focus:shadow-[0_0_0_2px] ltr:right-2 rtl:left-2"
           aria-label="Close"
         >
           <X />
