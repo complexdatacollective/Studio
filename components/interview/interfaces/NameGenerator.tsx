@@ -8,11 +8,11 @@ import NodePanels from '../containers/NodePanels';
 const demoPrompts = [
   {
     id: 0,
-    text: '**Within the past 6 months**, who have you felt _close to_, or discussed important personal matters with?',
+    text: 'Within the past 6 months, who have you felt close to, or discussed important personal matters with?',
   },
   {
     id: 1,
-    text: '**Who do you feel** _most comfortable_ with?',
+    text: 'Who do you feel most comfortable with?',
   },
 ];
 
