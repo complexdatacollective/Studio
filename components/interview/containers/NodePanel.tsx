@@ -10,7 +10,7 @@ export default function NodePanel({
 }) {
   return (
     <Panel title={title}>
-      <NodeList items={nodes} />
+      <NodeList items={nodes} nodeSize="sm" />
     </Panel>
   );
 }

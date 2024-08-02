@@ -8,12 +8,18 @@ export type Node = {
   type: string;
 };
 
-export default function NodeList({ items }: { items: Node[] }) {
+export default function NodeList({
+  items,
+  nodeSize = 'lg',
+}: {
+  items: Node[];
+  nodeSize?: 'sm' | 'lg';
+}) {
   return (
-    <div className="flex w-full flex-row items-center justify-center">
+    <div className="flex w-full flex-row flex-wrap items-center justify-center">
       {items.map((node) => (
         <div key={node.id} className="flex items-center justify-center">
-          <Node type={node.type} label={node.label} />
+          <Node type={node.type} label={node.label} size={nodeSize} />
         </div>
       ))}
     </div>

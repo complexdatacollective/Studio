@@ -1,14 +1,26 @@
-export default function Node({ type, label }: { type: string; label: string }) {
+import cn from 'classnames';
+
+export default function Node({
+  type,
+  label,
+  size = 'lg',
+}: {
+  type: string;
+  label: string;
+  size?: 'sm' | 'lg';
+}) {
   const labelWithEllipsis =
     label.length < 22 ? label : `${label.substring(0, 18)}\u{AD}...`; // Add ellipsis for really long labels
 
   const labelClasses = () => {
     const labelLength = label.length;
-    return `len-${labelLength} whitespace-pre-line overflow-hidden text-center hyphens-auto text-lg text-wrap break-all px-6`;
+    return `len-${labelLength} whitespace-pre-line overflow-hidden text-center hyphens-auto ${size === 'sm' ? 'text-lg' : 'text-xl'} text-wrap break-all px-6`;
   };
 
+  const nodeSizeClasses = size === 'sm' ? 'h-28 w-28' : 'h-44 w-44';
+
   return (
-    <div className="relative inline-block h-44 w-44">
+    <div className={`relative inline-block ${nodeSizeClasses}`} title={label}>
       <svg
         viewBox="0 0 500 500"
         xmlns="http://www.w3.org/2000/svg"
