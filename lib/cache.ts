@@ -1,16 +1,15 @@
 import { revalidateTag, unstable_cache } from 'next/cache';
 
 const CACHE_TAGS = [
-  'getProjects',
-  'getOrganizations',
-  'getOrgBySlug',
-  'getProjectBySlug',
+  'interview:getById',
+  'stage:getAll',
+  'study:getByUser',
 ] as const;
 
 type StaticTag = (typeof CACHE_TAGS)[number];
 type DynamicTag = `${StaticTag}-${string}`;
 
-type CacheTag = StaticTag | DynamicTag;
+export type CacheTag = StaticTag | DynamicTag;
 
 export function safeRevalidateTag(tag: CacheTag) {
   revalidateTag(tag);
@@ -18,16 +17,18 @@ export function safeRevalidateTag(tag: CacheTag) {
 
 type UnstableCacheParams = Parameters<typeof unstable_cache>;
 
+export type CacheOptions = {
+  // keyParts?: string[]; // Not exposed to consumers
+  revalidate?: number | false;
+};
+
 export function createCachedFunction<T extends UnstableCacheParams[0]>(
   func: T,
   tags: CacheTag[],
-  options?: {
-    keyParts?: string[];
-    revalidate?: number | false;
-  },
+  revalidate?: CacheOptions['revalidate'],
 ): T {
-  return unstable_cache(func, options?.keyParts, {
+  return unstable_cache(func, undefined, {
     tags,
-    revalidate: options?.revalidate,
+    revalidate,
   });
 }

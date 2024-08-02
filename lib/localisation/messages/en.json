@@ -22,7 +22,9 @@
     "formTitle": "Create Study",
     "inputLabel": "Study Name",
     "inputPlaceholder": "My New Study",
-    "formButton": "Create Study"
+    "formButton": "Create Study",
+    "roleSelectLabel": "Select a role",
+    "roleSelectPlaceholder": "Roles..."
   },
   "SignOutBtn": {
     "buttonLabel": "Sign Out"
@@ -36,6 +38,9 @@
     "projectNameInputLabel": "Project Name",
     "projectNameInputPlaceholder": "Studio",
     "formButton": "Create Project"
+  },
+  "MainNavigation": {
+    "home": "Studio Home"
   },
   "TopNavigation": {
     "home": "Studio",
@@ -79,5 +84,39 @@
   "LanguageSwitcher": {
     "en": "English",
     "es": "Español"
+  },
+  "Navigation": {
+    "forward": "Move forward",
+    "back": "Move backward",
+    "menu": "Menu"
+  },
+  "PopoverHint": {
+    "hint": "Click this for stage instructions",
+    "close": "Close",
+    "open": "Open"
+  },
+  "ExampleTooltip": {
+    "hint": "Drag and drop this node into a bin below."
+  },
+  "NameGeneratorPopover": {
+    "title": "Name Generator",
+    "hint": "Tap the icon to nominate a person. Type in a name and press enter to add it. Click next to continue. To remove a person, drag and drop the circle into the trash bin."
+  },
+  "InformationPopover": {
+    "title": "Information Interface",
+    "hint": "This interface is used to display information in text, image, or video format. Read the information and click next to continue."
+  },
+  "StudySwitcher": {
+    "placeholder": "Select a study"
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "homeText": "Home"
+  },
+  "StudyNotFound": {
+    "title": "Study Not Found",
+    "description": "The page you are looking for does not exist.",
+    "homeText": "Home"
   }
 }
