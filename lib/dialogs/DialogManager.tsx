@@ -1,4 +1,5 @@
 'use client';
+import Dialog from '~/components/ui/Dialog';
 import { useDialogStore } from './store';
 
 const DialogManager = () => {
@@ -7,7 +8,7 @@ const DialogManager = () => {
   return (
     <>
       {dialogs.map((dialog) => (
-        <div key={dialog.id}>{dialog.id}</div>
+        <Dialog key={dialog.id}>{dialog.id}</Dialog>
       ))}
     </>
   );
