@@ -12,10 +12,10 @@ export default function Node({
   const labelWithEllipsis =
     label.length < 22 ? label : `${label.substring(0, 18)}\u{AD}...`; // Add ellipsis for really long labels
 
-  const labelClasses = () => {
-    const labelLength = label.length;
-    return `len-${labelLength} whitespace-pre-line overflow-hidden text-center hyphens-auto ${size === 'sm' ? 'text-lg' : 'text-xl'} text-wrap break-all px-6`;
-  };
+  const labelClasses = cn(
+    'whitespace-pre-line overflow-hidden text-center hyphens-auto text-wrap break-all px-6',
+    size === 'sm' ? 'text-lg' : 'text-xl',
+  );
 
   const nodeSizeClasses = size === 'sm' ? 'h-28 w-28' : 'h-44 w-44';
 
@@ -38,7 +38,7 @@ export default function Node({
         <circle cx="250" cy="250" r="200" className="fill-transparent" />
       </svg>
       <div className="absolute flex h-full w-full items-center justify-center">
-        <div className={labelClasses()}>{labelWithEllipsis}</div>
+        <div className={labelClasses}>{labelWithEllipsis}</div>
       </div>
     </div>
   );

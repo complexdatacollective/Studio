@@ -1,22 +1,4 @@
-import { motion } from 'framer-motion';
 import { cn } from 'lib/utils';
-
-const container = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-      delay: 0.15,
-      when: 'beforeChildren',
-    },
-  },
-};
-
-const item = {
-  initial: { opacity: 0, y: '-200%' },
-  animate: { opacity: 1, y: 0 },
-};
 
 /**
  * Renders a set of pips indicating the current `Prompt`.
@@ -31,12 +13,9 @@ export default function Pips({
   currentIndex: number;
 }) {
   return (
-    <motion.div
-      className="flex w-full items-center justify-center space-x-2"
-      variants={container}
-    >
+    <div className="flex w-full items-center justify-center space-x-2">
       {Array.from({ length: count }).map((_, index) => (
-        <motion.div
+        <div
           key={index}
           className={cn(
             'h-4 w-4 rounded-full border-2 border-white border-opacity-15 transition-colors ease-in',
@@ -44,9 +23,8 @@ export default function Pips({
               ? 'bg-white bg-opacity-15'
               : 'bg-transparent',
           )}
-          variants={item}
         />
       ))}
-    </motion.div>
+    </div>
   );
 }
