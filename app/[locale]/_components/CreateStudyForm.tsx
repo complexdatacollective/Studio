@@ -1,27 +1,48 @@
 import { createStudy } from '~/server/actions/study';
 import { getTranslations } from 'next-intl/server';
 import { SubmitButton } from '~/components/form/SubmitButton';
+import { Input } from '~/components/ui/form/Input';
+import Section from '~/components/layout/Section';
+import {
+  Select,
+  SelectContent,
+  SelectValue,
+  SelectTrigger,
+  SelectItem,
+} from '~/components/ui/select';
+import { Role } from '@prisma/client';
 
 export default async function CreateStudyForm() {
   const t = await getTranslations('CreateStudyForm');
 
   return (
-    <form
-      action={createStudy}
-      className="border-slate-400 flex max-w-lg flex-col space-y-2 rounded-lg border p-4"
-    >
-      <h2 className="text-lg font-semibold">{t('formTitle')}</h2>
-      <label htmlFor="studyName" className="text-sm">
-        {t('inputLabel')}
-      </label>
-      <input
-        className="border-slate-200 text-slate-600 rounded-md border p-2"
-        type="text"
-        id="studyName"
-        name="studyName"
-        placeholder={t('inputPlaceholder')}
-      />
-      <SubmitButton>{t('formButton')}</SubmitButton>
+    <form action={createStudy}>
+      <Section
+        title={t('formTitle')}
+        Footer={<SubmitButton>{t('formButton')}</SubmitButton>}
+        className="flex flex-col gap-2"
+      >
+        <Input
+          label={t('inputLabel')}
+          type="text"
+          id="studyName"
+          name="studyName"
+          placeholder={t('inputPlaceholder')}
+          required
+        />
+        <Select id="role" name="role" required label={t('roleSelectLabel')}>
+          <SelectTrigger>
+            <SelectValue placeholder={t('roleSelectPlaceholder')} />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.values(Role).map((role) => (
+              <SelectItem key={role} value={role}>
+                {role}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </Section>
     </form>
   );
 }

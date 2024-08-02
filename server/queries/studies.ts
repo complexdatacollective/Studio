@@ -1,23 +1,35 @@
 import 'server-only';
 import { db } from '~/lib/db';
-import { createCachedFunction } from '~/lib/cache';
-import { headers } from 'next/headers';
-import { rateLimit } from '~/lib/rateLimit';
+import createAction from '~/lib/createAction';
 
-const getHeaders = () => headers();
+export const getUserStudies = createAction()
+  .requireAuthContext()
+  .cache({
+    tags: ({ context }) => [
+      'study:getByUser',
+      `study:getByUser-${context.user.id}`,
+    ],
+  })
+  .handler(async ({ context }) => {
+    const userStudies = await db.study.findMany({
+      where: {
+        users: {
+          some: {
+            userId: context.user.id,
+          },
+        },
+      },
+    });
 
-export const getStudies = async () => {
-  const headers = getHeaders();
+    return userStudies;
+  });
 
-  return await createCachedFunction(
-    async (headers: Headers) => {
-      const rateLimitResponse = await rateLimit(headers);
-      if (rateLimitResponse) {
-        throw new Error('Rate limit exceeded. Too many requests');
-      }
-
-      return await db.study.findMany();
+export const getStudyData = async (studySlug: string) => {
+  const study = await db.study.findFirst({
+    where: {
+      slug: studySlug,
     },
-    ['getOrganizations'],
-  )(headers);
+  });
+
+  return study;
 };

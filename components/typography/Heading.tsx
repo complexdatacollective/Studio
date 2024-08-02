@@ -9,10 +9,10 @@ export const headingVariants = tv({
   base: 'text-balance',
   variants: {
     variant: {
-      'h1': 'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl',
-      'h2': 'scroll-m-20 text-3xl font-semibold tracking-tight',
-      'h3': 'scroll-m-20 text-2xl font-semibold tracking-tight',
-      'h4': 'scroll-m-20 text-xl font-semibold tracking-tight',
+      'h1': 'scroll-m-20 text-4xl font-extrabold tracking-tight mb-4',
+      'h2': 'scroll-m-20 text-3xl font-semibold tracking-tight mb-3',
+      'h3': 'scroll-m-20 text-2xl font-semibold tracking-tight mb-2',
+      'h4': 'scroll-m-20 text-xl font-semibold tracking-tight mb-2',
       'h4-all-caps':
         'scroll-m-20 text-sm font-extrabold tracking-widest uppercase',
       'label':
@@ -45,7 +45,7 @@ const Heading = React.forwardRef<HTMLElement, HeadingProps>(
   ({ className, variant, as, asChild, ...props }, ref) => {
     const Comp = asChild
       ? Slot
-      : as ?? (variant ? variantElementMap[variant] : undefined) ?? 'div';
+      : (as ?? (variant ? variantElementMap[variant] : undefined) ?? 'div');
     return (
       <Comp
         className={cn(headingVariants({ variant, className }))}

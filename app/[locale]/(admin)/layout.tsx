@@ -1,5 +1,5 @@
-import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
+import LanguageSwitcher from '../_components/LanguageSwitcher';
 
 export default function AdminLayout({
   children,

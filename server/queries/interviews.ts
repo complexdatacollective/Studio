@@ -9,4 +9,4 @@ export const getInterviewById = ({ interviewId }: { interviewId: string }) =>
         protocolRevision: true,
       },
     });
-  }, [`getInterview-${interviewId}`])();
+  }, ['interview:getById', `interview:getById-${interviewId}`])();
