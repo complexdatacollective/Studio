@@ -4,6 +4,7 @@
 
 import Prompts from '../components/Prompts/Prompts';
 import NodePanels from '../containers/NodePanels';
+import NodeList from '../components/NodeList';
 
 const demoPrompts = [
   {
@@ -38,16 +39,39 @@ const demoPanels = [
     title: 'Classmates you have mentioned',
     nodes: [
       {
-        id: '1',
+        id: '3',
         label: 'Tim',
         type: 'person',
       },
       {
-        id: '2',
+        id: '4',
         label: 'Blake',
         type: 'person',
       },
     ],
+  },
+];
+
+const demoNodes = [
+  {
+    id: '5',
+    label: 'Matt',
+    type: 'person',
+  },
+  {
+    id: '6',
+    label: 'Taylor',
+    type: 'person',
+  },
+  {
+    id: '7',
+    label: 'Maggie',
+    type: 'person',
+  },
+  {
+    id: '8',
+    label: 'Emma',
+    type: 'person',
   },
 ];
 
@@ -59,6 +83,9 @@ export default function NameGenerator() {
         {/* NameGenerator Main Content */}
 
         <NodePanels panels={demoPanels} />
+        <div className="flex-basis-auto flex h-full flex-shrink flex-grow pl-6">
+          <NodeList items={demoNodes} />
+        </div>
       </div>
     </div>
   );

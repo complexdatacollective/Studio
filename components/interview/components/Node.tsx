@@ -8,7 +8,7 @@ export default function Node({ type, label }: { type: string; label: string }) {
   };
 
   return (
-    <div className="relative inline-block h-28 w-28">
+    <div className="relative inline-block h-44 w-44">
       <svg
         viewBox="0 0 500 500"
         xmlns="http://www.w3.org/2000/svg"
