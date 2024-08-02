@@ -5,6 +5,7 @@
 import Prompts from '../components/Prompts/Prompts';
 import NodePanels from '../containers/NodePanels';
 import NodeList from '../components/NodeList';
+import QuickNodeForm from '../containers/QuickNodeForm';
 
 const demoPrompts = [
   {
@@ -25,12 +26,10 @@ const demoPanels = [
       {
         id: '1',
         label: 'John',
-        type: 'person',
       },
       {
         id: '2',
         label: 'Jeff',
-        type: 'person',
       },
     ],
   },
@@ -41,12 +40,10 @@ const demoPanels = [
       {
         id: '3',
         label: 'Tim',
-        type: 'person',
       },
       {
         id: '4',
         label: 'Blake',
-        type: 'person',
       },
     ],
   },
@@ -56,22 +53,18 @@ const demoNodes = [
   {
     id: '5',
     label: 'Matt',
-    type: 'person',
   },
   {
     id: '6',
     label: 'Taylor',
-    type: 'person',
   },
   {
     id: '7',
     label: 'Maggie',
-    type: 'person',
   },
   {
     id: '8',
     label: 'Emma',
-    type: 'person',
   },
 ];
 
@@ -87,6 +80,7 @@ export default function NameGenerator() {
           <NodeList items={demoNodes} />
         </div>
       </div>
+      <QuickNodeForm />
     </div>
   );
 }

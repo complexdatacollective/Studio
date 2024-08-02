@@ -5,7 +5,6 @@ import Node from './Node';
 export type Node = {
   id: string;
   label: string;
-  type: string;
 };
 
 export default function NodeList({
@@ -19,7 +18,7 @@ export default function NodeList({
     <div className="flex w-full flex-row flex-wrap items-center justify-center">
       {items.map((node) => (
         <div key={node.id} className="flex items-center justify-center">
-          <Node type={node.type} label={node.label} size={nodeSize} />
+          <Node label={node.label} size={nodeSize} />
         </div>
       ))}
     </div>

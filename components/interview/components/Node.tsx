@@ -1,11 +1,9 @@
 import cn from 'classnames';
 
 export default function Node({
-  type,
   label,
   size = 'lg',
 }: {
-  type: string;
   label: string;
   size?: 'sm' | 'lg';
 }) {
@@ -17,7 +15,7 @@ export default function Node({
     size === 'sm' ? 'text-lg' : 'text-xl',
   );
 
-  const nodeSizeClasses = size === 'sm' ? 'h-28 w-28' : 'h-44 w-44';
+  const nodeSizeClasses = size === 'sm' ? 'h-28 w-28' : 'h-40 w-40';
 
   return (
     <div className={`relative inline-block ${nodeSizeClasses}`} title={label}>
