@@ -11,6 +11,8 @@ import { Link, redirect } from '~/lib/localisation/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getServerSession } from '~/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
   const t = await getTranslations('SignIn');
 

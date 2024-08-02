@@ -1,14 +1,11 @@
-import { useTranslations } from 'next-intl';
 import { Link } from '~/lib/localisation/navigation';
 import { routes } from '~/lib/routes';
 
 export default function NotFound() {
-  const t = useTranslations('NotFound');
   return (
     <div>
-      <h2>{t('title')}</h2>
-      <p>{t('description')}</p>
-      <Link href={routes.home()}>{t('homeText')}</Link>
+      <h2>404 - Page Not Found</h2>
+      <Link href={routes.home()}>Go back to the homepage</Link>
     </div>
   );
 }

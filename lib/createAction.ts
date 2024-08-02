@@ -11,16 +11,10 @@ type TSchemaInput<T extends z.ZodType | undefined> = T extends z.ZodType
   ? z.infer<T>
   : undefined;
 
-type TInternals<
-  TInputSchema extends z.ZodType | undefined,
-  TRequireAuthContext extends boolean,
-  TEnableCache extends boolean,
-> = {
+type TInternals<TInputSchema extends z.ZodType | undefined> = {
   inputSchema: TInputSchema;
-  requireAuthContext?: TRequireAuthContext;
-  cacheConfig?: TEnableCache extends true
-    ? CacheConfig<TInputSchema, TRequireAuthContext>
-    : undefined;
+  requireAuthContext?: boolean;
+  cacheConfig?: CacheConfig<TInputSchema>;
 };
 
 export type TContext = {
@@ -50,7 +44,7 @@ type HandlerArgs<TInputSchema> = TInputSchema extends z.ZodType
 type HandlerFn<
   T,
   TInputSchema extends z.ZodType | undefined,
-  TRequireAuthContext extends boolean,
+  TRequireAuthContext extends boolean = false,
 > = (args: {
   input: TSchemaInput<TInputSchema>;
   context: TRequireAuthContext extends true ? TContext : undefined;
@@ -59,17 +53,10 @@ type HandlerFn<
 class ActionBuilder<
   TInputSchema extends z.ZodType | undefined,
   TRequireAuthContext extends boolean = false,
-  TEnableCache extends boolean = false,
 > {
-  public $internals: TInternals<
-    TInputSchema,
-    TRequireAuthContext,
-    TEnableCache
-  >;
+  public $internals: TInternals<TInputSchema>;
 
-  constructor(
-    internals: TInternals<TInputSchema, TRequireAuthContext, TEnableCache>,
-  ) {
+  constructor(internals: TInternals<TInputSchema>) {
     this.$internals = internals;
   }
 
@@ -78,23 +65,24 @@ class ActionBuilder<
       throw new Error('Input schema must be a ZodType');
     }
 
-    return new ActionBuilder<z.infer<T>, TRequireAuthContext, TEnableCache>({
+    // @ts-expect-error - We know this is the correct type
+    return new ActionBuilder<T, TRequireAuthContext>({
       ...this.$internals,
       inputSchema,
     });
   }
 
   public requireAuthContext() {
-    return new ActionBuilder<TInputSchema, true, TEnableCache>({
+    return new ActionBuilder<TInputSchema, true>({
       ...this.$internals,
       requireAuthContext: true,
-      cacheConfig: undefined,
     });
   }
 
   public cache(config: CacheConfig<TInputSchema, TRequireAuthContext>) {
-    return new ActionBuilder<TInputSchema, TRequireAuthContext, true>({
+    return new ActionBuilder<TInputSchema, TRequireAuthContext>({
       ...this.$internals,
+      // @ts-expect-error - We know this is the correct type
       cacheConfig: config,
     });
   }
@@ -130,7 +118,7 @@ class ActionBuilder<
         const { tags, revalidate } = this.$internals.cacheConfig;
         const cacheTags =
           // @ts-expect-error - We know this is a function
-          typeof tags === 'function' ? tags({ input, context }) : tags;
+          typeof tags === 'function' ? tags({ input: input!, context }) : tags;
         return createCachedFunction(handlerFn, cacheTags, revalidate)();
       }
 

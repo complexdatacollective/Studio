@@ -5,6 +5,8 @@ import { routes } from '~/lib/routes';
 import SignOutBtn from './SignOutBtn';
 import StudySwitcher from './StudySwitcher';
 
+export const dynamic = 'force-dynamic';
+
 export default function MainNavigation() {
   const t = useTranslations('MainNavigation');
   return (
