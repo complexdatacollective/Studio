@@ -1,17 +1,25 @@
-'use client';
+import { type RefObject } from 'react';
 import Dialog from '~/components/ui/Dialog';
 import { useDialogStore } from './store';
 
-const DialogManager = () => {
+const DialogManager = ({
+  portalRef,
+}: {
+  portalRef: RefObject<HTMLDivElement>;
+}) => {
   const { dialogs } = useDialogStore();
 
   return (
     <>
       {dialogs.map((dialog) => (
-        <Dialog key={dialog.id}>{dialog.id}</Dialog>
+        <Dialog portalContainer={portalRef.current} key={dialog.id}>
+          {dialog.id}
+        </Dialog>
       ))}
     </>
   );
 };
+
+DialogManager.displayName = 'DialogManager';
 
 export default DialogManager;
