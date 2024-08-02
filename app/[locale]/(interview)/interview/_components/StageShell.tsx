@@ -1,5 +1,5 @@
 //import PopoverHint from './PopoverHint';
-import { useTranslations } from 'next-intl';
+//import { useTranslations } from 'next-intl';
 import type { Stage } from '@prisma/client';
 
 import NameGenerator from '~/components/interview/interfaces/NameGenerator';
@@ -31,7 +31,7 @@ export default function StageShell({ stage }: { stage: Stage }) {
           </>
         }
       /> */}
-      <NameGenerator />
+      {stage.type === 'NameGenerator' && <NameGenerator />}
     </div>
   );
 }
