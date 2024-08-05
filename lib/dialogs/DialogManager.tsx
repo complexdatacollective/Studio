@@ -1,14 +1,10 @@
 'use client';
 import Dialog from '~/components/ui/Dialog';
 import { useDialogStore } from './store';
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { Dialog as DialogType } from './store';
 
 type DialogManagerProps = {
-  DialogComponent?: React.ComponentType<
-    PropsWithChildren<{
-      children: ReactNode;
-    }>
-  >;
+  DialogComponent?: React.ComponentType<DialogType>;
 };
 
 const DialogManager = ({ DialogComponent = Dialog }: DialogManagerProps) => {
@@ -17,7 +13,7 @@ const DialogManager = ({ DialogComponent = Dialog }: DialogManagerProps) => {
   return (
     <>
       {dialogs.map((dialog) => (
-        <DialogComponent key={dialog.id}>{dialog.id}</DialogComponent>
+        <DialogComponent key={dialog.id} {...dialog} />
       ))}
     </>
   );

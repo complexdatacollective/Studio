@@ -3,6 +3,12 @@ import { create } from 'zustand';
 
 export type Dialog = {
   id: string;
+  title: string;
+  content: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  onConfirm: () => void;
+  onCancel: () => void;
 };
 
 type DialogState = {
