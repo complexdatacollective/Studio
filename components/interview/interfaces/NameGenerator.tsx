@@ -96,7 +96,9 @@ export default function NameGenerator() {
     <OnboardWizard steps={demoSteps}>
       <ToggleWizardButton />
       <div className="flex flex-col overflow-hidden px-4 py-2">
-        <Prompts prompts={demoPrompts} currentPromptId={0} />
+        <div id="name-generator-2">
+          <Prompts prompts={demoPrompts} currentPromptId={0} />
+        </div>
         <div className="h-12 w-12 bg-tomato" id="name-generator-1">
           test
         </div>

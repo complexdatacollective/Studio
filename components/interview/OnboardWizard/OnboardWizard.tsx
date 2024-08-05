@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useOnboardWizard } from './OnboardWizardContext';
 import type { Step } from './types';
+import Popover from '~/components/ui/Popover';
 
 export default function OnboardWizard({
   steps,
@@ -13,26 +14,47 @@ export default function OnboardWizard({
 }) {
   const { currentStep, setStep, closeWizard, startWizard, isOpen } =
     useOnboardWizard();
+  const [elementPosition, setElementPosition] = useState({});
 
   const getTargetElement = (targetElementId: string) => {
     return document.getElementById(targetElementId)!;
   };
 
-  // Add a border around the target element if the wizard is open
+  const getTargetElementPosition = (element: Element) => {
+    const { top, left, width, height } = element.getBoundingClientRect();
+    return { top, left, width, height };
+  };
+
   useEffect(() => {
     if (isOpen && steps[currentStep]) {
       const { targetElementId } = steps[currentStep];
       if (targetElementId) {
-        const targetElement = getTargetElement(targetElementId as string);
+        const targetElement = getTargetElement(targetElementId);
         if (targetElement) {
-          targetElement.classList.add('border', 'border-mustard');
-          return () => {
-            targetElement.classList.remove('border', 'border-mustard');
-          };
+          setElementPosition(getTargetElementPosition(targetElement));
         }
       }
+    } else {
+      setElementPosition(null);
     }
   }, [currentStep, steps, isOpen]);
 
-  return <div>{children}</div>;
+  return (
+    <div className="text-black">
+      {children}
+      {elementPosition && isOpen && (
+        <Popover content={steps[currentStep]?.content.en}>
+          <div
+            style={{
+              top: elementPosition.top,
+              left: elementPosition.left,
+              width: elementPosition.width,
+              height: elementPosition.height,
+            }}
+            className="absolute z-50 border-2 border-mustard"
+          />
+        </Popover>
+      )}
+    </div>
+  );
 }
