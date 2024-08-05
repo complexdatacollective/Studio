@@ -7,7 +7,7 @@ const Dialog = ({
   children,
 }: {
   children: ReactNode;
-  portalContainer: HTMLElement | null;
+  portalContainer?: HTMLElement | null;
 }) => {
   const handleOpenChange = () => {
     // handle open change

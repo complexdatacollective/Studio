@@ -26,7 +26,14 @@ export const DialogManagerComponent: Story = {
         >
           Remove Last Dialog
         </Button>
-        <div ref={portalRef} />
+        <div
+          style={{
+            border: '2px solid red',
+            height: '40rem',
+            position: 'relative',
+          }}
+          ref={portalRef}
+        />
         <DialogManager portalRef={portalRef} />
       </>
     );

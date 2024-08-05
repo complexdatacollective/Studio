@@ -6,14 +6,14 @@ import { useDialogStore } from './store';
 const DialogManager = ({
   portalRef,
 }: {
-  portalRef: RefObject<HTMLDivElement>;
+  portalRef?: RefObject<HTMLDivElement> | null;
 }) => {
   const { dialogs } = useDialogStore();
 
   return (
     <>
       {dialogs.map((dialog) => (
-        <Dialog portalContainer={portalRef.current} key={dialog.id}>
+        <Dialog portalContainer={portalRef?.current} key={dialog.id}>
           {dialog.id}
         </Dialog>
       ))}
