@@ -50,15 +50,15 @@ export default function OnboardWizardPopover({
         closeWizard();
       }}
     >
+      {/* spotlight */}
       <div
         style={{
           top: elementPosition.top,
           left: elementPosition.left,
           width: elementPosition.width,
           height: elementPosition.height,
-          zIndex: 100,
         }}
-        className="absolute border-2 border-sea-green"
+        className="absolute z-50"
       />
     </Popover>
   );

@@ -49,7 +49,7 @@ export default function OnboardWizard({
       {children}
       {elementPosition && isOpen && (
         <>
-          <div className="absolute inset-0 z-10 bg-cyber-grape-dark opacity-50" />
+          <div className="absolute inset-0 z-10 bg-cyber-grape-dark opacity-75" />
           <OnboardWizardPopover
             stepContent={steps[currentStep]?.content.en}
             elementPosition={elementPosition}
