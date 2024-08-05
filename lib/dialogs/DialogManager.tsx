@@ -1,16 +1,23 @@
 'use client';
 import Dialog from '~/components/ui/Dialog';
-import { useDialogStore, type Dialog as DialogType } from './store';
+import { useDialogStore } from './store';
+import type { PropsWithChildren, ReactNode } from 'react';
 
-const DialogManager = ({ dialogs }: { dialogs?: DialogType[] }) => {
-  const { dialogs: storeDialogs } = useDialogStore();
+type DialogManagerProps = {
+  DialogComponent?: React.ComponentType<
+    PropsWithChildren<{
+      children: ReactNode;
+    }>
+  >;
+};
 
-  const dialogsToRender = dialogs ?? storeDialogs;
+const DialogManager = ({ DialogComponent = Dialog }: DialogManagerProps) => {
+  const { dialogs } = useDialogStore();
 
   return (
     <>
-      {dialogsToRender.map((dialog) => (
-        <Dialog key={dialog.id}>{dialog.id}</Dialog>
+      {dialogs.map((dialog) => (
+        <DialogComponent key={dialog.id}>{dialog.id}</DialogComponent>
       ))}
     </>
   );
