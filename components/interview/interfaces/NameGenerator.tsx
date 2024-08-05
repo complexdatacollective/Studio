@@ -6,6 +6,8 @@ import Prompts from '../components/Prompts/Prompts';
 import NodePanels from '../containers/NodePanels';
 import NodeList from '../components/NodeList';
 import QuickNodeForm from '../containers/QuickNodeForm';
+import OnboardWizard from '../OnboardWizard/OnboardWizard';
+import ToggleWizardButton from '../OnboardWizard/ToggleWizardButton';
 
 const demoPrompts = [
   {
@@ -68,19 +70,46 @@ const demoNodes = [
   },
 ];
 
+const demoSteps = [
+  {
+    id: 0,
+    targetElementId: 'name-generator-1',
+    content: {
+      en: 'Welcome to the Name Generator! We will help you generate a name for your interview.',
+      es: '',
+      ar: '',
+    },
+  },
+  {
+    id: 1,
+    targetElementId: 'name-generator-2',
+    content: {
+      en: 'First, we will ask you a few questions to help us generate a name for your interview.',
+      es: '',
+      ar: '',
+    },
+  },
+];
+
 export default function NameGenerator() {
   return (
-    <div className="flex flex-col overflow-hidden px-4 py-2">
-      <Prompts prompts={demoPrompts} currentPromptId={0} />
-      <div className="relative flex h-full min-h-0 flex-1 items-start justify-center">
-        {/* NameGenerator Main Content */}
-
-        <NodePanels panels={demoPanels} />
-        <div className="flex-basis-auto flex h-full flex-shrink flex-grow pl-6">
-          <NodeList items={demoNodes} />
+    <OnboardWizard steps={demoSteps}>
+      <ToggleWizardButton />
+      <div className="flex flex-col overflow-hidden px-4 py-2">
+        <Prompts prompts={demoPrompts} currentPromptId={0} />
+        <div className="h-12 w-12 bg-tomato" id="name-generator-1">
+          test
         </div>
+        <div className="relative flex h-full min-h-0 flex-1 items-start justify-center">
+          {/* NameGenerator Main Content */}
+
+          <NodePanels panels={demoPanels} />
+          <div className="flex-basis-auto flex h-full flex-shrink flex-grow pl-6">
+            <NodeList items={demoNodes} />
+          </div>
+        </div>
+        <QuickNodeForm />
       </div>
-      <QuickNodeForm />
-    </div>
+    </OnboardWizard>
   );
 }
