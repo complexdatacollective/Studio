@@ -1,7 +1,7 @@
 import { generatePublicId } from '~/lib/generatePublicId';
 import { create } from 'zustand';
 
-type Dialog = {
+export type Dialog = {
   id: string;
 };
 

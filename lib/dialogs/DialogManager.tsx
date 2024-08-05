@@ -1,27 +1,16 @@
 'use client';
-import { type RefObject } from 'react';
 import Dialog from '~/components/ui/Dialog';
-import { useDialogStore } from './store';
+import { useDialogStore, type Dialog as DialogType } from './store';
 
-const DialogManager = ({
-  isModal,
-  portalRef,
-}: {
-  isModal?: boolean;
-  portalRef?: RefObject<HTMLDivElement> | null;
-}) => {
-  const { dialogs } = useDialogStore();
+const DialogManager = ({ dialogs }: { dialogs?: DialogType[] }) => {
+  const { dialogs: storeDialogs } = useDialogStore();
+
+  const dialogsToRender = dialogs ?? storeDialogs;
 
   return (
     <>
-      {dialogs.map((dialog) => (
-        <Dialog
-          isModal={isModal}
-          portalContainer={portalRef?.current}
-          key={dialog.id}
-        >
-          {dialog.id}
-        </Dialog>
+      {dialogsToRender.map((dialog) => (
+        <Dialog key={dialog.id}>{dialog.id}</Dialog>
       ))}
     </>
   );
