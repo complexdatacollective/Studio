@@ -72,19 +72,25 @@ const demoNodes = [
 
 const demoSteps = [
   {
-    id: 0,
     targetElementId: 'name-generator-1',
     content: {
-      en: 'This is the name generator interface. This interface allows you to nominate people.',
+      en: 'This is the name generator interface. This interface allows you to nominate people. First, read the prompt and think about the people who meet the criteria.',
       es: '',
       ar: '',
     },
   },
   {
-    id: 1,
     targetElementId: 'name-generator-2',
     content: {
-      en: 'First, read the prompt and think about the people who meet the criteria.',
+      en: 'These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them.',
+      es: '',
+      ar: '',
+    },
+  },
+  {
+    targetElementId: 'name-generator-3',
+    content: {
+      en: 'Click this button to add a new person.',
       es: '',
       ar: '',
     },
@@ -96,22 +102,13 @@ export default function NameGenerator() {
     <OnboardWizard steps={demoSteps}>
       <ToggleWizardButton />
       <div className="flex flex-col overflow-hidden px-4 py-2">
-        <Prompts
-          prompts={demoPrompts}
-          currentPromptId={0}
-          // data-id="name-generator-2"
-        />
-        <div className="h-12 w-12 bg-tomato" data-id="name-generator-1">
-          test
-        </div>
-        <div className="h-12 w-12 bg-tomato" data-id="name-generator-2">
-          test 2
+        <div data-id="name-generator-1">
+          <Prompts prompts={demoPrompts} currentPromptId={0} />
         </div>
 
         <div className="relative flex h-full min-h-0 flex-1 items-start justify-center">
-          {/* NameGenerator Main Content */}
-
           <NodePanels panels={demoPanels} />
+
           <div className="flex-basis-auto flex h-full flex-shrink flex-grow pl-6">
             <NodeList items={demoNodes} />
           </div>

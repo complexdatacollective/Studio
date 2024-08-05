@@ -4,20 +4,16 @@ import { Button } from '~/components/ui/Button';
 import { useOnboardWizard } from './OnboardWizardContext';
 
 export default function ToggleWizardButton() {
-  const { startWizard, closeWizard, isOpen } = useOnboardWizard();
+  const { startWizard } = useOnboardWizard();
 
   return (
-    <div className="flex">
+    <div>
       <Button
         onClick={() => {
-          if (isOpen) {
-            closeWizard();
-          } else {
-            startWizard();
-          }
+          startWizard();
         }}
       >
-        {isOpen ? 'Close Wizard' : 'Open Wizard'}
+        Open Wizard
       </Button>
     </div>
   );
