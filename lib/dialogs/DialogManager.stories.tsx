@@ -34,7 +34,7 @@ export const DialogManagerComponent: Story = {
           }}
           ref={portalRef}
         />
-        <DialogManager portalRef={portalRef} />
+        <DialogManager isModal={false} portalRef={portalRef} />
       </>
     );
   },

@@ -3,9 +3,11 @@ import { X } from 'lucide-react';
 import { type ReactNode } from 'react';
 
 const Dialog = ({
+  isModal,
   portalContainer,
   children,
 }: {
+  isModal?: boolean;
   children: ReactNode;
   portalContainer?: HTMLElement | null;
 }) => {
@@ -14,9 +16,9 @@ const Dialog = ({
   };
 
   return (
-    <DialogPrimitive.Root open onOpenChange={handleOpenChange}>
+    <DialogPrimitive.Root modal={isModal} open onOpenChange={handleOpenChange}>
       <DialogPrimitive.Portal container={portalContainer}>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-rich-black/50" />
+        <DialogPrimitive.Overlay className="absolute inset-0 z-50 bg-rich-black/50" />
         <DialogPrimitive.Content className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm translate-x-[-50%] translate-y-[-50%] gap-2 rounded-md border bg-background p-5 shadow-lg sm:max-w-lg sm:rounded-lg">
           {children}
 

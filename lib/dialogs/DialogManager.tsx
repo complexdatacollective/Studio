@@ -4,8 +4,10 @@ import Dialog from '~/components/ui/Dialog';
 import { useDialogStore } from './store';
 
 const DialogManager = ({
+  isModal,
   portalRef,
 }: {
+  isModal?: boolean;
   portalRef?: RefObject<HTMLDivElement> | null;
 }) => {
   const { dialogs } = useDialogStore();
@@ -13,7 +15,11 @@ const DialogManager = ({
   return (
     <>
       {dialogs.map((dialog) => (
-        <Dialog portalContainer={portalRef?.current} key={dialog.id}>
+        <Dialog
+          isModal={isModal}
+          portalContainer={portalRef?.current}
+          key={dialog.id}
+        >
           {dialog.id}
         </Dialog>
       ))}
