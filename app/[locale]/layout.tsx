@@ -2,7 +2,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { Inter } from 'next/font/google';
 import { getMessages } from 'next-intl/server';
 import { type Metadata } from 'next';
-import MainNavigation from './_components/MainNavigation';
 import '~/app/globals.scss';
 import { SUPPORTED_LOCALES, type Locale } from '~/lib/localisation/locales';
 import { Analytics } from '@vercel/analytics/react';
@@ -36,10 +35,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <RadixDirectionProvider dir={dir}>
-            <TooltipProvider>
-              <MainNavigation />
-              {children}
-            </TooltipProvider>
+            <TooltipProvider>{children}</TooltipProvider>
           </RadixDirectionProvider>
         </NextIntlClientProvider>
         <Analytics />
