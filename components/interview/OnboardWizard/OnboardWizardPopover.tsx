@@ -5,6 +5,7 @@ import { useOnboardWizard } from './OnboardWizardContext';
 export default function OnboardWizardPopover({
   stepContent,
   elementPosition,
+  totalSteps,
 }: {
   stepContent: React.ReactNode;
   elementPosition: {
@@ -13,6 +14,7 @@ export default function OnboardWizardPopover({
     width: number;
     height: number;
   };
+  totalSteps: number;
 }) {
   const { closeWizard, isOpen, setStep, currentStep } = useOnboardWizard();
 
@@ -28,13 +30,26 @@ export default function OnboardWizardPopover({
     <div className="flex flex-col">
       {stepContent}
       <div className="flex justify-between pt-2">
-        <Button onClick={() => prevStep()}>Prev</Button>
-        <Button onClick={() => nextStep()}>Next</Button>
+        {currentStep + 1} / {totalSteps}
+        {currentStep !== 0 && <Button onClick={() => prevStep()}>Prev</Button>}
+        {currentStep < totalSteps - 1 ? (
+          <Button onClick={() => nextStep()}>Next</Button>
+        ) : (
+          <Button onClick={() => closeWizard()}>Finish</Button>
+        )}
       </div>
     </div>
   );
+
   return (
-    <Popover content={popoverContent} modal={true} isOpen={true}>
+    <Popover
+      content={popoverContent}
+      modal={true}
+      isOpen={isOpen}
+      onOpenChange={() => {
+        closeWizard();
+      }}
+    >
       <div
         style={{
           top: elementPosition.top,
@@ -43,7 +58,7 @@ export default function OnboardWizardPopover({
           height: elementPosition.height,
           zIndex: 100,
         }}
-        className="absolute border-2 border-mustard"
+        className="absolute border-2 border-sea-green"
       />
     </Popover>
   );

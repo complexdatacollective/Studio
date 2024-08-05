@@ -9,14 +9,20 @@ const Popover = ({
   side = 'top',
   modal,
   isOpen,
+  onOpenChange,
 }: PropsWithChildren<{
   content: string | React.ReactNode;
   side?: 'top' | 'right' | 'bottom' | 'left';
   modal?: boolean;
   isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }>) => {
   return (
-    <PopoverPrimitive.Root modal={modal}>
+    <PopoverPrimitive.Root
+      modal={modal}
+      defaultOpen={isOpen}
+      onOpenChange={onOpenChange}
+    >
       <PopoverPrimitive.Trigger asChild>{children}</PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content

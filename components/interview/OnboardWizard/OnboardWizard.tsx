@@ -53,6 +53,7 @@ export default function OnboardWizard({
           <OnboardWizardPopover
             stepContent={steps[currentStep]?.content.en}
             elementPosition={elementPosition}
+            totalSteps={steps.length}
           />
         </>
       )}
