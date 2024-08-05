@@ -75,7 +75,7 @@ const demoSteps = [
     id: 0,
     targetElementId: 'name-generator-1',
     content: {
-      en: 'Welcome to the Name Generator! We will help you generate a name for your interview.',
+      en: 'This is the name generator interface. This interface allows you to nominate people.',
       es: '',
       ar: '',
     },
@@ -84,7 +84,7 @@ const demoSteps = [
     id: 1,
     targetElementId: 'name-generator-2',
     content: {
-      en: 'First, we will ask you a few questions to help us generate a name for your interview.',
+      en: 'First, read the prompt and think about the people who meet the criteria.',
       es: '',
       ar: '',
     },
@@ -96,12 +96,18 @@ export default function NameGenerator() {
     <OnboardWizard steps={demoSteps}>
       <ToggleWizardButton />
       <div className="flex flex-col overflow-hidden px-4 py-2">
-        <div id="name-generator-2">
-          <Prompts prompts={demoPrompts} currentPromptId={0} />
-        </div>
-        <div className="h-12 w-12 bg-tomato" id="name-generator-1">
+        <Prompts
+          prompts={demoPrompts}
+          currentPromptId={0}
+          // data-id="name-generator-2"
+        />
+        <div className="h-12 w-12 bg-tomato" data-id="name-generator-1">
           test
         </div>
+        <div className="h-12 w-12 bg-tomato" data-id="name-generator-2">
+          test 2
+        </div>
+
         <div className="relative flex h-full min-h-0 flex-1 items-start justify-center">
           {/* NameGenerator Main Content */}
 

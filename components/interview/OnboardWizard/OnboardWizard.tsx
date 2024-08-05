@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useOnboardWizard } from './OnboardWizardContext';
 import type { Step } from './types';
-import Popover from '~/components/ui/Popover';
+import OnboardWizardPopover from './OnboardWizardPopover';
 
 export default function OnboardWizard({
   steps,
@@ -12,15 +12,19 @@ export default function OnboardWizard({
   steps: Step[];
   children: React.ReactNode;
 }) {
-  const { currentStep, setStep, closeWizard, startWizard, isOpen } =
-    useOnboardWizard();
-  const [elementPosition, setElementPosition] = useState({});
+  const { currentStep, isOpen } = useOnboardWizard();
+  const [elementPosition, setElementPosition] = useState<{
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  } | null>(null);
 
-  const getTargetElement = (targetElementId: string) => {
-    return document.getElementById(targetElementId)!;
+  const getTargetElement = (dataId: string): HTMLElement | null => {
+    return document.querySelector(`[data-id="${dataId}"]`);
   };
 
-  const getTargetElementPosition = (element: Element) => {
+  const getTargetElementPosition = (element: HTMLElement) => {
     const { top, left, width, height } = element.getBoundingClientRect();
     return { top, left, width, height };
   };
@@ -32,6 +36,7 @@ export default function OnboardWizard({
         const targetElement = getTargetElement(targetElementId);
         if (targetElement) {
           setElementPosition(getTargetElementPosition(targetElement));
+          targetElement.style.zIndex = '50';
         }
       }
     } else {
@@ -43,17 +48,13 @@ export default function OnboardWizard({
     <div className="text-black">
       {children}
       {elementPosition && isOpen && (
-        <Popover content={steps[currentStep]?.content.en}>
-          <div
-            style={{
-              top: elementPosition.top,
-              left: elementPosition.left,
-              width: elementPosition.width,
-              height: elementPosition.height,
-            }}
-            className="absolute z-50 border-2 border-mustard"
+        <>
+          <div className="absolute inset-0 z-10 bg-cyber-grape-dark opacity-50" />
+          <OnboardWizardPopover
+            stepContent={steps[currentStep]?.content.en}
+            elementPosition={elementPosition}
           />
-        </Popover>
+        </>
       )}
     </div>
   );
