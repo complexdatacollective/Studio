@@ -19,6 +19,9 @@ export default function OnboardWizard({
     width: number;
     height: number;
   } | null>(null);
+  const [previousElement, setPreviousElement] = useState<HTMLElement | null>(
+    null,
+  );
 
   const getTargetElement = (dataId: string): HTMLElement | null => {
     return document.querySelector(`[data-id="${dataId}"]`);
@@ -37,12 +40,21 @@ export default function OnboardWizard({
         if (targetElement) {
           setElementPosition(getTargetElementPosition(targetElement));
           targetElement.style.zIndex = '50';
+
+          if (previousElement && previousElement !== targetElement) {
+            previousElement.style.zIndex = '';
+          }
+          setPreviousElement(targetElement);
         }
       }
     } else {
+      if (previousElement) {
+        previousElement.style.zIndex = '';
+        setPreviousElement(null);
+      }
       setElementPosition(null);
     }
-  }, [currentStep, steps, isOpen]);
+  }, [currentStep, steps, isOpen, previousElement]);
 
   return (
     <div className="text-black">
