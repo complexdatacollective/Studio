@@ -3,15 +3,15 @@ import StageShell from './StageShell';
 import Navigation from './Navigation';
 import type { Stage } from '@prisma/client';
 
-const stageOptions: Record<string, Stage> = {
-  NameGenerator: {
+const stageOptions: Stage[] = [
+  {
     id: 1,
     publicId: 'stage1',
-    name: 'Name Generator',
+    name: 'NameGenerator',
     type: 'NameGenerator',
     protocolRevisionId: 1,
   },
-};
+];
 
 const meta: Meta<typeof StageShell> = {
   title: 'Interview/StageShell',
@@ -25,12 +25,19 @@ const meta: Meta<typeof StageShell> = {
   argTypes: {
     stage: {
       control: 'select',
-      options: Object.keys(stageOptions),
+      options: stageOptions.map((stage) => stage.name),
+      mapping: stageOptions.reduce(
+        (acc, stage) => {
+          acc[stage.name] = stage;
+          return acc;
+        },
+        {} as Record<string, Stage>,
+      ),
       description: 'The stage to display.',
     },
   },
   args: {
-    stage: stageOptions.NameGenerator,
+    stage: stageOptions[0],
   },
   render: (args) => {
     return (
