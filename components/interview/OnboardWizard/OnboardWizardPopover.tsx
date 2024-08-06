@@ -60,6 +60,7 @@ export default function OnboardWizardPopover({
       onOpenChange={() => {
         closeWizard();
       }}
+      side="right"
     >
       {/* spotlight */}
       <div
