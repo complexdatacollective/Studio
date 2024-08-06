@@ -1,7 +1,7 @@
 'use client';
 import Dialog from '~/components/ui/Dialog';
 import { useDialogStore } from './store';
-import type { Dialog as DialogType } from './store';
+import type { Dialog as DialogType } from './dialog-schemas';
 
 type DialogManagerProps = {
   DialogComponent?: React.ComponentType<DialogType>;

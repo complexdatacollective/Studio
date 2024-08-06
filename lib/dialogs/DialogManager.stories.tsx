@@ -1,7 +1,8 @@
 import { type Meta, type StoryObj } from '@storybook/react';
 import { Button } from '~/components/ui/Button';
 import DialogManager from './DialogManager';
-import { type Dialog, useDialogStore } from './store';
+import { type Dialog } from './dialog-schemas';
+import useDialog from './useDialog';
 
 const meta = {
   title: 'Dialogs/DialogManager',
@@ -13,20 +14,14 @@ type Story = StoryObj<typeof meta>;
 
 export const DialogManagerComponent: Story = {
   render: () => {
-    const { addDialog, removeDialog, dialogs } = useDialogStore();
+    const { showDialog, closeDialog, dialogs } = useDialog();
 
-    const MockDialog = ({
-      id,
-      title,
-      content,
-      cancelLabel,
-      confirmLabel,
-    }: Dialog) => (
+    const MockDialog = ({ id, title, type, content, confirmLabel }: Dialog) => (
       <div>
         id: {id}
         title: {title}
+        type: {type}
         content: {content}
-        cancelLabel: {cancelLabel}
         confirmLabel: {confirmLabel}
       </div>
     );
@@ -35,8 +30,9 @@ export const DialogManagerComponent: Story = {
       <>
         <Button
           onClick={() =>
-            void addDialog({
+            void showDialog({
               title: 'Dialog title',
+              type: 'Confirm',
               content: 'Dialog content',
               confirmLabel: 'Confirm',
               cancelLabel: 'Cancel',
@@ -48,7 +44,7 @@ export const DialogManagerComponent: Story = {
           Add Dialogs
         </Button>
         <Button
-          onClick={() => void removeDialog(dialogs[dialogs.length - 1]!.id)}
+          onClick={() => void closeDialog(dialogs[dialogs.length - 1]!.id)}
         >
           Remove Last Dialog
         </Button>
