@@ -1,4 +1,9 @@
+import { SUPPORTED_LOCALES } from '~/lib/localisation/locales';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
+
+export function generateStaticParams() {
+  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+}
 
 export default function AuthLayout({
   children,
