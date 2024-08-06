@@ -56,6 +56,25 @@ export default function OnboardWizard({
     }
   }, [currentStep, steps, isOpen, previousElement]);
 
+  // Handle window resize
+  useEffect(() => {
+    const updateElementPosition = () => {
+      if (!isOpen || !steps[currentStep]) {
+        return;
+      }
+      const { targetElementId } = steps[currentStep];
+      if (targetElementId) {
+        const targetElement = getTargetElement(targetElementId);
+        if (targetElement) {
+          setElementPosition(getTargetElementPosition(targetElement));
+        }
+      }
+    };
+
+    window.addEventListener('resize', updateElementPosition);
+    return () => window.removeEventListener('resize', updateElementPosition);
+  }, [currentStep, steps, isOpen]);
+
   return (
     <div className="text-black">
       {children}
