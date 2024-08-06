@@ -1,5 +1,6 @@
 import { useOnboardWizard } from './OnboardWizardContext';
 import type { Step } from './types';
+import { cn } from '~/lib/utils';
 
 export default function Beacon({
   step,
@@ -16,10 +17,13 @@ export default function Beacon({
   };
 
   return (
-    <div
-      className="h-4 w-4 rounded-full bg-purple-pizazz"
+    <button
+      name={`beacon-${step.id}`}
+      className={cn(
+        'absolute h-4 w-4 rounded-full bg-purple-pizazz',
+        'hover:h-6 hover:w-6',
+      )}
       style={{
-        position: 'absolute',
         top: position.top,
         left: position.left,
       }}
