@@ -1,6 +1,4 @@
 import { getUserStudies } from '~/server/queries/studies';
-import CreateStudyForm from '../_components/CreateStudyForm';
-import { requirePageAuth } from '~/lib/auth';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
@@ -9,8 +7,10 @@ import Section from '~/components/layout/Section';
 import PageHeader from '~/components/typography/PageHeader';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import { getInterviews } from '~/server/queries/interviews';
+import CreateStudyForm from './_components/CreateStudyForm';
+import { requirePageAuth } from '~/lib/auth';
 
-export default async function Home() {
+export default async function Dashboard() {
   await requirePageAuth();
 
   const t = await getTranslations('Home');
