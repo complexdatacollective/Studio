@@ -12,7 +12,7 @@ export type DialogVariant =
 
 const SharedDialogProperties = z.object({
   id: z.string(),
-  title: z.string().optional(),
+  title: z.string(),
   content: z.custom<ReactNode>(),
   confirmLabel: z.string().optional(),
   onConfirm: z.function().optional(),
