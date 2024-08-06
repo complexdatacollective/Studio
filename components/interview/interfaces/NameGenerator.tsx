@@ -74,7 +74,20 @@ const demoSteps = [
   {
     targetElementId: 'name-generator-1',
     content: {
-      en: 'This is the name generator interface. This interface allows you to nominate people. First, read the prompt and think about the people who meet the criteria.',
+      en: (
+        <>
+          <p>
+            This is the name generator interface. This interface allows you to
+            nominate people. First, read the prompt and think about the people
+            who meet the criteria.
+          </p>
+          <img
+            src="https://documentation.networkcanvas.com/assets/img/interface-documentation/name-generators/ng-quick.png"
+            alt="Name Generator Interface"
+            style={{ width: '100%', height: 'auto', marginTop: '10px' }}
+          />
+        </>
+      ),
       es: '',
       ar: '',
     },
