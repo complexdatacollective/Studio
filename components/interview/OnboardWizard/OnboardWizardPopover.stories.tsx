@@ -26,15 +26,6 @@ const meta: Meta<typeof OnboardWizardPopover> = {
       defaultValue:
         'This is a name generator interface. This interface allows you to nominate people. First, read the prompt and think about the people who meet the criteria.',
     },
-    elementPosition: {
-      control: 'object',
-      defaultValue: {
-        top: 80,
-        left: 160,
-        width: 816,
-        height: 108,
-      },
-    },
     totalSteps: {
       control: 'number',
       defaultValue: 3,

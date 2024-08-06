@@ -16,7 +16,7 @@ export default function OnboardWizardPopover({
   };
   totalSteps: number;
 }) {
-  const { closeWizard, isOpen, setStep, currentStep } = useOnboardWizard();
+  const { closeWizard, setStep, currentStep } = useOnboardWizard();
 
   const nextStep = () => {
     setStep(currentStep + 1);
@@ -45,7 +45,7 @@ export default function OnboardWizardPopover({
     <Popover
       content={popoverContent}
       modal={true}
-      isOpen={isOpen}
+      isOpen={true}
       onOpenChange={() => {
         closeWizard();
       }}
