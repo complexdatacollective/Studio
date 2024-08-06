@@ -29,13 +29,24 @@ export default function OnboardWizardPopover({
   const popoverContent = (
     <div className="flex flex-col">
       {stepContent}
-      <div className="flex justify-between pt-2">
-        {currentStep + 1} / {totalSteps}
-        {currentStep !== 0 && <Button onClick={() => prevStep()}>Prev</Button>}
+
+      <div className="flex items-center justify-between pt-2">
+        {currentStep !== 0 && (
+          <Button name="previous" size="sm" onClick={() => prevStep()}>
+            Prev
+          </Button>
+        )}
+        <div className="text-sm">
+          {currentStep + 1} of {totalSteps}
+        </div>
         {currentStep < totalSteps - 1 ? (
-          <Button onClick={() => nextStep()}>Next</Button>
+          <Button name="next" size="sm" onClick={() => nextStep()}>
+            Next
+          </Button>
         ) : (
-          <Button onClick={() => closeWizard()}>Finish</Button>
+          <Button name="finish" size="sm" onClick={() => closeWizard()}>
+            Finish
+          </Button>
         )}
       </div>
     </div>
