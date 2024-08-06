@@ -73,7 +73,6 @@ const demoNodes = [
 const demoSteps = [
   {
     id: 1,
-    targetElementId: 'name-generator-1',
     content: {
       en: (
         <>

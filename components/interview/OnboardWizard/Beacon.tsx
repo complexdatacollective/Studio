@@ -18,6 +18,7 @@ export default function Beacon({
 
   return (
     <button
+      title={`beacon-${step.id}`}
       name={`beacon-${step.id}`}
       className={cn(
         'absolute h-4 w-4 rounded-full bg-purple-pizazz',

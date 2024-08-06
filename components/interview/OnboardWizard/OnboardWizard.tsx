@@ -5,6 +5,7 @@ import { useOnboardWizard } from './OnboardWizardContext';
 import type { Step } from './types';
 import OnboardWizardPopover from './OnboardWizardPopover';
 import Beacon from './Beacon';
+import OnboardWizardModal from './OnboardWizardModal';
 
 export default function OnboardWizard({
   steps,
@@ -37,27 +38,32 @@ export default function OnboardWizard({
   };
 
   useEffect(() => {
-    if (isOpen && steps[currentStep]) {
-      const { targetElementId } = steps[currentStep];
-      if (targetElementId) {
-        const targetElement = getTargetElement(targetElementId);
-        if (targetElement) {
-          setCurrentStepPosition(getElementPosition(targetElement));
-          targetElement.style.zIndex = '50';
+    const updateStepPosition = () => {
+      if (isOpen && steps[currentStep]) {
+        const { targetElementId } = steps[currentStep];
+        if (targetElementId) {
+          const targetElement = getTargetElement(targetElementId);
+          if (targetElement) {
+            // Reset z-index of the previous element before updating the new one
+            if (previousElement && previousElement !== targetElement) {
+              previousElement.style.zIndex = '';
+            }
 
-          if (previousElement && previousElement !== targetElement) {
-            previousElement.style.zIndex = '';
+            setCurrentStepPosition(getElementPosition(targetElement));
+            targetElement.style.zIndex = '50';
+            setPreviousElement(targetElement);
           }
-          setPreviousElement(targetElement);
         }
+      } else {
+        if (previousElement) {
+          previousElement.style.zIndex = '';
+        }
+        setCurrentStepPosition(null);
+        setPreviousElement(null);
       }
-    } else {
-      if (previousElement) {
-        previousElement.style.zIndex = '';
-      }
-      setCurrentStepPosition(null);
-      setPreviousElement(null);
-    }
+    };
+
+    updateStepPosition();
   }, [currentStep, steps, isOpen, previousElement]);
 
   // Handle window resize
@@ -102,15 +108,30 @@ export default function OnboardWizard({
           />
         </>
       )}
+      {/* Render Modal if there is no target element id */}
+      {isOpen && !currentStepPosition && (
+        <>
+          <OnboardWizardModal
+            stepContent={steps[currentStep]?.content.en}
+            totalSteps={steps.length}
+          />
+        </>
+      )}
       {/* Render beacons if wizard is not running */}
       {!isOpen &&
-        steps.map((step) => (
-          <Beacon
-            key={step.id}
-            step={step}
-            position={beaconPositions[step.id] ?? { top: 0, left: 0 }}
-          />
-        ))}
+        steps.map(
+          (step) =>
+            // only render beacon if there is a target element
+            beaconPositions[step.id] && (
+              <Beacon
+                key={step.id}
+                step={step}
+                position={
+                  beaconPositions[step.id] as { top: number; left: number }
+                }
+              />
+            ),
+        )}
     </div>
   );
 }
