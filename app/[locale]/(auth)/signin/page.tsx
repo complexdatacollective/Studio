@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/Card';
-import SignInForm from './_components/SignInForm';
+import SignInForm from '../_components/SignInForm';
 import { routes } from '~/lib/routes';
 import { Link, redirect } from '~/lib/localisation/navigation';
 import { getTranslations } from 'next-intl/server';
@@ -24,21 +24,19 @@ export default async function Page() {
   }
 
   return (
-    <div className="grid h-[100vh] w-full items-center justify-center gap-1.5">
-      <Card className="m-3 w-[28rem]">
-        <CardHeader>
-          <CardTitle>{t('cardTitle')}</CardTitle>
-          <CardDescription>
-            {t('cardDescription')}{' '}
-            <Link className="text-blue-400 underline" href={routes.signUp()}>
-              {t('linkText')}
-            </Link>
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <SignInForm />
-        </CardContent>
-      </Card>
-    </div>
+    <Card className="m-3 w-[28rem]">
+      <CardHeader>
+        <CardTitle>{t('cardTitle')}</CardTitle>
+        <CardDescription>
+          {t('cardDescription')}{' '}
+          <Link className="text-blue-400 underline" href={routes.signUp()}>
+            {t('linkText')}
+          </Link>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <SignInForm />
+      </CardContent>
+    </Card>
   );
 }

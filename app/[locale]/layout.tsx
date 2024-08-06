@@ -30,6 +30,7 @@ export default async function RootLayout({
 }) {
   const messages = await getMessages();
   const dir = getLangDir(locale);
+
   return (
     <html lang={locale} dir={dir}>
       <body className={inter.className}>
