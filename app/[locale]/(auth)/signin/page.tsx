@@ -11,8 +11,6 @@ import { Link, redirect } from '~/lib/localisation/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getServerSession } from '~/lib/auth';
 
-export const dynamic = 'force-dynamic';
-
 export default async function Page() {
   const t = await getTranslations('SignIn');
 
@@ -24,14 +22,12 @@ export default async function Page() {
   }
 
   return (
-    <Card className="m-3 w-[28rem]">
+    <Card className="w-[28rem]">
       <CardHeader>
         <CardTitle>{t('cardTitle')}</CardTitle>
         <CardDescription>
           {t('cardDescription')}{' '}
-          <Link className="text-blue-400 underline" href={routes.signUp()}>
-            {t('linkText')}
-          </Link>
+          <Link href={routes.signUp()}>{t('linkText')}</Link>
         </CardDescription>
       </CardHeader>
       <CardContent>

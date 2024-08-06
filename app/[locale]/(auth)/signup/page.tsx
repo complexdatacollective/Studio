@@ -21,14 +21,12 @@ export default async function Page() {
   }
 
   return (
-    <Card className="m-3 w-[28rem]">
+    <Card className="w-[28rem]">
       <CardHeader>
         <CardTitle>{t('cardTitle')}</CardTitle>
         <CardDescription>
           {t('cardDescription')}{' '}
-          <Link className="text-blue-400 underline" href={routes.signIn()}>
-            {t('linkText')}
-          </Link>
+          <Link href={routes.signIn()}>{t('linkText')}</Link>
         </CardDescription>
       </CardHeader>
       <CardContent>

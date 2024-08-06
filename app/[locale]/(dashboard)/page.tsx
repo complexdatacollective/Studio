@@ -1,5 +1,4 @@
 import { getUserStudies } from '~/server/queries/studies';
-import CreateStudyForm from '../_components/CreateStudyForm';
 import { requirePageAuth } from '~/lib/auth';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
@@ -9,6 +8,7 @@ import Section from '~/components/layout/Section';
 import PageHeader from '~/components/typography/PageHeader';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import { getInterviews } from '~/server/queries/interviews';
+import CreateStudyForm from './_components/CreateStudyForm';
 
 export default async function Home() {
   await requirePageAuth();

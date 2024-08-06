@@ -8,6 +8,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
 import { TooltipProvider } from '~/components/ui/Tooltip';
 import RadixDirectionProvider from './_components/RadixDirectionProvider';
+import { cn } from '~/lib/utils';
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
@@ -32,8 +33,8 @@ export default async function RootLayout({
   const dir = getLangDir(locale);
 
   return (
-    <html lang={locale} dir={dir}>
-      <body className={inter.className}>
+    <html lang={locale} dir={dir} className="h-full bg-platinum">
+      <body className={cn(inter.className, 'h-full')}>
         <NextIntlClientProvider messages={messages}>
           <RadixDirectionProvider dir={dir}>
             <TooltipProvider>{children}</TooltipProvider>

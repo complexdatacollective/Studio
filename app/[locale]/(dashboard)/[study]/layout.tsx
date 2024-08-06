@@ -1,33 +1,35 @@
-import { getTranslations } from 'next-intl/server';
-import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import { Link } from '~/lib/localisation/navigation';
 import { routes } from '~/lib/routes';
 
-const Layout = async ({
+export default function DashboardLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params?: unknown;
-}) => {
-  const { study } = routes.studyDashboard.$parseParams(params);
-  const t = await getTranslations('TopNavigation');
-
+  params: {
+    locale: string;
+    study: string;
+  };
+}) {
   return (
-    <div className="flex flex-col">
-      <nav className="flex flex-row space-x-2 bg-cyber-grape px-4 pt-4 text-lg text-white">
-        <div>
-          <Link href={`/`}>{t('home')}</Link> &#x2794;
+    <>
+      <div className="block border-t border-white border-opacity-20 py-5">
+        <div className="grid grid-cols-3 items-center gap-8">
+          <div className="col-span-2">
+            <nav className="flex space-x-4">
+              <Link href={routes.studyDashboard({ study: params.study })}>
+                Home
+              </Link>
+              <Link href={routes.studySettings({ study: params.study })}>
+                Settings
+              </Link>
+            </nav>
+          </div>
         </div>
-        <div>
-          <Link href={routes.studyDashboard({ study })}>{t('dashboard')}</Link>{' '}
-          &#x2794;
-        </div>
-        <Link href={routes.studySettings({ study })}>{t('settings')}</Link>
-      </nav>
-      <ResponsiveContainer>{children}</ResponsiveContainer>
-    </div>
+      </div>
+      <section className="overflow-hidden rounded-lg bg-white p-6 shadow">
+        {children}
+      </section>
+    </>
   );
-};
-
-export default Layout;
+}
