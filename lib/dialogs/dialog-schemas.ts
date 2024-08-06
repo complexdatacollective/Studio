@@ -23,6 +23,8 @@ const InfoDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Info),
 });
 
+type InfoDialog = z.infer<typeof InfoDialogSchema>;
+
 const ConfirmDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Confirm),
   cancelLabel: z.string().optional(),
@@ -30,11 +32,15 @@ const ConfirmDialogSchema = SharedDialogProperties.extend({
   onCancel: z.function(),
 });
 
+type ConfirmDialog = z.infer<typeof ConfirmDialogSchema>;
+
 // Error dialogs have an 'error' field that is an instance of the Error class
 const ErrorDialogSchema = SharedDialogProperties.extend({
   type: z.literal(DialogVariants.Error),
   error: z.instanceof(Error),
 });
+
+type ErrorDialog = z.infer<typeof ErrorDialogSchema>;
 
 // Create a discriminated union of all dialog schemas
 const DialogSchema = z.discriminatedUnion('type', [
@@ -45,4 +51,10 @@ const DialogSchema = z.discriminatedUnion('type', [
 
 export type Dialog = z.infer<typeof DialogSchema>;
 
-export type DialogWithoutId = Omit<Dialog, 'id'>;
+// Omitting the `id` field from discriminatedUnion with Omit<Dialog, 'id'>
+// omits the `id`, but changes the structure of the union to be a plain object
+// so we have to do it manually for each dialog type
+export type DialogWithoutId =
+  | Omit<InfoDialog, 'id'>
+  | Omit<ConfirmDialog, 'id'>
+  | Omit<ErrorDialog, 'id'>;

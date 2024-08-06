@@ -1,4 +1,5 @@
-import { nanoid } from 'nanoid';
+import { generatePublicId } from '~/lib/generatePublicId';
+import { type DialogWithoutId } from './dialog-schemas';
 import { useDialogStore } from './store';
 
 const useDialog = () => {
@@ -9,49 +10,47 @@ const useDialog = () => {
   } = useDialogStore();
 
   const showDialog = (dialog: DialogWithoutId) => {
-    const id = nanoid();
+    const id = generatePublicId();
     openDialog({ id, ...dialog });
     return id;
   };
 
-  const confirmDialog = async (dialogId: string) => {
-    const dialog = dialogs.find((dialog) => dialog.id === dialogId)!;
-    const result = await dialog?.onConfirm?.();
-    // close the dialog if it's not a prompt dialog or
-    // the prompt dialog onConfirm resolves to a truthy value
-    if (dialog?.type !== 'Prompt' || result) {
-      closeDialog(dialog.id);
+  const confirmDialog = (dialogId: string) => {
+    const dialog = dialogs.find((d) => d.id === dialogId);
+    if (dialog?.onConfirm) {
+      dialog.onConfirm();
     }
+    closeDialog(dialogId);
   };
 
   const cancelDialog = (dialogId: string) => {
-    const dialog = dialogs.find((dialog) => dialog.id === dialogId)!;
-    if (dialog?.type === 'Confirm') {
-      dialog.onCancel?.();
+    const dialog = dialogs.find((d) => d.id === dialogId);
+    if (dialog?.onCancel) {
+      dialog.onCancel();
     }
-    closeDialog(dialog.id);
+    closeDialog(dialogId);
   };
 
-  const createDialog = async (dialog: DialogWithoutId) => {
-    const id = showDialog(dialog);
-    return new Promise<boolean>((resolve) => {
-      const handleConfirm = () => {
-        resolve(true);
-      };
-      const handleCancel = () => {
-        resolve(false);
-      };
-      openDialog({
-        id,
-        ...dialog,
-        onConfirm: handleConfirm,
-        onCancel: handleCancel,
-      });
-    });
-  };
+  // const createDialog = async (dialog: DialogWithoutId) => {
+  //   const id = showDialog(dialog);
+  //   return new Promise<boolean>((resolve) => {
+  //     const handleConfirm = () => {
+  //       resolve(true);
+  //     };
+  //     const handleCancel = () => {
+  //       resolve(false);
+  //     };
+  //     openDialog({
+  //       id,
+  //       ...dialog,
+  //       onConfirm: handleConfirm,
+  //       onCancel: handleCancel,
+  //     });
+  //   });
+  // };
 
   return {
-    createDialog,
+    // createDialog,
     showDialog,
     confirmDialog,
     cancelDialog,
