@@ -7,9 +7,11 @@ export const getStage = async ({
   stageId: number;
   protocolRevisionId: number;
 }) => {
-  return await db.stage.findFirst({
-    where: { id: stageId, protocolRevisionId },
+  const stages = await db.stage.findMany({
+    where: { protocolRevisionId },
   });
+
+  return stages[stageId];
 };
 
 export const getStageCount = async ({

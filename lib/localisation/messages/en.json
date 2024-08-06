@@ -1,7 +1,8 @@
 {
   "Home": {
     "title": "Studio MVP",
-    "allStudiesHeading": "All Studies"
+    "allStudiesHeading": "All Studies",
+    "interviewsHeading": "Interviews"
   },
   "SignIn": {
     "cardTitle": "Sign in to Studio",

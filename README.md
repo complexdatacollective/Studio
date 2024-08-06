@@ -12,10 +12,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ### Environment Variables
 
-Team members can pull the `.env.local` file automatically, using the Vercel CLI and the following command:
+Team members can pull the `.env` file automatically, using the Vercel CLI and the following command:
 
 ```bash
-vercel env pull
+vercel env pull .env 
 ```
 
 You may need to link your local repository to the Vercel project first.

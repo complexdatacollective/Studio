@@ -28,9 +28,9 @@ export const { routes } = createNavigationConfig((defineRoute) => ({
       protocol: z.string(),
     }),
   }),
-  authedActions: defineRoute('/[study]/authed-actions', {
+  interview: defineRoute('/interview/[interviewId]', {
     params: z.object({
-      study: z.string(),
+      interviewId: z.string(),
     }),
   }),
 }));
