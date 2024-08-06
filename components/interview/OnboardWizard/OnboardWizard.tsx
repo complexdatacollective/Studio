@@ -39,25 +39,27 @@ export default function OnboardWizard({
 
   useEffect(() => {
     const updateStepPosition = () => {
+      // Reset the prev element's z-index
+      if (previousElement) {
+        previousElement.style.zIndex = '';
+      }
+
       if (isOpen && steps[currentStep]) {
         const { targetElementId } = steps[currentStep];
         if (targetElementId) {
           const targetElement = getTargetElement(targetElementId);
           if (targetElement) {
-            // Reset z-index of the previous element before updating the new one
-            if (previousElement && previousElement !== targetElement) {
-              previousElement.style.zIndex = '';
-            }
-
             setCurrentStepPosition(getElementPosition(targetElement));
             targetElement.style.zIndex = '50';
             setPreviousElement(targetElement);
           }
+        } else {
+          // If new step does not have a targetElementId, clear the current step position
+          setCurrentStepPosition(null);
+          setPreviousElement(null);
         }
       } else {
-        if (previousElement) {
-          previousElement.style.zIndex = '';
-        }
+        // If the wizard is not open or there's no current step, clear the step position
         setCurrentStepPosition(null);
         setPreviousElement(null);
       }
