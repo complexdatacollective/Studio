@@ -7,8 +7,6 @@ import NodePanels from '../containers/NodePanels';
 import NodeList from '../components/NodeList';
 import QuickNodeForm from '../containers/QuickNodeForm';
 import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
-import ToggleWizardButton from '~/components/OnboardWizard/ToggleWizardButton';
-import HelpModeButton from '~/components/OnboardWizard/HelpModeButton';
 
 const demoPrompts = [
   {
@@ -116,15 +114,6 @@ const demoSteps = [
 export default function NameGenerator() {
   return (
     <OnboardWizard steps={demoSteps} name="name-generator">
-      <div className="flex">
-        <ToggleWizardButton
-          wizardName="name-generator"
-          label="Start Name Gen Wizard"
-        />
-        <ToggleWizardButton wizardName="navigation" label="Start Nav Wizard" />
-        <HelpModeButton />
-      </div>
-
       <div className="flex flex-col overflow-hidden px-4 py-2">
         <div data-id="name-generator-1">
           <Prompts prompts={demoPrompts} currentPromptId={0} />

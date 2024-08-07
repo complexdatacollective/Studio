@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronUp, ChevronDown, Settings2 } from 'lucide-react';
+import { ChevronUp, ChevronDown, Settings2, HelpCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
@@ -13,6 +13,8 @@ import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
 import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
 import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
+import { useOnboardWizard } from '~/components/OnboardWizard/OnboardWizardContext';
+import ToggleWizardButton from '~/components/OnboardWizard/ToggleWizardButton';
 
 type NavigationButtonProps = {
   className?: string;
@@ -53,7 +55,7 @@ const demoSteps = [
     id: 1,
     targetElementId: 'navigation-1',
     content: {
-      en: 'Navigation wizard step 1',
+      en: 'This is the back button. Click it to go to the previous step.',
       es: '',
       ar: '',
     },
@@ -62,7 +64,7 @@ const demoSteps = [
     id: 2,
     targetElementId: 'navigation-2',
     content: {
-      en: 'Navigation wizard step 2',
+      en: 'This is the next button. Click it to go to the next step.',
       es: '',
       ar: '',
     },
@@ -74,6 +76,8 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const stage = searchParams.get('stage');
+
+  const { toggleBeacons, beaconsVisible } = useOnboardWizard();
 
   const moveBackward = () => {
     if (!stage) return;
@@ -144,6 +148,31 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
             <ChevronDown className="h-10 w-10 stroke-[3px]" />
           </NavButtonWithTooltip>
         </div>
+
+        <span className="rounded-full">
+          <NavButtonWithTooltip
+            aria-label={t('help')}
+            title={t('help')}
+            tooltipSide="right"
+            onClick={() => {
+              toggleBeacons();
+            }}
+          >
+            <HelpCircle className="h-10 w-10 stroke-[2px]" />
+          </NavButtonWithTooltip>
+        </span>
+        {beaconsVisible && (
+          <div className="absolute bottom-8 left-32 flex space-x-2">
+            <ToggleWizardButton
+              wizardName="navigation"
+              label="Show Interview Help"
+            />
+            <ToggleWizardButton
+              wizardName="name-generator"
+              label="Show Task Help"
+            />
+          </div>
+        )}
       </nav>
     </OnboardWizard>
   );

@@ -15,6 +15,7 @@ export default function ToggleWizardButton({
   return (
     <div>
       <Button
+        variant="accent"
         onClick={() => {
           startWizard(wizardName);
         }}

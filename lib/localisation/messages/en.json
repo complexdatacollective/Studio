@@ -89,7 +89,8 @@
   "Navigation": {
     "forward": "Move forward",
     "back": "Move backward",
-    "menu": "Menu"
+    "menu": "Menu",
+    "help": "Help"
   },
   "PopoverHint": {
     "hint": "Click this for stage instructions",
