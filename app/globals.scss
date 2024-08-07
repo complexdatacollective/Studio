@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'theme';
-
 @layer base {
   :root {
     /* UI Colors */
@@ -144,57 +142,57 @@
 
     --white: 0 0% 100%;
 
-    // Semantic slots
-    --background: var(--platinum);
-    --foreground: var(--cyber-grape);
+    // // Semantic slots
+    // --background: var(--platinum);
+    // --foreground: var(--cyber-grape);
 
-    --primary: var(--cyber-grape);
-    --primary-foreground: var(--white);
+    // --primary: var(--cyber-grape);
+    // --primary-foreground: var(--white);
 
-    --secondary: var(--neon-coral);
-    --secondary-foreground: var(--white);
+    // --secondary: var(--neon-coral);
+    // --secondary-foreground: var(--white);
 
-    --muted: var(--platinum);
-    --muted-foreground: var(--cyber-grape-hue)
-      calc(var(--cyber-grape-saturation) - 10%)
-      calc(var(--cyber-grape-lightness) - 10%);
+    // --muted: var(--platinum);
+    // --muted-foreground: var(--cyber-grape-hue)
+    //   calc(var(--cyber-grape-saturation) - 10%)
+    //   calc(var(--cyber-grape-lightness) - 10%);
 
-    --accent: var(--slate-blue);
-    --accent-foreground: var(--white);
+    // --accent: var(--slate-blue);
+    // --accent-foreground: var(--white);
 
-    --destructive: var(--tomato);
-    --destructive-foreground: var(--white);
+    // --destructive: var(--tomato);
+    // --destructive-foreground: var(--white);
 
-    --warning: var(--neon-carrot);
-    --warning-foreground: var(--white);
+    // --warning: var(--neon-carrot);
+    // --warning-foreground: var(--white);
 
-    --info: var(--cerulean-blue);
-    --info-foreground: var(--white);
+    // --info: var(--cerulean-blue);
+    // --info-foreground: var(--white);
 
-    --success: var(--sea-green);
-    --success-foreground: var(--white);
+    // --success: var(--sea-green);
+    // --success-foreground: var(--white);
 
-    --border: var(--platinum--dark);
+    // --border: var(--platinum--dark);
 
-    --link: var(--neon-coral);
+    // --link: var(--neon-coral);
 
-    --card: 0 0% 100%;
+    // --card: 0 0% 100%;
 
-    --panel: var(--platinum);
+    // --panel: var(--platinum);
 
-    --input: 0 0% 100%;
-    --input-foreground: var(--cyber-grape);
+    // --input: 0 0% 100%;
+    // --input-foreground: var(--cyber-grape);
 
-    --popover: var(--white);
-    --popover-foreground: var(--foreground);
+    // --popover: var(--white);
+    // --popover-foreground: var(--foreground);
 
-    --focus: var(--mustard);
+    // --focus: var(--mustard);
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply outline-primary-500 dark:outline-primary-400;
   }
 
   // These two tags are semantic, so I think its okay to apply styles to them

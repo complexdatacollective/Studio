@@ -84,7 +84,7 @@ const preview: Preview = {
     (Story) => {
       return (
         <TooltipProvider>
-          <div className="h-screen">
+          <div className="h-full">
             <Story />
           </div>
         </TooltipProvider>

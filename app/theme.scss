@@ -5,6 +5,14 @@
   // H - Hue (0-360) - Color
 
   :root {
+    --mix-color: white;
+    --mix-color-dark: black;
+
+    @media (prefers-color-scheme: dark) {
+      --mix-color: black;
+      --mix-color-dark: white;
+    }
+
     // lightness values are hand selected
     --lightness-50: 97.78%;
     --lightness-100: 93.56%;
@@ -31,7 +39,16 @@
     --primary-900: oklch(var(--lightness-900) 0.1953 var(--primary-hue));
     --primary-950: oklch(var(--lightness-950) 0.1431 var(--primary-hue));
 
-    --secondary-hue: calc(var(--primary-hue) + 180); // 103
+    // Background is calculated by mixing primary with mix-color
+    --background: color-mix(in oklab, var(--primary-500) 10%, var(--mix-color));
+
+    --background-foreground: color-mix(
+      in oklch,
+      var(--primary-500) 10%,
+      var(--mix-color-dark)
+    );
+
+    --secondary-hue: calc(var(--primary-hue) + 45); // 103
     --secondary-50: oklch(var(--lightness-50) 0.0114 var(--secondary-hue));
     --secondary-100: oklch(var(--lightness-100) 0.0348 var(--secondary-hue));
     --secondary-200: oklch(var(--lightness-200) 0.0652 var(--secondary-hue));
@@ -57,30 +74,25 @@
     --tertiary-900: oklch(var(--lightness-900) 0.1953 var(--tertiary-hue));
     --tertiary-950: oklch(var(--lightness-950) 0.1431 var(--tertiary-hue));
 
-    --surface-hue: calc(var(--primary-hue) + 15);
-    --surface-50: oklch(var(--lightness-50) 0.0114 var(--surface-hue));
-    --surface-100: oklch(var(--lightness-100) 0.0348 var(--surface-hue));
-    --surface-200: oklch(var(--lightness-200) 0.0652 var(--surface-hue));
-    --surface-300: oklch(var(--lightness-300) 0.0973 var(--surface-hue));
-    --surface-400: oklch(var(--lightness-400) 0.149 var(--surface-hue));
-    --surface-500: oklch(var(--lightness-500) 0.21 var(--surface-hue));
-    --surface-600: oklch(var(--lightness-600) 0.2606 var(--surface-hue));
-    --surface-700: oklch(var(--lightness-700) 0.2823 var(--surface-hue));
-    --surface-800: oklch(var(--lightness-800) 0.2372 var(--surface-hue));
-    --surface-900: oklch(var(--lightness-900) 0.1953 var(--surface-hue));
-    --surface-950: oklch(var(--lightness-950) 0.1431 var(--surface-hue));
+    // Surface should be based on background color, and using color-mix to add
+    // in either black or white (depending on the light/dark mode).
+    //
+    // Nested surfaces should **set** background to their surface color!
 
-    --container-hue: calc(var(--primary-hue) + 150);
-    --container-50: oklch(var(--lightness-50) 0.0114 var(--container-hue));
-    --container-100: oklch(var(--lightness-100) 0.0348 var(--container-hue));
-    --container-200: oklch(var(--lightness-200) 0.0652 var(--container-hue));
-    --container-300: oklch(var(--lightness-300) 0.0973 var(--container-hue));
-    --container-400: oklch(var(--lightness-400) 0.149 var(--container-hue));
-    --container-500: oklch(var(--lightness-500) 0.21 var(--container-hue));
-    --container-600: oklch(var(--lightness-600) 0.2606 var(--container-hue));
-    --container-700: oklch(var(--lightness-700) 0.2823 var(--container-hue));
-    --container-800: oklch(var(--lightness-800) 0.2372 var(--container-hue));
-    --container-900: oklch(var(--lightness-900) 0.1953 var(--container-hue));
-    --container-950: oklch(var(--lightness-950) 0.1431 var(--container-hue));
+    --surface: color-mix(in oklab, var(--primary-500) 15%, var(--mix-color));
+
+    --success: oklch(0.78 0.24 138);
+    --success-foreground: color-mix(
+      in oklch,
+      var(--success) 10%,
+      var(--mix-color-dark)
+    );
+
+    --danger: oklch(0.63 0.25 29.8);
+    --danger-foreground: color-mix(
+      in oklch,
+      var(--danger) 10%,
+      var(--mix-color)
+    );
   }
 }

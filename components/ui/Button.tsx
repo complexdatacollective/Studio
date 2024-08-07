@@ -7,14 +7,18 @@ const buttonVariants = tv({
   base: 'inline-flex items-center justify-center rounded-full text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-nowrap truncate text-foreground',
   variants: {
     variant: {
-      default: 'bg-primary hover:bg-primary/90 text-primary-foreground',
+      default: 'bg-black/10 hover:bg-black/20 text-primary-foreground',
+      primary:
+        'bg-primary-700 hover:bg-primary/80 text-primary-50',
+      secondary:
+        'bg-secondary-500 text-secondary-50 hover:bg-secondary/80',
       success: 'bg-success text-success-foreground hover:bg-success/90',
+      danger: 'bg-danger text-[--danger-foreground] hover:bg-danger/90',
       accent: 'bg-accent text-accent-foreground hover:bg-accent/90',
-      destructive:
-        'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+
       outline:
         'bg-transparent hover:bg-accent hover:text-accent-foreground border',
-      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+
       ghost: 'hover:text-accent',
       tableHeader: 'hover:text-accent -ml-6 data-[state=open]:text-accent',
       link: 'underline-offset-4 hover:underline',
