@@ -16,7 +16,8 @@ export default function OnboardWizard({
   children: React.ReactNode;
   name: string;
 }) {
-  const { currentStep, isOpen, currentWizard } = useOnboardWizard();
+  const { currentStep, isOpen, currentWizard, beaconsVisible } =
+    useOnboardWizard();
 
   const [currentStepPosition, setCurrentStepPosition] = useState<{
     top: number;
@@ -100,8 +101,8 @@ export default function OnboardWizard({
     return () => window.removeEventListener('resize', updatePositions);
   }, [currentStep, steps, isOpen]);
 
-  if (currentWizard !== name) {
-    return <>{children}</>;
+  if (currentWizard !== name && !beaconsVisible) {
+    return <div>{children}</div>;
   }
 
   return (
