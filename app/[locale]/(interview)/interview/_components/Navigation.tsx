@@ -12,6 +12,7 @@ import { forwardRef } from 'react';
 import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
 import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
+import OnboardWizard from '~/components/interview/OnboardWizard/OnboardWizard';
 
 type NavigationButtonProps = {
   className?: string;
@@ -47,6 +48,27 @@ type NavigationProps = {
   progress: IntRange<0, 100>;
 };
 
+const demoSteps = [
+  {
+    id: 1,
+    targetElementId: 'navigation-1',
+    content: {
+      en: 'Navigation wizard step 1',
+      es: '',
+      ar: '',
+    },
+  },
+  {
+    id: 2,
+    targetElementId: 'navigation-2',
+    content: {
+      en: 'Navigation wizard step 2',
+      es: '',
+      ar: '',
+    },
+  },
+];
+
 const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -68,56 +90,62 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const t = useTranslations('Navigation');
 
   return (
-    <nav
-      role="navigation"
-      className={cn(
-        'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-cyber-grape text-white',
-      )}
-    >
-      <Popover
-        side="right"
-        content={
-          <>
-            <Heading variant="label">Select language</Heading>
-            <LanguageSwitcher />
-          </>
-        }
+    <OnboardWizard steps={demoSteps} name="navigation">
+      <nav
+        role="navigation"
+        className={cn(
+          'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-cyber-grape text-white',
+        )}
       >
-        <span className="rounded-full">
+        <Popover
+          side="right"
+          content={
+            <>
+              <Heading variant="label">Select language</Heading>
+              <LanguageSwitcher />
+            </>
+          }
+        >
+          <span className="rounded-full">
+            <NavButtonWithTooltip
+              aria-label={t('menu')}
+              title={t('menu')}
+              tooltipSide="right"
+            >
+              <Settings2 className="h-10 w-10 stroke-[2px]" />
+            </NavButtonWithTooltip>
+          </span>
+        </Popover>
+        <div data-id="navigation-1">
           <NavButtonWithTooltip
-            aria-label={t('menu')}
-            title={t('menu')}
+            onClick={moveBackward}
+            aria-label={t('back')}
+            title={t('back')}
             tooltipSide="right"
           >
-            <Settings2 className="h-10 w-10 stroke-[2px]" />
+            <ChevronUp className="h-10 w-10 stroke-[3px]" />
           </NavButtonWithTooltip>
-        </span>
-      </Popover>
-      <NavButtonWithTooltip
-        onClick={moveBackward}
-        aria-label={t('back')}
-        title={t('back')}
-        tooltipSide="right"
-      >
-        <ChevronUp className="h-10 w-10 stroke-[3px]" />
-      </NavButtonWithTooltip>
-      <ProgressBar
-        value={progress}
-        className="bg-white/15"
-        ariaLabel="Interview Progress"
-      />
-      <NavButtonWithTooltip
-        className={cn(
-          pulseNext && 'animate-pulse-bg from-cyber-grape to-success',
-        )}
-        onClick={moveForward}
-        aria-label={t('forward')}
-        title={t('forward')}
-        tooltipSide="right"
-      >
-        <ChevronDown className="h-10 w-10 stroke-[3px]" />
-      </NavButtonWithTooltip>
-    </nav>
+        </div>
+        <ProgressBar
+          value={progress}
+          className="bg-white/15"
+          ariaLabel="Interview Progress"
+        />
+        <div data-id="navigation-2">
+          <NavButtonWithTooltip
+            className={cn(
+              pulseNext && 'animate-pulse-bg from-cyber-grape to-success',
+            )}
+            onClick={moveForward}
+            aria-label={t('forward')}
+            title={t('forward')}
+            tooltipSide="right"
+          >
+            <ChevronDown className="h-10 w-10 stroke-[3px]" />
+          </NavButtonWithTooltip>
+        </div>
+      </nav>
+    </OnboardWizard>
   );
 };
 

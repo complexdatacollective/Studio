@@ -10,11 +10,14 @@ import OnboardWizardModal from './OnboardWizardModal';
 export default function OnboardWizard({
   steps,
   children,
+  name,
 }: {
   steps: Step[];
   children: React.ReactNode;
+  name: string;
 }) {
-  const { currentStep, isOpen } = useOnboardWizard();
+  const { currentStep, isOpen, currentWizard } = useOnboardWizard();
+
   const [currentStepPosition, setCurrentStepPosition] = useState<{
     top: number;
     left: number;
@@ -44,7 +47,7 @@ export default function OnboardWizard({
         previousElement.style.zIndex = '';
       }
 
-      if (isOpen && steps[currentStep]) {
+      if (isOpen && steps[currentStep] && name === currentWizard) {
         const { targetElementId } = steps[currentStep];
         if (targetElementId) {
           const targetElement = getTargetElement(targetElementId);
@@ -66,7 +69,7 @@ export default function OnboardWizard({
     };
 
     updateStepPosition();
-  }, [currentStep, steps, isOpen, previousElement]);
+  }, [currentStep, steps, isOpen, previousElement, currentWizard, name]);
 
   // Handle window resize
   useEffect(() => {
@@ -96,6 +99,10 @@ export default function OnboardWizard({
     window.addEventListener('resize', updatePositions);
     return () => window.removeEventListener('resize', updatePositions);
   }, [currentStep, steps, isOpen]);
+
+  if (currentWizard !== name) {
+    return <>{children}</>;
+  }
 
   return (
     <div>
@@ -131,6 +138,7 @@ export default function OnboardWizard({
                 position={
                   beaconPositions[step.id] as { top: number; left: number }
                 }
+                wizardName={name}
               />
             ),
         )}

@@ -3,17 +3,23 @@
 import { Button } from '~/components/ui/Button';
 import { useOnboardWizard } from './OnboardWizardContext';
 
-export default function ToggleWizardButton() {
+export default function ToggleWizardButton({
+  wizardName,
+  label,
+}: {
+  wizardName: string;
+  label: string;
+}) {
   const { startWizard } = useOnboardWizard();
 
   return (
     <div>
       <Button
         onClick={() => {
-          startWizard();
+          startWizard(wizardName);
         }}
       >
-        Open Wizard
+        {label}
       </Button>
     </div>
   );

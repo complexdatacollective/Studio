@@ -5,14 +5,16 @@ import { cn } from '~/lib/utils';
 export default function Beacon({
   step,
   position,
+  wizardName,
 }: {
   step: Step;
   position: { top: number; left: number };
+  wizardName: string;
 }) {
   const { setStep, startWizard } = useOnboardWizard();
 
   const openStep = () => {
-    startWizard();
+    startWizard(wizardName);
     setStep(step.id - 1);
   };
 
