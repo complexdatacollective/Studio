@@ -1,0 +1,25 @@
+@layer base {
+  // OKLCH is:
+  // L - Lightness (0-100)
+  // C - Chroma (0-?) - upper limit depends on H and L
+  // H - Hue (0-360) - Color
+
+  :root {
+    --primary-hue: 283;
+    --primary-chroma: 0.27;
+    --primary-lightness: 50%;
+
+    // lightness values = 97.78, 93.56, 88.11, 82.67, 74.22, 64.78, 57.33, 46.89, 39.44, 32, 23.78
+    --primary-50: oklch(97.78% 0.0114 283);
+    --primary-100: oklch(93.56% 0.0348 283);
+    --primary-200: oklch(88.11% 0.0652 283);
+    --primary-300: oklch(82.67% 0.0973 283);
+    --primary-400: oklch(74.22% 0.149 283);
+    --primary-500: oklch(64.78% 0.21 283);
+    --primary-600: oklch(57.33% 0.2606 283);
+    --primary-700: oklch(46.89% 0.2823 283);
+    --primary-800: oklch(39.44% 0.2372 283);
+    --primary-900: oklch(32% 0.1953 283);
+    --primary-950: oklch(23.78% 0.1431 283);
+  }
+}
