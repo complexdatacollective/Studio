@@ -6,9 +6,9 @@ import Prompts from '../components/Prompts/Prompts';
 import NodePanels from '../containers/NodePanels';
 import NodeList from '../components/NodeList';
 import QuickNodeForm from '../containers/QuickNodeForm';
-import OnboardWizard from '../OnboardWizard/OnboardWizard';
-import ToggleWizardButton from '../OnboardWizard/ToggleWizardButton';
-import HelpModeButton from '../OnboardWizard/HelpModeButton';
+import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
+import ToggleWizardButton from '~/components/OnboardWizard/ToggleWizardButton';
+import HelpModeButton from '~/components/OnboardWizard/HelpModeButton';
 
 const demoPrompts = [
   {

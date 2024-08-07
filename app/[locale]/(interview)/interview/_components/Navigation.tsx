@@ -12,7 +12,7 @@ import { forwardRef } from 'react';
 import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
 import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
-import OnboardWizard from '~/components/interview/OnboardWizard/OnboardWizard';
+import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
 
 type NavigationButtonProps = {
   className?: string;

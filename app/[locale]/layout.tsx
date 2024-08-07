@@ -9,7 +9,7 @@ import { getLangDir } from 'rtl-detect';
 import { TooltipProvider } from '~/components/ui/Tooltip';
 import RadixDirectionProvider from './_components/RadixDirectionProvider';
 import { cn } from '~/lib/utils';
-import { OnboardWizardProvider } from '~/components/interview/OnboardWizard/OnboardWizardContext';
+import { OnboardWizardProvider } from '~/components/OnboardWizard/OnboardWizardContext';
 
 const inter = Inter({ subsets: ['latin'] });
 

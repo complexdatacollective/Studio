@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import NameGenerator from '../interfaces/NameGenerator';
+import NameGenerator from '~/components/interview/interfaces/NameGenerator';
 import { OnboardWizardProvider } from './OnboardWizardContext';
 import Navigation from '~/app/[locale]/(interview)/interview/_components/Navigation';
 
