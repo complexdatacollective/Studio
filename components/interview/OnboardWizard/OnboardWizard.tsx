@@ -50,13 +50,14 @@ export default function OnboardWizard({
 
       if (isOpen && steps[currentStep] && name === currentWizard) {
         const { targetElementId } = steps[currentStep];
-        if (targetElementId) {
-          const targetElement = getTargetElement(targetElementId);
-          if (targetElement) {
-            setCurrentStepPosition(getElementPosition(targetElement));
-            targetElement.style.zIndex = '50';
-            setPreviousElement(targetElement);
-          }
+        const targetElement = targetElementId
+          ? getTargetElement(targetElementId)
+          : null;
+
+        if (targetElement) {
+          setCurrentStepPosition(getElementPosition(targetElement));
+          targetElement.style.zIndex = '50';
+          setPreviousElement(targetElement);
         } else {
           // If new step does not have a targetElementId, clear the current step position
           setCurrentStepPosition(null);
@@ -76,13 +77,13 @@ export default function OnboardWizard({
   useEffect(() => {
     const updatePositions = () => {
       if (isOpen) {
-        const newCurrentStepPosition =
+        const currentStepPosition =
           currentStep !== null && steps[currentStep]?.targetElementId
             ? getElementPosition(
                 getTargetElement(steps[currentStep].targetElementId)!,
               )
             : null;
-        setCurrentStepPosition(newCurrentStepPosition);
+        setCurrentStepPosition(currentStepPosition);
       }
 
       const newBeaconPositions: Record<string, { top: number; left: number }> =
@@ -105,10 +106,14 @@ export default function OnboardWizard({
     return <div>{children}</div>;
   }
 
+  const showPopover = currentStepPosition && isOpen;
+  const showModal = isOpen && !currentStepPosition;
+  const showBeacons = !isOpen && beaconsVisible;
+
   return (
     <div>
       {children}
-      {currentStepPosition && isOpen && (
+      {showPopover && (
         <>
           <div className="absolute inset-0 z-10 bg-cyber-grape-dark opacity-75" />
           <OnboardWizardPopover
@@ -118,30 +123,24 @@ export default function OnboardWizard({
           />
         </>
       )}
-      {/* Render Modal if there is no target element id */}
-      {isOpen && !currentStepPosition && (
-        <>
-          <OnboardWizardModal
-            stepContent={steps[currentStep]?.content.en}
-            totalSteps={steps.length}
-          />
-        </>
+      {showModal && (
+        <OnboardWizardModal
+          stepContent={steps[currentStep]?.content.en}
+          totalSteps={steps.length}
+        />
       )}
-      {/* Render beacons if wizard is not running */}
-      {!isOpen &&
-        steps.map(
-          (step) =>
-            // only render beacon if there is a target element
-            beaconPositions[step.id] && (
-              <Beacon
-                key={step.id}
-                step={step}
-                position={
-                  beaconPositions[step.id] as { top: number; left: number }
-                }
-                wizardName={name}
-              />
-            ),
+      {showBeacons &&
+        steps.map((step) =>
+          beaconPositions[step.id] ? (
+            <Beacon
+              key={step.id}
+              step={step}
+              position={
+                beaconPositions[step.id] as { top: number; left: number }
+              }
+              wizardName={name}
+            />
+          ) : null,
         )}
     </div>
   );

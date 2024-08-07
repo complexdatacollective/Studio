@@ -8,8 +8,7 @@ import NodeList from '../components/NodeList';
 import QuickNodeForm from '../containers/QuickNodeForm';
 import OnboardWizard from '../OnboardWizard/OnboardWizard';
 import ToggleWizardButton from '../OnboardWizard/ToggleWizardButton';
-import { useOnboardWizard } from '../OnboardWizard/OnboardWizardContext';
-import { Button } from '~/components/ui/Button';
+import HelpModeButton from '../OnboardWizard/HelpModeButton';
 
 const demoPrompts = [
   {
@@ -115,7 +114,6 @@ const demoSteps = [
 ];
 
 export default function NameGenerator() {
-  const { toggleBeacons } = useOnboardWizard();
   return (
     <OnboardWizard steps={demoSteps} name="name-generator">
       <div className="flex">
@@ -124,9 +122,7 @@ export default function NameGenerator() {
           label="Start Name Gen Wizard"
         />
         <ToggleWizardButton wizardName="navigation" label="Start Nav Wizard" />
-        <Button variant="accent" onClick={() => toggleBeacons()}>
-          help mode
-        </Button>
+        <HelpModeButton />
       </div>
 
       <div className="flex flex-col overflow-hidden px-4 py-2">
