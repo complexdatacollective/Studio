@@ -33,6 +33,9 @@ export const OnboardWizardProvider = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const setStep = (step: number) => {
+    if (!isOpen) {
+      setIsOpen(true);
+    }
     setCurrentStep(step);
   };
 
