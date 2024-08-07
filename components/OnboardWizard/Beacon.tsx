@@ -14,7 +14,7 @@ export default function Beacon({
   const { setStep, startWizard } = useOnboardWizard();
 
   const openStep = () => {
-    startWizard(wizardName);
+    startWizard(wizardName, true);
     setStep(step.id - 1);
   };
 

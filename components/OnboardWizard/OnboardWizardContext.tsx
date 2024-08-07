@@ -7,10 +7,11 @@ type OnboardWizardContextType = {
   currentStep: number;
   setStep: (step: number) => void;
   closeWizard: () => void;
-  startWizard: (wizard: string) => void;
+  startWizard: (wizard: string, fromBeacon?: boolean) => void;
   isOpen: boolean;
   beaconsVisible: boolean;
   toggleBeacons: () => void;
+  showFlow: boolean;
 };
 
 const OnboardWizardContext = createContext<OnboardWizardContextType | null>(
@@ -36,6 +37,7 @@ export const OnboardWizardProvider = ({
   const [isOpen, setIsOpen] = useState(false);
   const [currentWizard, setCurrentWizard] = useState('');
   const [beaconsVisible, setBeaconsVisible] = useState(false);
+  const [showFlow, setShowFlow] = useState(true);
 
   const setStep = (step: number) => {
     if (!isOpen) {
@@ -50,7 +52,8 @@ export const OnboardWizardProvider = ({
     setCurrentStep(0);
   };
 
-  const startWizard = (wizard: string) => {
+  const startWizard = (wizard: string, fromBeacon?: boolean) => {
+    setShowFlow(!fromBeacon);
     setCurrentWizard(wizard);
     setIsOpen(true);
     setCurrentStep(0);
@@ -71,6 +74,7 @@ export const OnboardWizardProvider = ({
         isOpen,
         beaconsVisible,
         toggleBeacons,
+        showFlow,
       }}
     >
       {children}

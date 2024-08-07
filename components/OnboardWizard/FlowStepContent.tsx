@@ -1,7 +1,9 @@
+// Step content when rendered in a flow. Includes prev/next buttons.
+
 import { Button } from '~/components/ui/Button';
 import { useOnboardWizard } from './OnboardWizardContext';
 
-export default function StepContent({
+export default function FlowStepContent({
   stepContent,
   totalSteps,
 }: {

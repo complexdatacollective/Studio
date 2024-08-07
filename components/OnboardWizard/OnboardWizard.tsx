@@ -16,7 +16,7 @@ export default function OnboardWizard({
   children: React.ReactNode;
   name: string;
 }) {
-  const { currentStep, isOpen, currentWizard, beaconsVisible } =
+  const { currentStep, isOpen, currentWizard, beaconsVisible, showFlow } =
     useOnboardWizard();
 
   const [currentStepPosition, setCurrentStepPosition] = useState<{
@@ -119,6 +119,7 @@ export default function OnboardWizard({
             stepContent={steps[currentStep]?.content.en}
             elementPosition={currentStepPosition}
             totalSteps={steps.length}
+            showFlow={showFlow}
           />
         </>
       )}
@@ -126,6 +127,7 @@ export default function OnboardWizard({
         <OnboardWizardModal
           stepContent={steps[currentStep]?.content.en}
           totalSteps={steps.length}
+          showFlow={showFlow}
         />
       )}
       {beaconsVisible &&
