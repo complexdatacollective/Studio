@@ -38,7 +38,6 @@ export const OnboardWizardProvider = ({
   const [beaconsVisible, setBeaconsVisible] = useState(false);
 
   const setStep = (step: number) => {
-    setBeaconsVisible(false);
     if (!isOpen) {
       setIsOpen(true);
     }

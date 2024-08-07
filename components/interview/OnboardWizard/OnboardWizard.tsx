@@ -103,15 +103,14 @@ export default function OnboardWizard({
   }, [currentStep, steps, isOpen]);
 
   if (currentWizard !== name && !beaconsVisible) {
-    return <div>{children}</div>;
+    return <>{children}</>;
   }
 
-  const showPopover = currentStepPosition && isOpen;
-  const showModal = isOpen && !currentStepPosition;
-  const showBeacons = !isOpen && beaconsVisible;
+  const showPopover = currentWizard === name && isOpen && currentStepPosition;
+  const showModal = currentWizard === name && !currentStepPosition && isOpen;
 
   return (
-    <div>
+    <>
       {children}
       {showPopover && (
         <>
@@ -129,7 +128,7 @@ export default function OnboardWizard({
           totalSteps={steps.length}
         />
       )}
-      {showBeacons &&
+      {beaconsVisible &&
         steps.map((step) =>
           beaconPositions[step.id] ? (
             <Beacon
@@ -142,6 +141,6 @@ export default function OnboardWizard({
             />
           ) : null,
         )}
-    </div>
+    </>
   );
 }
