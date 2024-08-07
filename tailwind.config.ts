@@ -15,6 +15,7 @@ export default {
 
       // ----------------------------
       // Semantic colors
+      // ----------------------------
 
       primary: {
         DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
