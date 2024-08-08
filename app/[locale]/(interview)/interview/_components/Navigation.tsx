@@ -95,7 +95,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const t = useTranslations('Navigation');
 
   return (
-    <OnboardWizard steps={demoSteps} name="navigation">
+    <OnboardWizard steps={demoSteps} name="navigation" priority>
       <nav
         role="navigation"
         className={cn(

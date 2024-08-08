@@ -7,15 +7,18 @@ import OnboardWizardPopover from './OnboardWizardPopover';
 import Beacon from './Beacon';
 import OnboardWizardModal from './OnboardWizardModal';
 import { hash } from 'ohash';
+import { useSearchParams } from 'next/navigation';
 
 export default function OnboardWizard({
   steps,
   children,
   name,
+  priority,
 }: {
   steps: Step[];
   children: React.ReactNode;
   name: string;
+  priority?: boolean;
 }) {
   const {
     currentStep,
@@ -23,8 +26,11 @@ export default function OnboardWizard({
     currentWizard,
     beaconsVisible,
     showFlow,
-    startWizard,
+    queueWizard,
   } = useOnboardWizard();
+
+  const searchParams = useSearchParams();
+  const stage = searchParams.get('stage');
 
   const [currentStepPosition, setCurrentStepPosition] = useState<{
     top: number;
@@ -56,12 +62,11 @@ export default function OnboardWizard({
     const storedSteps = localStorage.getItem(key);
     const isFirstRun = !storedSteps;
 
-    // If it's the first run, start the wizard and save the steps
+    // If it's the first run, queue the wizard
     if (isFirstRun) {
-      startWizard(name);
-      localStorage.setItem(key, 'true');
+      queueWizard(name, hashedSteps, priority);
     }
-  }, [hashedSteps, startWizard, name]);
+  }, [hashedSteps, name, priority, stage]);
 
   useEffect(() => {
     const updateStepPosition = () => {
