@@ -167,10 +167,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
               wizardName="navigation"
               label="Show Interview Help"
             />
-            <ToggleWizardButton
-              wizardName="name-generator"
-              label="Show Task Help"
-            />
+            <ToggleWizardButton wizardName="task" label="Show Task Help" />
           </div>
         )}
       </nav>

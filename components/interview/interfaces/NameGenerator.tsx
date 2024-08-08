@@ -113,7 +113,7 @@ const demoSteps = [
 
 export default function NameGenerator() {
   return (
-    <OnboardWizard steps={demoSteps} name="name-generator">
+    <OnboardWizard steps={demoSteps} name="task">
       <div className="flex flex-col overflow-hidden px-4 py-2">
         <div data-id="name-generator-1">
           <Prompts prompts={demoPrompts} currentPromptId={0} />

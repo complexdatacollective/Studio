@@ -6,6 +6,7 @@ import type { Step } from './types';
 import OnboardWizardPopover from './OnboardWizardPopover';
 import Beacon from './Beacon';
 import OnboardWizardModal from './OnboardWizardModal';
+import { hash } from 'ohash';
 
 export default function OnboardWizard({
   steps,
@@ -16,8 +17,14 @@ export default function OnboardWizard({
   children: React.ReactNode;
   name: string;
 }) {
-  const { currentStep, isOpen, currentWizard, beaconsVisible, showFlow } =
-    useOnboardWizard();
+  const {
+    currentStep,
+    isOpen,
+    currentWizard,
+    beaconsVisible,
+    showFlow,
+    startWizard,
+  } = useOnboardWizard();
 
   const [currentStepPosition, setCurrentStepPosition] = useState<{
     top: number;
@@ -40,6 +47,20 @@ export default function OnboardWizard({
     const { top, left, height, width } = element.getBoundingClientRect();
     return { top, left, height, width };
   };
+
+  const hashedSteps = hash(steps);
+
+  // Check if the hashed steps have been saved to localStorage.
+  useEffect(() => {
+    const storedSteps = localStorage.getItem(hashedSteps);
+    const isFirstRun = !storedSteps;
+
+    // If it's the first run, start the wizard and save the steps
+    if (isFirstRun) {
+      startWizard(name);
+      localStorage.setItem(hashedSteps, 'true');
+    }
+  }, [hashedSteps, startWizard, name]);
 
   useEffect(() => {
     const updateStepPosition = () => {
