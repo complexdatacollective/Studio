@@ -52,13 +52,14 @@ export default function OnboardWizard({
 
   // Check if the hashed steps have been saved to localStorage.
   useEffect(() => {
-    const storedSteps = localStorage.getItem(hashedSteps);
+    const key = `ONBOARD_WIZARD_${hashedSteps}`;
+    const storedSteps = localStorage.getItem(key);
     const isFirstRun = !storedSteps;
 
     // If it's the first run, start the wizard and save the steps
     if (isFirstRun) {
       startWizard(name);
-      localStorage.setItem(hashedSteps, 'true');
+      localStorage.setItem(key, 'true');
     }
   }, [hashedSteps, startWizard, name]);
 

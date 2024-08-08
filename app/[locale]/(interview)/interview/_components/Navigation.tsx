@@ -15,6 +15,7 @@ import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
 import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
 import { useOnboardWizard } from '~/components/OnboardWizard/OnboardWizardContext';
 import ToggleWizardButton from '~/components/OnboardWizard/ToggleWizardButton';
+import ResetLocalStorage from '~/components/OnboardWizard/ResetLocalStorage';
 
 type NavigationButtonProps = {
   className?: string;
@@ -168,6 +169,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
               label="Show Interview Help"
             />
             <ToggleWizardButton wizardName="task" label="Show Task Help" />
+            <ResetLocalStorage />
           </div>
         )}
       </nav>
