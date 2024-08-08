@@ -62,14 +62,9 @@ export const OnboardWizardProvider = ({
   };
 
   const closeWizard = () => {
-    if (queue[0]) {
-      startWizard(queue[0].wizard);
-      setQueue(queue.slice(1));
-    } else {
-      setCurrentWizard('');
-      setIsOpen(false);
-      setCurrentStep(0);
-    }
+    setCurrentWizard('');
+    setIsOpen(false);
+    setCurrentStep(0);
   };
 
   const toggleBeacons = () => {
