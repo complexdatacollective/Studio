@@ -9,7 +9,7 @@ type Panel = {
 
 export default function NodePanels({ panels }: { panels: Panel[] }) {
   return (
-    <div>
+    <div data-id="name-generator-2">
       {panels.map((panel) => {
         return <NodePanel key={panel.id} {...panel} />;
       })}

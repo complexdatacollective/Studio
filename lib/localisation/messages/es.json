@@ -79,7 +79,8 @@
   "Navigation": {
     "forward": "Avanzar",
     "back": "Retroceder",
-    "menu": "Menú"
+    "menu": "Menú",
+    "help": "Ayuda"
   },
   "PopoverHint": {
     "hint": "Haz clic aquí para las instrucciones de la etapa",

@@ -6,6 +6,7 @@ import Prompts from '../components/Prompts/Prompts';
 import NodePanels from '../containers/NodePanels';
 import NodeList from '../components/NodeList';
 import QuickNodeForm from '../containers/QuickNodeForm';
+import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
 
 const demoPrompts = [
   {
@@ -68,19 +69,62 @@ const demoNodes = [
   },
 ];
 
+const demoSteps = [
+  {
+    content: {
+      en: (
+        <>
+          <p>
+            This is the name generator interface. This interface allows you to
+            nominate people. First, read the prompt and think about the people
+            who meet the criteria.
+          </p>
+          <img
+            src="https://documentation.networkcanvas.com/assets/img/interface-documentation/name-generators/ng-quick.png"
+            alt="Name Generator Interface"
+            style={{ width: '100%', height: 'auto', marginTop: '10px' }}
+          />
+        </>
+      ),
+      es: '',
+      ar: '',
+    },
+  },
+  {
+    targetElementId: 'name-generator-2',
+    content: {
+      en: 'These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them.',
+      es: '',
+      ar: '',
+    },
+  },
+  {
+    targetElementId: 'name-generator-3',
+    content: {
+      en: 'Click this button to add a new person.',
+      es: '',
+      ar: '',
+    },
+  },
+];
+
 export default function NameGenerator() {
   return (
-    <div className="flex flex-col overflow-hidden px-4 py-2">
-      <Prompts prompts={demoPrompts} currentPromptId={0} />
-      <div className="relative flex h-full min-h-0 flex-1 items-start justify-center">
-        {/* NameGenerator Main Content */}
-
-        <NodePanels panels={demoPanels} />
-        <div className="flex-basis-auto flex h-full flex-shrink flex-grow pl-6">
-          <NodeList items={demoNodes} />
+    <OnboardWizard steps={demoSteps} name="task">
+      <div className="flex flex-col overflow-hidden px-4 py-2">
+        <div data-id="name-generator-1">
+          <Prompts prompts={demoPrompts} currentPromptId={0} />
         </div>
+
+        <div className="relative flex h-full min-h-0 flex-1 items-start justify-center">
+          <NodePanels panels={demoPanels} />
+
+          <div className="flex-basis-auto flex h-full flex-shrink flex-grow pl-6">
+            <NodeList items={demoNodes} />
+          </div>
+        </div>
+        <QuickNodeForm />
       </div>
-      <QuickNodeForm />
-    </div>
+    </OnboardWizard>
   );
 }

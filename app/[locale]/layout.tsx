@@ -9,6 +9,7 @@ import { getLangDir } from 'rtl-detect';
 import { TooltipProvider } from '~/components/ui/Tooltip';
 import RadixDirectionProvider from './_components/RadixDirectionProvider';
 import { cn } from '~/lib/utils';
+import { OnboardWizardProvider } from '~/components/OnboardWizard/OnboardWizardContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,7 +34,9 @@ export default async function RootLayout({
       <body className={cn(inter.className, 'h-full')}>
         <NextIntlClientProvider messages={messages}>
           <RadixDirectionProvider dir={dir}>
-            <TooltipProvider>{children}</TooltipProvider>
+            <TooltipProvider>
+              <OnboardWizardProvider>{children}</OnboardWizardProvider>
+            </TooltipProvider>
           </RadixDirectionProvider>
         </NextIntlClientProvider>
         <Analytics />
