@@ -3,7 +3,6 @@ import Heading from '~/components/typography/Heading';
 
 const demoSteps = [
   {
-    id: 1,
     targetElementId: 'information-1',
     content: {
       en: 'This is the information section. Click the next button to continue.',

@@ -71,7 +71,6 @@ const demoNodes = [
 
 const demoSteps = [
   {
-    id: 1,
     content: {
       en: (
         <>
@@ -92,7 +91,6 @@ const demoSteps = [
     },
   },
   {
-    id: 2,
     targetElementId: 'name-generator-2',
     content: {
       en: 'These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them.',
@@ -101,7 +99,6 @@ const demoSteps = [
     },
   },
   {
-    id: 3,
     targetElementId: 'name-generator-3',
     content: {
       en: 'Click this button to add a new person.',

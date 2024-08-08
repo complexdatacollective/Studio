@@ -1,13 +1,12 @@
 import { useOnboardWizard } from './OnboardWizardContext';
-import type { Step } from './types';
 import { cn } from '~/lib/utils';
 
 export default function Beacon({
-  step,
+  index,
   position,
   wizardName,
 }: {
-  step: Step;
+  index: number;
   position: { top: number; left: number };
   wizardName: string;
 }) {
@@ -15,13 +14,13 @@ export default function Beacon({
 
   const openStep = () => {
     startWizard(wizardName, true);
-    setStep(step.id - 1);
+    setStep(index);
   };
 
   return (
     <button
-      title={`beacon-${step.id}`}
-      name={`beacon-${step.id}`}
+      title={`beacon-${index}`}
+      name={`beacon-${index}`}
       className={cn(
         'absolute h-4 w-4 rounded-full bg-purple-pizazz',
         'hover:h-6 hover:w-6',

@@ -39,7 +39,7 @@ export default function OnboardWizard({
     width: number;
   } | null>(null);
   const [beaconPositions, setBeaconPositions] = useState<
-    Record<string, { top: number; left: number }>
+    Record<number, { top: number; left: number }>
   >({});
   const [previousElement, setPreviousElement] = useState<HTMLElement | null>(
     null,
@@ -113,12 +113,12 @@ export default function OnboardWizard({
         setCurrentStepPosition(currentStepPosition);
       }
 
-      const newBeaconPositions: Record<string, { top: number; left: number }> =
+      const newBeaconPositions: Record<number, { top: number; left: number }> =
         {};
-      steps.forEach((step) => {
+      steps.forEach((step, index) => {
         const targetElement = getTargetElement(step.targetElementId ?? '');
         if (targetElement) {
-          newBeaconPositions[step.id] = getElementPosition(targetElement);
+          newBeaconPositions[index] = getElementPosition(targetElement);
         }
       });
       setBeaconPositions(newBeaconPositions);
@@ -158,14 +158,12 @@ export default function OnboardWizard({
         />
       )}
       {beaconsVisible &&
-        steps.map((step) =>
-          beaconPositions[step.id] ? (
+        steps.map((step, index) =>
+          beaconPositions[index] ? (
             <Beacon
-              key={step.id}
-              step={step}
-              position={
-                beaconPositions[step.id] as { top: number; left: number }
-              }
+              key={index}
+              index={index}
+              position={beaconPositions[index] as { top: number; left: number }}
               wizardName={name}
             />
           ) : null,

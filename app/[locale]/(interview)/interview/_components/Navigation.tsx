@@ -53,7 +53,6 @@ type NavigationProps = {
 
 const demoSteps = [
   {
-    id: 1,
     targetElementId: 'navigation-1',
     content: {
       en: 'This is the back button. Click it to go to the previous step.',
@@ -62,7 +61,6 @@ const demoSteps = [
     },
   },
   {
-    id: 2,
     targetElementId: 'navigation-2',
     content: {
       en: 'This is the next button. Click it to go to the next step.',
