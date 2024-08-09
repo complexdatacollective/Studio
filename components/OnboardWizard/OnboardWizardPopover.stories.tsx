@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import OnboardWizardPopover from './OnboardWizardPopover';
-import { OnboardWizardProvider } from './OnboardWizardContext';
 
 const meta: Meta<typeof OnboardWizardPopover> = {
   title: 'OnboardWizard/Popover',
@@ -13,11 +12,7 @@ const meta: Meta<typeof OnboardWizardPopover> = {
   },
   decorators: [
     (Story, _context) => {
-      return (
-        <OnboardWizardProvider>
-          <Story />
-        </OnboardWizardProvider>
-      );
+      return <Story />;
     },
   ],
   argTypes: {

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import NameGenerator from '~/components/interview/interfaces/NameGenerator';
-import { OnboardWizardProvider } from './OnboardWizardContext';
 import Navigation from '~/app/[locale]/(interview)/interview/_components/Navigation';
 
 const meta: Meta<typeof NameGenerator> = {
@@ -15,17 +14,15 @@ const meta: Meta<typeof NameGenerator> = {
   decorators: [
     (Story, _context) => {
       return (
-        <OnboardWizardProvider>
-          <div className="flex h-screen bg-navy-taupe text-white">
-            <Navigation pulseNext={false} progress={50} />
+        <div className="flex h-screen bg-navy-taupe text-white">
+          <Navigation pulseNext={false} progress={50} />
 
-            <div className="flex-1 overflow-hidden overflow-y-auto">
-              <div className="space-y-4 p-8">
-                <Story />
-              </div>
+          <div className="flex-1 overflow-hidden overflow-y-auto">
+            <div className="space-y-4 p-8">
+              <Story />
             </div>
           </div>
-        </OnboardWizardProvider>
+        </div>
       );
     },
   ],
