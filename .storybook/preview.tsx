@@ -6,6 +6,7 @@ import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
 import { TooltipProvider } from '~/components/ui/Tooltip';
 import { DirectionProvider } from '@radix-ui/react-direction';
+import { OnboardWizardProvider } from '~/components/OnboardWizard/OnboardWizardContext';
 
 const loadMessages = async (
   locale: Locale,
@@ -76,7 +77,9 @@ const preview: Preview = {
             messages={messages}
             locale={context.globals.locale as Locale}
           >
-            <Story />
+            <OnboardWizardProvider>
+              <Story />
+            </OnboardWizardProvider>
           </NextIntlClientProvider>
         </DirectionProvider>
       );
