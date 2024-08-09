@@ -50,6 +50,9 @@ export default function OnboardWizard({
   };
 
   const getElementPosition = (element: HTMLElement) => {
+    if (!element) {
+      return null;
+    }
     const { top, left, height, width } = element.getBoundingClientRect();
     return { top, left, height, width };
   };
