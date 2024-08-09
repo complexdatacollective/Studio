@@ -141,7 +141,7 @@ export default function OnboardWizard({
       {children}
       {showPopover && (
         <>
-          <div className="absolute inset-0 z-10 bg-cyber-grape-dark opacity-75" />
+          <div className="absolute inset-0 z-10 backdrop-blur-md backdrop-brightness-75" />
           <OnboardWizardPopover
             stepContent={steps[currentStep]?.content.en}
             elementPosition={currentStepPosition}
