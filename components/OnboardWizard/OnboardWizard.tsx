@@ -69,6 +69,7 @@ export default function OnboardWizard({
     if (isFirstRun) {
       queueWizard(name, hashedSteps, priority);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hashedSteps, name, priority, stage]);
 
   useEffect(() => {
@@ -121,7 +122,10 @@ export default function OnboardWizard({
       steps.forEach((step, index) => {
         const targetElement = getTargetElement(step.targetElementId ?? '');
         if (targetElement) {
-          newBeaconPositions[index] = getElementPosition(targetElement);
+          const position = getElementPosition(targetElement);
+          if (position) {
+            newBeaconPositions[index] = position;
+          }
         }
       });
       setBeaconPositions(newBeaconPositions);
