@@ -14,7 +14,7 @@ const demoSteps = [
 
 export default function Information() {
   return (
-    <OnboardWizard steps={demoSteps} name="task">
+    <OnboardWizard steps={demoSteps} name="task" priority={2}>
       <div
         className="flex flex-col overflow-hidden px-4 py-2"
         data-id="data-wizard-task-step-1"

@@ -18,7 +18,7 @@ export default function OnboardWizard({
   steps: Step[];
   children: React.ReactNode;
   name: string;
-  priority?: boolean;
+  priority?: number;
 }) {
   const {
     currentStep,

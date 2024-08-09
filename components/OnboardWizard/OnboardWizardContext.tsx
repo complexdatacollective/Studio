@@ -12,11 +12,7 @@ type OnboardWizardContextType = {
   beaconsVisible: boolean;
   toggleBeacons: () => void;
   showFlow: boolean;
-  queueWizard: (
-    wizard: string,
-    hashedSteps: string,
-    priority?: boolean,
-  ) => void;
+  queueWizard: (wizard: string, hashedSteps: string, priority?: number) => void;
 };
 
 const OnboardWizardContext = createContext<OnboardWizardContextType | null>(
@@ -43,9 +39,9 @@ export const OnboardWizardProvider = ({
   const [currentWizard, setCurrentWizard] = useState('');
   const [beaconsVisible, setBeaconsVisible] = useState(false);
   const [showFlow, setShowFlow] = useState(true);
-  const [queue, setQueue] = useState<{ wizard: string; hashedSteps: string }[]>(
-    [],
-  );
+  const [queue, setQueue] = useState<
+    { wizard: string; hashedSteps: string; priority?: number }[]
+  >([]);
 
   const setStep = (step: number) => {
     if (!isOpen) {
@@ -74,23 +70,33 @@ export const OnboardWizardProvider = ({
   const queueWizard = (
     wizard: string,
     hashedSteps: string,
-    priority?: boolean,
+    priority?: number,
   ) => {
-    if (priority) {
-      startWizard(wizard);
-      localStorage.setItem(`ONBOARD_WIZARD_${hashedSteps}`, 'true');
-    } else {
-      setQueue([...queue, { wizard, hashedSteps }]);
-    }
+    setQueue((prevQueue) => {
+      const newQueue = [...prevQueue, { wizard, hashedSteps, priority }];
+
+      newQueue.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+
+      return newQueue;
+    });
   };
 
   // Start the next wizard in the queue if there is a queue and no wizard is open
   useEffect(() => {
     if (!isOpen && queue[0]) {
-      startWizard(queue[0].wizard);
-      localStorage.setItem(`ONBOARD_WIZARD_${queue[0].hashedSteps}`, 'true');
+      const highestPriorityWizard = queue[0];
+      startWizard(highestPriorityWizard.wizard);
+      localStorage.setItem(
+        `ONBOARD_WIZARD_${highestPriorityWizard.hashedSteps}`,
+        'true',
+      );
 
-      setQueue((prevQueue) => prevQueue.slice(1));
+      // Remove the started wizard from the queue
+      setQueue((prevQueue) =>
+        prevQueue.filter(
+          (item) => item.hashedSteps !== highestPriorityWizard.hashedSteps,
+        ),
+      );
     }
   }, [isOpen, queue]);
 
