@@ -53,7 +53,7 @@ type NavigationProps = {
 
 const demoSteps = [
   {
-    targetElementId: 'navigation-1',
+    targetElementId: 'data-wizard-navigation-step-1',
     content: {
       en: 'This is the back button. Click it to go to the previous step.',
       es: '',
@@ -61,7 +61,7 @@ const demoSteps = [
     },
   },
   {
-    targetElementId: 'navigation-2',
+    targetElementId: 'data-wizard-navigation-step-2',
     content: {
       en: 'This is the next button. Click it to go to the next step.',
       es: '',
@@ -119,7 +119,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
             </NavButtonWithTooltip>
           </span>
         </Popover>
-        <div data-id="navigation-1">
+        <div data-id="data-wizard-navigation-step-1">
           <NavButtonWithTooltip
             onClick={moveBackward}
             aria-label={t('back')}
@@ -134,7 +134,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           className="bg-white/15"
           ariaLabel="Interview Progress"
         />
-        <div data-id="navigation-2">
+        <div data-id="data-wizard-navigation-step-2">
           <NavButtonWithTooltip
             className={cn(
               pulseNext && 'animate-pulse-bg from-cyber-grape to-success',

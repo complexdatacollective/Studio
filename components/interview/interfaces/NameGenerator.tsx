@@ -91,7 +91,7 @@ const demoSteps = [
     },
   },
   {
-    targetElementId: 'name-generator-2',
+    targetElementId: 'data-wizard-task-step-2',
     content: {
       en: 'These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them.',
       es: '',
@@ -99,7 +99,7 @@ const demoSteps = [
     },
   },
   {
-    targetElementId: 'name-generator-3',
+    targetElementId: 'data-wizard-task-step-3',
     content: {
       en: 'Click this button to add a new person.',
       es: '',
@@ -112,7 +112,7 @@ export default function NameGenerator() {
   return (
     <OnboardWizard steps={demoSteps} name="task">
       <div className="flex flex-col overflow-hidden px-4 py-2">
-        <div data-id="name-generator-1">
+        <div data-id="data-wizard-task-step-1">
           <Prompts prompts={demoPrompts} currentPromptId={0} />
         </div>
 
