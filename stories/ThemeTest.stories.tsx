@@ -36,7 +36,7 @@ export const Primary: Story = {
   render: () => {
     return (
     <div className="wrapper flex h-full flex-col bg-primary-50 text-primary-900 dark:bg-primary-950 dark:text-primary-50">
-      <nav className="main-nav flex justify-between bg-primary-700 px-4 py-2 text-primary-50">
+      <nav className="main-nav flex justify-between bg-primary-800 px-4 py-2 text-primary-50">
         <ul className="flex items-center">
           <li>
             <img src="https://via.placeholder.com/50" alt="logo" />

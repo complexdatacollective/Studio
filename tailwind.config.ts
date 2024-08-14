@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: dynamicTwClasses("primary", 220),
+        primary: dynamicTwClasses("primary", 255),
         secondary: dynamicTwClasses("secondary", 370),
         success: {
           DEFAULT: colors.green[500],
