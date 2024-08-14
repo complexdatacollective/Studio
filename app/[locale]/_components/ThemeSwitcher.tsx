@@ -1,31 +1,42 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
+import { useRef } from 'react';
 import Select from '~/components/ui/form/Select';
+import { Switch } from '~/components/ui/form/Switch';
+import { THEMES } from '~/lib/theme/constants';
 
-export default function ThemeSwitcher() {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+export default function ThemeSwitcher({
+  currentTheme,
+  forceDarkMode,
+  updateTheme,
+}: {
+  currentTheme: string;
+  forceDarkMode: boolean;
+  updateTheme: (form: FormData) => void;
+}) {
+  const formRef = useRef<HTMLFormElement | null>(null);
 
-  // useEffect only runs on the client, so now we can safely show the UI
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  const handleChange = () => {
+    formRef.current?.requestSubmit();
+  };
 
   return (
-    <Select
-      value={theme}
-      onValueChange={(theme) => setTheme(theme)}
-      options={[
-        { label: 'System', value: 'system' },
-        { label: 'Dark', value: 'dark' },
-        { label: 'Light', value: 'light' },
-      ]}
-    />
+    <form action={updateTheme} ref={formRef}>
+      <Select
+        placeholder="Select a theme"
+        name="theme"
+        value={currentTheme}
+        options={Object.keys(THEMES).map((theme) => ({
+          label: theme,
+          value: theme,
+        }))}
+        onValueChange={handleChange}
+      />
+      <Switch
+        name="force-dark-mode"
+        checked={forceDarkMode}
+        onCheckedChange={handleChange}
+      />
+    </form>
   );
 }

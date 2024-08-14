@@ -13,11 +13,11 @@ type SimpleSelectProps = {
 } & SelectProps;
 
 export default function SimpleSelect(props: SimpleSelectProps) {
-  const { options, placeholder, ...rest } = props;
+  const { options, placeholder, value, ...rest } = props;
   return (
     <Select {...rest}>
       <SelectTrigger>
-        <SelectValue placeholder={placeholder} />
+        <SelectValue placeholder={placeholder} defaultValue={value} />
       </SelectTrigger>
       <SelectContent>
         {options.map(({ label, value }) => (

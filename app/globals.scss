@@ -52,55 +52,55 @@
 
     --popover: var(--white);
     --popover-foreground: var(--foreground);
-  }
 
-  [data-theme='dark'] {
-    /* Semantic slots */
-    --background: var(--navy-taupe);
-    --foreground: var(--platinum);
+    @media (prefers-color-scheme: dark) {
+      /* Semantic slots */
+      --background: var(--navy-taupe);
+      --foreground: var(--platinum);
 
-    --primary: var(--neon-coral);
-    --primary-foreground: var(--white);
+      --primary: var(--neon-coral);
+      --primary-foreground: var(--white);
 
-    --secondary: var(--neon-coral);
-    --secondary-foreground: var(--white);
+      --secondary: var(--neon-coral);
+      --secondary-foreground: var(--white);
 
-    --muted: var(--platinum);
-    --muted-foreground: var(--cyber-grape-hue)
-      calc(var(--cyber-grape-saturation) - 10%)
-      calc(var(--cyber-grape-lightness) - 10%);
+      --muted: var(--platinum);
+      --muted-foreground: var(--cyber-grape-hue)
+        calc(var(--cyber-grape-saturation) - 10%)
+        calc(var(--cyber-grape-lightness) - 10%);
 
-    --accent: var(--slate-blue);
-    --accent-foreground: var(--white);
+      --accent: var(--slate-blue);
+      --accent-foreground: var(--white);
 
-    --destructive: var(--tomato);
-    --destructive-foreground: var(--white);
+      --destructive: var(--tomato);
+      --destructive-foreground: var(--white);
 
-    --warning: var(--neon-carrot);
-    --warning-foreground: var(--white);
+      --warning: var(--neon-carrot);
+      --warning-foreground: var(--white);
 
-    --info: var(--cerulean-blue);
-    --info-foreground: var(--white);
+      --info: var(--cerulean-blue);
+      --info-foreground: var(--white);
 
-    --success: var(--sea-green);
-    --success-foreground: var(--white);
+      --success: var(--sea-green);
+      --success-foreground: var(--white);
 
-    --border: var(--slate-blue);
+      --border: var(--slate-blue);
 
-    --link: var(--neon-coral);
+      --link: var(--neon-coral);
 
-    --card: var(--cyber-grape);
+      --card: var(--cyber-grape);
 
-    --panel: var(--platinum);
+      --panel: var(--platinum);
 
-    /* Focus ring */
-    --ring: var(--mustard);
+      /* Focus ring */
+      --ring: var(--mustard);
 
-    --input: var(--cyber-grape);
-    --input-foreground: var(--white);
+      --input: var(--cyber-grape);
+      --input-foreground: var(--white);
 
-    --popover: var(--cyber-grape);
-    --popover-foreground: var(--foreground);
+      --popover: var(--cyber-grape);
+      --popover-foreground: var(--foreground);
+    }
   }
 }
 

@@ -8,6 +8,8 @@ import StudioLogo from '~/public/studio.png';
 import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import ThemeSwitcher from '../_components/ThemeSwitcher';
+import { updateTheme } from '~/lib/theme/actions';
+import { getForceDarkMode, getTheme } from '~/lib/theme/utils';
 
 export default async function DashboardLayout({
   children,
@@ -30,7 +32,11 @@ export default async function DashboardLayout({
             />
           </div>
           <StudySwitcher />
-          <ThemeSwitcher />
+          <ThemeSwitcher
+            currentTheme={getTheme()}
+            forceDarkMode={getForceDarkMode() === 'yes'}
+            updateTheme={updateTheme}
+          />
           <Input
             type="search"
             placeholder="Search"

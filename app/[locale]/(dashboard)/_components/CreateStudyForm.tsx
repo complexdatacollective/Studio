@@ -1,6 +1,6 @@
 import { createStudy } from '~/server/actions/study';
 import { getTranslations } from 'next-intl/server';
-import { SubmitButton } from '~/components/form/SubmitButton';
+import { SubmitButton } from '~/components/ui/form/SubmitButton';
 import { Input } from '~/components/ui/form/Input';
 import Section from '~/components/layout/Section';
 import {

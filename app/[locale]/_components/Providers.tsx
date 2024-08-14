@@ -2,7 +2,6 @@ import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { type ReactNode } from 'react';
 import RadixDirectionProvider from './RadixDirectionProvider';
 import { TooltipProvider } from '~/components/ui/Tooltip';
-import { ThemeProvider } from 'next-themes';
 
 export default function Providers({
   dir,
@@ -16,9 +15,7 @@ export default function Providers({
   return (
     <NextIntlClientProvider messages={messages}>
       <RadixDirectionProvider dir={dir}>
-        <TooltipProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </TooltipProvider>
+        <TooltipProvider>{children}</TooltipProvider>
       </RadixDirectionProvider>
     </NextIntlClientProvider>
   );
