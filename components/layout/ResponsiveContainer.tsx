@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react';
 import { cn } from '~/lib/utils';
 
 const containerVariants = tv({
-  base: 'mx-auto flex flex-col my-6 md:my-10 ',
+  base: 'mx-auto flex flex-col',
   variants: {
     maxWidth: {
       'xl': 'max-w-xl',

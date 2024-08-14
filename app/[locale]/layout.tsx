@@ -1,4 +1,3 @@
-import { NextIntlClientProvider } from 'next-intl';
 import { Inter } from 'next/font/google';
 import { getMessages } from 'next-intl/server';
 import { type Metadata } from 'next';
@@ -6,9 +5,8 @@ import '~/app/globals.scss';
 import { type Locale } from '~/lib/localisation/locales';
 import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
-import { TooltipProvider } from '~/components/ui/Tooltip';
-import RadixDirectionProvider from './_components/RadixDirectionProvider';
 import { cn } from '~/lib/utils';
+import Providers from './_components/Providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,13 +27,11 @@ export default async function RootLayout({
   const dir = getLangDir(locale);
 
   return (
-    <html lang={locale} dir={dir} className="h-full bg-platinum">
+    <html lang={locale} dir={dir} className="h-full" suppressHydrationWarning>
       <body className={cn(inter.className, 'h-full')}>
-        <NextIntlClientProvider messages={messages}>
-          <RadixDirectionProvider dir={dir}>
-            <TooltipProvider>{children}</TooltipProvider>
-          </RadixDirectionProvider>
-        </NextIntlClientProvider>
+        <Providers dir={dir} messages={messages}>
+          {children}
+        </Providers>
         <Analytics />
       </body>
     </html>

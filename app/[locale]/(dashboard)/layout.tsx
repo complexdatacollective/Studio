@@ -7,6 +7,7 @@ import SignOutBtn from './_components/SignOutBtn';
 import StudioLogo from '~/public/studio.png';
 import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
+import ThemeSwitcher from '../_components/ThemeSwitcher';
 
 export default async function DashboardLayout({
   children,
@@ -29,7 +30,7 @@ export default async function DashboardLayout({
             />
           </div>
           <StudySwitcher />
-
+          <ThemeSwitcher />
           <Input
             type="search"
             placeholder="Search"

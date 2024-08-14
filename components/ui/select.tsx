@@ -6,7 +6,7 @@ import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '~/lib/utils';
 import { Label } from './form/Label';
 
-type SelectProps = {
+export type SelectProps = {
   label?: string;
   hint?: React.ReactNode;
   id?: string;
