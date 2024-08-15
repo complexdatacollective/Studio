@@ -2,22 +2,8 @@
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
 import { SUPPORTED_LOCALES } from './locales';
-import {
-  type IntlError,
-  IntlErrorCode,
-  type AbstractIntlMessages,
-} from 'next-intl';
-
-export const customErrorLogger = (error: IntlError) => {
-  if (error.code === IntlErrorCode.MISSING_MESSAGE) {
-    // Missing translations are expected and should only log an error
-    console.log(error.message);
-  } else {
-    // Other errors indicate a bug in the app and should be reported
-    // reportToErrorTracking(error);
-    console.log('other', error.message);
-  }
-};
+import { IntlErrorCode, type AbstractIntlMessages } from 'next-intl';
+import { customErrorLogger } from './utils';
 
 export default getRequestConfig(async ({ locale }) => {
   // Validate that the incoming `locale` parameter is valid

@@ -2,22 +2,33 @@ import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { type ReactNode } from 'react';
 import RadixDirectionProvider from './RadixDirectionProvider';
 import { TooltipProvider } from '~/components/ui/Tooltip';
-import { customErrorLogger } from '~/lib/localisation/i18n';
+import { customErrorLogger } from '~/lib/localisation/utils';
+import { type Locale } from '~/lib/localisation/locales';
+import IntlProvider from './IntlProvider';
 
 export default function Providers({
-  dir,
-  messages,
+  intlParams: { dir, messages, locale, now, timeZone },
   children,
 }: {
-  dir: 'ltr' | 'rtl';
-  messages: AbstractIntlMessages;
+  intlParams: {
+    dir: 'ltr' | 'rtl';
+    messages: AbstractIntlMessages;
+    locale: Locale;
+    now: Date;
+    timeZone: string;
+  };
   children: ReactNode;
 }) {
   return (
-    <NextIntlClientProvider messages={messages} onError={customErrorLogger}>
+    <IntlProvider
+      messages={messages}
+      locale={locale}
+      now={now}
+      timeZone={timeZone}
+    >
       <RadixDirectionProvider dir={dir}>
         <TooltipProvider>{children}</TooltipProvider>
       </RadixDirectionProvider>
-    </NextIntlClientProvider>
+    </IntlProvider>
   );
 }

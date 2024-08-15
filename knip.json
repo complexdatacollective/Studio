@@ -1,12 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignoreDependencies": [
-    "sharp",
-    "server-only",
-    "@storybook/blocks",
-    "tsx",
-    "framer-motion"
-  ],
+  "ignoreDependencies": ["sharp", "server-only", "@storybook/blocks", "tsx"],
   "ignore": [
     "./components/layout/*",
     "./components/typography/*",

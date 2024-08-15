@@ -51,12 +51,8 @@ export default async function DashboardLayout({
         </div>
       </header>
       <main>{children}</main>
-      <footer>
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="border-t py-8 text-center text-sm">
-            &copy; 2024 Complex Data Collective.
-          </div>
-        </div>
+      <footer className="mx-auto max-w-3xl p-4 sm:p-6 lg:p-8">
+        &copy; 2024 Complex Data Collective.
       </footer>
     </ResponsiveContainer>
   );
