@@ -15,9 +15,9 @@ type SimpleSelectProps = {
 export default function SimpleSelect(props: SimpleSelectProps) {
   const { options, placeholder, value, ...rest } = props;
   return (
-    <Select {...rest}>
+    <Select {...rest} defaultValue={value}>
       <SelectTrigger>
-        <SelectValue placeholder={placeholder} defaultValue={value} />
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
         {options.map(({ label, value }) => (

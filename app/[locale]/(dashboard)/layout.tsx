@@ -9,7 +9,7 @@ import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import ThemeSwitcher from '../_components/ThemeSwitcher';
 import { updateTheme } from '~/lib/theme/actions';
-import { getForceDarkMode, getTheme } from '~/lib/theme/utils';
+import { getThemeDataFromCookies } from '~/lib/theme/utils';
 
 export default async function DashboardLayout({
   children,
@@ -33,8 +33,7 @@ export default async function DashboardLayout({
           </div>
           <StudySwitcher />
           <ThemeSwitcher
-            currentTheme={getTheme()}
-            forceDarkMode={getForceDarkMode() === 'yes'}
+            cookieData={getThemeDataFromCookies()}
             updateTheme={updateTheme}
           />
           <Input

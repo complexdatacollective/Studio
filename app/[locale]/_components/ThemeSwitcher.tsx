@@ -3,18 +3,18 @@
 import { useRef } from 'react';
 import Select from '~/components/ui/form/Select';
 import { Switch } from '~/components/ui/form/Switch';
-import { THEMES } from '~/lib/theme/constants';
+import { type Theme, THEMES } from '~/lib/theme/constants';
 
 export default function ThemeSwitcher({
-  currentTheme,
-  forceDarkMode,
+  cookieData,
   updateTheme,
 }: {
-  currentTheme: string;
-  forceDarkMode: boolean;
+  cookieData: { theme: Theme; forceDarkMode: boolean };
   updateTheme: (form: FormData) => void;
 }) {
   const formRef = useRef<HTMLFormElement | null>(null);
+
+  const { theme, forceDarkMode } = cookieData;
 
   const handleChange = () => {
     formRef.current?.requestSubmit();
@@ -25,7 +25,7 @@ export default function ThemeSwitcher({
       <Select
         placeholder="Select a theme"
         name="theme"
-        value={currentTheme}
+        value={theme}
         options={Object.keys(THEMES).map((theme) => ({
           label: theme,
           value: theme,
@@ -34,7 +34,7 @@ export default function ThemeSwitcher({
       />
       <Switch
         name="force-dark-mode"
-        checked={forceDarkMode}
+        defaultChecked={forceDarkMode}
         onCheckedChange={handleChange}
       />
     </form>

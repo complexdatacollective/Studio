@@ -13,10 +13,10 @@ import {
  *   - Work out i18n for theme names
  */
 
-export const getTheme = () =>
+const getTheme = () =>
   (cookies().get(THEME_COOKIE_NAME)?.value as Theme) ?? ('default' as Theme);
-export const getForceDarkMode = () =>
-  cookies().get(DARK_MODE_COOKIE_NAME)?.value ?? 'no';
+const getForceDarkMode = () =>
+  cookies().get(DARK_MODE_COOKIE_NAME)?.value === 'on' ?? false;
 
 export const getThemeDataFromCookies = () => {
   return {
