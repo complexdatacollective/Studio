@@ -1,6 +1,5 @@
 :root {
   /* UI Colors */
-  // To generate dark color variants, subtract 5% from the lightness.
   --dark-mod: 5%;
   --neon-coral-hue: 342;
   --neon-coral-saturation: 76.9%;

@@ -1,8 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import './styles/colors';
 
 @layer base {
   :root {
@@ -101,26 +96,5 @@
       --popover: var(--cyber-grape);
       --popover-foreground: var(--foreground);
     }
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  // These two tags are semantic, so I think its okay to apply styles to them
-  // directly in the global styles.
-  strong {
-    @apply font-extrabold;
-  }
-
-  em {
-    @apply italic;
   }
 }

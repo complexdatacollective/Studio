@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react';
-import '~/app/globals.scss';
+import '~/styles/global.css';
 import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';

@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
 import { getMessages } from 'next-intl/server';
 import { type Metadata } from 'next';
-import '~/app/globals.scss';
+import '~/styles/global.css';
 import { type Locale } from '~/lib/localisation/locales';
 import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
