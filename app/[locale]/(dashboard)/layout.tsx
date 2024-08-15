@@ -4,7 +4,6 @@ import Image from 'next/image';
 import StudySwitcher from './_components/StudySwitcher';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
 import SignOutBtn from './_components/SignOutBtn';
-import StudioLogo from '~/public/studio.png';
 import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import ThemeSwitcher from '../_components/ThemeSwitcher';
@@ -25,7 +24,7 @@ export default async function DashboardLayout({
           <div className="absolute left-0 flex-shrink-0 lg:static">
             <span className="sr-only">Network Canvas Studio</span>
             <Image
-              src={StudioLogo}
+              src="/images/studio.png"
               height={50}
               width={50}
               alt="Network Canvas Studio"

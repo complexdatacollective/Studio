@@ -22,7 +22,6 @@ export default {
     },
     colors: {
       transparent: 'transparent',
-      white: 'hsl(var(--white) / <alpha-value>)',
 
       background: 'hsl(var(--background) / <alpha-value>)',
       foreground: 'hsl(var(--foreground) / <alpha-value>)',
@@ -55,23 +54,34 @@ export default {
         DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
         foreground: 'hsl(var(--accent-foreground) / <alpha-value>)',
       },
+
       popover: {
         DEFAULT: 'hsl(var(--popover) / <alpha-value>)',
         foreground: 'hsl(var(--popover-foreground) / <alpha-value>)',
       },
+
       card: {
         DEFAULT: 'hsl(var(--card) / <alpha-value>)',
+        border:
+          'color-mix(in hsl, hsl(var(--background)), hsl(var(--darkness)) 10%)',
         foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
       },
+
       panel: {
         DEFAULT: 'hsl(var(--panel) / <alpha-value>)',
         foreground: 'hsl(var(--foreground) / <alpha-value>)',
       },
+
       input: {
         DEFAULT: 'hsl(var(--input) / <alpha-value>)',
+        border:
+          'color-mix(in hsl, hsl(var(--background)), hsl(var(--darkness)) 10%)',
         foreground: 'hsl(var(--input-foreground) / <alpha-value>)',
       },
-      border: 'hsl(var(--border) / <alpha-value>)',
+
+      border:
+        'color-mix(in hsl, hsl(var(--background)), hsl(var(--darkness)) 10%)',
+
       link: 'hsl(var(--link) / <alpha-value>)',
 
       focus: 'hsl(var(--focus) / <alpha-value>)',

@@ -5,7 +5,6 @@ import { type Locale } from '~/lib/localisation/locales';
 import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
 import Providers from './_components/Providers';
-import { getThemeData, getThemeDataFromCookies } from '~/lib/theme/utils';
 
 export const metadata: Metadata = {
   title: 'Network Canvas Studio',
@@ -26,8 +25,11 @@ export default async function RootLayout({
   const timeZone = await getTimeZone();
 
   return (
-    <html lang={locale} dir={dir} className="h-full">
-      <body className="h-full">
+    <html lang={locale} dir={dir} className="min-h-full">
+      <head>
+        <link rel="stylesheet" href="/themes/default.css" />
+      </head>
+      <body className="text-background-foreground min-h-full bg-background">
         <Providers
           intlParams={{
             dir,

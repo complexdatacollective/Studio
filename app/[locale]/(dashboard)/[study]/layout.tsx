@@ -27,7 +27,7 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
-      <section className="overflow-hidden rounded-lg bg-white p-6 shadow">
+      <section className="overflow-hidden rounded-lg p-6 shadow">
         {children}
       </section>
     </>

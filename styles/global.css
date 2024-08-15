@@ -2,17 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './colors';
+@import './colors.css';
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Open Sans', sans-serif;
-  }
 
   strong {
     @apply font-extrabold;

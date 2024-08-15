@@ -1,7 +1,7 @@
 @layer base {
   :root {
-    --background: var(--platinum);
-    --foreground: var(--cyber-grape);
+    --background: var(--cyber-grape);
+    --foreground: var(--platinum);
 
     --primary: var(--cyber-grape);
     --primary-foreground: var(--white);

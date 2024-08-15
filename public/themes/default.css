@@ -1,7 +1,10 @@
 
 @layer base {
   :root {
-    /* Semantic slots */
+    --darkness: var(--rich-black);
+    --lightness: var(--white);
+
+
     --background: var(--platinum);
     --foreground: var(--cyber-grape);
 
