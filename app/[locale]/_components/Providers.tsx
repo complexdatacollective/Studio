@@ -1,10 +1,10 @@
-import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
+import { type AbstractIntlMessages } from 'next-intl';
 import { type ReactNode } from 'react';
 import RadixDirectionProvider from './RadixDirectionProvider';
 import { TooltipProvider } from '~/components/ui/Tooltip';
-import { customErrorLogger } from '~/lib/localisation/utils';
 import { type Locale } from '~/lib/localisation/locales';
 import IntlProvider from './IntlProvider';
+import { ThemeProvider } from 'next-themes';
 
 export default function Providers({
   intlParams: { dir, messages, locale, now, timeZone },
@@ -20,15 +20,17 @@ export default function Providers({
   children: ReactNode;
 }) {
   return (
-    <IntlProvider
-      messages={messages}
-      locale={locale}
-      now={now}
-      timeZone={timeZone}
-    >
-      <RadixDirectionProvider dir={dir}>
-        <TooltipProvider>{children}</TooltipProvider>
-      </RadixDirectionProvider>
-    </IntlProvider>
+    <ThemeProvider>
+      <IntlProvider
+        messages={messages}
+        locale={locale}
+        now={now}
+        timeZone={timeZone}
+      >
+        <RadixDirectionProvider dir={dir}>
+          <TooltipProvider>{children}</TooltipProvider>
+        </RadixDirectionProvider>
+      </IntlProvider>
+    </ThemeProvider>
   );
 }

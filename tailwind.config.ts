@@ -2,6 +2,7 @@ import { type Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
+  darkMode: ['selector', '[data-mode="dark"]'],
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './lib/interviewer/**/*.{js,ts,jsx,tsx}',
@@ -63,7 +64,7 @@ export default {
       card: {
         DEFAULT: 'hsl(var(--card) / <alpha-value>)',
         border:
-          'color-mix(in hsl, hsl(var(--background)), hsl(var(--darkness)) 10%)',
+          'color-mix(in hsl, hsl(var(--background)), hsl(var(--contrast)) 10%)',
         foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
       },
 
@@ -75,21 +76,25 @@ export default {
       input: {
         DEFAULT: 'hsl(var(--input) / <alpha-value>)',
         border:
-          'color-mix(in hsl, hsl(var(--background)), hsl(var(--darkness)) 10%)',
+          'color-mix(in hsl, hsl(var(--background)), hsl(var(--contrast)) 10%)',
         foreground: 'hsl(var(--input-foreground) / <alpha-value>)',
       },
 
       border:
-        'color-mix(in hsl, hsl(var(--background)), hsl(var(--darkness)) 10%)',
+        'color-mix(in hsl, hsl(var(--background)), hsl(var(--contrast)) 10%)',
 
       link: 'hsl(var(--link) / <alpha-value>)',
 
       focus: 'hsl(var(--focus) / <alpha-value>)',
     },
+    borderRadius: {
+      none: '0',
+      small: 'calc(var(--border-radius) / 2)',
+      DEFAULT: 'var(--border-radius)',
+      large: 'calc(var(--border-radius) * 1.5)',
+      full: '9999px',
+    },
     extend: {
-      borderRadius: {
-        input: defaultTheme.borderRadius.xl,
-      },
       keyframes: {
         'wiggle': {
           '0%, 100%': { transform: 'rotate(-3deg)' },

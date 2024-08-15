@@ -4,10 +4,10 @@ import { cn } from '~/lib/utils';
 
 const sectionVariants = tv({
   slots: {
-    base: 'border rounded-lg border-card-border flex flex-col bg-card text-card-foreground',
+    base: 'border rounded border-card-border flex flex-col bg-card text-card-foreground',
     wrapper: 'relative flex flex-col space-y-4 py-4 px-6 sm:py-6 sm:px-8',
     footer:
-      'flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-card-border p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10',
+      'flex flex-col items-center justify-center space-y-2 rounded-b border-t border-card-border p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10',
   },
 });
 

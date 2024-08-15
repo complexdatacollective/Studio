@@ -1,9 +1,14 @@
-import ThemeProvider from '~/lib/theme/ThemeProvider';
+import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 
 export default function InterviewLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <ThemeProvider theme="interview">{children}</ThemeProvider>;
+  return (
+    <>
+      <InjectThemeVariables theme="interview" />
+      {children}
+    </>
+  );
 }

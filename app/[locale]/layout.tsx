@@ -25,11 +25,13 @@ export default async function RootLayout({
   const timeZone = await getTimeZone();
 
   return (
-    <html lang={locale} dir={dir} className="min-h-full">
-      <head>
-        <link rel="stylesheet" href="/themes/default.css" />
-      </head>
-      <body className="text-background-foreground min-h-full bg-background">
+    <html
+      lang={locale}
+      dir={dir}
+      className="min-h-full"
+      suppressHydrationWarning
+    >
+      <body className="text-background-foreground min-h-full bg-background text-foreground">
         <Providers
           intlParams={{
             dir,

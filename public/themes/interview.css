@@ -1,9 +1,9 @@
 @layer base {
   :root {
-    --background: var(--cyber-grape);
+    --background: var(--navy-taupe);
     --foreground: var(--platinum);
 
-    --primary: var(--cyber-grape);
+    --primary: var(--neon-coral);
     --primary-foreground: var(--white);
 
     --secondary: var(--neon-coral);
