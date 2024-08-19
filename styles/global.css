@@ -9,12 +9,6 @@
     --font-family-heading: 'Lexend', sans-serif;
     --font-family-body: 'Lexend', sans-serif;
 
-    /* Make sure to add these weights to the import URL above! */
-    /* --font-weight-light: 200;
-    --font-weight-normal: 330;
-    --font-weight-bold: 400;
-    --font-weight-extrabold: 540; */
-
     /* https://www.fluid-type-scale.com/calculate?minFontSize=14&minWidth=400&minRatio=1.25&maxFontSize=18&maxWidth=1920&maxRatio=1.25&steps=sm%2Cbase%2Clg%2Cxl%2C2xl%2C3xl%2C4xl%2C5xl%2C6xl&baseStep=base&prefix=font-size&decimals=2&useRems=on&remValue=16&previewFont=Inter&previewText=Almost+before+we+knew+it%2C+we+had+left+the+ground&previewWidth=400 */
     --font-size-sm: clamp(0.8rem, 0.17cqi + 0.76rem, 0.89rem);
     --font-size-base: clamp(1rem, 0.34cqi + 0.91rem, 1.19rem);
