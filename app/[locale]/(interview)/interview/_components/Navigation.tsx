@@ -101,13 +101,13 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         )}
       >
         <Popover
-          side="right"
           content={
             <>
               <Heading variant="label">Select language</Heading>
               <LanguageSwitcher />
             </>
           }
+          side="right"
         >
           <span className="rounded-full">
             <NavButtonWithTooltip

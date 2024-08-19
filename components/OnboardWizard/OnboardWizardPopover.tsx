@@ -20,6 +20,15 @@ export default function OnboardWizardPopover({
 }) {
   const { closeWizard } = useOnboardWizard();
 
+  let side = 'right' as 'right' | 'left' | 'top' | 'bottom';
+
+  // Override default side if element is too close to the top or bottom of the screen
+  if (elementPosition.top < 100) {
+    side = 'bottom';
+  } else if (elementPosition.top > window.innerHeight - 100) {
+    side = 'top';
+  }
+
   return (
     <Popover
       content={
@@ -30,7 +39,7 @@ export default function OnboardWizardPopover({
       onOpenChange={() => {
         closeWizard();
       }}
-      side="right"
+      side={side}
     >
       {/* spotlight */}
       <div

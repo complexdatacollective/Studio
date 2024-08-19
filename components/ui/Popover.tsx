@@ -39,6 +39,7 @@ const Popover = ({
           sideOffset={5}
           collisionPadding={10}
           side={side}
+          avoidCollisions
         >
           <div className="flex flex-col gap-2.5">{content}</div>
           <PopoverPrimitive.Close
@@ -47,7 +48,7 @@ const Popover = ({
           >
             <X />
           </PopoverPrimitive.Close>
-          <PopoverPrimitive.Arrow className="fill-white" />
+          <PopoverPrimitive.Arrow className="fill-overlay" />
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>
