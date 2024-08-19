@@ -1,7 +1,14 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignoreDependencies": ["sharp", "server-only", "@storybook/blocks", "tsx"],
+  "ignoreDependencies": [
+    "sharp",
+    "server-only",
+    "@storybook/blocks",
+    "tsx",
+    "@radix-ui/*"
+  ],
   "ignore": [
+    "./components/ui/form/*",
     "./components/layout/*",
     "./components/typography/*",
     "./lib/db/seed.ts",
