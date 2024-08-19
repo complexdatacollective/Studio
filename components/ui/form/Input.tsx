@@ -13,7 +13,7 @@ type InputProps = {
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const inputClasses = cn(
-  'flex h-10 w-full rounded border bg-input px-6 text-sm',
+  'flex h-12 w-full rounded border bg-input px-6 text-sm',
   'disabled:cursor-not-allowed disabled:opacity-50',
   'placeholder:text-muted-foreground',
   'file:border-0 file:bg-transparent file:text-sm file:font-medium',

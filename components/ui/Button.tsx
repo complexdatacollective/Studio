@@ -4,7 +4,13 @@ import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';
 
 const buttonVariants = tv({
-  base: 'inline-flex items-center justify-center rounded text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-nowrap truncate text-foreground hover:bg-opacity-90 tracking-wide',
+  base: cn(
+    'inline-flex items-center justify-center rounded text-sm font-semibold transition-colors text-nowrap truncate text-foreground tracking-wide',
+    'hover:bg-opacity-90',
+    'ring-offset-background ',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ',
+    'disabled:pointer-events-none disabled:opacity-50',
+  ),
   variants: {
     variant: {
       default: 'bg-primary text-primary-foreground',
@@ -19,11 +25,11 @@ const buttonVariants = tv({
       link: 'underline-offset-4 hover:underline',
     },
     size: {
-      default: 'h-10 px-6',
-      xs: 'h-6 px-3 text-xs',
-      sm: 'h-8 px-4',
-      lg: 'h-12 px-8',
-      icon: 'h-10 w-10',
+      default: 'h-12 px-6',
+      xs: 'h-8 px-3 text-xs',
+      sm: 'h-10 px-4',
+      lg: 'h-16 px-8',
+      icon: 'h-12 w-12',
     },
   },
   defaultVariants: {

@@ -33,7 +33,8 @@ export default async function Dashboard() {
             <Button>Default</Button>
             <Button variant="accent">Accent</Button>
             <Button variant="destructive">Delete</Button>
-            <Button variant="outline">Link button</Button>
+            <Button variant="outline">Outline button</Button>
+            <Button variant="link">Link Button</Button>
           </div>
         }
       >

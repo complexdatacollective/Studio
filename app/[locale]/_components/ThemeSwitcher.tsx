@@ -9,8 +9,8 @@ import { useTranslations } from 'next-intl';
 
 const variants = tv({
   slots: {
-    root: 'h-10 p-1 flex items-center focus-visible:ring-ring peer shrink-0 rounded-full bg-input disabled:cursor-not-allowed disabled:opacity-50 border border overflow-hidden rounded',
-    item: 'w-8 h-8 flex items-center justify-center rounded-[calc(var(--border-radius)*0.6)] data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-all duration-200',
+    root: 'h-12 p-1 flex items-center focus-visible:ring-ring peer shrink-0 rounded-full bg-input disabled:cursor-not-allowed disabled:opacity-50 border border overflow-hidden rounded',
+    item: 'w-10 h-10 flex items-center justify-center rounded-full data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground transition-all duration-200',
     icon: 'h-4 w-4',
   },
 });

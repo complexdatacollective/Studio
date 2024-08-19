@@ -48,7 +48,7 @@
     --background: 97% 0.001 var(--base-hue);
     --foreground: 20% 0.1 var(--base-hue);
 
-    --primary: 34% 0.1 var(--base-hue);
+    --primary: 34% 0.2 var(--base-hue);
     --primary-foreground: var(--white);
 
     --accent-hue: calc(var(--base-hue) - 30);
@@ -97,10 +97,9 @@
     --background: 13% 0.1 var(--base-hue);
     --foreground: 97% 0.001 var(--base-hue);
 
-    --primary: var(--neon-coral);
-    --primary-foreground: var(--white);
+    --primary: 40% 0.2 var(--base-hue);
 
-    --border-color: var(--slate-blue);
+    --border-color: 58% 0.2 var(--base-hue);
 
     --input: 20% 0.1 var(--base-hue);
     --input-foreground: var(--foreground);
