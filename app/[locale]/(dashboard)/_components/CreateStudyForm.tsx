@@ -16,14 +16,14 @@ export default async function CreateStudyForm() {
   const t = await getTranslations('CreateStudyForm');
 
   return (
-    <form action={createStudy}>
-      <Section
-        title={t('formTitle')}
-        Footer={<SubmitButton>{t('formButton')}</SubmitButton>}
-        className="flex flex-col gap-2"
-      >
+    <Section
+      title={t('formTitle')}
+      footer={<SubmitButton>{t('formButton')}</SubmitButton>}
+    >
+      <form action={createStudy} id="test" className="flex flex-col gap-4">
         <Input
           label={t('inputLabel')}
+          hint={t('inputHint')}
           type="text"
           id="studyName"
           name="studyName"
@@ -42,7 +42,7 @@ export default async function CreateStudyForm() {
             ))}
           </SelectContent>
         </Select>
-      </Section>
-    </form>
+      </form>
+    </Section>
   );
 }

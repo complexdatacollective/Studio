@@ -9,6 +9,8 @@ import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import { getInterviews } from '~/server/queries/interviews';
 import CreateStudyForm from './_components/CreateStudyForm';
 import { requirePageAuth } from '~/lib/auth';
+import { Button } from '~/components/ui/Button';
+import Paragraph from '~/components/typography/Paragraph';
 
 export default async function Dashboard() {
   await requirePageAuth();
@@ -18,10 +20,23 @@ export default async function Dashboard() {
   const interviews = await getInterviews();
 
   return (
-    <ResponsiveContainer className="flex flex-col gap-4">
-      <PageHeader headerText={t('title')} subHeaderText={''} />
+    <>
+      <PageHeader
+        headerText={t('title')}
+        subHeaderText={'The dashboard page is a place for things'}
+      />
       <CreateStudyForm />
-      <Section title={t('allStudiesHeading')}>
+      <Section
+        title={t('allStudiesHeading')}
+        footer={
+          <div className="flex gap-2">
+            <Button>Default</Button>
+            <Button variant="accent">Accent</Button>
+            <Button variant="destructive">Delete</Button>
+            <Button variant="outline">Link button</Button>
+          </div>
+        }
+      >
         <UnorderedList>
           {studies.map((study) => (
             <li key={study.id}>
@@ -31,6 +46,9 @@ export default async function Dashboard() {
             </li>
           ))}
         </UnorderedList>
+        <Section level={2} title="Nested Section">
+          <Paragraph>This is a nested section.</Paragraph>
+        </Section>
       </Section>
       <Section title={t('interviewsHeading')}>
         <UnorderedList>
@@ -45,6 +63,6 @@ export default async function Dashboard() {
           ))}
         </UnorderedList>
       </Section>
-    </ResponsiveContainer>
+    </>
   );
 }

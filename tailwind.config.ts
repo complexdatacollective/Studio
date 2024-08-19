@@ -1,5 +1,4 @@
 import { type Config } from 'tailwindcss';
-import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
   darkMode: ['selector', '[data-mode="dark"]'],
@@ -9,6 +8,11 @@ export default {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    fontFamily: {
+      body: ['var(--font-family-body)'],
+      heading: ['var(--font-family-heading)'],
+      mono: ['var(--font-family-mono)'],
+    },
     fontSize: {
       'sm': ['var(--font-size-sm)', '1.5'],
       'base-sm': ['var(--font-size-base-sm)', '1.5'],
@@ -21,71 +25,75 @@ export default {
       '5xl': ['var(--font-size-5xl)', '1.1'],
       '6xl': ['var(--font-size-6xl)', '1.1'],
     },
+    fontWeight: {
+      light: '260',
+      normal: '330',
+      bold: '400',
+      extrabold: '540',
+    },
     colors: {
-      transparent: 'transparent',
+      'transparent': 'transparent',
 
-      background: 'hsl(var(--background) / <alpha-value>)',
-      foreground: 'hsl(var(--foreground) / <alpha-value>)',
+      'background': 'oklch(var(--background) / <alpha-value>)',
+      'foreground': 'oklch(var(--foreground) / <alpha-value>)',
 
-      primary: {
-        DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
-        foreground: 'hsl(var(--primary-foreground) / <alpha-value>)',
+      'primary': {
+        DEFAULT: 'oklch(var(--primary) / <alpha-value>)',
+        foreground: 'oklch(var(--primary-foreground) / <alpha-value>)',
       },
-      secondary: {
-        DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
-        foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)',
+      'accent': {
+        DEFAULT: 'oklch(var(--accent) / <alpha-value>)',
+        foreground: 'oklch(var(--accent-foreground) / <alpha-value>)',
       },
-      destructive: {
-        DEFAULT: 'hsl(var(--destructive) / <alpha-value>)',
-        foreground: 'hsl(var(--destructive-foreground) / <alpha-value>)',
+      'destructive': {
+        DEFAULT: 'oklch(var(--destructive) / <alpha-value>)',
+        foreground: 'oklch(var(--destructive-foreground) / <alpha-value>)',
       },
-      success: {
-        DEFAULT: 'hsl(var(--success) / <alpha-value>)',
-        foreground: 'hsl(var(--success-foreground) / <alpha-value>)',
+      'success': {
+        DEFAULT: 'oklch(var(--success) / <alpha-value>)',
+        foreground: 'oklch(var(--success-foreground) / <alpha-value>)',
       },
-      info: {
-        DEFAULT: 'hsl(var(--info) / <alpha-value>)',
-        foreground: 'hsl(var(--info-foreground) / <alpha-value>)',
+      'info': {
+        DEFAULT: 'oklch(var(--info) / <alpha-value>)',
+        foreground: 'oklch(var(--info-foreground) / <alpha-value>)',
       },
-      muted: {
-        DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
-        foreground: 'hsl(var(--muted-foreground) / <alpha-value>)',
-      },
-      accent: {
-        DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
-        foreground: 'hsl(var(--accent-foreground) / <alpha-value>)',
+      'muted': {
+        DEFAULT: 'oklch(var(--muted) / <alpha-value>)',
+        foreground: 'oklch(var(--muted-foreground) / <alpha-value>)',
       },
 
-      popover: {
-        DEFAULT: 'hsl(var(--popover) / <alpha-value>)',
-        foreground: 'hsl(var(--popover-foreground) / <alpha-value>)',
+      'surface-1': {
+        DEFAULT: 'oklch(var(--surface-1-bg) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-1-fg) / <alpha-value>)',
       },
 
-      card: {
-        DEFAULT: 'hsl(var(--card) / <alpha-value>)',
-        border:
-          'color-mix(in hsl, hsl(var(--background)), hsl(var(--contrast)) 10%)',
-        foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
+      'surface-2': {
+        DEFAULT: 'oklch(var(--surface-2-bg) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-2-fg) / <alpha-value>)',
       },
 
-      panel: {
-        DEFAULT: 'hsl(var(--panel) / <alpha-value>)',
-        foreground: 'hsl(var(--foreground) / <alpha-value>)',
+      'surface-3': {
+        DEFAULT: 'oklch(var(--surface-3-bg) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-3-fg) / <alpha-value>)',
       },
 
-      input: {
-        DEFAULT: 'hsl(var(--input) / <alpha-value>)',
-        border:
-          'color-mix(in hsl, hsl(var(--background)), hsl(var(--contrast)) 10%)',
-        foreground: 'hsl(var(--input-foreground) / <alpha-value>)',
+      'surface-4': {
+        DEFAULT: 'oklch(var(--surface-4-bg) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-4-fg) / <alpha-value>)',
       },
 
-      border:
-        'color-mix(in hsl, hsl(var(--background)), hsl(var(--contrast)) 10%)',
+      'input': {
+        DEFAULT: 'oklch(var(--input) / <alpha-value>)',
+        foreground: 'oklch(var(--input-foreground) / <alpha-value>)',
+      },
 
-      link: 'hsl(var(--link) / <alpha-value>)',
+      'border': {
+        DEFAULT: 'oklch(var(--border-color) / <alpha-value>)',
+      },
 
-      focus: 'hsl(var(--focus) / <alpha-value>)',
+      'link': 'oklch(var(--link) / <alpha-value>)',
+
+      'focus': 'oklch(var(--focus) / <alpha-value>)',
     },
     borderRadius: {
       none: '0',
@@ -167,7 +175,6 @@ export default {
   },
 
   plugins: [
-    require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/container-queries'),
   ],

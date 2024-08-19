@@ -19,39 +19,37 @@ export default async function DashboardLayout({
   return (
     <>
       <InjectThemeVariables theme="default" />
-      <ResponsiveContainer className="min-h-full" maxWidth="7xl">
-        <header>
-          <div className="relative flex items-center justify-between py-5">
-            <div className="absolute left-0 flex-shrink-0 lg:static">
-              <span className="sr-only">Network Canvas Studio</span>
-              <Image
-                src="/images/studio.png"
-                height={50}
-                width={50}
-                alt="Network Canvas Studio"
-              />
-            </div>
-            <StudySwitcher />
-            <ThemeSwitcher />
-            <Input
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              className="w-full max-w-xs"
-              leftAdornment={<SearchIcon className="h-5 w-5" />}
+      <ResponsiveContainer as="header" className="min-h-full" maxWidth="7xl">
+        <div className="relative flex items-center justify-between py-5">
+          <div className="absolute left-0 flex-shrink-0 lg:static">
+            <span className="sr-only">Network Canvas Studio</span>
+            <Image
+              src="/images/studio.png"
+              height={50}
+              width={50}
+              alt="Network Canvas Studio"
             />
-
-            <LanguageSwitcher />
-            <div className="ml-4 flex items-center pr-0.5">
-              <SignOutBtn />
-            </div>
           </div>
-        </header>
-        <main>{children}</main>
-        <footer className="mx-auto max-w-3xl p-4 sm:p-6 lg:p-8">
-          &copy; 2024 Complex Data Collective.
-        </footer>
+          <StudySwitcher />
+          <ThemeSwitcher />
+          <Input
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            className="w-full max-w-xs"
+            leftAdornment={<SearchIcon className="h-5 w-5" />}
+          />
+
+          <LanguageSwitcher />
+          <div className="ml-4 flex items-center pr-0.5">
+            <SignOutBtn />
+          </div>
+        </div>
       </ResponsiveContainer>
+      <ResponsiveContainer as="main">{children}</ResponsiveContainer>
+      <footer className="mx-auto p-4 text-right sm:p-6 lg:p-8">
+        &copy; 2024 Complex Data Collective.
+      </footer>
     </>
   );
 }
