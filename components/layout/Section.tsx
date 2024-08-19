@@ -1,4 +1,4 @@
-import { tv, VariantProps } from 'tailwind-variants';
+import { tv } from 'tailwind-variants';
 import Heading from '../typography/Heading';
 import { cn } from '~/lib/utils';
 

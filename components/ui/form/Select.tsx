@@ -4,13 +4,14 @@ import {
   SelectValue,
   SelectTrigger,
   SelectItem,
-  type SelectProps,
 } from '~/components/ui/select';
+import type * as SelectPrimitive from '@radix-ui/react-select';
 
 type SimpleSelectProps = {
   options: { label: string; value: string }[];
   placeholder?: string;
-} & SelectProps;
+} & SelectPrimitive.SelectProps &
+  React.SelectHTMLAttributes<HTMLSelectElement>;
 
 export default function SimpleSelect(props: SimpleSelectProps) {
   const { options, placeholder, value, ...rest } = props;

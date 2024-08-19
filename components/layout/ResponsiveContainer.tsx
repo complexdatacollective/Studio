@@ -30,6 +30,7 @@ type ContainerProps<T extends ElementType> = {
   as?: T;
   maxWidth?: VariantProps<typeof containerVariants>['maxWidth'];
   baseSize?: VariantProps<typeof containerVariants>['baseSize'];
+  className?: string;
 } & ComponentPropsWithoutRef<T>;
 
 const ResponsiveContainer = <T extends ElementType = 'div'>({
@@ -40,7 +41,7 @@ const ResponsiveContainer = <T extends ElementType = 'div'>({
   className,
   ...props
 }: ContainerProps<T>) => {
-  const Component = as || 'div';
+  const Component = as ?? 'div';
   return (
     <Component
       className={cn(containerVariants({ maxWidth, baseSize }), className)}

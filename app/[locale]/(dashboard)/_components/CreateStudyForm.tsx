@@ -23,7 +23,6 @@ export default async function CreateStudyForm() {
       <form action={createStudy} id="test" className="flex flex-col gap-4">
         <Input
           label={t('inputLabel')}
-          hint={t('inputHint')}
           type="text"
           id="studyName"
           name="studyName"

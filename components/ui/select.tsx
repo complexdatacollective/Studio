@@ -7,7 +7,7 @@ import { cn } from '~/lib/utils';
 import { Label } from './form/Label';
 import { inputClasses } from './form/Input';
 
-type SelectProps = {
+export type SelectProps = {
   label?: string;
   hint?: React.ReactNode;
   id?: string;
