@@ -1,11 +1,13 @@
 import type { Preview } from '@storybook/react';
-import '~/styles/global.css';
 import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
 import { TooltipProvider } from '~/components/ui/Tooltip';
 import { DirectionProvider } from '@radix-ui/react-direction';
+import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
+import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import '~/styles/global.css';
 
 const loadMessages = async (
   locale: Locale,
@@ -23,14 +25,6 @@ const loadMessages = async (
 };
 
 const preview: Preview = {
-  parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
-  },
   globalTypes: {
     locale: {
       name: 'Locale',
@@ -48,11 +42,25 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    visualTheme: {
+      name: 'Visual Theme',
+      description: 'Global theme for components',
+      defaultValue: 'default',
+      toolbar: {
+        icon: 'paintbrush',
+        showName: true,
+        dynamicTitle: true,
+        items: [
+          { value: 'default', title: 'Default' },
+          { value: 'interview', title: 'Interview' },
+        ],
+      },
+    },
   },
   decorators: [
     (Story, context) => {
       const [messages, setMessages] = useState<AbstractIntlMessages>();
-      const [langDir, setLandDir] =
+      const [langDir, setLangDir] =
         useState<ReturnType<typeof getLangDir>>('ltr');
 
       useEffect(() => {
@@ -60,7 +68,7 @@ const preview: Preview = {
           const locale = context.globals.locale as Locale;
           const loadedMessages = await loadMessages(locale);
           setMessages(loadedMessages);
-          setLandDir(getLangDir(locale));
+          setLangDir(getLangDir(locale));
         };
 
         void fetchMessages();
@@ -71,25 +79,30 @@ const preview: Preview = {
       }, [langDir]);
 
       return (
-        <DirectionProvider dir={langDir}>
-          <NextIntlClientProvider
-            messages={messages}
-            locale={context.globals.locale as Locale}
-          >
-            <Story />
-          </NextIntlClientProvider>
-        </DirectionProvider>
-      );
-    },
-    (Story) => {
-      return (
         <TooltipProvider>
-          <div className="h-screen">
-            <Story />
-          </div>
+          <InjectThemeVariables theme={context.globals.visualTheme} />
+          <DirectionProvider dir={langDir}>
+            <NextIntlClientProvider
+              messages={messages}
+              locale={context.globals.locale as Locale}
+            >
+              <Story />
+            </NextIntlClientProvider>
+          </DirectionProvider>
         </TooltipProvider>
       );
     },
+    (Story) => {
+      return <Story />;
+    },
+    withThemeByDataAttribute({
+      themes: {
+        light: 'light',
+        dark: 'dark',
+      },
+      defaultTheme: 'light',
+      attributeName: 'data-theme',
+    }),
   ],
 };
 

@@ -7,7 +7,6 @@ import SignOutBtn from './_components/SignOutBtn';
 import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import ThemeSwitcher from '../_components/ThemeSwitcher';
-import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 
 export default async function DashboardLayout({
   children,
@@ -18,7 +17,6 @@ export default async function DashboardLayout({
 
   return (
     <>
-      <InjectThemeVariables theme="default" />
       <ResponsiveContainer as="header" className="min-h-full" maxWidth="7xl">
         <div className="relative flex items-center justify-between py-5">
           <div className="absolute left-0 flex-shrink-0 lg:static">

@@ -1,13 +1,6 @@
 'use client';
 
 import { type Study } from '@prisma/client';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/ui/select';
 import { useParams } from 'next/navigation';
 import { useRouter } from '~/lib/localisation/navigation';
 import { useTranslations } from 'next-intl';

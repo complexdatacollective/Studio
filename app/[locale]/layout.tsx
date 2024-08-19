@@ -38,7 +38,7 @@ export default async function RootLayout({
       className={cn('min-h-full', lexend)}
       suppressHydrationWarning
     >
-      <body className="text-background-foreground font-body min-h-full bg-background text-foreground">
+      <body className="font-body min-h-full bg-background text-foreground">
         <Providers
           intlParams={{
             dir,

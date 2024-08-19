@@ -55,9 +55,8 @@
     --accent: 55% 0.2 var(--accent-hue);
     --accent-foreground: var(--white);
 
-    --muted: var(--platinum);
-    --muted-foreground: calc(var(--cyber-grape-lightness) - 10%)
-      var(--cyber-grape-chroma) var(--cyber-grape-hue);
+    --muted: 95% 0.001 var(--base-hue);
+    --muted-foreground: 40% 0.1 var(--base-hue);
 
     --destructive: var(--tomato);
     --destructive-foreground: var(--white);

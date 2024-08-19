@@ -12,7 +12,7 @@ export default function Node({
 
   const labelClasses = cn(
     'whitespace-pre-line overflow-hidden text-center hyphens-auto text-wrap break-all px-6',
-    size === 'sm' ? 'text-lg' : 'text-xl',
+    size === 'sm' ? 'text-sm' : 'text-base',
   );
 
   const nodeSizeClasses = size === 'sm' ? 'h-28 w-28' : 'h-40 w-40';

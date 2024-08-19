@@ -1,7 +1,7 @@
 import { type Config } from 'tailwindcss';
 
 export default {
-  darkMode: ['selector', '[data-mode="dark"]'],
+  darkMode: ['selector'],
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './lib/interviewer/**/*.{js,ts,jsx,tsx}',

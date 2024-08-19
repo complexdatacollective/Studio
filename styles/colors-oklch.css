@@ -84,15 +84,11 @@
   --tomato: var(--tomato-lightness) var(--tomato-chroma) var(--tomato-hue);
 
   /* 
-  These colors are essentially variations of cyber grape, so im removing them
-  --slate-blue: 58% 0.2 276.03; // Lighter, slightly desaturated
-  --navy-taupe: 31% 0.08 287.36; // Darker
-  --rich-black // Much darker
-  --platinum: 95.93% 0.009 247.92 // Much lighter and very desaturated
+  These colors are essentially variations of cyber grape:
   */
 
-  --navy-taupe: 13% 0.2 var(--cyber-grape-hue);
+  --navy-taupe: 28% 0.11 var(--cyber-grape-hue);
   --rich-black: 2% 0.1 var(--cyber-grape-hue);
-  --platinum: 95.93% 0.009 247.92;
+  --platinum: 95.93% 0.009 var(--cyber-grape-hue);
   --slate-blue: 58% 0.2 var(--cyber-grape-hue);
 }
