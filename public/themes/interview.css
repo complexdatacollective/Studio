@@ -6,7 +6,15 @@
     --primary: var(--neon-coral);
     --primary-foreground: var(--white);
 
+    /* Node Panels and Navigation Bar */
     --surface-1-bg: var(--cyber-grape);
+
+    /* Popovers and Dialogs */
+    --overlay: var(--white);
+    --overlay-foreground: var(--cyber-grape);
+
+    --input: var(--white);
+    --input-foreground: var(--charcoal);
 
     --accent: var(--sea-green);
     --muted: var(--platinum);

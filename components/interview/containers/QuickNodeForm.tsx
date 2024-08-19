@@ -15,7 +15,7 @@ export default function QuickNodeForm() {
             <input
               type="text"
               placeholder="Type a label and press enter..."
-              className="w-80 rounded-full px-6 py-4 text-lg font-semibold"
+              className="font-semibold rounded-full bg-input px-6 py-4 text-lg text-input-foreground placeholder-input-foreground"
             />
           </form>
           <div onClick={() => setShowForm(false)}>

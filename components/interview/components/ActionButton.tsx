@@ -7,7 +7,7 @@ export default function ActionButton({ onClick }: { onClick: () => void }) {
       <div className="absolute inset-0 flex items-center justify-center rounded-full">
         <AddAPersonIcon />
       </div>
-      <div className="absolute right-0 top-3 flex h-16 w-16 items-center justify-center rounded-full p-5">
+      <div className="bg-platinum absolute right-0 top-3 flex h-16 w-16 items-center justify-center rounded-full p-5">
         <MenuNewSessionIcon />
       </div>
     </button>

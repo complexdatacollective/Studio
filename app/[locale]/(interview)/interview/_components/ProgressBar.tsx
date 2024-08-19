@@ -36,6 +36,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         'bg-muted opacity-20': indeterminate,
         'bg-muted opacity-50': value === 100 && nudge,
       },
+      'bg-muted/15',
       className,
     )}
     onClick={onClick}
@@ -47,7 +48,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   >
     <div
       className={cx(
-        'absolute left-0 top-0 rounded-full bg-muted opacity-50',
+        'absolute left-0 top-0 rounded-full bg-muted opacity-60',
         orientation === 'horizontal'
           ? 'h-full transition-all duration-300 ease-in-out'
           : 'w-full transition-all duration-300 ease-in-out',

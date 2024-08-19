@@ -95,6 +95,12 @@ export default {
 
       'focus': 'oklch(var(--focus) / <alpha-value>)',
 
+      // Popovers and Dialogs
+      'overlay': {
+        DEFAULT: 'oklch(var(--overlay) / <alpha-value>)',
+        foreground: 'oklch(var(--overlay-foreground) / <alpha-value>)',
+      },
+
       // NC colors
       'neon-coral': {
         DEFAULT: 'oklch(var(--neon-coral) / <alpha-value>)',
