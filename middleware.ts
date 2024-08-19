@@ -10,6 +10,11 @@ export default middlewareStacker([
 ]);
 
 export const config = {
-  // Only run middleware at all on these paths:
-  matcher: ['/((?!_next/static|images|_next/image|favicon.ico).*)'],
+  /**
+   * Global matcher for all middleware.
+   *
+   * NOTE: All static paths under public must be excluded from the matcher,
+   * otherwise the Intl middleware will intercept them!!
+   */
+  matcher: ['/((?!_next/static|images|themes|_next/image|favicon.ico).*)'],
 };

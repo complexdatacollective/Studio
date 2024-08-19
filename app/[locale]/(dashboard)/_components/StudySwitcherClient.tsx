@@ -1,6 +1,10 @@
 'use client';
 
 import { type Study } from '@prisma/client';
+import { useParams } from 'next/navigation';
+import { useRouter } from '~/lib/localisation/navigation';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -8,10 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import { useParams } from 'next/navigation';
-import { useRouter } from '~/lib/localisation/navigation';
-import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
 
 export default function StudySwitcherClient({ studies }: { studies: Study[] }) {
   const t = useTranslations('StudySwitcher');

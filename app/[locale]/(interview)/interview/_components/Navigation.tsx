@@ -101,11 +101,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
       >
         <ChevronUp className="h-10 w-10 stroke-[3px]" />
       </NavButtonWithTooltip>
-      <ProgressBar
-        value={progress}
-        className="bg-white/15"
-        ariaLabel="Interview Progress"
-      />
+      <ProgressBar value={progress} ariaLabel="Interview Progress" />
       <NavButtonWithTooltip
         className={cn(
           pulseNext && 'animate-pulse-bg from-cyber-grape to-success',

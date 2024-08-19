@@ -1,6 +1,6 @@
 import { login } from '~/server/actions/auth';
 import { Input } from '~/components/ui/form/Input';
-import { SubmitButton } from '~/components/form/SubmitButton';
+import { SubmitButton } from '~/components/ui/form/SubmitButton';
 
 export default function SignInForm() {
   return (

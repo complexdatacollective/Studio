@@ -4,27 +4,32 @@ import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';
 
 const buttonVariants = tv({
-  base: 'inline-flex items-center justify-center rounded-full text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-nowrap truncate text-foreground',
+  base: cn(
+    'inline-flex items-center justify-center rounded text-sm font-semibold transition-colors text-nowrap truncate text-foreground tracking-wide',
+    'hover:bg-opacity-90',
+    'ring-offset-background ',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ',
+    'disabled:pointer-events-none disabled:opacity-50',
+  ),
   variants: {
     variant: {
-      default: 'bg-primary hover:bg-primary/90 text-primary-foreground',
-      success: 'bg-success text-success-foreground hover:bg-success/90',
+      default: 'bg-primary text-primary-foreground',
       accent: 'bg-accent text-accent-foreground hover:bg-accent/90',
       destructive:
         'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+      success: 'bg-success text-success-foreground',
       outline:
-        'bg-transparent hover:bg-accent hover:text-accent-foreground border',
-      secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        'bg-transparent hover:bg-primary hover:text-primary-foreground border border-[currentColor] hover:bg-opacity-100',
       ghost: 'hover:text-accent',
       tableHeader: 'hover:text-accent -ml-6 data-[state=open]:text-accent',
       link: 'underline-offset-4 hover:underline',
     },
     size: {
-      default: 'h-10 px-6 py-2',
-      xs: 'h-6 px-3 text-xs',
-      sm: 'h-8 px-4',
-      lg: 'h-12 px-8',
-      icon: 'h-10 w-10',
+      default: 'h-12 px-6',
+      xs: 'h-8 px-3 text-xs',
+      sm: 'h-10 px-4',
+      lg: 'h-16 px-8',
+      icon: 'h-12 w-12',
     },
   },
   defaultVariants: {

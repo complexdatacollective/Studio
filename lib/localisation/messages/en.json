@@ -110,6 +110,9 @@
   "StudySwitcher": {
     "placeholder": "Select a study"
   },
+  "ThemeSwitcher": {
+    "label": "Toggle theme"
+  },
   "NotFound": {
     "title": "Page Not Found",
     "description": "The page you are looking for does not exist.",

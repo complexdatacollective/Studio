@@ -1,6 +1,6 @@
 import { createStudy } from '~/server/actions/study';
 import { getTranslations } from 'next-intl/server';
-import { SubmitButton } from '~/components/form/SubmitButton';
+import { SubmitButton } from '~/components/ui/form/SubmitButton';
 import { Input } from '~/components/ui/form/Input';
 import Section from '~/components/layout/Section';
 import {
@@ -16,12 +16,11 @@ export default async function CreateStudyForm() {
   const t = await getTranslations('CreateStudyForm');
 
   return (
-    <form action={createStudy}>
-      <Section
-        title={t('formTitle')}
-        Footer={<SubmitButton>{t('formButton')}</SubmitButton>}
-        className="flex flex-col gap-2"
-      >
+    <Section
+      title={t('formTitle')}
+      footer={<SubmitButton>{t('formButton')}</SubmitButton>}
+    >
+      <form action={createStudy} id="test" className="flex flex-col gap-4">
         <Input
           label={t('inputLabel')}
           type="text"
@@ -42,7 +41,7 @@ export default async function CreateStudyForm() {
             ))}
           </SelectContent>
         </Select>
-      </Section>
-    </form>
+      </form>
+    </Section>
   );
 }

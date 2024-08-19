@@ -5,9 +5,10 @@
     "server-only",
     "@storybook/blocks",
     "tsx",
-    "framer-motion"
+    "@radix-ui/*"
   ],
   "ignore": [
+    "./components/ui/form/*",
     "./components/layout/*",
     "./components/typography/*",
     "./lib/db/seed.ts",

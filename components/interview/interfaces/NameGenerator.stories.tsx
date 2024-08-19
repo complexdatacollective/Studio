@@ -9,11 +9,12 @@ const meta: Meta<typeof NameGenerator> = {
       appDirectory: 'true',
     },
     layout: 'fullscreen',
+    forceTheme: 'interview',
   },
   decorators: [
     (Story, _context) => {
       return (
-        <div className="h-screen bg-navy-taupe text-white">
+        <div className="h-screen">
           <Story />
         </div>
       );
