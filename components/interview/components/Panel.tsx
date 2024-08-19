@@ -19,7 +19,7 @@ export default function Panel({
   const [collapsed, setCollapsed] = useState(false);
 
   const panelClasses = cn(
-    'mb-4 flex flex-1 flex-col rounded-lg bg-cyber-grape border-b border-b-sea-green border-b-4',
+    'mb-4 flex flex-1 flex-col rounded bg-cyber-grape border-b border-b-4',
     {
       'border-b-0': noHighlight,
       'border-b-0 opacity-0 mb-0 flex-grow-0': minimize,
@@ -41,7 +41,7 @@ export default function Panel({
   return (
     <div className={panelClasses}>
       <div
-        className="flex cursor-pointer flex-col items-center border-b border-cyber-grape-dark p-4 text-center"
+        className="flex cursor-pointer flex-col items-center border-b p-4 text-center"
         onClick={toggleCollapsed}
       >
         <h3 className="text-lg font-medium">{title}</h3>

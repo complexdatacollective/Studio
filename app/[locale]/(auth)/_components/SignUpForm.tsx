@@ -5,7 +5,7 @@ import { signup } from '~/server/actions/auth';
 import { Input } from '~/components/ui/form/Input';
 import { Label } from '~/components/ui/form/Label';
 import { useTranslations } from 'next-intl';
-import { SubmitButton } from '~/components/form/SubmitButton';
+import { SubmitButton } from '~/components/ui/form/SubmitButton';
 
 export default function SignUpForm() {
   const [formState, formAction] = useFormState(signup, {

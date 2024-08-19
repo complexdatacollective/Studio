@@ -13,6 +13,10 @@ import { getServerSession } from '~/lib/auth';
 import type { Locale } from '~/lib/localisation/locales';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
+// This should not be needed, because we are using `unstable_setRequestLocale`.
+// Possibly a bug?
+export const dynamic = 'force-dynamic';
+
 export default async function Page({
   params: { locale },
 }: {

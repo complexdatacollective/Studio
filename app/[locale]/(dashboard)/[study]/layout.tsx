@@ -13,7 +13,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <div className="block border-t border-white border-opacity-20 py-5">
+      <div className="block border-t border-opacity-20 py-5">
         <div className="grid grid-cols-3 items-center gap-8">
           <div className="col-span-2">
             <nav className="flex space-x-4">
@@ -27,9 +27,7 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
-      <section className="overflow-hidden rounded-lg bg-white p-6 shadow">
-        {children}
-      </section>
+      <section className="overflow-hidden p-6 shadow">{children}</section>
     </>
   );
 }

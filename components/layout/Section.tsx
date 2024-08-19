@@ -4,37 +4,49 @@ import { cn } from '~/lib/utils';
 
 const sectionVariants = tv({
   slots: {
-    base: 'border rounded-lg border bg-white flex flex-col',
-    wrapper: 'relative flex flex-col space-y-4 py-4 px-6 sm:py-6 sm:px-8',
-    footer:
-      'flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10',
+    base: cn(
+      'rounded my-10 py-10 px-12 bg-surface-1 text-surface-1-foreground',
+      '[&>section]:border [&>section]:bg-surface-2 [&>section]:my-6 [&>section]:py-6 [&>section]:px-8 [&>section]:text-surface-2-foreground',
+      '[&>section>section]:bg-surface-3 [&>section>section]:text-surface-3',
+      '[&>section>section>section]:bg-surface-4 [&>section>section>section]:text-surface-4',
+    ),
+    footerSlot: 'mt-4',
   },
 });
-
-const { base, footer, wrapper } = sectionVariants();
 
 export default function Section({
   children,
   title,
-  Footer,
+  footer,
   className,
+  level = 1,
 }: {
   children: React.ReactNode;
   title?: string;
-  Footer?: React.ReactNode;
+  footer?: React.ReactNode;
   className?: string;
+  level?: 1 | 2 | 3 | 4;
 }) {
+  const { base, footerSlot } = sectionVariants();
+
+  const getHeadingLevel = () => {
+    switch (level) {
+      case 1:
+        return 'h2';
+      case 2:
+        return 'h3';
+      case 3:
+        return 'h4';
+      case 4:
+        return 'h4';
+    }
+  };
+
   return (
-    <section className={base()}>
-      <div className={cn(wrapper(), className)}>
-        {title && (
-          <Heading variant="h2" className="m-0">
-            {title}
-          </Heading>
-        )}
-        {children}
-      </div>
-      {Footer && <div className={footer()}>{Footer}</div>}
+    <section className={cn(base(), className)}>
+      {title && <Heading variant={getHeadingLevel()}>{title}</Heading>}
+      {children}
+      {footer && <footer className={footerSlot()}>{footer}</footer>}
     </section>
   );
 }

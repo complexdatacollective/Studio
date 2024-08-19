@@ -7,7 +7,7 @@
 
 export default function Prompt({ id, text }: { id: number; text: string }) {
   return (
-    <div title={text} key={id} className="text-3xl">
+    <div title={text} key={id} className="text-xl">
       {text}
     </div>
   );

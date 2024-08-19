@@ -4,9 +4,9 @@ import Image from 'next/image';
 import StudySwitcher from './_components/StudySwitcher';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
 import SignOutBtn from './_components/SignOutBtn';
-import StudioLogo from '~/public/studio.png';
 import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
+import ThemeSwitcher from '../_components/ThemeSwitcher';
 
 export default async function DashboardLayout({
   children,
@@ -16,20 +16,20 @@ export default async function DashboardLayout({
   await requirePageAuth();
 
   return (
-    <ResponsiveContainer className="min-h-full" maxWidth="7xl">
-      <header>
+    <>
+      <ResponsiveContainer as="header" className="min-h-full" maxWidth="7xl">
         <div className="relative flex items-center justify-between py-5">
           <div className="absolute left-0 flex-shrink-0 lg:static">
             <span className="sr-only">Network Canvas Studio</span>
             <Image
-              src={StudioLogo}
+              src="/images/studio.png"
               height={50}
               width={50}
               alt="Network Canvas Studio"
             />
           </div>
           <StudySwitcher />
-
+          <ThemeSwitcher />
           <Input
             type="search"
             placeholder="Search"
@@ -43,15 +43,11 @@ export default async function DashboardLayout({
             <SignOutBtn />
           </div>
         </div>
-      </header>
-      <main>{children}</main>
-      <footer>
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="border-t py-8 text-center text-sm">
-            &copy; 2024 Complex Data Collective.
-          </div>
-        </div>
+      </ResponsiveContainer>
+      <ResponsiveContainer as="main">{children}</ResponsiveContainer>
+      <footer className="mx-auto p-4 text-right sm:p-6 lg:p-8">
+        &copy; 2024 Complex Data Collective.
       </footer>
-    </ResponsiveContainer>
+    </>
   );
 }

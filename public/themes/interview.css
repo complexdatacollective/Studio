@@ -1,0 +1,9 @@
+@layer base {
+  :root {
+    --background: var(--navy-taupe);
+    --foreground: var(--white);
+
+    --primary: var(--neon-coral);
+    --primary-foreground: var(--white);
+  }
+}

@@ -1,3 +1,7 @@
 {
-  "cSpell.language": "en,en-GB"
+  "cSpell.language": "en,en-GB",
+  "css.customData": [
+    ".vscode/tailwind.json"
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

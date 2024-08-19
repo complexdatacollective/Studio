@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { z } from 'zod';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,4 +27,12 @@ export function ensureError(value: unknown): Error {
     `This value was thrown as is, not through an Error: ${stringified}`,
   );
   return error;
+}
+
+// Helper function that creates a ZodEnum from an object's keys
+export function zodEnumFromObjKeys<K extends string>(
+  obj: Record<K, unknown>,
+): z.ZodEnum<[K, ...K[]]> {
+  const [firstKey, ...otherKeys] = Object.keys(obj) as K[];
+  return z.enum([firstKey!, ...otherKeys]);
 }

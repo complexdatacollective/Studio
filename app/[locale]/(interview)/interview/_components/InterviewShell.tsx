@@ -28,7 +28,7 @@ export default async function InterviewShell({
   const progress = ((currentStage / stageCount) * 100) as IntRange<0, 100>;
 
   return (
-    <div className="flex h-screen bg-navy-taupe text-white">
+    <div className="flex h-screen">
       <Navigation pulseNext={isReadyForNextStage} progress={progress} />
 
       <div className="flex-1 overflow-hidden overflow-y-auto">

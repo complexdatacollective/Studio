@@ -97,7 +97,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
       <nav
         role="navigation"
         className={cn(
-          'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-cyber-grape text-white',
+          'bg-cyber-grape text-white flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center',
         )}
       >
         <Popover
@@ -129,15 +129,11 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
             <ChevronUp className="h-10 w-10 stroke-[3px]" />
           </NavButtonWithTooltip>
         </div>
-        <ProgressBar
-          value={progress}
-          className="bg-white/15"
-          ariaLabel="Interview Progress"
-        />
+        <ProgressBar value={progress} ariaLabel="Interview Progress" />
         <div data-id="data-wizard-navigation-step-2">
           <NavButtonWithTooltip
             className={cn(
-              pulseNext && 'animate-pulse-bg from-cyber-grape to-success',
+              pulseNext && 'from-cyber-grape animate-pulse-bg to-success',
             )}
             onClick={moveForward}
             aria-label={t('forward')}

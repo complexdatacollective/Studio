@@ -12,6 +12,14 @@ type InputProps = {
   rightAdornment?: React.ReactNode;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
+export const inputClasses = cn(
+  'flex h-12 w-full rounded border bg-input px-6 text-sm',
+  'disabled:cursor-not-allowed disabled:opacity-50',
+  'placeholder:text-muted-foreground',
+  'file:border-0 file:bg-transparent file:text-sm file:font-medium',
+  'focus-visible:ring-ring ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+);
+
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -42,15 +50,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative flex items-center justify-end">
           {leftAdornment && (
-            <div className="absolute left-2">{leftAdornment}</div>
+            <div className="absolute left-4">{leftAdornment}</div>
           )}
           <input
             id={id}
             type={type}
             className={cn(
-              'focus-visible:ring-ring flex h-10 w-full rounded-input border border-border bg-input px-3 py-2 text-sm text-input-foreground ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-              !!leftAdornment && 'pl-10',
-              !!rightAdornment && 'pr-10',
+              inputClasses,
+              !!leftAdornment && 'pl-12',
+              !!rightAdornment && 'pr-12',
               !!error && 'border-destructive',
               inputClassName,
             )}
@@ -58,7 +66,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightAdornment && (
-            <div className="absolute right-2">{rightAdornment}</div>
+            <div className="absolute right-4">{rightAdornment}</div>
           )}
         </div>
         {error && (
