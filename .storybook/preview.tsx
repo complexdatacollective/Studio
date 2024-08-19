@@ -78,20 +78,29 @@ const preview: Preview = {
         document.documentElement.dir = langDir;
       }, [langDir]);
 
+      console.log('context', context);
+
+      const theme =
+        context.parameters.forceTheme ?? context.globals.visualTheme;
+
       return (
         <TooltipProvider>
-          <InjectThemeVariables theme={context.globals.visualTheme} />
+          <InjectThemeVariables theme={theme} />
           <DirectionProvider dir={langDir}>
             <NextIntlClientProvider
               messages={messages}
               locale={context.globals.locale as Locale}
             >
-              <Story />
+              {Story()}
             </NextIntlClientProvider>
           </DirectionProvider>
         </TooltipProvider>
       );
     },
+    // For some reason, we need this empty decorator here, or the theme switcher
+    // throws an error. This seems to be a bug in the addon.
+    // see: https://stackoverflow.com/questions/71993857/using-usestate-along-with-global-decorators-throws-error-storybook-preview-hooks/77859321#77859321
+    // and: https://github.com/storybookjs/storybook/issues/22132
     (Story) => {
       return <Story />;
     },

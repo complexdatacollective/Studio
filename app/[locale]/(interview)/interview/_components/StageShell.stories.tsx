@@ -21,6 +21,7 @@ const meta: Meta<typeof StageShell> = {
       appDirectory: 'true',
     },
     layout: 'fullscreen',
+    forceTheme: 'interview',
   },
   argTypes: {
     stage: {
