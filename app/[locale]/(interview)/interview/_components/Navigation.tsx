@@ -97,7 +97,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
       <nav
         role="navigation"
         className={cn(
-          'bg-cyber-grape text-white flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center',
+          'text-white flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-surface-1',
         )}
       >
         <Popover

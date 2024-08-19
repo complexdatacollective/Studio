@@ -5,5 +5,10 @@
 
     --primary: var(--neon-coral);
     --primary-foreground: var(--white);
+
+    --surface-1-bg: var(--cyber-grape);
+
+    --accent: var(--sea-green);
+    --muted: var(--platinum);
   }
 }
