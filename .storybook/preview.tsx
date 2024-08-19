@@ -78,10 +78,9 @@ const preview: Preview = {
         document.documentElement.dir = langDir;
       }, [langDir]);
 
-      console.log('context', context);
-
       const theme =
-        context.parameters.forceTheme ?? context.globals.visualTheme;
+        (context.parameters.forceTheme as string) ??
+        (context.globals.visualTheme as string);
 
       return (
         <TooltipProvider>
