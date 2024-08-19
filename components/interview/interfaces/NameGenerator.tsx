@@ -86,7 +86,7 @@ const demoSteps = [
           />
         </>
       ),
-      es: '',
+      es: 'Spanish translation here',
       ar: '',
     },
   },
@@ -94,7 +94,7 @@ const demoSteps = [
     targetElementId: 'data-wizard-task-step-2',
     content: {
       en: 'These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them.',
-      es: '',
+      es: 'Spanish translation here',
       ar: '',
     },
   },
@@ -102,7 +102,7 @@ const demoSteps = [
     targetElementId: 'data-wizard-task-step-3',
     content: {
       en: 'Click this button to add a new person.',
-      es: '',
+      es: 'Spanish translation here',
       ar: '',
     },
   },

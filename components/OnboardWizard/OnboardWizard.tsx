@@ -8,6 +8,8 @@ import Beacon from './Beacon';
 import OnboardWizardModal from './OnboardWizardModal';
 import { hash } from 'ohash';
 import { useSearchParams } from 'next/navigation';
+import { type Locale } from '~/lib/localisation/locales';
+import { useLocale } from 'next-intl';
 
 export default function OnboardWizard({
   steps,
@@ -31,6 +33,7 @@ export default function OnboardWizard({
 
   const searchParams = useSearchParams();
   const stage = searchParams.get('stage');
+  const currentLocale = useLocale() as Locale;
 
   const [currentStepPosition, setCurrentStepPosition] = useState<{
     top: number;
@@ -150,7 +153,7 @@ export default function OnboardWizard({
         <>
           <div className="absolute inset-0 z-10 backdrop-blur-md backdrop-brightness-75" />
           <OnboardWizardPopover
-            stepContent={steps[currentStep]?.content.en}
+            stepContent={steps[currentStep]?.content[currentLocale]}
             elementPosition={currentStepPosition}
             totalSteps={steps.length}
             showFlow={showFlow}
@@ -159,7 +162,7 @@ export default function OnboardWizard({
       )}
       {showModal && (
         <OnboardWizardModal
-          stepContent={steps[currentStep]?.content.en}
+          stepContent={steps[currentStep]?.content[currentLocale]}
           totalSteps={steps.length}
           showFlow={showFlow}
         />
