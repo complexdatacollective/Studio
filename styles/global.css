@@ -45,10 +45,6 @@
     /* Used for relative color values */
     --base-hue: 281;
 
-    /* contrast colors used with color-mix to darken or lighten colors  */
-    --contrast: var(--black);
-    --opposite-contrast: var(--white);
-
     --background: 97% 0.001 var(--base-hue);
     --foreground: 20% 0.1 var(--base-hue);
 
@@ -98,46 +94,20 @@
   }
 
   [data-theme='dark'] {
-    --contrast: var(--white);
-    --opposite-contrast: 2% 0.25 var(--base-hue);
-
     --background: 13% 0.1 var(--base-hue);
     --foreground: 97% 0.001 var(--base-hue);
 
     --primary: var(--neon-coral);
     --primary-foreground: var(--white);
 
-    --secondary: var(--neon-coral);
-    --secondary-foreground: var(--white);
+    --border-color: var(--slate-blue);
 
-    --accent: var(--slate-blue);
-    --accent-foreground: var(--white);
+    --input: 20% 0.1 var(--base-hue);
+    --input-foreground: var(--foreground);
 
-    --destructive: var(--tomato);
-    --destructive-foreground: var(--white);
-
-    --warning: var(--neon-carrot);
-    --warning-foreground: var(--white);
-
-    --info: var(--cerulean-blue);
-    --info-foreground: var(--white);
-
-    --success: var(--sea-green);
-    --success-foreground: var(--white);
-
-    --link: var(--neon-coral);
-
-    --card: 22% 0.1 var(--base-hue);
-
-    --panel: var(--platinum);
-
-    /* Focus ring */
-    --ring: var(--mustard);
-
-    --input: var(--cyber-grape);
-    --input-foreground: var(--white);
-
-    --popover: 22% 0.1 var(--base-hue);
-    --popover-foreground: var(--foreground);
+    --surface-1-bg: 20% 0.1 var(--base-hue);
+    --surface-2-bg: 23% 0.1 var(--base-hue);
+    --surface-3-bg: 26% 0.1 var(--base-hue);
+    --surface-4-bg: 29% 0.1 var(--base-hue);
   }
 }

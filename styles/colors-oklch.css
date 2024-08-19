@@ -6,7 +6,8 @@
   --neon-coral-lightness: 57.33%;
   --neon-coral-chroma: 0.2584;
   --neon-coral-hue: 11.57;
-  --neon-coral: var(--neon-coral-lightness) var(--neon-coral-chroma) var(--neon-coral-hue);
+  --neon-coral: var(--neon-coral-lightness) var(--neon-coral-chroma)
+    var(--neon-coral-hue);
 
   /* Mustard */
   --mustard-lightness: 81%;
@@ -18,37 +19,43 @@
   --sea-green-lightness: 75%;
   --sea-green-chroma: 0.15;
   --sea-green-hue: 171.52;
-  --sea-green: var(--sea-green-lightness) var(--sea-green-chroma) var(--sea-green-hue);
+  --sea-green: var(--sea-green-lightness) var(--sea-green-chroma)
+    var(--sea-green-hue);
 
   /* Cyber Grape */
   --cyber-grape-lightness: 34%;
   --cyber-grape-chroma: 0.08;
   --cyber-grape-hue: 281.02;
-  --cyber-grape: var(--cyber-grape-lightness) var(--cyber-grape-chroma) var(--cyber-grape-hue);
+  --cyber-grape: var(--cyber-grape-lightness) var(--cyber-grape-chroma)
+    var(--cyber-grape-hue);
 
   /* Sea Serpent */
   --sea-serpent-lightness: 73.83%;
   --sea-serpent-chroma: 0.13;
   --sea-serpent-hue: 217.55;
-  --sea-serpent: var(--sea-serpent-lightness) var(--sea-serpent-chroma) var(--sea-serpent-hue);
+  --sea-serpent: var(--sea-serpent-lightness) var(--sea-serpent-chroma)
+    var(--sea-serpent-hue);
 
   /* Purple Pizazz */
   --purple-pizazz-lightness: 62.49%;
   --purple-pizazz-chroma: 0.288;
   --purple-pizazz-hue: 320.46;
-  --purple-pizazz: var(--purple-pizazz-lightness) var(--purple-pizazz-chroma) var(--purple-pizazz-hue);
+  --purple-pizazz: var(--purple-pizazz-lightness) var(--purple-pizazz-chroma)
+    var(--purple-pizazz-hue);
 
   /* Paradise Pink */
   --paradise-pink-lightness: 65.86%;
   --paradise-pink-chroma: 0.253;
   --paradise-pink-hue: 359.2;
-  --paradise-pink: var(--paradise-pink-lightness) var(--paradise-pink-chroma) var(--paradise-pink-hue);
+  --paradise-pink: var(--paradise-pink-lightness) var(--paradise-pink-chroma)
+    var(--paradise-pink-hue);
 
   /* Cerulean Blue */
   --cerulean-blue-lightness: 58.24%;
   --cerulean-blue-chroma: 0.229;
   --cerulean-blue-hue: 260.09;
-  --cerulean-blue: var(--cerulean-blue-lightness) var(--cerulean-blue-chroma) var(--cerulean-blue-hue);
+  --cerulean-blue: var(--cerulean-blue-lightness) var(--cerulean-blue-chroma)
+    var(--cerulean-blue-hue);
 
   /* Kiwi */
   --kiwi-lightness: 74.36%;
@@ -60,13 +67,15 @@
   --neon-carrot-lightness: 74.87%;
   --neon-carrot-chroma: 0.161;
   --neon-carrot-hue: 62.61;
-  --neon-carrot: var(--neon-carrot-lightness) var(--neon-carrot-chroma) var(--neon-carrot-hue);
+  --neon-carrot: var(--neon-carrot-lightness) var(--neon-carrot-chroma)
+    var(--neon-carrot-hue);
 
   /* Barbie Pink */
   --barbie-pink-lightness: 61.82%;
   --barbie-pink-chroma: 0.251;
   --barbie-pink-hue: 359.853;
-  --barbie-pink: var(--barbie-pink-lightness) var(--barbie-pink-chroma) var(--barbie-pink-hue);
+  --barbie-pink: var(--barbie-pink-lightness) var(--barbie-pink-chroma)
+    var(--barbie-pink-hue);
 
   /* Tomato */
   --tomato-lightness: 59.99%;
@@ -81,12 +90,9 @@
   --rich-black // Much darker
   --platinum: 95.93% 0.009 247.92 // Much lighter and very desaturated
   */
-  
+
   --navy-taupe: 13% 0.2 var(--cyber-grape-hue);
   --rich-black: 2% 0.1 var(--cyber-grape-hue);
   --platinum: 95.93% 0.009 247.92;
-
-   
+  --slate-blue: 58% 0.2 var(--cyber-grape-hue);
 }
-
-
