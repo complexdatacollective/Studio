@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const VariableNameSchema = z.string().regex(/^[a-zA-Z0-9._:-]+$/);
+
 export const CategoricalOptionSchema = z.object({
   label: z.string(),
   value: z.union([z.string(), z.number(), z.boolean()]),
@@ -16,26 +18,26 @@ const VariableTypes = z.enum([
   'layout',
 ]);
 
-const hasOptions = z.enum(['ordinal', 'categorical']);
-const hasParameters = z.enum(['datetime', 'scalar']);
+const VariablesWithOptions = z.enum(['ordinal', 'categorical']);
+const VariablesWithParameters = z.enum(['datetime', 'scalar']);
 
 const BaseVariableDefinitionSchema = z.object({
-  name: z.string(),
+  name: VariableNameSchema,
 });
 
 const NormalVariableDefinitionSchema = BaseVariableDefinitionSchema.extend({
-  type: VariableTypes.exclude(hasOptions.options).exclude(
-    hasParameters.options,
+  type: VariableTypes.exclude(VariablesWithOptions.options).exclude(
+    VariablesWithParameters.options,
   ),
 });
 
 export const CategoricalVariableSchema = BaseVariableDefinitionSchema.extend({
-  type: hasOptions,
+  type: VariablesWithOptions,
   options: z.array(CategoricalOptionSchema),
 });
 
 export const ParametersVariableSchema = BaseVariableDefinitionSchema.extend({
-  type: hasParameters,
+  type: VariablesWithParameters,
   parameters: z.object({
     // Todo: revise this.
     type: z.string(),
