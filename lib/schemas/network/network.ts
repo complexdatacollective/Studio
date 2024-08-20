@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-export const Entity = z.object({
+export const EntitySchema = z.object({
   _id: z.string().readonly(),
   _attributes: z.record(z.string(), z.any()),
 });
 
-export type TEntity = z.infer<typeof Entity>;
+export type TEntity = z.infer<typeof EntitySchema>;
 
-export const Node = Entity.extend({
+export const NodeSchema = EntitySchema.extend({
   _type: z.string(),
   _meta: z.object({
     createdOn: z.string().optional(),
@@ -15,20 +15,20 @@ export const Node = Entity.extend({
   }),
 });
 
-export type TNode = z.infer<typeof Node>;
+export type TNode = z.infer<typeof NodeSchema>;
 
-export const Edge = Entity.extend({
+export const EdgeSchema = EntitySchema.extend({
   _type: z.string(),
   _source: z.string(),
   _target: z.string(),
 });
 
-export type TEdge = z.infer<typeof Edge>;
+export type TEdge = z.infer<typeof EdgeSchema>;
 
-export const Network = z.object({
-  nodes: z.array(Node),
-  edges: z.array(Edge),
-  ego: Entity,
+export const NetworkSchema = z.object({
+  nodes: z.array(NodeSchema),
+  edges: z.array(EdgeSchema),
+  ego: EntitySchema,
 });
 
-export type TNetwork = z.infer<typeof Network>;
+export type TNetwork = z.infer<typeof NetworkSchema>;

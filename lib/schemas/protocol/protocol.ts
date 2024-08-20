@@ -308,3 +308,21 @@ export const Edge = z.object({
   to: z.string(),
   directed: z.boolean(), // directed edges
 });
+
+// -------
+
+const ProtocolSchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  lastModified: z.string().datetime(),
+  schemaVersion: z.number(),
+  stages: z.array(StageSchema),
+  codebook: CodebookSchema,
+  assetManifest: AssetManifestScheme.optional(),
+});
+
+export type Protocol = z.infer<typeof Protocol>;
+
+const devProtocol: Protocol = {};
+
+export default devProtocol;
