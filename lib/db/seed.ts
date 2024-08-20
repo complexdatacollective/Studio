@@ -54,11 +54,6 @@ async function seed() {
                   name: 'Name Generator',
                   type: 'NameGenerator',
                 },
-                {
-                  publicId: generateIdFromEntropySize(6),
-                  name: 'Information',
-                  type: 'Information',
-                },
               ],
             },
           },
