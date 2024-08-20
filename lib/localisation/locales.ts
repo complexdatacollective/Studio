@@ -1,9 +1,15 @@
-export const LOCALES_DICT = [
-  ['en', 'English'],
-  ['es', 'Español'],
-  ['ar', 'عربي'],
-] as const;
+import { z } from 'zod';
 
-export const SUPPORTED_LOCALES = LOCALES_DICT.map(([code]) => code);
+export const LocalesDictSchema = z
+  .object({
+    en: z.literal('English'),
+    es: z.literal('Español'),
+    ar: z.literal('عربي'),
+  })
+  .strict();
+
+export const SUPPORTED_LOCALES = [...LocalesDictSchema.keyof().options];
+
+export type TSupportedLocales = typeof SUPPORTED_LOCALES;
 
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
