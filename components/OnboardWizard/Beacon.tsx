@@ -22,7 +22,7 @@ export default function Beacon({
       title={`beacon-${index}`}
       name={`beacon-${index}`}
       className={cn(
-        'absolute h-4 w-4 rounded-full bg-purple-pizazz',
+        'absolute h-4 w-4 rounded-full bg-accent',
         'hover:h-6 hover:w-6',
       )}
       style={{

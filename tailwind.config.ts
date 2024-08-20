@@ -101,74 +101,58 @@ export default {
         foreground: 'oklch(var(--overlay-foreground) / <alpha-value>)',
       },
 
-      // NC colors
-      'neon-coral': {
-        DEFAULT: 'oklch(var(--neon-coral) / <alpha-value>)',
-        dark: 'oklch(var(--neon-coral--dark) / <alpha-value>)',
+      // Sequences
+      'node': {
+        '1': 'oklch(var(--seq-node-1) / <alpha-value>)',
+        '2': 'oklch(var(--seq-node-2) / <alpha-value>)',
+        '3': 'oklch(var(--seq-node-3) / <alpha-value>)',
+        '4': 'oklch(var(--seq-node-4) / <alpha-value>)',
+        '5': 'oklch(var(--seq-node-5) / <alpha-value>)',
+        '6': 'oklch(var(--seq-node-6) / <alpha-value>)',
+        '7': 'oklch(var(--seq-node-7) / <alpha-value>)',
+        '8': 'oklch(var(--seq-node-8) / <alpha-value>)',
       },
-      'sea-green': {
-        DEFAULT: 'oklch(var(--sea-green) / <alpha-value>)',
-        dark: 'oklch(var(--sea-green--dark) / <alpha-value>)',
+
+      'edge': {
+        '1': 'oklch(var(--seq-edge-1) / <alpha-value>)',
+        '2': 'oklch(var(--seq-edge-2) / <alpha-value>)',
+        '3': 'oklch(var(--seq-edge-3) / <alpha-value>)',
+        '4': 'oklch(var(--seq-edge-4) / <alpha-value>)',
+        '5': 'oklch(var(--seq-edge-5) / <alpha-value>)',
+        '6': 'oklch(var(--seq-edge-6) / <alpha-value>)',
+        '7': 'oklch(var(--seq-edge-7) / <alpha-value>)',
+        '8': 'oklch(var(--seq-edge-8) / <alpha-value>)',
+        '9': 'oklch(var(--seq-edge-9) / <alpha-value>)',
+        '10': 'oklch(var(--seq-edge-10) / <alpha-value>)',
       },
-      'slate-blue': {
-        DEFAULT: 'oklch(var(--slate-blue) / <alpha-value>)',
-        dark: 'oklch(var(--slate-blue--dark) / <alpha-value>)',
+
+      'cat': {
+        '1': 'oklch(var(--seq-cat-1) / <alpha-value>)',
+        '2': 'oklch(var(--seq-cat-2) / <alpha-value>)',
+        '3': 'oklch(var(--seq-cat-3) / <alpha-value>)',
+        '4': 'oklch(var(--seq-cat-4) / <alpha-value>)',
+        '5': 'oklch(var(--seq-cat-5) / <alpha-value>)',
+        '6': 'oklch(var(--seq-cat-6) / <alpha-value>)',
+        '7': 'oklch(var(--seq-cat-7) / <alpha-value>)',
+        '8': 'oklch(var(--seq-cat-8) / <alpha-value>)',
+        '9': 'oklch(var(--seq-cat-9) / <alpha-value>)',
+        '10': 'oklch(var(--seq-cat-10) / <alpha-value>)',
       },
-      'navy-taupe': {
-        DEFAULT: 'oklch(var(--navy-taupe) / <alpha-value>)',
-        dark: 'oklch(var(--navy-taupe--dark) / <alpha-value>)',
+
+      'ord': {
+        '1': 'oklch(var(--seq-ord-1) / <alpha-value>)',
+        '2': 'oklch(var(--seq-ord-2) / <alpha-value>)',
+        '3': 'oklch(var(--seq-ord-3) / <alpha-value>)',
+        '4': 'oklch(var(--seq-ord-4) / <alpha-value>)',
+        '5': 'oklch(var(--seq-ord-5) / <alpha-value>)',
+        '6': 'oklch(var(--seq-ord-6) / <alpha-value>)',
+        '7': 'oklch(var(--seq-ord-7) / <alpha-value>)',
+        '8': 'oklch(var(--seq-ord-8) / <alpha-value>)',
       },
-      'cyber-grape': {
-        DEFAULT: 'oklch(var(--cyber-grape) / <alpha-value>)',
-        dark: 'oklch(var(--cyber-grape--dark) / <alpha-value>)',
-      },
-      'mustard': {
-        DEFAULT: 'oklch(var(--mustard) / <alpha-value>)',
-        dark: 'oklch(var(--mustard--dark) / <alpha-value>)',
-      },
-      'rich-black': {
-        DEFAULT: 'oklch(var(--rich-black) / <alpha-value>)',
-        dark: 'oklch(var(--rich-black--dark) / <alpha-value>)',
-      },
-      'charcoal': {
-        DEFAULT: 'oklch(var(--charcoal) / <alpha-value>)',
-        dark: 'oklch(var(--charcoal--dark) / <alpha-value>)',
-      },
-      'platinum': {
-        DEFAULT: 'oklch(var(--platinum) / <alpha-value>)',
-        dark: 'oklch(var(--platinum--dark) / <alpha-value>)',
-      },
-      'sea-serpent': {
-        DEFAULT: 'oklch(var(--sea-serpent) / <alpha-value>)',
-        dark: 'oklch(var(--sea-serpent--dark) / <alpha-value>)',
-      },
-      'purple-pizazz': {
-        DEFAULT: 'oklch(var(--purple-pizazz) / <alpha-value>)',
-        dark: 'oklch(var(--purple-pizazz--dark) / <alpha-value>)',
-      },
-      'paradise-pink': {
-        DEFAULT: 'oklch(var(--paradise-pink) / <alpha-value>)',
-        dark: 'oklch(var(--paradise-pink--dark) / <alpha-value>)',
-      },
-      'cerulean-blue': {
-        DEFAULT: 'oklch(var(--cerulean-blue) / <alpha-value>)',
-        dark: 'oklch(var(--cerulean-blue--dark) / <alpha-value>)',
-      },
-      'kiwi': {
-        DEFAULT: 'oklch(var(--kiwi) / <alpha-value>)',
-        dark: 'oklch(var(--kiwi--dark) / <alpha-value>)',
-      },
-      'neon-carrot': {
-        DEFAULT: 'oklch(var(--neon-carrot) / <alpha-value>)',
-        dark: 'oklch(var(--neon-carrot--dark) / <alpha-value>)',
-      },
-      'barbie-pink': {
-        DEFAULT: 'oklch(var(--barbie-pink) / <alpha-value>)',
-        dark: 'oklch(var(--barbie-pink--dark) / <alpha-value>)',
-      },
-      'tomato': {
-        DEFAULT: 'oklch(var(--tomato) / <alpha-value>)',
-        dark: 'oklch(var(--tomato--dark) / <alpha-value>)',
+
+      'panel': {
+        '1': 'oklch(var(--seq-panel-1) / <alpha-value>)',
+        '2': 'oklch(var(--seq-panel-2) / <alpha-value>)',
       },
     },
     borderRadius: {

@@ -27,10 +27,10 @@ export default function Node({
       >
         <circle cx="250" cy="270" r="200" className={`fill-black opacity-25`} />
         <circle cx="250" cy="250" r="250" className="fill-transparent" />
-        <circle cx="250" cy="250" r="200" className={`fill-neon-coral`} />
+        <circle cx="250" cy="250" r="200" className={`fill-node-1`} />
         <path
           d="m50,250 a1,1 0 0,0 400,0"
-          className={`fill-neon-coral-dark`}
+          className={`fill-node-1`}
           transform="rotate(-35 250 250)"
         />
         <circle cx="250" cy="250" r="200" className="fill-transparent" />
