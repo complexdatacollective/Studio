@@ -1,6 +1,7 @@
 import { useOnboardWizard } from './OnboardWizardContext';
 import Dialog from '~/components/ui/Dialog';
 import FlowStepContent from './FlowStepContent';
+import React from 'react';
 
 export default function OnboardWizardModal({
   stepContent,
@@ -13,6 +14,17 @@ export default function OnboardWizardModal({
 }) {
   const { closeWizard } = useOnboardWizard();
 
+  const mediaCheck = (content: React.ReactNode): boolean => {
+    return React.Children.toArray(content).some((child) => {
+      return (
+        React.isValidElement(child) &&
+        (child.type === 'img' || child.type === 'video')
+      );
+    });
+  };
+
+  const hasMedia = mediaCheck(stepContent);
+
   return (
     <Dialog
       content={
@@ -22,6 +34,7 @@ export default function OnboardWizardModal({
       onOpenChange={() => {
         closeWizard();
       }}
+      className={` ${hasMedia ? 'w-1/2' : 'w-[90vw] max-w-[450px]'}`}
     ></Dialog>
   );
 }
