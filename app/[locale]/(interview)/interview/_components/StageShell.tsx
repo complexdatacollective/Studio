@@ -23,7 +23,7 @@ export default function StageShell({ stage }: { stage: Stage }) {
   //       };
 
   return (
-    <div className="space-y-4 p-8">
+    <div className="p-8">
       {/* <PopoverHint
         popoverContent={
           <>

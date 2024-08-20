@@ -19,6 +19,8 @@
     --accent: var(--sea-green);
     --muted: var(--platinum);
 
+    --border-radius: 0.75rem;
+
     /* Sequences */
 
     --seq-node-1: var(--neon-coral);
