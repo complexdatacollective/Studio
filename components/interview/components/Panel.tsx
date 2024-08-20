@@ -19,7 +19,7 @@ export default function Panel({
   const [collapsed, setCollapsed] = useState(false);
 
   const panelClasses = cn(
-    'mb-4 flex flex-1 flex-col rounded bg-surface-1 border-b border-b-4 border-panel-1',
+    'mb-4 flex flex-1 flex-col rounded-small bg-surface-1 border-b border-b-4 border-panel-1',
     {
       'border-b-0': noHighlight,
       'border-b-0 opacity-0 mb-0 flex-grow-0': minimize,
