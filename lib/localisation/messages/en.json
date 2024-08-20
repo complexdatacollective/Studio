@@ -1,7 +1,8 @@
 {
   "Home": {
     "title": "Studio MVP",
-    "allStudiesHeading": "All Studies"
+    "allStudiesHeading": "All Studies",
+    "interviewsHeading": "Interviews"
   },
   "SignIn": {
     "cardTitle": "Sign in to Studio",
@@ -108,6 +109,9 @@
   },
   "StudySwitcher": {
     "placeholder": "Select a study"
+  },
+  "ThemeSwitcher": {
+    "label": "Toggle theme"
   },
   "NotFound": {
     "title": "Page Not Found",

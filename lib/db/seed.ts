@@ -15,6 +15,9 @@ async function seed() {
     update: {},
   });
 
+  // Drop existing studies. Protocols, revisions, interviews should cascade.
+  await db.study.deleteMany();
+
   const study = await db.study.create({
     data: {
       publicId: generateIdFromEntropySize(6),
@@ -48,12 +51,7 @@ async function seed() {
               create: [
                 {
                   publicId: generateIdFromEntropySize(6),
-                  name: 'Stage 1',
-                  type: 'Information',
-                },
-                {
-                  publicId: generateIdFromEntropySize(6),
-                  name: 'Stage 2',
+                  name: 'Name Generator',
                   type: 'NameGenerator',
                 },
               ],

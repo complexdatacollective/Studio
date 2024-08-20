@@ -8,6 +8,7 @@ import { redirect } from '~/lib/localisation/navigation';
 import { cookies } from 'next/headers';
 import 'server-only';
 import { getServerPath } from '../serverUtils';
+import { unstable_noStore } from 'next/cache';
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -74,6 +75,7 @@ export async function requirePageAuth({
 }: {
   returnToCurrentPath?: boolean;
 } = {}) {
+  unstable_noStore();
   const { session } = await getServerSession();
 
   if (!session) {

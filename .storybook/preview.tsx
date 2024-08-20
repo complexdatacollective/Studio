@@ -1,11 +1,13 @@
 import type { Preview } from '@storybook/react';
-import '~/app/globals.scss';
 import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
 import { TooltipProvider } from '~/components/ui/Tooltip';
 import { DirectionProvider } from '@radix-ui/react-direction';
+import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
+import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import '~/styles/global.css';
 
 const loadMessages = async (
   locale: Locale,
@@ -23,14 +25,6 @@ const loadMessages = async (
 };
 
 const preview: Preview = {
-  parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
-  },
   globalTypes: {
     locale: {
       name: 'Locale',
@@ -48,11 +42,25 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    visualTheme: {
+      name: 'Visual Theme',
+      description: 'Global theme for components',
+      defaultValue: 'default',
+      toolbar: {
+        icon: 'paintbrush',
+        showName: true,
+        dynamicTitle: true,
+        items: [
+          { value: 'default', title: 'Default' },
+          { value: 'interview', title: 'Interview' },
+        ],
+      },
+    },
   },
   decorators: [
     (Story, context) => {
       const [messages, setMessages] = useState<AbstractIntlMessages>();
-      const [langDir, setLandDir] =
+      const [langDir, setLangDir] =
         useState<ReturnType<typeof getLangDir>>('ltr');
 
       useEffect(() => {
@@ -60,7 +68,7 @@ const preview: Preview = {
           const locale = context.globals.locale as Locale;
           const loadedMessages = await loadMessages(locale);
           setMessages(loadedMessages);
-          setLandDir(getLangDir(locale));
+          setLangDir(getLangDir(locale));
         };
 
         void fetchMessages();
@@ -70,26 +78,39 @@ const preview: Preview = {
         document.documentElement.dir = langDir;
       }, [langDir]);
 
-      return (
-        <DirectionProvider dir={langDir}>
-          <NextIntlClientProvider
-            messages={messages}
-            locale={context.globals.locale as Locale}
-          >
-            <Story />
-          </NextIntlClientProvider>
-        </DirectionProvider>
-      );
-    },
-    (Story) => {
+      const theme =
+        (context.parameters.forceTheme as string) ??
+        (context.globals.visualTheme as string);
+
       return (
         <TooltipProvider>
-          <div className="h-screen">
-            <Story />
-          </div>
+          <InjectThemeVariables theme={theme} />
+          <DirectionProvider dir={langDir}>
+            <NextIntlClientProvider
+              messages={messages}
+              locale={context.globals.locale as Locale}
+            >
+              {Story()}
+            </NextIntlClientProvider>
+          </DirectionProvider>
         </TooltipProvider>
       );
     },
+    // For some reason, we need this empty decorator here, or the theme switcher
+    // throws an error. This seems to be a bug in the addon.
+    // see: https://stackoverflow.com/questions/71993857/using-usestate-along-with-global-decorators-throws-error-storybook-preview-hooks/77859321#77859321
+    // and: https://github.com/storybookjs/storybook/issues/22132
+    (Story) => {
+      return <Story />;
+    },
+    withThemeByDataAttribute({
+      themes: {
+        light: 'light',
+        dark: 'dark',
+      },
+      defaultTheme: 'light',
+      attributeName: 'data-theme',
+    }),
   ],
 };
 

@@ -27,14 +27,14 @@ const Tooltip = ({
             'data-[state=delayed-open]:data-[side=left]:animate-tooltipSlideRightAndFade',
             'data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade',
             'shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]',
-            'select-none rounded-sm bg-white px-2 py-2 text-sm text-slate-blue will-change-[transform,opacity]',
+            'select-none rounded px-2 py-2 text-sm text-slate-blue will-change-[transform,opacity]',
           )}
           sideOffset={5} // Distance in PX from the trigger
           collisionPadding={10} // distance from boundary edge
           side={side}
         >
           {tooltip}
-          <TooltipPrimitive.Arrow className="fill-white" />
+          <TooltipPrimitive.Arrow />
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>

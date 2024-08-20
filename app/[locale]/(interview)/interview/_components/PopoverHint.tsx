@@ -28,7 +28,7 @@ export default function PopoverHint({
           }
         >
           <button
-            className="z-10 flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-accent p-2 text-accent-foreground sm:h-20 sm:w-20 sm:p-6"
+            className="z-10 flex h-12 w-12 flex-col items-center justify-center rounded-full bg-accent p-2 text-accent-foreground sm:h-20 sm:w-20 sm:p-6"
             aria-label={t('open')}
           >
             <CircleHelp />

@@ -13,5 +13,8 @@ const handler = createMiddleware({
 export default {
   name: 'NextIntlMiddleware',
   handler,
-  matcher: ['/', `/(${SUPPORTED_LOCALES.join('|')})`],
+  matcher: [
+    '^/(?!api).*', // Match all paths except /api
+    `/(${SUPPORTED_LOCALES.join('|')})`,
+  ],
 };
