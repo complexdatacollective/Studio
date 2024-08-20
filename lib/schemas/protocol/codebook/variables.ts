@@ -37,6 +37,7 @@ export const CategoricalVariableSchema = BaseVariableDefinitionSchema.extend({
 export const ParametersVariableSchema = BaseVariableDefinitionSchema.extend({
   type: hasParameters,
   parameters: z.object({
+    // Todo: revise this.
     type: z.string(),
     min: z.string(),
     minLabel: z.string(),

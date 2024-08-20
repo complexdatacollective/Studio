@@ -1,17 +1,19 @@
 import { z } from 'zod';
 
-export const VariableValidationSchema = z.object({
-  required: z.boolean().optional(),
-  minValue: z.number().optional(),
-  maxValue: z.number().optional(),
-  minLength: z.number().optional(),
-  maxLength: z.number().optional(),
-  pattern: z.string().optional(),
-  unique: z.boolean().optional(),
-  sameAs: z.string().optional(),
-  differentFrom: z.string().optional(),
-  greaterThanVariable: z.string().optional(),
-  lessThanVariable: z.string().optional(),
-});
+export const VariableValidationSchema = z
+  .object({
+    required: z.boolean(),
+    minValue: z.number(),
+    maxValue: z.number(),
+    minLength: z.number(),
+    maxLength: z.number(),
+    pattern: z.string(),
+    unique: z.boolean(),
+    sameAs: z.string(),
+    differentFrom: z.string(),
+    greaterThanVariable: z.string(),
+    lessThanVariable: z.string(),
+  })
+  .partial();
 
 export type TVariableValidation = z.infer<typeof VariableValidationSchema>;
