@@ -28,6 +28,7 @@ type OnboardWizardAction =
 type OnboardWizardContextProps = {
   state: OnboardWizardState;
   dispatch: React.Dispatch<OnboardWizardAction>;
+  startWizard: (name: string) => void;
 };
 
 const initialState: OnboardWizardState = {
@@ -112,19 +113,14 @@ export const OnboardWizardProvider = ({
 }) => {
   const [state, dispatch] = useReducer(onboardWizardReducer, initialState);
 
-  const hashedSteps = hash(steps); // memoize this
-
-  useEffect(() => {
-    const key = `ONBOARD_WIZARD_${hashedSteps}`;
-    const storedSteps = localStorage.getItem(key);
-    const isFirstRun = !storedSteps;
-
-    if (isFirstRun) {
-      queueWizard(name, hashedSteps, priority);
+  const startWizard = (wizardName: string) => {
+    console.log('startWizard', wizardName, name);
+    if (wizardName === name) {
+      dispatch({ type: 'ACTIVATE_WIZARD', step: steps[0] });
     }
-  }, [hashedSteps, name, priority]);
+  };
 
-  const value = { state, dispatch };
+  const value = { state, dispatch, startWizard };
 
   return (
     <OnboardWizardContext.Provider value={value}>

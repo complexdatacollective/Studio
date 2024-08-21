@@ -5,26 +5,10 @@ import { useRegisterWizard } from './OnboardWizardContext';
 import OnboardWizardPopover from './OnboardWizardPopover';
 import Beacon from './Beacon';
 import OnboardWizardModal from './OnboardWizardModal';
-import { type Locale } from '~/lib/localisation/locales';
-
-type Step = {
-  // if targetElementId _not_ provided, render as a modal
-  targetElementId?: string; // Should this be a ref, or just a string?
-  content: Record<Locale, ReactNode>;
-};
+import type { Step } from './types';
+import { getElementPosition, getTargetElement } from '~/lib/onboardWizardUtils';
 
 // These should be in a helpers/utils file
-const getTargetElement = (dataId: string): HTMLElement | null => {
-  return document.querySelector(`[data-id="${dataId}"]`);
-};
-
-const getElementPosition = (element: HTMLElement) => {
-  if (!element) {
-    return null;
-  }
-  const { top, left, height, width } = element.getBoundingClientRect();
-  return { top, left, height, width };
-};
 
 const PopoverBackdrop = () => (
   <div className="absolute inset-0 z-10 backdrop-blur-sm backdrop-brightness-75" />
@@ -53,6 +37,8 @@ export default function OnboardWizard({
     priority,
   });
 
+  console.log(name, currentStep, isActive, showFlow, progress);
+
   // Abstract beacon logic into a hook, which returns:
   type Beacon = {
     id: number;
@@ -62,6 +48,8 @@ export default function OnboardWizard({
 
   // Custom hook!
   // const beacons: Beacon[] = generateBeacons(steps);
+
+  // activateWizard(0);
 
   return (
     <>
@@ -89,6 +77,7 @@ export default function OnboardWizard({
           // />
           console.log('beacon'),
         )}
+      <button onClick={() => activateWizard(0)}>Activate Wizard {name}</button>
     </>
   );
 }
@@ -99,7 +88,17 @@ const WizardStep = ({ step }: { step: Step }) => {
 
   useEffect(() => {
     const updatePosition = () => {
-      const newPosition = getElementPosition(targetElementId);
+      if (!targetElementId) {
+        return;
+      }
+      const element = getTargetElement(targetElementId);
+      if (!element) {
+        return;
+      }
+      const newPosition = getElementPosition(element);
+      if (!newPosition) {
+        return;
+      }
       setPosition(newPosition);
     };
 
