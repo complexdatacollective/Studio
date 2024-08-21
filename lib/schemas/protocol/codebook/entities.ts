@@ -27,8 +27,7 @@ export const EdgeColors = [
 ] as const;
 
 export const EntityTypeSchema = z.object({
-  name: z.string(),
-  variables: z.map(z.string(), VariableDefinitionSchema),
+  variables: z.record(z.string(), VariableDefinitionSchema).optional(),
 });
 
 export type TEntityType = z.infer<typeof EntityTypeSchema>;
@@ -42,6 +41,7 @@ export type TNodeType = z.infer<typeof NodeTypeSchema>;
 
 export const EdgeTypeSchema = EntityTypeSchema.extend({
   color: z.enum(EdgeColors),
+  directed: z.boolean(),
 });
 
 export type TEdgeType = z.infer<typeof EdgeTypeSchema>;

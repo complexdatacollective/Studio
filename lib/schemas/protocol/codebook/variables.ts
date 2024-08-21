@@ -18,28 +18,21 @@ const VariableTypes = z.enum([
   'layout',
 ]);
 
-const VariablesWithOptions = z.enum(['ordinal', 'categorical']);
-const VariablesWithParameters = z.enum(['datetime', 'scalar']);
-
-const BaseVariableDefinitionSchema = z.object({
-  name: VariableNameSchema,
-});
+const BaseVariableDefinitionSchema = z.object({});
 
 const NormalVariableDefinitionSchema = BaseVariableDefinitionSchema.extend({
-  type: VariableTypes.exclude(VariablesWithOptions.options).exclude(
-    VariablesWithParameters.options,
-  ),
+  type: VariableTypes.exclude(['ordinal', 'categorical', 'datetime', 'scalar']),
 });
 
 export const CategoricalVariableSchema = BaseVariableDefinitionSchema.extend({
-  type: VariablesWithOptions,
+  type: VariableTypes.extract(['ordinal', 'categorical']),
   options: z.array(CategoricalOptionSchema),
 });
 
 export const ParametersVariableSchema = BaseVariableDefinitionSchema.extend({
-  type: VariablesWithParameters,
+  type: VariableTypes.extract(['datetime', 'scalar']),
   parameters: z.object({
-    // Todo: revise this.
+    // Todo: revise this to be contingent on the type
     type: z.string(),
     min: z.string(),
     minLabel: z.string(),

@@ -25,7 +25,7 @@ const BaseFilterRuleSchema = z
       type: z.literal('ego'),
     }),
     z.object({
-      type: z.union([z.literal('node'), z.literal('edge')]),
+      type: z.enum(['node', 'edge']),
       entityId: z.string(),
     }),
   ])

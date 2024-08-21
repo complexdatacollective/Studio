@@ -37,7 +37,7 @@ const BaseStageSchema = z.object({
 });
 
 export const StageSchema = z
-  .discriminatedUnion('type', [
+  .union([
     NameGeneratorSchema,
     SociogramSchema,
     InformationSchema,

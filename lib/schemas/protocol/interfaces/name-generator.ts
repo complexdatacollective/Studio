@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { StageTypeSchema } from './stages';
 import { SubjectSchema } from '../shared/subject';
-import { PromptsSchema } from '../shared/prompts';
+import { PromptsSchema } from '../shared/prompt';
 
 const BaseNameGeneratorSchema = z.object({
   type: StageTypeSchema.extract(['NameGenerator']),
@@ -9,18 +9,18 @@ const BaseNameGeneratorSchema = z.object({
   prompts: PromptsSchema,
 });
 
-const NameGeneratorFormSchema = z.object({
+const NameGeneratorFormSchema = BaseNameGeneratorSchema.extend({
   mode: z.literal('form'),
   form: z.string(),
 });
 
-const NameGeneratorQuickAddSchema = z.object({
+const NameGeneratorQuickAddSchema = BaseNameGeneratorSchema.extend({
   mode: z.literal('quickAdd'),
   quickAddVariable: z.string(),
 });
 
-export const NameGeneratorSchema = BaseNameGeneratorSchema.merge(
+export const NameGeneratorSchema = NameGeneratorQuickAddSchema.or(
   NameGeneratorFormSchema,
-).and(NameGeneratorQuickAddSchema);
+);
 
 export type TNameGenerator = z.infer<typeof NameGeneratorSchema>;
