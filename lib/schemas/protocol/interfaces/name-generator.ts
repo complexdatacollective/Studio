@@ -19,9 +19,8 @@ const NameGeneratorQuickAddSchema = z.object({
   quickAddVariable: z.string(),
 });
 
-export const NameGeneratorSchema = z
-  .discriminatedUnion('mode', [
-    NameGeneratorFormSchema,
-    NameGeneratorQuickAddSchema,
-  ])
-  .and(BaseNameGeneratorSchema);
+export const NameGeneratorSchema = BaseNameGeneratorSchema.merge(
+  NameGeneratorFormSchema,
+).and(NameGeneratorQuickAddSchema);
+
+export type TNameGenerator = z.infer<typeof NameGeneratorSchema>;

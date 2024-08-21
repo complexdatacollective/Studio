@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SkipDefinitionSchema } from '../logic/filter';
+import { SkipDefinitionSchema } from '../shared/filter';
 import { NameGeneratorSchema } from './name-generator';
 import { SociogramSchema } from './sociogram';
 import { InformationSchema } from './information';
