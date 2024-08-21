@@ -1,121 +1,179 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  type ReactNode,
+} from 'react';
+import { hash } from 'ohash';
+import type { Step } from './types';
 
-type OnboardWizardContextType = {
-  currentWizard: string;
-  currentStep: number;
-  setStep: (step: number) => void;
-  closeWizard: () => void;
-  startWizard: (wizard: string, fromBeacon?: boolean) => void;
-  isOpen: boolean;
-  beaconsVisible: boolean;
-  toggleBeacons: () => void;
+type OnboardWizardState = {
+  currentStep: Step | null;
+  isActive: boolean;
   showFlow: boolean;
-  queueWizard: (wizard: string, hashedSteps: string, priority?: number) => void;
+  progress: number;
 };
 
-const OnboardWizardContext = createContext<OnboardWizardContextType | null>(
-  null,
-);
+type OnboardWizardAction =
+  | { type: 'ACTIVATE_WIZARD'; step: Step | undefined }
+  | { type: 'NEXT_STEP'; steps: Step[] }
+  | { type: 'PREV_STEP'; steps: Step[] }
+  | { type: 'COMPLETE_WIZARD' }
+  | { type: 'SHOW_FLOW' }
+  | { type: 'HIDE_FLOW' };
 
-export function useOnboardWizard() {
-  const context = useContext(OnboardWizardContext);
-  if (!context) {
-    throw new Error(
-      'useOnboardWizard must be used within a OnboardWizardProvider',
-    );
+type OnboardWizardContextProps = {
+  state: OnboardWizardState;
+  dispatch: React.Dispatch<OnboardWizardAction>;
+};
+
+const initialState: OnboardWizardState = {
+  currentStep: null,
+  isActive: false,
+  showFlow: false,
+  progress: 0,
+};
+
+const onboardWizardReducer = (
+  state: OnboardWizardState,
+  action: OnboardWizardAction,
+): OnboardWizardState => {
+  switch (action.type) {
+    case 'ACTIVATE_WIZARD': {
+      if (!action.step) {
+        return { ...state, isActive: false };
+      }
+      return { ...state, currentStep: action.step, isActive: true };
+    }
+    case 'NEXT_STEP': {
+      if (state.currentStep) {
+        const currentIndex = action.steps.indexOf(state.currentStep);
+        const nextStep = action.steps[currentIndex + 1] ?? null;
+        return {
+          ...state,
+          currentStep: nextStep,
+          progress: nextStep
+            ? (currentIndex + 2) / action.steps.length
+            : state.progress,
+        };
+      }
+      // if there is no next step, complete the wizard
+      return state;
+    }
+    case 'PREV_STEP': {
+      if (state.currentStep) {
+        const currentIndex = action.steps.indexOf(state.currentStep);
+        const prevStep = action.steps[currentIndex - 1] ?? null;
+        return {
+          ...state,
+          currentStep: prevStep,
+          progress: prevStep
+            ? currentIndex / action.steps.length
+            : state.progress,
+        };
+      }
+      // if there is no prev step, do nothing
+      return state;
+    }
+
+    case 'COMPLETE_WIZARD':
+      return { ...state, isActive: false, progress: 1, currentStep: null };
+    case 'SHOW_FLOW':
+      return { ...state, showFlow: true };
+    case 'HIDE_FLOW':
+      return { ...state, showFlow: false };
+    default:
+      return state;
   }
-  return context;
-}
+};
+
+const OnboardWizardContext = createContext<
+  OnboardWizardContextProps | undefined
+>(undefined);
+
+const queueWizard = (name: string, hashedSteps: string, priority?: number) => {
+  const key = `ONBOARD_WIZARD_${hashedSteps}`;
+  localStorage.setItem(key, JSON.stringify({ name, priority }));
+};
 
 export const OnboardWizardProvider = ({
   children,
+  steps,
+  name,
+  priority,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  steps: Step[];
+  name: string;
+  priority?: number;
 }) => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentWizard, setCurrentWizard] = useState('');
-  const [beaconsVisible, setBeaconsVisible] = useState(false);
-  const [showFlow, setShowFlow] = useState(true);
-  const [queue, setQueue] = useState<
-    { wizard: string; hashedSteps: string; priority?: number }[]
-  >([]);
+  const [state, dispatch] = useReducer(onboardWizardReducer, initialState);
 
-  const setStep = (step: number) => {
-    if (!isOpen) {
-      setIsOpen(true);
-    }
-    setCurrentStep(step);
-  };
+  const hashedSteps = hash(steps); // memoize this
 
-  const startWizard = (wizard: string, fromBeacon?: boolean) => {
-    setShowFlow(!fromBeacon);
-    setCurrentWizard(wizard);
-    setIsOpen(true);
-    setCurrentStep(0);
-  };
-
-  const closeWizard = () => {
-    setCurrentWizard('');
-    setIsOpen(false);
-    setCurrentStep(0);
-  };
-
-  const toggleBeacons = () => {
-    setBeaconsVisible(!beaconsVisible);
-  };
-
-  const queueWizard = (
-    wizard: string,
-    hashedSteps: string,
-    priority?: number,
-  ) => {
-    setQueue((prevQueue) => {
-      const newQueue = [...prevQueue, { wizard, hashedSteps, priority }];
-
-      newQueue.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
-
-      return newQueue;
-    });
-  };
-
-  // Start the next wizard in the queue if there is a queue and no wizard is open
   useEffect(() => {
-    if (!isOpen && queue[0]) {
-      const highestPriorityWizard = queue[0];
-      startWizard(highestPriorityWizard.wizard);
-      localStorage.setItem(
-        `ONBOARD_WIZARD_${highestPriorityWizard.hashedSteps}`,
-        'true',
-      );
+    const key = `ONBOARD_WIZARD_${hashedSteps}`;
+    const storedSteps = localStorage.getItem(key);
+    const isFirstRun = !storedSteps;
 
-      // Remove the started wizard from the queue
-      setQueue((prevQueue) =>
-        prevQueue.filter(
-          (item) => item.hashedSteps !== highestPriorityWizard.hashedSteps,
-        ),
-      );
+    if (isFirstRun) {
+      queueWizard(name, hashedSteps, priority);
     }
-  }, [isOpen, queue]);
+  }, [hashedSteps, name, priority]);
+
+  const value = { state, dispatch };
 
   return (
-    <OnboardWizardContext.Provider
-      value={{
-        currentWizard,
-        currentStep,
-        setStep,
-        closeWizard,
-        startWizard,
-        isOpen,
-        beaconsVisible,
-        toggleBeacons,
-        showFlow,
-        queueWizard,
-      }}
-    >
+    <OnboardWizardContext.Provider value={value}>
       {children}
     </OnboardWizardContext.Provider>
   );
+};
+
+export const useOnboardWizard = () => {
+  const context = useContext(OnboardWizardContext);
+  if (!context) {
+    throw new Error(
+      'useOnboardWizard must be used within an OnboardWizardProvider',
+    );
+  }
+  return context;
+};
+
+export const useRegisterWizard = ({
+  name,
+  steps,
+  priority,
+}: {
+  name: string;
+  steps: Step[];
+  priority?: number;
+}) => {
+  const { state, dispatch } = useOnboardWizard();
+
+  useEffect(() => {
+    const hashedSteps = hash(steps);
+    const key = `ONBOARD_WIZARD_${hashedSteps}`;
+    const storedSteps = localStorage.getItem(key);
+    const isFirstRun = !storedSteps;
+
+    if (isFirstRun) {
+      queueWizard(name, hashedSteps, priority);
+    }
+  }, [name, steps, priority]);
+
+  const activateWizard = (stepIndex: number) => {
+    dispatch({ type: 'ACTIVATE_WIZARD', step: steps[stepIndex] });
+  };
+
+  return {
+    currentStep: state.currentStep,
+    isActive: state.isActive,
+    showFlow: state.showFlow,
+    activateWizard,
+    progress: state.progress,
+  };
 };

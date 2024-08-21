@@ -150,22 +150,22 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
             title={t('help')}
             tooltipSide="right"
             onClick={() => {
-              toggleBeacons();
+              // toggleBeacons();
             }}
           >
             <HelpCircle className="h-10 w-10 stroke-[2px]" />
           </NavButtonWithTooltip>
         </span>
-        {beaconsVisible && (
-          <div className="absolute bottom-8 left-32 flex space-x-2">
-            <ToggleWizardButton
-              wizardName="navigation"
-              label="Show Interview Help"
-            />
-            <ToggleWizardButton wizardName="task" label="Show Task Help" />
-            <ResetLocalStorage />
-          </div>
-        )}
+        {/* {beaconsVisible && ( */}
+        <div className="absolute bottom-8 left-32 flex space-x-2">
+          <ToggleWizardButton
+            wizardName="navigation"
+            label="Show Interview Help"
+          />
+          <ToggleWizardButton wizardName="task" label="Show Task Help" />
+          <ResetLocalStorage />
+        </div>
+        {/* )} */}
       </nav>
     </OnboardWizard>
   );

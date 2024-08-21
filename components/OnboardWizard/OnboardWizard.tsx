@@ -1,15 +1,34 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useOnboardWizard } from './OnboardWizardContext';
-import type { Step } from './types';
+import { type ReactNode, useEffect, useState } from 'react';
+import { useRegisterWizard } from './OnboardWizardContext';
 import OnboardWizardPopover from './OnboardWizardPopover';
 import Beacon from './Beacon';
 import OnboardWizardModal from './OnboardWizardModal';
-import { hash } from 'ohash';
-import { useSearchParams } from 'next/navigation';
 import { type Locale } from '~/lib/localisation/locales';
-import { useLocale } from 'next-intl';
+
+type Step = {
+  // if targetElementId _not_ provided, render as a modal
+  targetElementId?: string; // Should this be a ref, or just a string?
+  content: Record<Locale, ReactNode>;
+};
+
+// These should be in a helpers/utils file
+const getTargetElement = (dataId: string): HTMLElement | null => {
+  return document.querySelector(`[data-id="${dataId}"]`);
+};
+
+const getElementPosition = (element: HTMLElement) => {
+  if (!element) {
+    return null;
+  }
+  const { top, left, height, width } = element.getBoundingClientRect();
+  return { top, left, height, width };
+};
+
+const PopoverBackdrop = () => (
+  <div className="absolute inset-0 z-10 backdrop-blur-sm backdrop-brightness-75" />
+);
 
 export default function OnboardWizard({
   steps,
@@ -23,161 +42,74 @@ export default function OnboardWizard({
   priority?: number;
 }) {
   const {
-    currentStep,
-    isOpen,
-    currentWizard,
-    beaconsVisible,
-    showFlow,
-    queueWizard,
-  } = useOnboardWizard();
+    currentStep, // Automatically localised by provider.
+    isActive, // Controlled by provider.
+    showFlow, // Controlled by provider.
+    activateWizard, // (stepId: number) => void
+    progress, // progress through current wizard
+  } = useRegisterWizard({
+    name, // Index for use in store
+    steps,
+    priority,
+  });
 
-  const searchParams = useSearchParams();
-  const stage = searchParams.get('stage');
-  const currentLocale = useLocale() as Locale;
-
-  const [currentStepPosition, setCurrentStepPosition] = useState<{
-    top: number;
-    left: number;
-    height: number;
-    width: number;
-  } | null>(null);
-  const [beaconPositions, setBeaconPositions] = useState<
-    Record<number, { top: number; left: number }>
-  >({});
-  const [previousElement, setPreviousElement] = useState<HTMLElement | null>(
-    null,
-  );
-
-  const getTargetElement = (dataId: string): HTMLElement | null => {
-    return document.querySelector(`[data-id="${dataId}"]`);
+  // Abstract beacon logic into a hook, which returns:
+  type Beacon = {
+    id: number;
+    stepIndex: number; // Index of the step in the wizard
+    position: { top: number; left: number };
   };
 
-  const getElementPosition = (element: HTMLElement) => {
-    if (!element) {
-      return null;
-    }
-    const { top, left, height, width } = element.getBoundingClientRect();
-    return { top, left, height, width };
-  };
-
-  const hashedSteps = hash(steps);
-
-  // Check if the hashed steps have been saved to localStorage.
-  useEffect(() => {
-    const key = `ONBOARD_WIZARD_${hashedSteps}`;
-    const storedSteps = localStorage.getItem(key);
-    const isFirstRun = !storedSteps;
-
-    // If it's the first run, queue the wizard
-    if (isFirstRun) {
-      queueWizard(name, hashedSteps, priority);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hashedSteps, name, priority, stage]);
-
-  useEffect(() => {
-    const updateStepPosition = () => {
-      // Reset the prev element's z-index
-      if (previousElement) {
-        previousElement.style.zIndex = '';
-      }
-
-      if (isOpen && steps[currentStep] && name === currentWizard) {
-        const { targetElementId } = steps[currentStep];
-        const targetElement = targetElementId
-          ? getTargetElement(targetElementId)
-          : null;
-
-        if (targetElement) {
-          setCurrentStepPosition(getElementPosition(targetElement));
-          targetElement.style.zIndex = '50';
-          setPreviousElement(targetElement);
-        } else {
-          // If new step does not have a targetElementId, clear the current step position
-          setCurrentStepPosition(null);
-          setPreviousElement(null);
-        }
-      } else {
-        // If the wizard is not open or there's no current step, clear the step position
-        setCurrentStepPosition(null);
-        setPreviousElement(null);
-      }
-    };
-
-    updateStepPosition();
-  }, [currentStep, steps, isOpen, previousElement, currentWizard, name]);
-
-  // Handle window resize
-  useEffect(() => {
-    const updatePositions = () => {
-      if (isOpen) {
-        const currentStepPosition =
-          currentStep !== null && steps[currentStep]?.targetElementId
-            ? getElementPosition(
-                getTargetElement(steps[currentStep].targetElementId)!,
-              )
-            : null;
-        setCurrentStepPosition(currentStepPosition);
-      }
-
-      const newBeaconPositions: Record<number, { top: number; left: number }> =
-        {};
-      steps.forEach((step, index) => {
-        const targetElement = getTargetElement(step.targetElementId ?? '');
-        if (targetElement) {
-          const position = getElementPosition(targetElement);
-          if (position) {
-            newBeaconPositions[index] = position;
-          }
-        }
-      });
-      setBeaconPositions(newBeaconPositions);
-    };
-
-    updatePositions();
-    window.addEventListener('resize', updatePositions);
-    return () => window.removeEventListener('resize', updatePositions);
-  }, [currentStep, steps, isOpen]);
-
-  if (currentWizard !== name && !beaconsVisible) {
-    return <>{children}</>;
-  }
-
-  const showPopover = currentWizard === name && isOpen && currentStepPosition;
-  const showModal = currentWizard === name && !currentStepPosition && isOpen;
+  // Custom hook!
+  // const beacons: Beacon[] = generateBeacons(steps);
 
   return (
     <>
       {children}
-      {showPopover && (
+      {isActive && (
         <>
-          <div className="absolute inset-0 z-10 backdrop-blur-md backdrop-brightness-75" />
-          <OnboardWizardPopover
-            stepContent={steps[currentStep]?.content[currentLocale]}
-            elementPosition={currentStepPosition}
-            totalSteps={steps.length}
-            showFlow={showFlow}
-          />
+          <PopoverBackdrop />
+          {/* 
+
+            Simplify the api here!
+
+            New component, WizardStep should internally handle modal and 
+            positioned variants. Total steps, and element position should be
+            calculated inside the component, not passed as props.
+          */}
+          <WizardStep step={currentStep} />
         </>
       )}
-      {showModal && (
-        <OnboardWizardModal
-          stepContent={steps[currentStep]?.content[currentLocale]}
-          totalSteps={steps.length}
-          showFlow={showFlow}
-        />
-      )}
-      {beaconsVisible &&
-        steps.map((step, index) =>
-          beaconPositions[index] ? (
-            <Beacon
-              key={index}
-              index={index}
-              position={beaconPositions[index] as { top: number; left: number }}
-              wizardName={name}
-            />
-          ) : null,
+      {showFlow &&
+        beacons.map((beacon) =>
+          // <Beacon
+          //   key={beacon.id}
+          //   position={beacon.position}
+          //   onClick={() => activateWizard(beacon.stepIndex)}
+          // />
+          console.log('beacon'),
         )}
     </>
   );
 }
+
+const WizardStep = ({ step }: { step: Step }) => {
+  const { targetElementId, content } = step;
+  const [position, setPosition] = useState();
+
+  useEffect(() => {
+    const updatePosition = () => {
+      const newPosition = getElementPosition(targetElementId);
+      setPosition(newPosition);
+    };
+
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
+  }, [targetElementId]);
+
+  return targetElementId ? (
+    <OnboardWizardPopover position={position} content={content} />
+  ) : (
+    <OnboardWizardModal content={content} />
+  );
+};
