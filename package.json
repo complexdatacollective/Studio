@@ -44,7 +44,6 @@
     "knip": "^5.26.0",
     "lucia": "^3.2.0",
     "lucide-react": "^0.394.0",
-    "lucide-static": "^0.429.0",
     "nanoid": "^5.0.7",
     "next": "15.0.0-canary.120",
     "next-intl": "^3.17.2",

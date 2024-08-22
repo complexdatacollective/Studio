@@ -41,7 +41,7 @@ const devProtocol: Protocol = {
           },
         },
         color: 'seq-node-2',
-        icon: 'Backpack',
+        icon: 'Backpack', // example of using lucide icon
       },
     },
   },

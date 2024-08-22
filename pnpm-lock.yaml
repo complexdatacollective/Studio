@@ -83,9 +83,6 @@ dependencies:
   lucide-react:
     specifier: ^0.394.0
     version: 0.394.0(react@19.0.0-rc-1eaccd82-20240816)
-  lucide-static:
-    specifier: ^0.429.0
-    version: 0.429.0
   nanoid:
     specifier: ^5.0.7
     version: 5.0.7
@@ -8112,10 +8109,6 @@ packages:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 19.0.0-rc-1eaccd82-20240816
-    dev: false
-
-  /lucide-static@0.429.0:
-    resolution: {integrity: sha512-S/FzhfA/EzI0gyxz2Ta/yIdIDmWXq96dLWUpIKNreg7/WqFsgZ86/h/7XJ9phhIQWd2TeICiFV3rrhsK4CQMaQ==}
     dev: false
 
   /lz-string@1.5.0:

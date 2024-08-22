@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { VariableDefinitionSchema } from './variables';
-import iconNodes from 'lucide-static';
+import * as lucide from 'lucide-react';
 
-const lucideIcons = Object.keys(iconNodes) as (keyof typeof iconNodes)[];
+const lucideIcons = Object.keys(lucide) as (keyof typeof lucide)[];
 
 export const NodeColors = [
   'seq-node-1',
