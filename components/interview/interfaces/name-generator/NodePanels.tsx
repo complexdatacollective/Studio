@@ -9,14 +9,7 @@ type Panel = {
 
 export default function NodePanels({ panels }: { panels: Panel[] }) {
   return (
-    <div
-      data-id="data-wizard-task-step-2"
-      data-wizard-step={JSON.stringify({
-        content: {
-          en: 'Node panel text',
-        },
-      })}
-    >
+    <div id="data-wizard-task-step-2">
       {panels.map((panel) => {
         return <NodePanel key={panel.id} {...panel} />;
       })}

@@ -54,7 +54,7 @@ export default function OnboardWizardPopover({
                 Next
               </Button>
             ) : (
-              <Button name="finish" size="sm" onClick={() => closeWizard()}>
+              <Button name="finish" size="sm" onClick={() => nextStep()}>
                 Finish
               </Button>
             )}
