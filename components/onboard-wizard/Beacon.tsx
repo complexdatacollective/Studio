@@ -1,4 +1,3 @@
-import { useOnboardWizard } from './OnboardWizardContext';
 import { cn } from '~/lib/utils';
 
 export default function Beacon({

@@ -1,7 +1,7 @@
 import Dialog from '~/components/ui/Dialog';
 import React from 'react';
-import { useWizardController } from './OnboardWizard';
 import { Button } from '../ui/Button';
+import { useWizardController } from './useWizardController';
 
 export default function OnboardWizardModal({
   content,
