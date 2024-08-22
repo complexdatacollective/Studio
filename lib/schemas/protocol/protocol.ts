@@ -21,6 +21,13 @@ export type Protocol = z.infer<typeof ProtocolSchema>;
 const devProtocol: Protocol = {
   name: 'Dev Protocol',
   codebook: {
+    ego: {
+      variables: {
+        school: {
+          type: 'text',
+        },
+      },
+    },
     nodes: {
       person: {
         variables: {
@@ -62,7 +69,7 @@ const devProtocol: Protocol = {
           text: {
             en: 'Who are your classmates at {school}?',
           },
-          variables: [{ name: 'school', value: 'Northwestern' }],
+          injectedVariables: ['school'],
         },
       ],
     },

@@ -1,16 +1,10 @@
 import { z } from 'zod';
 import { LocalisedRecord } from '../../shared';
 
-// prompt variables for injection
-const PromptVariableSchema = z.object({
-  name: z.string(),
-  value: z.string().optional(),
-});
-
 export const PromptSchema = z.object({
   id: z.string(),
   text: LocalisedRecord,
-  variables: z.array(PromptVariableSchema).optional(),
+  injectedVariables: z.array(z.string()).optional(), // variables to inject into the prompt text
   // Todo:
   // additionalAttributes: z.any().optional(),
   // variable: z.string().optional(),
