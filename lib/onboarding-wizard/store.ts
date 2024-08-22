@@ -1,11 +1,4 @@
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-} from 'react';
-import { useStore } from 'zustand';
+import { type ReactNode } from 'react';
 import { createStore } from 'zustand/vanilla';
 
 export type Step = {
@@ -52,7 +45,9 @@ const defaultInitialState: WizardState = {
   },
 };
 
-const createWizardStore = (initState: WizardState = defaultInitialState) => {
+export const createWizardStore = (
+  initState: WizardState = defaultInitialState,
+) => {
   return createStore<WizardStore>()((set, get) => ({
     ...initState,
     registerWizard: (wizard) => {
@@ -267,62 +262,3 @@ const createWizardStore = (initState: WizardState = defaultInitialState) => {
 };
 
 export type WizardStoreApi = ReturnType<typeof createWizardStore>;
-
-const WizardContext = createContext<WizardStoreApi | undefined>(undefined);
-
-export const WizardProvider = ({ children }: { children: ReactNode }) => {
-  const storeRef = useRef<WizardStoreApi>();
-
-  if (!storeRef.current) {
-    storeRef.current = createWizardStore();
-  }
-
-  const { wizards, setActiveWizard } = useStore(storeRef.current);
-
-  // Set the active wizard based on the first wizard that has not been seen
-  useEffect(() => {
-    console.log('checking for active wizard');
-    const activeWizard = wizards.find(
-      (wizard) => !localStorage.getItem(`wizard-${wizard.name}-seen`),
-    );
-
-    if (activeWizard) {
-      console.log('found active wizard', activeWizard);
-      setActiveWizard(activeWizard.name);
-    }
-  }, [wizards, setActiveWizard]);
-
-  // Get all children of ref that have a data-wizard-step attribute
-  useEffect(() => {
-    const elements = document.querySelectorAll('[data-wizard-step]');
-    if (!elements) return;
-
-    const attributes = [];
-
-    elements.forEach((element) => {
-      const attribute = element.getAttribute('data-wizard-step');
-      attributes.push(JSON.parse(attribute));
-    });
-  }, []);
-
-  return (
-    <WizardContext.Provider value={storeRef.current}>
-      {children}
-    </WizardContext.Provider>
-  );
-};
-
-export const useWizardContext = <T extends WizardStore>(
-  selector?: (store: WizardStore) => T,
-) => {
-  const wizardStoreContext = useContext(WizardContext);
-  if (!wizardStoreContext) {
-    throw new Error(
-      'useUserActionsContext must be used within a UserActionsProvider',
-    );
-  }
-
-  const selectorWithDefault = selector ?? ((store) => store);
-
-  return useStore(wizardStoreContext, selectorWithDefault);
-};

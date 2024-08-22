@@ -6,7 +6,7 @@ import Prompts from '~/components/interview/Prompts/Prompts';
 import NodePanels from './NodePanels';
 import NodeList from '~/components/interview/NodeList';
 import QuickNodeForm from './QuickNodeForm';
-import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
+import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
 
 const demoPrompts = [
   {

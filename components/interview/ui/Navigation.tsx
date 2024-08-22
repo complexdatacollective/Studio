@@ -10,7 +10,7 @@ import type { IntRange } from 'type-fest';
 import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
 import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
-import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
+import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
 import HelpButton from './HelpButton';
 import { NavButtonWithTooltip } from './NavigationButton';
 
