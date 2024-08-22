@@ -15,6 +15,7 @@ export const FilterOperators = z.enum([
   'OPTIONS_LESS_THAN',
   'OPTIONS_EQUALS',
   'OPTIONS_NOT_EQUALS',
+  'COUNT', // count of nodes or edges
 ]);
 
 export type FilterOperator = z.infer<typeof FilterOperators>;
@@ -41,9 +42,14 @@ const FilterRuleSchema = z
       operator: FilterOperators.extract(['EXISTS', 'NOT_EXISTS']),
     }),
     z.object({
-      operator: FilterOperators.exclude(['EXISTS', 'NOT_EXISTS']),
+      operator: FilterOperators.exclude(['EXISTS', 'NOT_EXISTS', 'COUNT']),
       entityVariable: z.string(),
       value: z.union([z.boolean(), z.number(), z.string()]),
+    }),
+    z.object({
+      operator: z.literal('COUNT'),
+      entityId: z.string(),
+      count: z.number(),
     }),
   ])
   .and(BaseFilterRuleSchema);
@@ -55,11 +61,23 @@ export const FilterDefinitionSchema = z.object({
   rules: z.array(FilterRuleSchema),
 });
 
-export type FilterDefinition = z.infer<typeof FilterDefinitionSchema>;
+export type FilterDefinition = {
+  join: 'AND' | 'OR';
+  rules: (FilterRule | FilterDefinition)[];
+};
+
+const BranchingFilterSchema = z.object({
+  condition: FilterRuleSchema,
+  stagesToShow: z.array(z.string()), // branched stages to show
+});
+
+export type BranchingFilter = z.infer<typeof BranchingFilterSchema>;
 
 export const SkipDefinitionSchema = z.object({
   action: z.enum(['SKIP', 'SHOW']),
   filter: FilterDefinitionSchema,
+  targetStage: z.string().optional(), // specific stage to skip to
+  stagesToShow: z.array(z.string()).optional(), // optional stages to show for branching
 });
 
 export type SkipDefinition = z.infer<typeof SkipDefinitionSchema>;

@@ -59,7 +59,45 @@ const devProtocol: Protocol = {
     {
       id: '2',
       type: 'Sociogram',
-      label: 'Sociogram',
+      label: 'Count & ability to skip to specific stage',
+      skipLogic: {
+        action: 'SKIP',
+        filter: {
+          join: 'AND',
+          rules: [
+            {
+              operator: 'COUNT',
+              count: 3,
+              type: 'ego',
+              entityId: 'person',
+              id: '1',
+            },
+          ],
+        },
+        targetStage: '4', // skip here if count condition is met
+      },
+    },
+    {
+      id: '3',
+      type: 'Sociogram',
+      label: 'Branching Filter Example',
+      skipLogic: {
+        action: 'SHOW',
+        filter: {
+          join: 'AND',
+          rules: [
+            {
+              operator: 'INCLUDES',
+              entityVariable: 'name',
+              value: 'John',
+              type: 'node',
+              entityId: 'person',
+              id: '1',
+            },
+          ],
+        },
+        stagesToShow: ['7', '8'],
+      },
     },
   ],
 };

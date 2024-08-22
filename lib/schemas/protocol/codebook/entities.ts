@@ -24,6 +24,8 @@ export const EdgeColors = [
   'seq-edge-6',
   'seq-edge-7',
   'seq-edge-8',
+  'seq-edge-9',
+  'seq-edge-10',
 ] as const;
 
 export const EntityTypeSchema = z.object({
