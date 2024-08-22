@@ -2,6 +2,7 @@ import Popover from '~/components/ui/Popover';
 import { getElementPosition } from '~/lib/onboarding-wizard/utils';
 import { Button } from '../ui/Button';
 import { useWizardController } from './useWizardController';
+import { useEffect } from 'react';
 
 export default function OnboardWizardPopover({
   content,
@@ -19,6 +20,22 @@ export default function OnboardWizardPopover({
     nextStep,
   } = useWizardController();
   const position = getElementPosition(targetElementId);
+
+  // Boost z-index of element so it is above the overlay
+  useEffect(() => {
+    const targetElement = document.getElementById(targetElementId);
+    if (!targetElement) {
+      console.log('no target element...');
+      return;
+    }
+
+    targetElement.style.zIndex = '50';
+
+    return () => {
+      // cleanup
+      targetElement.style.zIndex = '';
+    };
+  }, [targetElementId]);
 
   if (!position) {
     console.log('no position...');

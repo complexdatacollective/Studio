@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import StageShell from './StageShell';
-import Navigation from './Navigation';
 import type { Stage } from '@prisma/client';
+import SimpleShell from './SimpleShell';
+import NameGenerator from '../interfaces/name-generator/NameGenerator';
 
 const stageOptions: Stage[] = [
   {
@@ -13,9 +13,8 @@ const stageOptions: Stage[] = [
   },
 ];
 
-const meta: Meta<typeof StageShell> = {
+const meta: Meta = {
   title: 'Interview/StageShell',
-  component: StageShell,
   parameters: {
     nextjs: {
       appDirectory: 'true',
@@ -41,13 +40,19 @@ const meta: Meta<typeof StageShell> = {
     stage: stageOptions[0],
   },
   render: (args) => {
+    const getStageComponent = (stage: Stage) => {
+      switch (stage.type) {
+        case 'NameGenerator':
+          return <NameGenerator />;
+        default:
+          return null;
+      }
+    };
+
     return (
-      <div className="bg-navy-taupe text-white flex h-screen">
-        <Navigation pulseNext={false} progress={50} />
-        <div className="flex-1 overflow-hidden overflow-y-auto">
-          <StageShell stage={args.stage} />
-        </div>
-      </div>
+      <SimpleShell isReadyForNextStage={false} progress={50}>
+        {getStageComponent(args.stage)}
+      </SimpleShell>
     );
   },
 };

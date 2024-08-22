@@ -163,6 +163,9 @@ export default {
       full: '9999px',
     },
     extend: {
+      backdropBlur: {
+        xs: '2px',
+      },
       keyframes: {
         'wiggle': {
           '0%, 100%': { transform: 'rotate(-3deg)' },

@@ -1,8 +1,8 @@
 import { getStage, getStageCount } from '~/server/queries/stages';
-import Navigation from './Navigation';
-import StageShell from './StageShell';
 import type { Interview } from '@prisma/client';
 import type { IntRange } from 'type-fest';
+import NameGenerator from '../interfaces/name-generator/NameGenerator';
+import SimpleShell from './SimpleShell';
 
 // This is the shell for the interview. It contains the navigation and the current stage shell.
 export default async function InterviewShell({
@@ -28,12 +28,8 @@ export default async function InterviewShell({
   const progress = ((currentStage / stageCount) * 100) as IntRange<0, 100>;
 
   return (
-    <div className="flex h-screen">
-      <Navigation pulseNext={isReadyForNextStage} progress={progress} />
-
-      <div className="flex-1 overflow-hidden overflow-y-auto">
-        {stage ? <StageShell stage={stage} /> : <div>Stage not found</div>}
-      </div>
-    </div>
+    <SimpleShell isReadyForNextStage={isReadyForNextStage} progress={progress}>
+      {stage?.type === 'NameGenerator' && <NameGenerator />}
+    </SimpleShell>
   );
 }
