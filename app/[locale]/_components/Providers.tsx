@@ -5,7 +5,7 @@ import { TooltipProvider } from '~/components/ui/Tooltip';
 import { type Locale } from '~/lib/localisation/locales';
 import IntlProvider from './IntlProvider';
 import { ThemeProvider } from 'next-themes';
-import { WizardProvider } from '~/lib/onboardWizard/Provider';
+import { WizardProvider } from '~/lib/onboarding-wizard/Provider';
 
 export default function Providers({
   intlParams: { dir, messages, locale, now, timeZone },

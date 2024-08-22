@@ -1,5 +1,5 @@
 import Popover from '~/components/ui/Popover';
-import { getElementPosition } from '~/lib/onboardWizard/utils';
+import { getElementPosition } from '~/lib/onboarding-wizard/utils';
 import { useWizardController } from './OnboardWizard';
 import { Button } from '../ui/Button';
 

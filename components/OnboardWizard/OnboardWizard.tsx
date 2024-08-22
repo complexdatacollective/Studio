@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo } from 'react';
-import { Step, useWizardContext } from '~/lib/onboardWizard/Provider';
+import { Step, useWizardContext } from '~/lib/onboarding-wizard/Provider';
 import OnboardWizardPopover from './OnboardWizardPopover';
 import OnboardWizardModal from './OnboardWizardModal';
 import { useLocale } from 'next-intl';
