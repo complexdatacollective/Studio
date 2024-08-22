@@ -1,5 +1,8 @@
 import { z } from 'zod';
 import { VariableDefinitionSchema } from './variables';
+import iconNodes from 'lucide-static';
+
+const lucideIcons = Object.keys(iconNodes) as (keyof typeof iconNodes)[];
 
 export const NodeColors = [
   'seq-node-1',
@@ -12,8 +15,11 @@ export const NodeColors = [
   'seq-node-8',
 ] as const;
 
-// Todo: extend to include all lucide icons
-export const NodeIcons = ['add-a-person', 'add-a-place'] as const;
+export const NodeIcons = [
+  'add-a-person',
+  'add-a-place',
+  ...lucideIcons,
+] as const;
 
 export const EdgeColors = [
   'seq-edge-1',

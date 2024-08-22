@@ -34,6 +34,15 @@ const devProtocol: Protocol = {
         color: 'seq-node-1',
         icon: 'add-a-person',
       },
+      school: {
+        variables: {
+          name: {
+            type: 'text',
+          },
+        },
+        color: 'seq-node-2',
+        icon: 'Backpack',
+      },
     },
   },
   stages: [
