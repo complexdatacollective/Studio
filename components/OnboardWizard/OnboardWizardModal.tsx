@@ -1,40 +1,52 @@
-import { useOnboardWizard } from './OnboardWizardContext';
 import Dialog from '~/components/ui/Dialog';
-import FlowStepContent from './FlowStepContent';
 import React from 'react';
+import { useWizardController } from './OnboardWizard';
+import { Button } from '../ui/Button';
 
 export default function OnboardWizardModal({
-  stepContent,
-  totalSteps,
-  showFlow,
+  content,
 }: {
-  stepContent: React.ReactNode;
-  totalSteps: number;
-  showFlow: boolean;
+  content: React.ReactNode;
 }) {
-  const { closeWizard } = useOnboardWizard();
-
-  const mediaCheck = (content: React.ReactNode): boolean => {
-    return React.Children.toArray(content).some((child) => {
-      return (
-        React.isValidElement(child) &&
-        (child.type === 'img' || child.type === 'video')
-      );
-    });
-  };
-
-  const hasMedia = mediaCheck(stepContent);
+  const {
+    closeWizard,
+    nextStep,
+    previousStep,
+    hasNextStep,
+    hasPreviousStep,
+    progress,
+  } = useWizardController();
 
   return (
     <Dialog
-      content={
-        showFlow ? FlowStepContent({ stepContent, totalSteps }) : stepContent
-      }
       isOpen={true}
       onOpenChange={() => {
         closeWizard();
       }}
-      className={` ${hasMedia ? 'w-1/2' : 'w-[90vw] max-w-[450px]'}`}
-    ></Dialog>
+      className="w-[90vw] min-w-[450px]"
+    >
+      <div className="flex flex-col">
+        {content}
+        <footer className="flex items-center justify-between pt-2">
+          {hasPreviousStep && (
+            <Button name="previous" size="sm" onClick={() => previousStep()}>
+              Prev
+            </Button>
+          )}
+          <div className="text-sm">
+            {progress.current} of {progress.total}
+          </div>
+          {hasNextStep ? (
+            <Button name="next" size="sm" onClick={() => nextStep()}>
+              Next
+            </Button>
+          ) : (
+            <Button name="finish" size="sm" onClick={() => closeWizard()}>
+              Finish
+            </Button>
+          )}
+        </footer>
+      </div>
+    </Dialog>
   );
 }

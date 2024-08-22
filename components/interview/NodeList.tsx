@@ -1,6 +1,4 @@
-'use client';
-
-import Node from './Node';
+import Node from '~/components/Node';
 
 export type Node = {
   id: string;

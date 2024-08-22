@@ -2,18 +2,44 @@
 
 import { useCallback, useEffect, useMemo } from 'react';
 import { Step, useWizardContext } from '~/lib/onboardWizard/Provider';
+import OnboardWizardPopover from './OnboardWizardPopover';
+import OnboardWizardModal from './OnboardWizardModal';
+import { useLocale } from 'next-intl';
+
+export const useWizardController = () => {
+  const {
+    setActiveWizard,
+    nextStep,
+    hasNextStep,
+    previousStep,
+    hasPreviousStep,
+    progress,
+  } = useWizardContext();
+
+  const closeWizard = useCallback(
+    () => setActiveWizard(null),
+    [setActiveWizard],
+  );
+
+  return {
+    closeWizard,
+    nextStep,
+    hasNextStep: hasNextStep(),
+    previousStep,
+    hasPreviousStep: hasPreviousStep(),
+    progress,
+  };
+};
 
 const useWizardStore = () => {
-  const { registerWizard, deregisterWizard, activeWizard, currentStep } =
-    useWizardContext((store) => store);
-
-  const nextStep = useCallback(() => {
-    console.log('next');
-  }, []);
-
-  const previousStep = useCallback(() => {
-    console.log('previous');
-  }, []);
+  const {
+    registerWizard,
+    deregisterWizard,
+    activeWizard,
+    currentStep,
+    nextStep,
+    previousStep,
+  } = useWizardContext((store) => store);
 
   return {
     activeWizard,
@@ -25,8 +51,8 @@ const useWizardStore = () => {
   };
 };
 
-// Returns scroped state for a given wizard
-const useRegisterWizard = ({
+// Returns scoped state for a given wizard
+export const useOnboardWizard = ({
   name,
   steps,
   priority,
@@ -45,82 +71,69 @@ const useRegisterWizard = ({
     previousStep,
   } = useWizardStore();
 
-  // Only run on mount
+  // On mount, register the wizard with the store
   useEffect(() => {
     addWizardToStore({ name, steps, priority });
 
     return () => removeWizard(name);
-  }, []);
+  }, [name, steps, priority, addWizardToStore, removeWizard]);
 
-  const isActive = useMemo(() => activeWizard === name, [activeWizard]);
+  const isActive = useMemo(() => activeWizard === name, [activeWizard, name]);
+
+  const activeStep = useMemo(
+    () => (isActive ? steps[currentStep!]! : null),
+    [steps, isActive, currentStep],
+  );
 
   return {
     isActive,
-    currentStep,
+    activeStep,
     nextStep,
     previousStep,
   };
 };
 
-// These should be in a helpers/utils file
-
 const PopoverBackdrop = () => (
-  <div className="absolute inset-0 z-10 backdrop-blur-sm backdrop-brightness-75" />
+  <div className="absolute inset-0 z-10 backdrop-blur-sm backdrop-brightness-75 transition-all" />
 );
 
+export const Priorities = {
+  ShowFirst: Infinity,
+  UI: 100,
+  Navigation: 50,
+  Task: 10,
+  ShowLast: -Infinity,
+} as const;
+
+type Priority = keyof typeof Priorities;
+
 export default function OnboardWizard({
-  steps,
   children,
   name,
-  priority,
+  steps,
+  priority = 'Task',
 }: {
-  steps: Step[];
   children: React.ReactNode;
+  steps: Step[];
   name: string;
-  priority?: number;
+  priority?: Priority;
 }) {
-  const { isActive, currentStep, nextStep, previousStep } = useRegisterWizard({
+  const { isActive, activeStep } = useOnboardWizard({
     name, // maybe this is where we generate something relative to the study/protocol?
-    steps: [
-      { content: <div>Step 1</div> },
-      { content: <div>Step 2</div> },
-      { content: <div>Step 3</div> },
-    ],
-    priority: 1,
+    steps,
+    priority: Priorities[priority],
   });
-
-  // Abstract beacon logic into a hook, which returns:
-  // type Beacon = {
-  //   id: number;
-  //   stepIndex: number; // Index of the step in the wizard
-  //   position: { top: number; left: number };
-  // };
 
   // Custom hook!
   // const beacons: Beacon[] = generateBeacons(steps);
 
-  // activateWizard(0);
-
   return (
     <>
       {children}
-      {isActive && (
+      {isActive && activeStep && (
         <>
           <PopoverBackdrop />
-          {/* 
-
-            Simplify the api here!
-
-            New component, WizardStep should internally handle modal and 
-            positioned variants. Total steps, and element position should be
-            calculated inside the component, not passed as props.
-          */}
-          {/* <WizardStep step={currentStep} /> */}
-          <div>
-            {currentStep?.content}
-            <button onClick={previousStep}>Previous</button>
-            <button onClick={nextStep}>Next</button>
-          </div>
+          <WizardStep step={activeStep} />
         </>
       )}
       {/* {showFlow &&
@@ -136,33 +149,16 @@ export default function OnboardWizard({
   );
 }
 
-// const WizardStep = ({ step }: { step: Step }) => {
-//   const { targetElementId, content } = step;
-//   const [position, setPosition] = useState();
+const WizardStep = ({ step }: { step: Step }) => {
+  const { targetElementId, content } = step;
+  const locale = useLocale();
 
-//   useEffect(() => {
-//     const updatePosition = () => {
-//       if (!targetElementId) {
-//         return;
-//       }
-//       const element = getTargetElement(targetElementId);
-//       if (!element) {
-//         return;
-//       }
-//       const newPosition = getElementPosition(element);
-//       if (!newPosition) {
-//         return;
-//       }
-//       setPosition(newPosition);
-//     };
-
-//     window.addEventListener('resize', updatePosition);
-//     return () => window.removeEventListener('resize', updatePosition);
-//   }, [targetElementId]);
-
-//   return targetElementId ? (
-//     <OnboardWizardPopover position={position} content={content} />
-//   ) : (
-//     <OnboardWizardModal content={content} />
-//   );
-// };
+  return targetElementId ? (
+    <OnboardWizardPopover
+      targetElementId={targetElementId}
+      content={content[locale]}
+    />
+  ) : (
+    <OnboardWizardModal content={content[locale]} />
+  );
+};

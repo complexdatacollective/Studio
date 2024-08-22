@@ -1,5 +1,5 @@
-import Panel from '../components/Panel';
-import NodeList, { type Node } from '../components/NodeList';
+import Panel from './Panel';
+import NodeList, { type Node } from '../../NodeList';
 
 export default function NodePanel({
   nodes,

@@ -14,7 +14,9 @@ export const useRegisterWizard = ({
   steps,
   priority,
 }: UseRegisterWizardProps) => {
-  const { wizards, actions } = useWizardContext();
+  const registerWizard = useWizardContext();
+
+  const { isActive, currentStep } = registerWizard({});
 
   // useEffect(() => {
   //   actions.registerWizard({ name, steps, priority });

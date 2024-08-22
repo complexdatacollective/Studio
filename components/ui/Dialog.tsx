@@ -1,16 +1,14 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
-import cn from 'classnames';
+import { cn } from '~/lib/utils';
 
 const Dialog = ({
-  content,
   children,
   isOpen,
   onOpenChange,
   title,
   className,
 }: {
-  content: React.ReactNode;
   children?: React.ReactNode;
   isOpen?: boolean;
   title?: string;
@@ -32,7 +30,7 @@ const Dialog = ({
           <DialogPrimitive.Title className="font-medium m-0 text-lg text-overlay-foreground">
             {title}
           </DialogPrimitive.Title>
-          {content}
+          {children}
           <DialogPrimitive.Close asChild>
             <button
               className="hover:bg-violet4 absolute top-2 inline-flex h-[25px] w-[25px] cursor-default items-center justify-center rounded-full text-overlay-foreground outline-none focus:shadow-[0_0_0_2px] focus:shadow-background ltr:right-2 rtl:left-2"

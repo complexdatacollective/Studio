@@ -2,7 +2,8 @@ export const getTargetElement = (dataId: string): HTMLElement | null => {
   return document.querySelector(`[data-id="${dataId}"]`);
 };
 
-export const getElementPosition = (element: HTMLElement) => {
+export const getElementPosition = (targetElementId: string) => {
+  const element = document.getElementById(targetElementId);
   if (!element) {
     return null;
   }

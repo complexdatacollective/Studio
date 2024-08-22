@@ -2,10 +2,10 @@
  * Building blocks for NameGenerator interface
  */
 
-import Prompts from '../components/Prompts/Prompts';
-import NodePanels from '../containers/NodePanels';
-import NodeList from '../components/NodeList';
-import QuickNodeForm from '../containers/QuickNodeForm';
+import Prompts from '~/components/interview/Prompts/Prompts';
+import NodePanels from './NodePanels';
+import NodeList from '~/components/interview/NodeList';
+import QuickNodeForm from './QuickNodeForm';
 import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
 
 const demoPrompts = [
@@ -110,7 +110,7 @@ const demoSteps = [
 
 export default function NameGenerator() {
   return (
-    <OnboardWizard steps={demoSteps} name="task">
+    <OnboardWizard steps={demoSteps} name="task" priority="Task">
       <div className="flex flex-col overflow-hidden px-4 py-2">
         <div data-id="data-wizard-task-step-1">
           <Prompts prompts={demoPrompts} currentPromptId={0} />

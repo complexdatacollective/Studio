@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import ActionButton from '../components/ActionButton';
-import Node from '../components/Node';
+import ActionButton from '~/components/interview/ActionButton';
+import Node from '~/components/Node';
 
 export default function QuickNodeForm() {
   const [showForm, setShowForm] = useState(false);

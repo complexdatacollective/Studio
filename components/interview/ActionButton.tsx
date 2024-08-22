@@ -1,5 +1,5 @@
-import AddAPersonIcon from '../icons/add-a-person-svg-react';
-import MenuNewSessionIcon from '../icons/menu-new-session.svg.react';
+import AddAPersonIcon from './icons/add-a-person-svg-react';
+import MenuNewSessionIcon from './icons/menu-new-session.svg.react';
 
 export default function ActionButton({ onClick }: { onClick: () => void }) {
   return (

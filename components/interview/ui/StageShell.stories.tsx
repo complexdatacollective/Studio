@@ -42,7 +42,7 @@ const meta: Meta<typeof StageShell> = {
   },
   render: (args) => {
     return (
-      <div className="flex h-screen bg-navy-taupe text-white">
+      <div className="bg-navy-taupe text-white flex h-screen">
         <Navigation pulseNext={false} progress={50} />
         <div className="flex-1 overflow-hidden overflow-y-auto">
           <StageShell stage={args.stage} />

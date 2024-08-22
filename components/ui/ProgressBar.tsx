@@ -1,5 +1,5 @@
 import React from 'react';
-import cx from 'classnames';
+import { cn } from '~/lib/utils';
 
 type ProgressBarProps = {
   indeterminate?: boolean;
@@ -29,7 +29,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   className,
 }) => (
   <div
-    className={cx(
+    className={cn(
       'relative flex-grow overflow-hidden rounded-full',
       orientation === 'horizontal' ? 'h-3' : 'w-3',
       {
@@ -47,7 +47,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     aria-label={ariaLabel}
   >
     <div
-      className={cx(
+      className={cn(
         'absolute left-0 top-0 rounded-full bg-muted opacity-60',
         orientation === 'horizontal'
           ? 'h-full transition-all duration-300 ease-in-out'
