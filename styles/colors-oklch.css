@@ -32,7 +32,7 @@
 
   /* Cyber Grape */
   --cyber-grape-lightness: 34%;
-  --cyber-grape-chroma: 0.08;
+  --cyber-grape-chroma: 0.11;
   --cyber-grape-hue: 281.02;
   --cyber-grape: var(--cyber-grape-lightness) var(--cyber-grape-chroma)
     var(--cyber-grape-hue);
@@ -124,8 +124,7 @@
   */
 
   --navy-taupe: 28% 0.11 var(--cyber-grape-hue);
-  --rich-black: 2% 0.1 var(--cyber-grape-hue);
+  --rich-black: 2% 0.11 var(--cyber-grape-hue);
   --platinum: 95.93% 0.009 var(--cyber-grape-hue);
-  --platinum--dark: calc(95.93% - var(--dark-mod)) 0.009 var(--cyber-grape-hue);
   --slate-blue: 58% 0.2 var(--cyber-grape-hue);
 }

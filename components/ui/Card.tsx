@@ -3,8 +3,7 @@ import * as React from 'react';
 import { cn } from '~/lib/utils';
 import Heading from '~/components/typography/Heading';
 
-const cardClasses =
-  'rounded border border-[hsl(var(--platinum--dark))] bg-card text-card-foreground';
+const cardClasses = 'rounded border bg-card text-card-foreground';
 
 export const Card = React.forwardRef<
   HTMLDivElement,
