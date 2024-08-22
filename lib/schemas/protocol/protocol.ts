@@ -51,8 +51,9 @@ const devProtocol: Protocol = {
         {
           id: '1',
           text: {
-            en: 'What is the name of the person?',
+            en: 'Who are your classmates at {school}?',
           },
+          variables: [{ name: 'school', value: 'Northwestern' }],
         },
       ],
     },
