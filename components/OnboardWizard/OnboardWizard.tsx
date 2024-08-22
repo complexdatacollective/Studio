@@ -1,12 +1,66 @@
 'use client';
 
-import { type ReactNode, useEffect, useState } from 'react';
-import { useRegisterWizard } from './OnboardWizardContext';
-import OnboardWizardPopover from './OnboardWizardPopover';
-import Beacon from './Beacon';
-import OnboardWizardModal from './OnboardWizardModal';
-import type { Step } from './types';
-import { getElementPosition, getTargetElement } from '~/lib/onboardWizardUtils';
+import { useCallback, useEffect, useMemo } from 'react';
+import { Step, useWizardContext } from '~/lib/onboardWizard/Provider';
+
+const useWizardStore = () => {
+  const { registerWizard, deregisterWizard, activeWizard, currentStep } =
+    useWizardContext((store) => store);
+
+  const nextStep = useCallback(() => {
+    console.log('next');
+  }, []);
+
+  const previousStep = useCallback(() => {
+    console.log('previous');
+  }, []);
+
+  return {
+    activeWizard,
+    currentStep,
+    nextStep,
+    previousStep,
+    addWizardToStore: registerWizard,
+    removeWizard: deregisterWizard,
+  };
+};
+
+// Returns scroped state for a given wizard
+const useRegisterWizard = ({
+  name,
+  steps,
+  priority,
+}: {
+  name: string;
+  steps: Step[];
+  priority: number;
+}) => {
+  // Get global store
+  const {
+    activeWizard,
+    currentStep,
+    addWizardToStore,
+    removeWizard,
+    nextStep,
+    previousStep,
+  } = useWizardStore();
+
+  // Only run on mount
+  useEffect(() => {
+    addWizardToStore({ name, steps, priority });
+
+    return () => removeWizard(name);
+  }, []);
+
+  const isActive = useMemo(() => activeWizard === name, [activeWizard]);
+
+  return {
+    isActive,
+    currentStep,
+    nextStep,
+    previousStep,
+  };
+};
 
 // These should be in a helpers/utils file
 
@@ -25,26 +79,22 @@ export default function OnboardWizard({
   name: string;
   priority?: number;
 }) {
-  const {
-    currentStep, // Automatically localised by provider.
-    isActive, // Controlled by provider.
-    showFlow, // Controlled by provider.
-    activateWizard, // (stepId: number) => void
-    progress, // progress through current wizard
-  } = useRegisterWizard({
-    name, // Index for use in store
-    steps,
-    priority,
+  const { isActive, currentStep, nextStep, previousStep } = useRegisterWizard({
+    name, // maybe this is where we generate something relative to the study/protocol?
+    steps: [
+      { content: <div>Step 1</div> },
+      { content: <div>Step 2</div> },
+      { content: <div>Step 3</div> },
+    ],
+    priority: 1,
   });
 
-  console.log(name, currentStep, isActive, showFlow, progress);
-
   // Abstract beacon logic into a hook, which returns:
-  type Beacon = {
-    id: number;
-    stepIndex: number; // Index of the step in the wizard
-    position: { top: number; left: number };
-  };
+  // type Beacon = {
+  //   id: number;
+  //   stepIndex: number; // Index of the step in the wizard
+  //   position: { top: number; left: number };
+  // };
 
   // Custom hook!
   // const beacons: Beacon[] = generateBeacons(steps);
@@ -65,10 +115,15 @@ export default function OnboardWizard({
             positioned variants. Total steps, and element position should be
             calculated inside the component, not passed as props.
           */}
-          <WizardStep step={currentStep} />
+          {/* <WizardStep step={currentStep} /> */}
+          <div>
+            {currentStep?.content}
+            <button onClick={previousStep}>Previous</button>
+            <button onClick={nextStep}>Next</button>
+          </div>
         </>
       )}
-      {showFlow &&
+      {/* {showFlow &&
         beacons.map((beacon) =>
           // <Beacon
           //   key={beacon.id}
@@ -76,39 +131,38 @@ export default function OnboardWizard({
           //   onClick={() => activateWizard(beacon.stepIndex)}
           // />
           console.log('beacon'),
-        )}
-      <button onClick={() => activateWizard(0)}>Activate Wizard {name}</button>
+        )} */}
     </>
   );
 }
 
-const WizardStep = ({ step }: { step: Step }) => {
-  const { targetElementId, content } = step;
-  const [position, setPosition] = useState();
+// const WizardStep = ({ step }: { step: Step }) => {
+//   const { targetElementId, content } = step;
+//   const [position, setPosition] = useState();
 
-  useEffect(() => {
-    const updatePosition = () => {
-      if (!targetElementId) {
-        return;
-      }
-      const element = getTargetElement(targetElementId);
-      if (!element) {
-        return;
-      }
-      const newPosition = getElementPosition(element);
-      if (!newPosition) {
-        return;
-      }
-      setPosition(newPosition);
-    };
+//   useEffect(() => {
+//     const updatePosition = () => {
+//       if (!targetElementId) {
+//         return;
+//       }
+//       const element = getTargetElement(targetElementId);
+//       if (!element) {
+//         return;
+//       }
+//       const newPosition = getElementPosition(element);
+//       if (!newPosition) {
+//         return;
+//       }
+//       setPosition(newPosition);
+//     };
 
-    window.addEventListener('resize', updatePosition);
-    return () => window.removeEventListener('resize', updatePosition);
-  }, [targetElementId]);
+//     window.addEventListener('resize', updatePosition);
+//     return () => window.removeEventListener('resize', updatePosition);
+//   }, [targetElementId]);
 
-  return targetElementId ? (
-    <OnboardWizardPopover position={position} content={content} />
-  ) : (
-    <OnboardWizardModal content={content} />
-  );
-};
+//   return targetElementId ? (
+//     <OnboardWizardPopover position={position} content={content} />
+//   ) : (
+//     <OnboardWizardModal content={content} />
+//   );
+// };

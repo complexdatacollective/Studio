@@ -13,7 +13,6 @@ import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
 import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
 import OnboardWizard from '~/components/OnboardWizard/OnboardWizard';
-import { useOnboardWizard } from '~/components/OnboardWizard/OnboardWizardContext';
 import ToggleWizardButton from '~/components/OnboardWizard/ToggleWizardButton';
 import ResetLocalStorage from '~/components/OnboardWizard/ResetLocalStorage';
 
@@ -76,7 +75,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const searchParams = useSearchParams();
   const stage = searchParams.get('stage');
 
-  const { toggleBeacons, beaconsVisible } = useOnboardWizard();
+  // const { toggleBeacons, beaconsVisible } = useOnboardWizard();
 
   const moveBackward = () => {
     if (!stage) return;
@@ -97,7 +96,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
       <nav
         role="navigation"
         className={cn(
-          'text-white flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-surface-1',
+          'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-surface-1 text-foreground',
         )}
       >
         <Popover

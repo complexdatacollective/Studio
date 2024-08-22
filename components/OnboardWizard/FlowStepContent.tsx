@@ -1,7 +1,6 @@
 // Step content when rendered in a flow. Includes prev/next buttons.
 
 import { Button } from '~/components/ui/Button';
-import { useOnboardWizard } from './OnboardWizardContext';
 
 export default function FlowStepContent({
   stepContent,
@@ -10,14 +9,19 @@ export default function FlowStepContent({
   stepContent: React.ReactNode;
   totalSteps: number;
 }) {
-  const { closeWizard, setStep, currentStep } = useOnboardWizard();
+  // const { closeWizard, setStep, currentStep } = useOnboardWizard();
+  const currentStep = 0;
+
+  const closeWizard = () => {
+    console.log('close');
+  };
 
   const nextStep = () => {
-    setStep(currentStep + 1);
+    // setStep(currentStep + 1);
   };
 
   const prevStep = () => {
-    setStep(currentStep - 1);
+    // setStep(currentStep - 1);
   };
 
   return (

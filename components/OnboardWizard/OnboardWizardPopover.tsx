@@ -1,5 +1,4 @@
 import Popover from '~/components/ui/Popover';
-import { useOnboardWizard } from './OnboardWizardContext';
 import FlowStepContent from './FlowStepContent';
 
 export default function OnboardWizardPopover({
@@ -18,7 +17,7 @@ export default function OnboardWizardPopover({
   totalSteps: number;
   showFlow: boolean;
 }) {
-  const { closeWizard } = useOnboardWizard();
+  // const { closeWizard } = useOnboardWizard();
 
   let side = 'right' as 'right' | 'left' | 'top' | 'bottom';
 
@@ -37,7 +36,7 @@ export default function OnboardWizardPopover({
       modal={true}
       isOpen={true}
       onOpenChange={() => {
-        closeWizard();
+        // closeWizard();
       }}
       side={side}
     >
