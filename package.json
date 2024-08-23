@@ -18,6 +18,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.5.4",
     "@lucia-auth/adapter-prisma": "^4.0.1",
     "@node-rs/argon2": "^1.8.3",
     "@radix-ui/react-dialog": "^1.1.1",

@@ -11,7 +11,7 @@ const handler = createMiddleware({
 });
 
 export default {
-  name: 'NextIntlMiddleware',
+  name: 'IntlMiddleware',
   handler,
   matcher: [
     '^/(?!api).*', // Match all paths except /api

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { LocalisedRecord } from '../../shared';
+import { LocalisedRecord } from '~/lib/schemas/shared';
 
 export const PromptSchema = z.object({
   id: z.string(),
