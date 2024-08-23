@@ -36,10 +36,13 @@ export const useOnboardWizard = ({
     [steps, isActive, currentStep],
   );
 
+  const showBeacons = true;
+
   return {
     isActive,
     activeStep,
     nextStep,
     previousStep,
+    showBeacons,
   };
 };

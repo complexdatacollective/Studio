@@ -6,6 +6,7 @@ import { useLocale } from 'next-intl';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { useOnboardWizard } from './useOnboardWizard';
 import PopoverBackdrop from './PopoverBackdrop';
+import Beacon from './Beacon';
 
 export const Priorities = {
   ShowFirst: Infinity,
@@ -30,14 +31,11 @@ export default function OnboardWizard({
 }) {
   const locale = useLocale();
 
-  const { isActive, activeStep } = useOnboardWizard({
+  const { isActive, activeStep, showBeacons } = useOnboardWizard({
     name, // maybe this is where we generate something relative to the study/protocol?
     steps,
     priority: Priorities[priority],
   });
-
-  // Custom hook!
-  // const beacons: Beacon[] = generateBeacons(steps);
 
   return (
     <>
@@ -55,15 +53,16 @@ export default function OnboardWizard({
           )}
         </>
       )}
-      {/* {showFlow &&
-        beacons.map((beacon) =>
-          // <Beacon
-          //   key={beacon.id}
-          //   position={beacon.position}
-          //   onClick={() => activateWizard(beacon.stepIndex)}
-          // />
-          console.log('beacon'),
-        )} */}
+      {showBeacons &&
+        steps
+          .filter((step: Step) => !!step.targetElementId)
+          .map((step, index) => (
+            <Beacon
+              key={`${name}_${index}`}
+              targetElementId={step.targetElementId!}
+              label={step.label[locale] ?? 'Help'}
+            />
+          ))}
     </>
   );
 }

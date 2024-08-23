@@ -1,25 +1,33 @@
+import { HelpCircleIcon } from 'lucide-react';
+import { getElementPosition } from '~/lib/onboarding-wizard/utils';
 import { cn } from '~/lib/utils';
 
 export default function Beacon({
-  index,
-  position,
-  wizardName,
+  targetElementId,
+  label,
 }: {
-  index: number;
-  position: { top: number; left: number };
-  wizardName: string;
+  targetElementId: string;
+  label: string;
 }) {
-  const { setStep, startWizard } = useOnboardWizard();
+  const position = getElementPosition(targetElementId);
 
-  const openStep = () => {
-    startWizard(wizardName, true);
-    setStep(index);
-  };
+  if (!position) {
+    console.log('no position...');
+    // throw Error(`Element with id ${targetElementId} not found!`);
+    return null;
+  }
+
+  // const { setStep, startWizard } = useOnboardWizard();
+
+  // const openStep = () => {
+  //   startWizard(wizardName, true);
+  //   setStep(index);
+  // };
 
   return (
     <button
-      title={`beacon-${index}`}
-      name={`beacon-${index}`}
+      title={label}
+      aria-label={label}
       className={cn(
         'absolute h-4 w-4 rounded-full bg-accent',
         'hover:h-6 hover:w-6',
@@ -29,8 +37,10 @@ export default function Beacon({
         left: position.left,
       }}
       onClick={() => {
-        openStep();
+        // openStep();
       }}
-    />
+    >
+      <HelpCircleIcon />
+    </button>
   );
 }

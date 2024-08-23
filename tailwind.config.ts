@@ -164,7 +164,7 @@ export default {
     },
     extend: {
       backdropBlur: {
-        xs: '2px',
+        xs: '3px',
       },
       keyframes: {
         'wiggle': {
