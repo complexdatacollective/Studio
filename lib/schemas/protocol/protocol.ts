@@ -10,6 +10,7 @@ const ProtocolSchema = z
     description: z.string().optional(),
     stages: z.array(StageSchema),
     codebook: CodebookSchema,
+    languages: z.array(z.string()), // first language is default
     // assetManifest: AssetManifestScheme.optional(),
   })
   // May not need this - will throw error if extra fields are present
@@ -20,6 +21,7 @@ export type Protocol = z.infer<typeof ProtocolSchema>;
 
 const devProtocol: Protocol = {
   name: 'Dev Protocol',
+  languages: ['en', 'es'],
   codebook: {
     ego: {
       variables: {
@@ -67,7 +69,7 @@ const devProtocol: Protocol = {
         {
           id: '1',
           text: {
-            en: 'Who are your classmates at {school}?',
+            DEFAULT: 'Who are your classmates at {school}?',
           },
           injectedVariables: ['school'],
         },
