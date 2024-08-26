@@ -12,10 +12,9 @@ export default function SimpleShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen gap-4">
       <Navigation pulseNext={isReadyForNextStage} progress={progress} />
-
-      <div className="flex-1 overflow-hidden overflow-y-auto">{children}</div>
+      <div className="my-2 flex">{children}</div>
     </div>
   );
 }

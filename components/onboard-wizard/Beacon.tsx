@@ -24,9 +24,7 @@ export default function Beacon({
   return (
     <button
       tabIndex={0}
-      className={cn(
-        'group absolute inline-flex transition-transform hover:scale-125',
-      )}
+      className={cn('absolute inline-flex')}
       style={{
         top: position.top,
         left: position.left,
@@ -34,7 +32,7 @@ export default function Beacon({
       onClick={() => setActiveWizard(wizardName, wizardStep)}
     >
       <div className="absolute left-0 top-0 h-8 w-8 rounded-full bg-info duration-1000 group-hover:animate-none motion-safe:animate-ping" />
-      <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-info text-info-foreground">
+      <div className="group z-10 flex h-8 w-8 items-center justify-center rounded-full bg-info text-info-foreground transition-transform hover:scale-125">
         <span className="text-base">?</span>
       </div>
     </button>

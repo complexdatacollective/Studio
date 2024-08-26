@@ -147,18 +147,21 @@ const demoSteps: Step[] = [
 
 export default function NameGenerator() {
   return (
-    <OnboardWizard steps={demoSteps} name="task" priority="Task">
-      <div className="flex grow flex-col overflow-hidden px-4 py-2">
+    <OnboardWizard
+      steps={demoSteps}
+      name="Information About this Task"
+      priority="Task"
+    >
+      <div className="flex grow flex-col gap-4 overflow-hidden">
         <Prompts
           prompts={demoPrompts}
           currentPromptId={0}
           id="data-wizard-task-step-1"
         />
-
-        <div className="relative flex h-full min-h-0 flex-1 items-start justify-center">
+        <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
           <NodePanels panels={demoPanels} />
 
-          <div className="flex-basis-auto flex h-full flex-shrink flex-grow pl-6">
+          <div className="flex-basis-auto flex h-full flex-shrink flex-grow">
             <NodeList items={demoNodes} />
           </div>
         </div>

@@ -23,25 +23,6 @@ const SpotlightOverlay = ({
     height: 0,
   });
 
-  // useEffect(() => {
-  //   const updateSpotlightPosition = () => {
-  //     if (targetRef.current) {
-  //       const rect = targetRef.current.getBoundingClientRect();
-  //       setSpotlightPosition({
-  //         x: rect.left - margin,
-  //         y: rect.top - margin,
-  //         width: rect.width + margin * 2,
-  //         height: rect.height + margin * 2,
-  //       });
-  //     }
-  //   };
-
-  //   updateSpotlightPosition();
-  //   window.addEventListener('resize', updateSpotlightPosition);
-
-  //   return () => window.removeEventListener('resize', updateSpotlightPosition);
-  // }, [targetRef, margin]);
-
   useEffect(() => {
     const updateSpotlightPosition = () => {
       if (!targetElementId) {

@@ -19,7 +19,10 @@ function AvailableWizardsPanel() {
   const t = useTranslations('ContextSpecificHelp');
 
   return (
-    <Card className="absolute bottom-10 left-1/2 -translate-x-1/2 transform shadow-lg">
+    <Card
+      className="absolute bottom-10 left-1/2 -translate-x-1/2 transform shadow-lg"
+      role="dialog"
+    >
       <CardHeader>
         <CardTitle>{t('title')}</CardTitle>
         <CardDescription>{t('description')}</CardDescription>

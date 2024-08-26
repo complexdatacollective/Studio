@@ -22,7 +22,7 @@ export default function Prompts({
   return (
     <div
       id={id}
-      className="flex w-full flex-col items-center justify-center text-balance pb-5 text-center leading-tight"
+      className="flex w-full flex-col items-center justify-center text-balance text-center leading-tight"
     >
       <Pips count={prompts.length} currentIndex={currentIndex} />
 

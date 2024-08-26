@@ -103,7 +103,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           },
         },
       ]}
-      name="navigation"
+      name="General Interview Information"
       priority="Navigation"
     >
       <nav
