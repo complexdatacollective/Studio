@@ -41,26 +41,27 @@ const Tooltip = ({
 };
 
 // HOC version of Tooltip that wraps a component with a Tooltip
-export function withTooltip<T>(WrappedComponent: ComponentType<T>) {
+export function withTooltip<T extends JSX.IntrinsicAttributes>(
+  WrappedComponent: ComponentType<T>,
+) {
   // Define the props for the HOC
   type WithTooltipProps = T & {
+    title?: string;
     tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
     tooltipContent?: ReactNode;
   };
 
   // Create a new component with forwardRef
   const WithTooltip = ({
+    title,
     tooltipSide = 'top',
     tooltipContent,
     ...props
   }: WithTooltipProps) => {
-    // Extract the title prop for tooltip fallback
-    const { title, ...restProps } = props as T & { title?: string };
-
     return (
       <Tooltip tooltip={tooltipContent ?? title} side={tooltipSide}>
         {/* Pass down all original props, including ref */}
-        <WrappedComponent title={title} {...(restProps as T)} />
+        <WrappedComponent {...(props as T)} />
       </Tooltip>
     );
   };
