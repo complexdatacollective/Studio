@@ -11,14 +11,19 @@ type Prompt = {
 export default function Prompts({
   prompts,
   currentPromptId,
+  id,
 }: {
+  id?: string;
   prompts: Prompt[];
   currentPromptId: number;
 }) {
   const currentIndex = prompts.findIndex(({ id }) => id === currentPromptId);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center text-balance pb-5 text-center leading-tight">
+    <div
+      id={id}
+      className="flex w-full flex-col items-center justify-center text-balance pb-5 text-center leading-tight"
+    >
       <Pips count={prompts.length} currentIndex={currentIndex} />
 
       {prompts.map(

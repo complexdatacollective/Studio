@@ -2,6 +2,7 @@ import { type PropsWithChildren } from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { X } from 'lucide-react';
 import { cn } from '~/lib/utils';
+import CloseButton from './CloseButton';
 
 const Popover = ({
   children,
@@ -31,24 +32,23 @@ const Popover = ({
             'motion-safe:data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
             'motion-safe:data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
             'motion-safe:data-[state=open]:data-[side=left]:animate-slideRightAndFade',
-            'bg-overlay text-overlay-foreground w-[260px] rounded-small p-5 will-change-[transform,opacity]',
-            'shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)]',
-            'focus:shadow-surface-1',
-            'z-50',
+            'bg-card text-card-foreground max-w-96 rounded-small px-6 py-10 will-change-[transform,opacity]',
+            'z-50 shadow-xl',
           )}
           sideOffset={5}
           collisionPadding={10}
           side={side}
           avoidCollisions
         >
-          <div className="flex flex-col gap-2.5">{content}</div>
-          <PopoverPrimitive.Close
-            className="text-overlay-foreground absolute top-2 inline-flex h-[25px] w-[25px] cursor-default items-center justify-center rounded-full outline-none focus:shadow-[0_0_0_2px] focus:shadow-background ltr:right-2 rtl:left-2"
-            aria-label="Close"
-          >
-            <X />
+          {content}
+          <PopoverPrimitive.Close asChild>
+            <CloseButton />
           </PopoverPrimitive.Close>
-          <PopoverPrimitive.Arrow className="fill-overlay" />
+          <PopoverPrimitive.Arrow
+            className="fill-card"
+            width={26}
+            height={16}
+          />
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>

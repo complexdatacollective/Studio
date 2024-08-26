@@ -16,21 +16,24 @@ export type Wizard = {
 export type WizardState = {
   wizards: Wizard[];
   currentStep: number | null; // Only null when there's no active wizard.
-  activeWizard: string | null;
+  activeWizardName: string | null;
   progress: {
     current: number;
     total: number;
   };
+  showBeacons: boolean;
 };
 
 export type WizardActions = {
   registerWizard: (wizard: Wizard) => void;
   deregisterWizard: (name: Wizard['name']) => void;
-  setActiveWizard: (name: Wizard['name'] | null) => void;
+  setActiveWizard: (name: Wizard['name'] | null, step?: number) => void;
   nextStep: () => void;
   hasNextStep: () => boolean;
   previousStep: () => void;
   hasPreviousStep: () => boolean;
+  setShowBeacons: (show: boolean) => void;
+  getActiveWizard: () => Wizard | null;
 };
 
 export type WizardStore = WizardState & WizardActions;
@@ -38,11 +41,12 @@ export type WizardStore = WizardState & WizardActions;
 const defaultInitialState: WizardState = {
   wizards: [],
   currentStep: null,
-  activeWizard: null,
+  activeWizardName: null,
   progress: {
     current: 0,
     total: 0,
   },
+  showBeacons: false,
 };
 
 export const createWizardStore = (
@@ -50,11 +54,23 @@ export const createWizardStore = (
 ) => {
   return createStore<WizardStore>()((set, get) => ({
     ...initState,
-    registerWizard: (wizard) => {
-      console.log('registering wizard', wizard);
+    getActiveWizard: () => {
+      const { activeWizardName, wizards } = get();
 
+      return activeWizardName
+        ? (wizards.find((wizard) => wizard.name === activeWizardName) ?? null)
+        : null;
+    },
+    setShowBeacons: (show) => {
+      set((state) => ({
+        ...state,
+        showBeacons: show,
+      }));
+    },
+    registerWizard: (wizard) => {
       // Check wizard with this name does not already exist
       if (get().wizards.some((w) => w.name === wizard.name)) {
+        // eslint-disable-next-line no-console
         console.error(`Wizard with name ${wizard.name} already exists`);
         return;
       }
@@ -76,18 +92,20 @@ export const createWizardStore = (
       }));
     },
     deregisterWizard: (name) => {
-      console.log('deregistering wizard', name);
       set((state) => ({
         wizards: state.wizards.filter((wizard) => wizard.name !== name),
       }));
     },
-    setActiveWizard: (name) => {
+    setActiveWizard: (name, step) => {
+      console.log('setactive', name, step);
+
       set((state) => ({
         ...state,
-        activeWizard: name,
-        currentStep: 0,
+        activeWizardName: name,
+        currentStep: step ?? 0,
+        showBeacons: false,
         progress: {
-          current: 1,
+          current: step ? step + 1 : 1,
           total: name
             ? state.wizards.find((wizard) => wizard.name === name)!.steps.length
             : 0,
@@ -95,14 +113,15 @@ export const createWizardStore = (
       }));
     },
     nextStep() {
-      console.log('next');
-      const { wizards, activeWizard: activeWizardName, currentStep } = get();
-
-      console.log({ wizards, activeWizardName, currentStep });
+      const {
+        wizards,
+        activeWizardName: activeWizardName,
+        currentStep,
+      } = get();
 
       if (!activeWizardName || currentStep === null) {
-        console.log('No active wizard or current step found');
-        return;
+        // eslint-disable-next-line no-console
+        throw new Error('No active wizard or current step found');
       }
 
       const activeWizardIndex = wizards.findIndex(
@@ -110,15 +129,13 @@ export const createWizardStore = (
       );
 
       if (activeWizardIndex === -1) {
-        console.log('No active wizard found');
-        return;
+        throw new Error('No active wizard found');
       }
 
       const activeWizard = wizards[activeWizardIndex]!;
 
       // If there is a next step in the current wizard, move to it
       if (currentStep < activeWizard.steps.length - 1) {
-        console.log('moving to next step');
         set((state) => ({
           ...state,
           currentStep: currentStep + 1,
@@ -131,7 +148,6 @@ export const createWizardStore = (
         return;
       }
 
-      console.log('moving to next wizard');
       // If we are at the last step of the wizard, mark it as seen and move to the next wizard
       localStorage.setItem(`wizard-${activeWizardName}-seen`, 'true');
 
@@ -145,7 +161,7 @@ export const createWizardStore = (
       if (nextWizard) {
         set((state) => ({
           ...state,
-          activeWizard: nextWizard.name,
+          activeWizardName: nextWizard.name,
           currentStep: 0,
           progress: {
             current: 1,
@@ -157,10 +173,9 @@ export const createWizardStore = (
       }
 
       // If there are no more wizards, reset the active wizard
-      console.log('no more wizards');
       set((state) => ({
         ...state,
-        activeWizard: null,
+        activeWizardName: null,
         currentStep: null,
         progress: {
           current: 0,
@@ -169,11 +184,14 @@ export const createWizardStore = (
       }));
     },
     previousStep() {
-      console.log('previous');
-      const { wizards, activeWizard: activeWizardName, currentStep } = get();
+      const {
+        wizards,
+        activeWizardName: activeWizardName,
+        currentStep,
+      } = get();
 
       if (!activeWizardName || !currentStep) {
-        return;
+        throw new Error('No active wizard or current step found');
       }
 
       const activeWizardIndex = wizards.findIndex(
@@ -181,13 +199,11 @@ export const createWizardStore = (
       );
 
       if (activeWizardIndex === -1) {
-        console.log('No active wizard found');
-        return;
+        throw new Error('No active wizard found');
       }
 
       // If there is a previous step in the current wizard, move to it
       if (currentStep > 0) {
-        console.log('moving to previous step');
         set((state) => ({
           ...state,
           currentStep: currentStep - 1,
@@ -200,7 +216,6 @@ export const createWizardStore = (
         return;
       }
 
-      console.log('moving to previous wizard');
       // If we are at the first step of the wizard, move to the previous wizard
       // TODO: should this ignore the seen status of previous wizards?
       const previousWizard = wizards
@@ -211,7 +226,7 @@ export const createWizardStore = (
       if (previousWizard) {
         set((state) => ({
           ...state,
-          activeWizard: previousWizard.name,
+          activeWizardName: previousWizard.name,
           currentStep: previousWizard.steps.length - 1,
           progress: {
             current: previousWizard.steps.length,
@@ -223,7 +238,11 @@ export const createWizardStore = (
       }
     },
     hasNextStep() {
-      const { wizards, activeWizard: activeWizardName, currentStep } = get();
+      const {
+        wizards,
+        activeWizardName: activeWizardName,
+        currentStep,
+      } = get();
 
       if (!activeWizardName || currentStep === null) {
         return false;
@@ -242,7 +261,11 @@ export const createWizardStore = (
       return currentStep < activeWizard.steps.length - 1;
     },
     hasPreviousStep() {
-      const { wizards, activeWizard: activeWizardName, currentStep } = get();
+      const {
+        wizards,
+        activeWizardName: activeWizardName,
+        currentStep,
+      } = get();
 
       if (!activeWizardName || currentStep === null) {
         return false;

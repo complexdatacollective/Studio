@@ -9,6 +9,9 @@ export const useWizardController = () => {
     previousStep,
     hasPreviousStep,
     progress,
+    wizards,
+    showBeacons,
+    setShowBeacons,
   } = useWizardContext();
 
   const closeWizard = useCallback(
@@ -17,11 +20,15 @@ export const useWizardController = () => {
   );
 
   return {
+    setActiveWizard,
+    wizards,
     closeWizard,
     nextStep,
     hasNextStep: hasNextStep(),
     previousStep,
     hasPreviousStep: hasPreviousStep(),
     progress,
+    showBeacons,
+    setShowBeacons,
   };
 };

@@ -43,15 +43,63 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
     <OnboardWizard
       steps={[
         {
-          targetElementId: 'nav-wizard-step-1',
+          targetElementId: 'nav-wizard-settings',
           content: {
-            en: 'This is the back button. Click it to go to the previous step.',
+            en: [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    text: 'This is the settings button. Click it to open the settings menu.',
+                  },
+                ],
+              },
+            ],
           },
         },
         {
-          targetElementId: 'nav-wizard-step-2',
+          targetElementId: 'nav-wizard-help',
           content: {
-            en: 'This is the next button. Click it to go to the next step.',
+            en: [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    text: 'This is the help button. Click it to open the help menu.',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          targetElementId: 'nav-wizard-back',
+          content: {
+            en: [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    text: 'This is the back button. Click it to go to the previous step.',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+        {
+          targetElementId: 'nav-wizard-forward',
+          content: {
+            en: [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    text: 'This is the forward button. Click it to go to the next step.',
+                  },
+                ],
+              },
+            ],
           },
         },
       ]}
@@ -77,13 +125,14 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
             aria-label={t('menu')}
             title={t('menu')}
             tooltipSide="right"
+            id="nav-wizard-settings"
           >
             <Settings2 className="h-10 w-10 stroke-[2px]" />
           </NavButtonWithTooltip>
         </Popover>
-        <HelpButton />
+        <HelpButton id="nav-wizard-help" />
         <NavButtonWithTooltip
-          id="nav-wizard-step-1"
+          id="nav-wizard-back"
           onClick={moveBackward}
           aria-label={t('back')}
           title={t('back')}
@@ -93,7 +142,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         </NavButtonWithTooltip>
         <ProgressBar value={progress} ariaLabel="Interview Progress" />
         <NavButtonWithTooltip
-          id="nav-wizard-step-2"
+          id="nav-wizard-forward"
           className={cn(
             pulseNext &&
               'from-cyber-grape to-success motion-safe:animate-pulse-bg motion-reduce:bg-success',

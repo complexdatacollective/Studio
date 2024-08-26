@@ -61,7 +61,10 @@ export default {
         DEFAULT: 'oklch(var(--muted) / <alpha-value>)',
         foreground: 'oklch(var(--muted-foreground) / <alpha-value>)',
       },
-
+      'card': {
+        DEFAULT: 'oklch(var(--card) / <alpha-value>)',
+        foreground: 'oklch(var(--card-foreground) / <alpha-value>)',
+      },
       'surface-1': {
         DEFAULT: 'oklch(var(--surface-1-bg) / <alpha-value>)',
         foreground: 'oklch(var(--surface-1-fg) / <alpha-value>)',
@@ -94,12 +97,6 @@ export default {
       'link': 'oklch(var(--link) / <alpha-value>)',
 
       'focus': 'oklch(var(--focus) / <alpha-value>)',
-
-      // Popovers and Dialogs
-      'overlay': {
-        DEFAULT: 'oklch(var(--overlay) / <alpha-value>)',
-        foreground: 'oklch(var(--overlay-foreground) / <alpha-value>)',
-      },
 
       // Sequences
       'node': {

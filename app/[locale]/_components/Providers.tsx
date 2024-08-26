@@ -6,6 +6,7 @@ import { type Locale } from '~/lib/localisation/locales';
 import IntlProvider from './IntlProvider';
 import { ThemeProvider } from 'next-themes';
 import { WizardProvider } from '~/lib/onboarding-wizard/Provider';
+import { MotionConfig } from 'framer-motion';
 
 export default function Providers({
   intlParams: { dir, messages, locale, now, timeZone },
@@ -28,11 +29,13 @@ export default function Providers({
         now={now}
         timeZone={timeZone}
       >
-        <RadixDirectionProvider dir={dir}>
-          <TooltipProvider>
-            <WizardProvider>{children}</WizardProvider>
-          </TooltipProvider>
-        </RadixDirectionProvider>
+        <MotionConfig reducedMotion="user">
+          <RadixDirectionProvider dir={dir}>
+            <TooltipProvider>
+              <WizardProvider>{children}</WizardProvider>
+            </TooltipProvider>
+          </RadixDirectionProvider>
+        </MotionConfig>
       </IntlProvider>
     </ThemeProvider>
   );

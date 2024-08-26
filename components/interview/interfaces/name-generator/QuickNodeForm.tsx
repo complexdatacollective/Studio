@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import ActionButton from '~/components/interview/ActionButton';
+import { ActionButtonWithTooltip } from '~/components/interview/ActionButton';
 import Node from '~/components/Node';
 
 export default function QuickNodeForm() {
@@ -25,7 +25,10 @@ export default function QuickNodeForm() {
       )}
       {!showForm && (
         <div className="mr-8" id="data-wizard-task-step-3">
-          <ActionButton onClick={() => setShowForm(true)} />
+          <ActionButtonWithTooltip
+            onClick={() => setShowForm(true)}
+            tooltipContent="Add a person"
+          />
         </div>
       )}
     </div>

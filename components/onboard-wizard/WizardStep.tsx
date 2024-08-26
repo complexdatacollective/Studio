@@ -28,49 +28,37 @@ export default function WizardStep({ step }: { step: Step }) {
   const position = getElementPosition(targetElementId);
 
   const renderContent = () => (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       <RenderRichText value={localisedStepContent} />
-      <footer className="flex items-center justify-between pt-2">
+      <footer className="-mb-4 flex justify-between">
         {hasPreviousStep && (
-          <Button name="previous" size="sm" onClick={() => previousStep()}>
+          <Button
+            variant="outline"
+            onClick={() => previousStep()}
+            className="flex-1"
+          >
             {t('previous')}
           </Button>
         )}
-        <div className="text-sm">
+        <div className="flex flex-1 items-center justify-center text-sm">
           {progress.current} / {progress.total}
         </div>
         {hasNextStep ? (
-          <Button name="next" size="sm" onClick={() => nextStep()}>
+          <Button
+            variant="primary"
+            onClick={() => nextStep()}
+            className="flex-1"
+          >
             {t('next')}
           </Button>
         ) : (
-          <Button name="finish" size="sm" onClick={() => nextStep()}>
+          <Button onClick={() => nextStep()} className="flex-1">
             {t('done')}
           </Button>
         )}
       </footer>
     </div>
   );
-
-  // Boost z-index of element so it is above the overlay
-  useEffect(() => {
-    if (!targetElementId) {
-      return;
-    }
-
-    const targetElement = document.getElementById(targetElementId);
-
-    if (!targetElement) {
-      return;
-    }
-
-    targetElement.style.zIndex = '50';
-
-    return () => {
-      // cleanup
-      targetElement.style.zIndex = '';
-    };
-  }, [targetElementId]);
 
   if (position) {
     return (
@@ -101,7 +89,6 @@ export default function WizardStep({ step }: { step: Step }) {
       onOpenChange={() => {
         closeWizard();
       }}
-      className="w-[90vw] min-w-[450px]"
     >
       {renderContent()}
     </Dialog>

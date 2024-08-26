@@ -99,6 +99,21 @@ const demoSteps: Step[] = [
     },
   },
   {
+    targetElementId: 'data-wizard-task-step-1',
+    content: {
+      en: [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              text: 'These are the prompts. They help you think about the people you want to nominate.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     targetElementId: 'data-wizard-task-step-2',
     content: {
       en: [
@@ -133,11 +148,11 @@ const demoSteps: Step[] = [
 export default function NameGenerator() {
   return (
     <OnboardWizard steps={demoSteps} name="task" priority="Task">
-      <div className="flex flex-col overflow-hidden px-4 py-2">
+      <div className="flex grow flex-col overflow-hidden px-4 py-2">
         <Prompts
           prompts={demoPrompts}
           currentPromptId={0}
-          data-id="data-wizard-task-step-1"
+          id="data-wizard-task-step-1"
         />
 
         <div className="relative flex h-full min-h-0 flex-1 items-start justify-center">

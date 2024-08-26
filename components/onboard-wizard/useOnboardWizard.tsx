@@ -20,6 +20,7 @@ export const useOnboardWizard = ({
     removeWizard,
     nextStep,
     previousStep,
+    showBeacons,
   } = useWizardStore();
 
   // On mount, register the wizard with the store
@@ -35,8 +36,6 @@ export const useOnboardWizard = ({
     () => (isActive ? steps[currentStep!]! : null),
     [steps, isActive, currentStep],
   );
-
-  const showBeacons = true;
 
   return {
     isActive,

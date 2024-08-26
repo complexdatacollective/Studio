@@ -1,20 +1,17 @@
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import type {
   BlockNode,
   InlineElement,
   TextNode,
   JSONRichText,
 } from '~/lib/schemas/shared';
+import { hash } from 'ohash';
 import Paragraph from './typography/Paragraph';
 import Heading from './typography/Heading';
 import { cn } from '~/lib/utils';
 
 /**
  * Render a localised value (JSONRichText or string).
- *
- * - If the value is a string, return it as is.
- * - If the value is a JSONRichText, render it using our custom components.
- *
  * Should return a ReactNode.
  *
  * Should be removed once we figure out which AST we will use for rich text.
@@ -34,7 +31,6 @@ const getElementForType = (type: string) => {
 };
 
 const processChildren = (children: (TextNode | InlineElement)[]) => {
-  console.log('children', children);
   return children.map((child) => {
     if ('children' in child) {
       // If we have children, we are an online element
@@ -47,8 +43,9 @@ const processChildren = (children: (TextNode | InlineElement)[]) => {
 
 const processBlockNode = (blockNode: BlockNode) => {
   const Element = getElementForType(blockNode.type);
+  const id = hash(blockNode); //
 
-  return <Element>{processChildren(blockNode.children)}</Element>;
+  return <Element key={id}>{processChildren(blockNode.children)}</Element>;
 };
 
 const processTextNode = (textNode: TextNode) => {
@@ -79,7 +76,6 @@ const processInlineElement = (inlineElement: InlineElement) => {
 };
 
 export function renderLocalisedValue(value: JSONRichText): ReactNode {
-  console.log('value', value);
   return value.map((blockNode) => processBlockNode(blockNode));
 }
 

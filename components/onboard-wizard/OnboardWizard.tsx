@@ -3,7 +3,7 @@
 import WizardStep from './WizardStep';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { useOnboardWizard } from './useOnboardWizard';
-import PopoverBackdrop from './PopoverBackdrop';
+import PopoverBackdrop from '../PopoverBackdrop';
 import Beacon from './Beacon';
 
 export const Priorities = {
@@ -36,18 +36,15 @@ export default function OnboardWizard({
   return (
     <>
       {children}
-      {isActive && activeStep && (
-        <>
-          <PopoverBackdrop />
-          <WizardStep step={activeStep} />
-        </>
-      )}
+      {isActive && activeStep && <WizardStep step={activeStep} />}
       {showBeacons &&
         steps
           .filter((step: Step) => !!step.targetElementId)
           .map((step, index) => (
             <Beacon
               key={`${name}_${index}`}
+              wizardName={name}
+              wizardStep={index}
               targetElementId={step.targetElementId!}
             />
           ))}

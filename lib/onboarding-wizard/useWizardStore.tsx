@@ -4,10 +4,11 @@ export const useWizardStore = () => {
   const {
     registerWizard,
     deregisterWizard,
-    activeWizard,
+    activeWizardName: activeWizard,
     currentStep,
     nextStep,
     previousStep,
+    showBeacons,
   } = useWizardContext((store) => store);
 
   return {
@@ -17,5 +18,6 @@ export const useWizardStore = () => {
     previousStep,
     addWizardToStore: registerWizard,
     removeWizard: deregisterWizard,
+    showBeacons,
   };
 };

@@ -13,6 +13,7 @@ import {
   type WizardStore,
   type WizardStoreApi,
 } from './store';
+import Spotlight from '~/components/Spotlight';
 
 const WizardContext = createContext<WizardStoreApi | undefined>(undefined);
 
@@ -25,21 +26,38 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
 
   const { wizards, setActiveWizard } = useStore(storeRef.current);
 
+  // Selector to get the current step's target element ID (if any)
+  const currentTargetElementId = useStore(
+    storeRef.current,
+    ({ currentStep, getActiveWizard }) => {
+      const activeWizard = getActiveWizard();
+
+      if (!activeWizard || currentStep === null) {
+        return null;
+      }
+
+      return activeWizard.steps[currentStep]!.targetElementId;
+    },
+  );
+
   // Set the active wizard based on the first wizard that has not been seen
   useEffect(() => {
-    console.log('checking for active wizard');
-    const activeWizard = wizards.find(
+    const firstUnseenWizard = wizards.find(
       (wizard) => !localStorage.getItem(`wizard-${wizard.name}-seen`),
     );
 
-    if (activeWizard) {
-      console.log('found active wizard', activeWizard);
-      setActiveWizard(activeWizard.name);
+    if (firstUnseenWizard) {
+      setActiveWizard(firstUnseenWizard.name);
     }
   }, [wizards, setActiveWizard]);
 
+  console.log('thing', currentTargetElementId);
+
   return (
     <WizardContext.Provider value={storeRef.current}>
+      {currentTargetElementId && (
+        <Spotlight targetElementId={currentTargetElementId} />
+      )}
       {children}
     </WizardContext.Provider>
   );

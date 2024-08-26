@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { cn } from '~/lib/utils';
 import Heading from '~/components/typography/Heading';
+import Paragraph from '../typography/Paragraph';
 
 const cardClasses = 'rounded border bg-card text-card-foreground';
 
@@ -33,11 +34,7 @@ export const CardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn('text-sm text-muted-foreground', className)}
-    {...props}
-  />
+  <Paragraph ref={ref} className={cn(className)} {...props} />
 ));
 CardDescription.displayName = 'CardDescription';
 
