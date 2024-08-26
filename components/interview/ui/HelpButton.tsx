@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from '~/components/ui/Card';
 import { env } from '~/env';
+import { WIZARD_LOCAL_STORAGE_KEY } from '~/lib/onboarding-wizard/Provider';
 
 function AvailableWizardsPanel() {
   const { wizards, setActiveWizard } = useWizardController();
@@ -33,7 +34,14 @@ function AvailableWizardsPanel() {
           </Button>
         ))}
         {env.NODE_ENV === 'development' && (
-          <Button variant="destructive">Reset local storage</Button>
+          <Button
+            variant="destructive"
+            onClick={() => {
+              localStorage.removeItem(WIZARD_LOCAL_STORAGE_KEY);
+            }}
+          >
+            Reset local storage
+          </Button>
         )}
       </CardContent>
     </Card>

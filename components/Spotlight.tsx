@@ -68,7 +68,12 @@ const SpotlightOverlay = ({
   }, [targetElementId, margin]);
 
   return createPortal(
-    <div className="pointer-events-none fixed left-0 top-0 z-50 h-full w-full backdrop-blur-sm backdrop-brightness-75 [mask-image:url(#spotlight-mask)] [mask-size:cover]">
+    <motion.div
+      className="pointer-events-none fixed left-0 top-0 z-50 h-full w-full backdrop-blur-sm backdrop-brightness-75 [mask-image:url(#spotlight-mask)] [mask-size:cover]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <svg
         width="100%"
         height="100%"
@@ -85,7 +90,7 @@ const SpotlightOverlay = ({
                 width: spotlightPosition.width,
                 height: spotlightPosition.height,
               }}
-              transition={{ type: 'spring', stiffness: 100, damping: 30 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               fill="black"
               rx={borderRadius}
               ry={borderRadius}
@@ -93,7 +98,7 @@ const SpotlightOverlay = ({
           </mask>
         </defs>
       </svg>
-    </div>,
+    </motion.div>,
     document.body,
   );
 };

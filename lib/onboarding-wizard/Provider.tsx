@@ -15,25 +15,26 @@ import {
 } from './store';
 import Spotlight from '~/components/Spotlight';
 import { createLocalStorageStore } from '../createLocalStorageStore';
+import { AnimatePresence } from 'framer-motion';
 
 const WizardContext = createContext<WizardStoreApi | undefined>(undefined);
 
+export const WIZARD_LOCAL_STORAGE_KEY = 'wizard-store';
+
 // TODO: We probably want to scope this to the study/protocol
-const storage = createLocalStorageStore<boolean>('wizard-store');
+const createWizardLocalStorage = createLocalStorageStore<boolean>(
+  WIZARD_LOCAL_STORAGE_KEY,
+);
 
 export type WizardLocalStore = ReturnType<typeof createLocalStorageStore>;
 
 export const WizardProvider = ({ children }: { children: ReactNode }) => {
   const storeRef = useRef<WizardStoreApi>();
-  const { get: getItem, set: setItem, data } = storage();
-
-  console.log('data', data);
+  const { get: getItem, set: setItem } = createWizardLocalStorage();
 
   if (!storeRef.current) {
     storeRef.current = createWizardStore(getItem, setItem);
   }
-
-  const { setActiveWizard } = useStore(storeRef.current);
 
   // Selector to get the current step's target element ID (if any)
   const currentTargetElementId = useStore(
@@ -55,6 +56,8 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
   );
 
   // Set the active wizard based on the first wizard that has not been seen
+  const { setActiveWizard } = useStore(storeRef.current);
+
   useEffect(() => {
     if (firstUnseenWizard) {
       setActiveWizard(firstUnseenWizard.name);
@@ -63,9 +66,11 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <WizardContext.Provider value={storeRef.current}>
-      {currentTargetElementId && (
-        <Spotlight targetElementId={currentTargetElementId} />
-      )}
+      <AnimatePresence>
+        {currentTargetElementId && (
+          <Spotlight targetElementId={currentTargetElementId} />
+        )}
+      </AnimatePresence>
       {children}
     </WizardContext.Provider>
   );
