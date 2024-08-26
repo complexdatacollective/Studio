@@ -27,11 +27,11 @@ const Popover = ({
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
           className={cn(
-            'data-[state=open]:data-[side=top]:animate-slideDownAndFade',
-            'data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
-            'data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
-            'data-[state=open]:data-[side=left]:animate-slideRightAndFade',
-            'w-[260px] rounded-small bg-overlay p-5 text-overlay-foreground will-change-[transform,opacity]',
+            'motion-safe:data-[state=open]:data-[side=top]:animate-slideDownAndFade',
+            'motion-safe:data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
+            'motion-safe:data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
+            'motion-safe:data-[state=open]:data-[side=left]:animate-slideRightAndFade',
+            'bg-overlay text-overlay-foreground w-[260px] rounded-small p-5 will-change-[transform,opacity]',
             'shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)]',
             'focus:shadow-surface-1',
             'z-50',
@@ -43,7 +43,7 @@ const Popover = ({
         >
           <div className="flex flex-col gap-2.5">{content}</div>
           <PopoverPrimitive.Close
-            className="absolute top-2 inline-flex h-[25px] w-[25px] cursor-default items-center justify-center rounded-full text-overlay-foreground outline-none focus:shadow-[0_0_0_2px] focus:shadow-background ltr:right-2 rtl:left-2"
+            className="text-overlay-foreground absolute top-2 inline-flex h-[25px] w-[25px] cursor-default items-center justify-center rounded-full outline-none focus:shadow-[0_0_0_2px] focus:shadow-background ltr:right-2 rtl:left-2"
             aria-label="Close"
           >
             <X />

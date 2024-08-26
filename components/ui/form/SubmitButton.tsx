@@ -9,7 +9,7 @@ export function SubmitButton({ children }: React.PropsWithChildren) {
 
   return (
     <Button type="submit" disabled={pending}>
-      {pending && <Loader2 className="mr-2 animate-spin" />}
+      {pending && <Loader2 className="mr-2 motion-safe:animate-spin" />}
       {children ?? 'Submit'}
     </Button>
   );

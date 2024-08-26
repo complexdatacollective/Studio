@@ -46,6 +46,7 @@
     "lucia": "^3.2.0",
     "lucide-react": "^0.394.0",
     "nanoid": "^5.0.7",
+    "negotiator": "^0.6.3",
     "next": "15.0.0-canary.120",
     "next-intl": "^3.17.2",
     "next-safe-navigation": "^0.3.2",

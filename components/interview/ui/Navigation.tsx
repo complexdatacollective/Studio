@@ -95,7 +95,8 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         <NavButtonWithTooltip
           id="nav-wizard-step-2"
           className={cn(
-            pulseNext && 'from-cyber-grape animate-pulse-bg to-success',
+            pulseNext &&
+              'from-cyber-grape to-success motion-safe:animate-pulse-bg motion-reduce:bg-success',
           )}
           onClick={moveForward}
           aria-label={t('forward')}

@@ -1,11 +1,10 @@
-import { type ReactNode } from 'react';
 import { createStore } from 'zustand/vanilla';
+import { type LocalisedRecord } from '../schemas/shared';
 
 export type Step = {
   // if targetElementId _not_ provided, render as a modal
-  targetElementId?: string; // Should this be a ref, or just a string?
-  content: Record<string, ReactNode>; // Todo: make the key signature any valid locale
-  label: Record<string, string>; // Todo: make the key signature any valid locale
+  targetElementId?: string;
+  content: LocalisedRecord; // Todo: make the key signature any valid locale
 };
 
 export type Wizard = {

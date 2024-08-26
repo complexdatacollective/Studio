@@ -16,25 +16,28 @@ export const customErrorLogger = (error: IntlError) => {
 
 /**
  * take a LocalisedRecord, and the users locale, and return the best possible
- * localised string for that locale, or the fallback.
+ * localised value for that locale, or the fallback.
+ *
+ * Calculate the fallbacl using the algorithm from the
+ * `@formatjs/intl-localematcher` package, which is the same one `next-intl`
+ * uses.
  *
  * Primarily for use in interview contexts where we have user supplied localised
  * strings.
  */
-export function getLocalisedString(
+export function getLocalisedValue(
   localisedRecord: LocalisedRecord,
   userLocales: string[],
-): string {
-  const bestMatch = match(
-    userLocales,
-    Object.keys(localisedRecord),
-    'NOT_FOUND',
-  );
+) {
+  console.log('user', userLocales);
+  console.log('record', Object.keys(localisedRecord));
+
+  const bestMatch = match(userLocales, Object.keys(localisedRecord), 'en');
 
   if (bestMatch !== 'NOT_FOUND') {
     return localisedRecord[bestMatch]!;
   }
 
   // Fallback
-  return localisedRecord.DEFAULT;
+  return localisedRecord.en;
 }

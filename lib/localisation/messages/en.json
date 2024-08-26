@@ -82,15 +82,32 @@
     "title": "Participants Page",
     "description": "slug:"
   },
-  "LanguageSwitcher": {
-    "en": "English",
-    "es": "Español"
-  },
   "Navigation": {
     "forward": "Move forward",
     "back": "Move backward",
     "menu": "Menu",
     "help": "Help"
+  },
+  "Generic": {
+    "next": "Next",
+    "previous": "Previous",
+    "done": "Done",
+    "close": "Close",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "remove": "Remove",
+    "create": "Create",
+    "copy": "Copy",
+    "paste": "Paste",
+    "undo": "Undo",
+    "redo": "Redo",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear"
   },
   "PopoverHint": {
     "hint": "Click this for stage instructions",

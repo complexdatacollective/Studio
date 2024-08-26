@@ -1,8 +1,6 @@
 'use client';
 
-import OnboardWizardPopover from './OnboardWizardPopover';
-import OnboardWizardModal from './OnboardWizardModal';
-import { useLocale } from 'next-intl';
+import WizardStep from './WizardStep';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { useOnboardWizard } from './useOnboardWizard';
 import PopoverBackdrop from './PopoverBackdrop';
@@ -29,8 +27,6 @@ export default function OnboardWizard({
   name: string;
   priority?: Priority;
 }) {
-  const locale = useLocale();
-
   const { isActive, activeStep, showBeacons } = useOnboardWizard({
     name, // maybe this is where we generate something relative to the study/protocol?
     steps,
@@ -43,14 +39,7 @@ export default function OnboardWizard({
       {isActive && activeStep && (
         <>
           <PopoverBackdrop />
-          {activeStep.targetElementId ? (
-            <OnboardWizardPopover
-              targetElementId={activeStep.targetElementId}
-              content={activeStep.content[locale]}
-            />
-          ) : (
-            <OnboardWizardModal content={activeStep.content[locale]} />
-          )}
+          <WizardStep step={activeStep} />
         </>
       )}
       {showBeacons &&
@@ -60,7 +49,6 @@ export default function OnboardWizard({
             <Beacon
               key={`${name}_${index}`}
               targetElementId={step.targetElementId!}
-              label={step.label[locale] ?? 'Help'}
             />
           ))}
     </>

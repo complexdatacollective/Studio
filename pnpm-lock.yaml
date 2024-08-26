@@ -92,6 +92,9 @@ importers:
       nanoid:
         specifier: ^5.0.7
         version: 5.0.7
+      negotiator:
+        specifier: ^0.6.3
+        version: 0.6.3
       next:
         specifier: 15.0.0-canary.120
         version: 15.0.0-canary.120(@babel/core@7.25.2)(react-dom@19.0.0-rc-1eaccd82-20240816(react@19.0.0-rc-1eaccd82-20240816))(react@19.0.0-rc-1eaccd82-20240816)(sass@1.77.8)
