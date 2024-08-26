@@ -14,17 +14,26 @@ import {
   type WizardStoreApi,
 } from './store';
 import Spotlight from '~/components/Spotlight';
+import { createLocalStorageStore } from '../createLocalStorageStore';
 
 const WizardContext = createContext<WizardStoreApi | undefined>(undefined);
 
+// TODO: We probably want to scope this to the study/protocol
+const storage = createLocalStorageStore<boolean>('wizard-store');
+
+export type WizardLocalStore = ReturnType<typeof createLocalStorageStore>;
+
 export const WizardProvider = ({ children }: { children: ReactNode }) => {
   const storeRef = useRef<WizardStoreApi>();
+  const { get: getItem, set: setItem, data } = storage();
+
+  console.log('data', data);
 
   if (!storeRef.current) {
-    storeRef.current = createWizardStore();
+    storeRef.current = createWizardStore(getItem, setItem);
   }
 
-  const { wizards, setActiveWizard } = useStore(storeRef.current);
+  const { setActiveWizard } = useStore(storeRef.current);
 
   // Selector to get the current step's target element ID (if any)
   const currentTargetElementId = useStore(
@@ -40,18 +49,17 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
     },
   );
 
+  // Selector to get the first wizard that has not been seen
+  const firstUnseenWizard = useStore(storeRef.current, ({ wizards }) =>
+    wizards.find((wizard) => !getItem(wizard.name)),
+  );
+
   // Set the active wizard based on the first wizard that has not been seen
   useEffect(() => {
-    const firstUnseenWizard = wizards.find(
-      (wizard) => !localStorage.getItem(`wizard-${wizard.name}-seen`),
-    );
-
     if (firstUnseenWizard) {
       setActiveWizard(firstUnseenWizard.name);
     }
-  }, [wizards, setActiveWizard]);
-
-  console.log('thing', currentTargetElementId);
+  }, [firstUnseenWizard, setActiveWizard]);
 
   return (
     <WizardContext.Provider value={storeRef.current}>

@@ -1,13 +1,13 @@
 import { type PropsWithChildren } from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { X } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { cn } from '~/lib/utils';
 import CloseButton from './CloseButton';
 
 const Popover = ({
   children,
   content,
-  side = 'top',
+  side,
   modal,
   isOpen,
   onOpenChange,
@@ -39,16 +39,19 @@ const Popover = ({
           collisionPadding={10}
           side={side}
           avoidCollisions
+          asChild
         >
-          {content}
-          <PopoverPrimitive.Close asChild>
-            <CloseButton />
-          </PopoverPrimitive.Close>
-          <PopoverPrimitive.Arrow
-            className="fill-card"
-            width={26}
-            height={16}
-          />
+          <motion.div layoutId="popover-content">
+            {content}
+            <PopoverPrimitive.Close asChild>
+              <CloseButton />
+            </PopoverPrimitive.Close>
+            <PopoverPrimitive.Arrow
+              className="fill-card"
+              width={26}
+              height={16}
+            />
+          </motion.div>
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>

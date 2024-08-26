@@ -85,7 +85,7 @@ const SpotlightOverlay = ({
                 width: spotlightPosition.width,
                 height: spotlightPosition.height,
               }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              transition={{ type: 'spring', stiffness: 100, damping: 30 }}
               fill="black"
               rx={borderRadius}
               ry={borderRadius}

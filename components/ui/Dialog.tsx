@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import { cn } from '~/lib/utils';
 import Heading from '../typography/Heading';
 import CloseButton from './CloseButton';
+import PopoverBackdrop from '../PopoverBackdrop';
 
 const Dialog = ({
   children,
@@ -19,9 +20,11 @@ const Dialog = ({
 }) => {
   return (
     <DialogPrimitive.Root defaultOpen={isOpen} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Trigger asChild>{children}</DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="motion-safe:data-[state=open]:animate-overlayShow fixed inset-0 z-50 backdrop-blur-md backdrop-brightness-75" />
+        <DialogPrimitive.Overlay asChild>
+          <PopoverBackdrop />
+        </DialogPrimitive.Overlay>
+
         <DialogPrimitive.Content
           aria-describedby={undefined}
           className={cn(

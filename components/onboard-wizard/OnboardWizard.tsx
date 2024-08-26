@@ -3,7 +3,6 @@
 import WizardStep from './WizardStep';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { useOnboardWizard } from './useOnboardWizard';
-import PopoverBackdrop from '../PopoverBackdrop';
 import Beacon from './Beacon';
 
 export const Priorities = {

@@ -1,5 +1,10 @@
-import { createStore } from 'zustand/vanilla';
+import { createStore, StoreApi } from 'zustand/vanilla';
 import { type LocalisedRecord } from '../schemas/shared';
+import {
+  createLocalStorageStore,
+  LocalStorageState,
+} from '../createLocalStorageStore';
+import { WizardLocalStore } from './Provider';
 
 export type Step = {
   // if targetElementId _not_ provided, render as a modal
@@ -50,10 +55,11 @@ const defaultInitialState: WizardState = {
 };
 
 export const createWizardStore = (
-  initState: WizardState = defaultInitialState,
+  getItem: LocalStorageState<boolean>['get'],
+  setItem: LocalStorageState<boolean>['set'],
 ) => {
   return createStore<WizardStore>()((set, get) => ({
-    ...initState,
+    ...defaultInitialState,
     getActiveWizard: () => {
       const { activeWizardName, wizards } = get();
 
@@ -97,8 +103,6 @@ export const createWizardStore = (
       }));
     },
     setActiveWizard: (name, step) => {
-      console.log('setactive', name, step);
-
       set((state) => ({
         ...state,
         activeWizardName: name,
@@ -149,13 +153,10 @@ export const createWizardStore = (
       }
 
       // If we are at the last step of the wizard, mark it as seen and move to the next wizard
-      localStorage.setItem(`wizard-${activeWizardName}-seen`, 'true');
+      setItem(activeWizardName, true);
 
       const nextWizard = wizards.find((wizard, index) => {
-        return (
-          index > activeWizardIndex &&
-          !localStorage.getItem(`wizard-${wizard.name}-seen`)
-        );
+        return index > activeWizardIndex && !getItem(wizard.name);
       });
 
       if (nextWizard) {
@@ -221,7 +222,7 @@ export const createWizardStore = (
       const previousWizard = wizards
         .slice(0, activeWizardIndex)
         .reverse()
-        .find((wizard) => !localStorage.getItem(`wizard-${wizard.name}-seen`));
+        .find((wizard) => !getItem(wizard.name));
 
       if (previousWizard) {
         set((state) => ({

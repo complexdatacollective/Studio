@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/Card';
+import { env } from '~/env';
 
 function AvailableWizardsPanel() {
   const { wizards, setActiveWizard } = useWizardController();
@@ -31,6 +32,9 @@ function AvailableWizardsPanel() {
             {wizard.name}
           </Button>
         ))}
+        {env.NODE_ENV === 'development' && (
+          <Button variant="destructive">Reset local storage</Button>
+        )}
       </CardContent>
     </Card>
   );
