@@ -63,50 +63,6 @@ export const createWizardStore = (
   getItem: LocalStorageState<boolean>['get'],
   setItem: LocalStorageState<boolean>['set'],
 ) => {
-  // To calculate the progress through _all_ wizards, we need to know the number of steps for all wizards prior to this one (when sorted by priority), and then to add the current step index.
-  const calculateCurrentProgress = (
-    wizards: WizardState['wizards'],
-    activeWizardId: WizardState['activeWizardId'],
-    currentStep: number,
-  ) => {
-    const sortedWizards = Object.entries(wizards)
-      .map(([id, wizard]) => ({ id, ...wizard }))
-      // .filter((wizard) => !getItem(wizard.id)) // Filter out seen wizards
-      .sort((a, b) => Priorities[b.priority] - Priorities[a.priority]);
-
-    const total = sortedWizards.reduce((t, wizard) => {
-      return t + wizard.steps.length;
-    }, 0);
-
-    const activeWizardIndex = sortedWizards.findIndex(
-      (wizard) => wizard.id === activeWizardId,
-    );
-
-    const current =
-      currentStep +
-      sortedWizards.reduce((t, wizard) => {
-        const currentWizardIndex = sortedWizards.findIndex(
-          (w) => w.id === wizard.id,
-        );
-
-        if (wizard.id === activeWizardId) {
-          return t;
-        }
-
-        if (currentWizardIndex > activeWizardIndex) {
-          return t;
-        }
-
-        console.log(activeWizardId, 'adding', wizard.steps.length, 'to', t);
-        return t + wizard.steps.length;
-      }, 0) +
-      1;
-
-    console.log({ currentStep, activeWizardId, current, total });
-
-    return { current, total };
-  };
-
   return createStore<WizardStore>()((set, get) => ({
     ...defaultInitialState,
     getActiveWizard: () => {
@@ -119,37 +75,21 @@ export const createWizardStore = (
       return get().wizards[activeWizardId] ?? null;
     },
     registerWizard: (wizard) => {
-      const shouldUpdateProgress = !getItem(wizard.id);
-
-      const { wizards, activeWizardId, currentStep } = get();
-
-      const newWizards = {
-        ...wizards,
-        [wizard.id]: wizard,
-      };
-
       set((state) => ({
         ...state,
-        wizards: newWizards,
-        progress: shouldUpdateProgress
-          ? calculateCurrentProgress(newWizards, activeWizardId, currentStep)
-          : state.progress,
+        wizards: {
+          ...state.wizards,
+          [wizard.id]: wizard,
+        },
       }));
     },
     deregisterWizard: (id) => {
-      const shouldUpdateProgress = !getItem(id);
-
-      const { activeWizardId, currentStep } = get();
-
       set((state) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [id]: _, ...wizards } = state.wizards;
         return {
           ...state,
           wizards,
-          progress: shouldUpdateProgress
-            ? calculateCurrentProgress(wizards, activeWizardId, currentStep)
-            : state.progress,
         };
       });
     },
@@ -159,7 +99,10 @@ export const createWizardStore = (
           ...state,
           activeWizardId: null,
           currentStep: 0,
-          progress: calculateCurrentProgress(state.wizards, id, 0),
+          progress: {
+            current: 0,
+            total: 0,
+          },
         }));
 
         return;
@@ -171,14 +114,14 @@ export const createWizardStore = (
         throw new Error(`Wizard with id ${id} not found`);
       }
 
-      const result = calculateCurrentProgress(wizards, id, 0);
-      console.log('results', result, wizards, id);
-
       set((state) => ({
         ...state,
         activeWizardId: id,
         currentStep: 0,
-        progress: result,
+        progress: {
+          current: 1,
+          total: wizards[id]!.steps.length,
+        },
       }));
     },
     nextStep() {
@@ -218,9 +161,12 @@ export const createWizardStore = (
       if (nextWizard) {
         set((state) => ({
           ...state,
-          activeWizardName: nextWizard.name,
+          activeWizardId: nextWizard.id,
           currentStep: 0,
-          progress: calculateCurrentProgress(wizards, nextWizard.id, 0),
+          progress: {
+            current: 1,
+            total: nextWizard.steps.length,
+          },
         }));
 
         return;
@@ -241,11 +187,10 @@ export const createWizardStore = (
         set((state) => ({
           ...state,
           currentStep: currentStep - 1,
-          progress: calculateCurrentProgress(
-            wizards,
-            activeWizardId,
-            currentStep - 1,
-          ),
+          progress: {
+            ...state.progress,
+            current: state.progress.current - 1,
+          },
         }));
 
         return;
@@ -264,11 +209,10 @@ export const createWizardStore = (
           ...state,
           activeWizardName: previousWizard.name,
           currentStep: previousWizard.steps.length - 1,
-          progress: calculateCurrentProgress(
-            wizards,
-            previousWizard.id,
-            previousWizard.steps.length - 1,
-          ),
+          progress: {
+            current: previousWizard.steps.length,
+            total: previousWizard.steps.length,
+          },
         }));
 
         return;

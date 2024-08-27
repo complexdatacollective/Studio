@@ -36,6 +36,7 @@ export default function WizardStep({ step }: { step: Step }) {
             variant="outline"
             onClick={() => previousStep()}
             className="flex-1"
+            tabIndex={1}
           >
             {t('Previous')}
           </Button>
@@ -48,11 +49,12 @@ export default function WizardStep({ step }: { step: Step }) {
             variant="primary"
             onClick={() => nextStep()}
             className="flex-1"
+            tabIndex={1}
           >
             {t('Next')}
           </Button>
         ) : (
-          <Button onClick={() => nextStep()} className="flex-1">
+          <Button onClick={() => nextStep()} className="flex-1" tabIndex={1}>
             {t('Done')}
           </Button>
         )}
