@@ -35,6 +35,7 @@ const Tooltip = ({
           side={side}
         >
           {tooltip}
+          <TooltipPrimitive.Arrow className="fill-card" />
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>
@@ -62,7 +63,7 @@ export function withTooltip<T extends HtmlHTMLAttributes<HTMLDivElement>>(
     return (
       <Tooltip tooltip={tooltipContent ?? title} side={tooltipSide}>
         {/* Pass down all original props, including ref */}
-        <WrappedComponent {...(props as T)} />
+        <WrappedComponent {...(props as T)} tabIndex={0} />
       </Tooltip>
     );
   };

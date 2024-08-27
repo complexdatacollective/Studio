@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
 import { cn } from '~/lib/utils';
-import ProgressBar, { ProgressBarWithTooltip } from '../../ui/ProgressBar';
+import { ProgressBarWithTooltip } from '../../ui/ProgressBar';
 import type { IntRange } from 'type-fest';
 import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
@@ -37,7 +37,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
     router.push(`${pathname}/?stage=${newStage}`);
   };
 
-  const t = useTranslations('Navigation');
+  const t = useTranslations('Interview.Navigation');
 
   return (
     <OnboardWizard
@@ -122,8 +122,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           side="right"
         >
           <NavButtonWithTooltip
-            aria-label={t('menu')}
-            title={t('menu')}
+            title={t('Menu')}
             tooltipSide="right"
             id="nav-wizard-settings"
           >
@@ -134,8 +133,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         <NavButtonWithTooltip
           id="nav-wizard-back"
           onClick={moveBackward}
-          aria-label={t('back')}
-          title={t('back')}
+          title={t('Back')}
           tooltipSide="right"
         >
           <ChevronUp className="h-10 w-10 stroke-[3px]" />
@@ -143,7 +141,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         <ProgressBarWithTooltip
           value={progress}
           orientation="vertical"
-          title="Progress"
+          title={t('Progress', { percent: progress })}
         />
         <NavButtonWithTooltip
           id="nav-wizard-forward"
@@ -152,8 +150,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
               'from-cyber-grape to-success motion-safe:animate-pulse-bg motion-reduce:bg-success',
           )}
           onClick={moveForward}
-          aria-label={t('forward')}
-          title={t('forward')}
+          title={t('Forward')}
           tooltipSide="right"
         >
           <ChevronDown className="h-10 w-10 stroke-[3px]" />

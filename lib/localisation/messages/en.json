@@ -19,24 +19,6 @@
       "ButtonLabel": "Sign Out"
     }
   },
-  "CreateStudyForm": {
-    "FormTitle": "Create Study",
-    "InputLabel": "Study Name",
-    "InputPlaceholder": "My New Study",
-    "FormButton": "Create Study",
-    "RoleSelectLabel": "Select a role",
-    "RoleSelectPlaceholder": "Roles..."
-  },
-  "StudyPage": {
-    "Title": "Study Page",
-    "NoProjectFoundMessage": "No projects found"
-  },
-  "CreateProjectForm": {
-    "FormTitle": "Create Project",
-    "ProjectNameInputLabel": "Project Name",
-    "ProjectNameInputPlaceholder": "Studio",
-    "FormButton": "Create Project"
-  },
   "Navigation": {
     "Primary": {
       "Home": "Studio",
@@ -81,6 +63,8 @@
       }
     },
     "Study": {
+      "Title": "Study Page",
+      "NoProjectFoundMessage": "No projects found",
       "SettingsPage": {
         "Title": "Study Settings Page",
         "Description": "slug:"
@@ -101,9 +85,9 @@
     "Navigation": {
       "Forward": "Move forward",
       "Back": "Move backward",
-      "Menu": "Menu",
-      "Help": "Help",
-      "Progress": "You have completed {percent} of the interview"
+      "Menu": "Main menu",
+      "Help": "Help menu",
+      "Progress": "You have completed {percent}% of the interview"
     }
   },
   "Generic": {
@@ -127,10 +111,26 @@
     "Filter": "Filter",
     "Clear": "Clear"
   },
-  "StudySwitcher": {
-    "Placeholder": "Select a study"
-  },
-  "ThemeSwitcher": {
-    "Label": "Toggle theme"
+  "Components": {
+    "StudySwitcher": {
+      "Placeholder": "Select a study"
+    },
+    "ThemeSwitcher": {
+      "Label": "Toggle theme"
+    },
+    "CreateStudyForm": {
+      "FormTitle": "Create Study",
+      "InputLabel": "Study Name",
+      "InputPlaceholder": "My New Study",
+      "FormButton": "Create Study",
+      "RoleSelectLabel": "Select a role",
+      "RoleSelectPlaceholder": "Roles..."
+    },
+    "CreateProjectForm": {
+      "FormTitle": "Create Project",
+      "ProjectNameInputLabel": "Project Name",
+      "ProjectNameInputPlaceholder": "Studio",
+      "FormButton": "Create Project"
+    }
   }
 }

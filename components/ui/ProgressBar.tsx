@@ -32,6 +32,8 @@ const ProgressBar = ({
     className={cn(
       'relative flex-grow overflow-hidden rounded-full',
       'outline outline-4 outline-offset-8 outline-transparent transition-all duration-300 hover:outline-accent',
+      'ring-offset-background focus-visible:transition-none',
+      'focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       orientation === 'horizontal' ? 'h-3' : 'w-3',
       {
         'bg-muted opacity-20': indeterminate,

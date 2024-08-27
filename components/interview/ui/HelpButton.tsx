@@ -58,13 +58,12 @@ function AvailableWizardsPanel() {
 export default function HelpButton({ id }: { id?: string }) {
   const { showBeacons, setShowBeacons } = useWizardController();
 
-  const t = useTranslations('Navigation');
+  const t = useTranslations('Interview.Navigation');
   return (
     <>
       <NavButtonWithTooltip
         id={id}
-        aria-label={t('help')}
-        title={t('help')}
+        title={t('Help')}
         tooltipSide="right"
         onClick={() => setShowBeacons(!showBeacons)}
       >
