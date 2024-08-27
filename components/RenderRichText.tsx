@@ -1,21 +1,15 @@
-import { type ReactNode } from 'react';
+import { createElement, type ReactNode } from 'react';
 import type {
   BlockNode,
   InlineElement,
   TextNode,
   JSONRichText,
-} from '~/lib/schemas/shared';
+} from '~/schemas/shared';
 import { hash } from 'ohash';
 import Paragraph from './typography/Paragraph';
 import Heading from './typography/Heading';
 import { cn } from '~/lib/utils';
-
-/**
- * Render a localised value (JSONRichText or string).
- * Should return a ReactNode.
- *
- * Should be removed once we figure out which AST we will use for rich text.
- */
+import { jsx } from 'react/jsx-runtime';
 
 const getElementForType = (type: string) => {
   switch (type) {
@@ -23,8 +17,6 @@ const getElementForType = (type: string) => {
       return Heading;
     case 'paragraph':
       return Paragraph;
-    // case 'video':
-    //   return <video />;
     default:
       return Paragraph;
   }
@@ -42,10 +34,18 @@ const processChildren = (children: (TextNode | InlineElement)[]) => {
 };
 
 const processBlockNode = (blockNode: BlockNode) => {
-  const Element = getElementForType(blockNode.type);
-  const id = hash(blockNode); //
+  const id = hash(blockNode);
 
-  console.log('props', blockNode.props);
+  if (blockNode.type === 'image') {
+    return <img {...blockNode.props} />;
+  }
+
+  if (blockNode.type === 'video') {
+    return <video {...blockNode.props} />;
+  }
+
+  const Element = getElementForType(blockNode.type);
+
   return (
     <Element key={id} {...blockNode.props}>
       {processChildren(blockNode.children)}
@@ -80,6 +80,12 @@ const processInlineElement = (inlineElement: InlineElement) => {
   }
 };
 
+/**
+ * Render a localised value (JSONRichText or string).
+ * Should return a ReactNode.
+ *
+ * Should be removed once we figure out which AST we will use for rich text.
+ */
 export function renderLocalisedValue(value: JSONRichText): ReactNode {
   return value.map((blockNode) => processBlockNode(blockNode));
 }

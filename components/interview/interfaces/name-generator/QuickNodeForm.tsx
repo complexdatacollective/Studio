@@ -8,7 +8,7 @@ export default function QuickNodeForm() {
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div className="absolute bottom-4 right-2 flex items-center">
+    <div className="absolute bottom-4 flex items-center ltr:right-2 rtl:left-2">
       {showForm && (
         <div className="relative mr-8 flex items-center">
           <form>

@@ -131,6 +131,10 @@
       "ProjectNameInputLabel": "Project Name",
       "ProjectNameInputPlaceholder": "Studio",
       "FormButton": "Create Project"
+    },
+    "ContextualHelp": {
+      "Title": "Help",
+      "Description": "The cards below show the help options available based on the current page. Click on a card to view the help content."
     }
   }
 }

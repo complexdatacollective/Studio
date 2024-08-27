@@ -41,72 +41,91 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
 
   return (
     <OnboardWizard
-      steps={[
-        {
-          targetElementId: 'nav-wizard-settings',
-          content: {
-            en: [
-              {
-                type: 'paragraph',
-                children: [
-                  {
-                    text: 'This is the settings button. Click it to open the settings menu.',
-                  },
-                ],
-              },
-            ],
-          },
+      wizard={{
+        id: 'general-interview-information',
+        name: {
+          en: 'General Interview Information',
         },
-        {
-          targetElementId: 'nav-wizard-help',
-          content: {
-            en: [
-              {
-                type: 'paragraph',
-                children: [
-                  {
-                    text: 'This is the help button. Click it to open the help menu.',
-                  },
-                ],
-              },
-            ],
-          },
+        priority: 'Navigation',
+        description: {
+          en: [
+            {
+              type: 'paragraph',
+              children: [
+                {
+                  text: 'Help with the general interview process, including how to navigate the interview, and general tips to help you get started.',
+                },
+              ],
+            },
+          ],
         },
-        {
-          targetElementId: 'nav-wizard-back',
-          content: {
-            en: [
-              {
-                type: 'paragraph',
-                children: [
-                  {
-                    text: 'This is the back button. Click it to go to the previous step.',
-                  },
-                ],
-              },
-            ],
+        steps: [
+          {
+            title: {
+              en: 'Welcome to the Interview!',
+            },
+            content: {
+              en: [
+                {
+                  type: 'paragraph',
+                  children: [
+                    {
+                      text: 'Before you begin, here are some general tips to help you navigate the interview process.',
+                    },
+                  ],
+                },
+              ],
+            },
           },
-        },
-        {
-          targetElementId: 'nav-wizard-forward',
-          content: {
-            en: [
-              {
-                type: 'paragraph',
-                children: [
-                  {
-                    text: 'This is the forward button. Click it to go to the next step.',
-                  },
-                ],
-              },
-            ],
+          {
+            targetElementId: 'navigation-bar',
+            title: {
+              en: 'Navigation Bar',
+            },
+            content: {
+              en: [
+                {
+                  type: 'paragraph',
+                  children: [
+                    {
+                      text: 'The navigation bar helps you move through the interview process, and get help if you need it.',
+                    },
+                  ],
+                },
+                {
+                  type: 'paragraph',
+                  children: [
+                    {
+                      text: 'You can change the language from the settings button, or access help options by clicking the help button.',
+                    },
+                  ],
+                },
+              ],
+            },
           },
-        },
-      ]}
-      name="General Interview Information"
-      priority="Navigation"
+          {
+            targetElementId: 'interview-movement',
+            title: {
+              en: 'Navigating the Interview',
+            },
+            content: {
+              en: [
+                {
+                  type: 'paragraph',
+                  children: [
+                    {
+                      text: 'Use the back and forward buttons to move through the interview, and track your progress using the progress bar.',
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      }}
     >
       <nav
+        id="navigation-bar"
         role="navigation"
         className={cn(
           'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-surface-1 text-foreground',
@@ -121,40 +140,39 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           }
           side="right"
         >
-          <NavButtonWithTooltip
-            title={t('Menu')}
-            tooltipSide="right"
-            id="nav-wizard-settings"
-          >
+          <NavButtonWithTooltip title={t('Menu')} tooltipSide="right">
             <Settings2 className="h-10 w-10 stroke-[2px]" />
           </NavButtonWithTooltip>
         </Popover>
         <HelpButton id="nav-wizard-help" />
-        <NavButtonWithTooltip
-          id="nav-wizard-back"
-          onClick={moveBackward}
-          title={t('Back')}
-          tooltipSide="right"
+        <div
+          id="interview-movement"
+          className="flex flex-1 flex-col items-center"
         >
-          <ChevronUp className="h-10 w-10 stroke-[3px]" />
-        </NavButtonWithTooltip>
-        <ProgressBarWithTooltip
-          value={progress}
-          orientation="vertical"
-          title={t('Progress', { percent: progress })}
-        />
-        <NavButtonWithTooltip
-          id="nav-wizard-forward"
-          className={cn(
-            pulseNext &&
-              'from-cyber-grape to-success motion-safe:animate-pulse-bg motion-reduce:bg-success',
-          )}
-          onClick={moveForward}
-          title={t('Forward')}
-          tooltipSide="right"
-        >
-          <ChevronDown className="h-10 w-10 stroke-[3px]" />
-        </NavButtonWithTooltip>
+          <NavButtonWithTooltip
+            onClick={moveBackward}
+            title={t('Back')}
+            tooltipSide="right"
+          >
+            <ChevronUp className="h-10 w-10 stroke-[3px]" />
+          </NavButtonWithTooltip>
+          <ProgressBarWithTooltip
+            value={progress}
+            orientation="vertical"
+            title={t('Progress', { percent: progress })}
+          />
+          <NavButtonWithTooltip
+            className={cn(
+              pulseNext &&
+                'from-cyber-grape to-success motion-safe:animate-pulse-bg motion-reduce:bg-success',
+            )}
+            onClick={moveForward}
+            title={t('Forward')}
+            tooltipSide="right"
+          >
+            <ChevronDown className="h-10 w-10 stroke-[3px]" />
+          </NavButtonWithTooltip>
+        </div>
       </nav>
     </OnboardWizard>
   );

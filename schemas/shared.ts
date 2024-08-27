@@ -35,7 +35,7 @@ export type InlineElement = z.infer<typeof InlineElementSchema>;
 
 // Define the schema for a block node
 const BlockNodeSchema = z.object({
-  type: z.enum(['paragraph', 'heading', 'block-quote', 'video']), // Add other block types as needed
+  type: z.enum(['paragraph', 'heading', 'block-quote', 'video', 'image']), // Add other block types as needed
   props: z.record(z.any()).optional(), // Props for the block node
   children: z.array(z.union([TextNodeSchema, InlineElementSchema])), // Block nodes contain children, which could be text or inline elements
 });
@@ -49,10 +49,18 @@ export type JSONRichText = z.infer<typeof JSONRichTextSchema>;
 // Utility for protocol keys that must support localisation.
 // TODO: figure out how to make the required key (which represents the default)
 // locale) definable in the protocol
-export const LocalisedRecord = z
+export const LocalisedRecordSchema = z
   .object({
     en: JSONRichTextSchema,
   })
   .and(z.record(JSONRichTextSchema));
 
-export type LocalisedRecord = z.infer<typeof LocalisedRecord>;
+export type LocalisedRecord = z.infer<typeof LocalisedRecordSchema>;
+
+export const LocalisedStringSchema = z
+  .object({
+    en: z.string(),
+  })
+  .and(z.record(z.string()));
+
+export type LocalisedString = z.infer<typeof LocalisedStringSchema>;

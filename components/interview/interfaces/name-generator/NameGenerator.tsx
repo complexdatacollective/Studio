@@ -72,19 +72,11 @@ const demoNodes = [
 
 const demoSteps: Step[] = [
   {
+    title: {
+      en: 'Welcome to the Name Generator',
+    },
     content: {
       en: [
-        {
-          type: 'heading',
-          props: {
-            variant: 'h2',
-          },
-          children: [
-            {
-              text: 'Welcome to the Name Generator',
-            },
-          ],
-        },
         {
           type: 'paragraph',
           children: [
@@ -93,16 +85,22 @@ const demoSteps: Step[] = [
             },
           ],
         },
-        // {
-        //   type: 'image',
-        //   url: 'https://documentation.networkcanvas.com/assets/img/interface-documentation/name-generators/ng-quick.png',
-        //   alt: 'Name Generator Interface',
-        // },
+        {
+          type: 'image',
+          props: {
+            src: 'https://documentation.networkcanvas.com/assets/img/interface-documentation/name-generators/ng-quick.png',
+            alt: 'Name Generator Interface',
+          },
+          children: [],
+        },
       ],
     },
   },
   {
     targetElementId: 'data-wizard-task-step-1',
+    title: {
+      en: 'Prompts',
+    },
     content: {
       en: [
         {
@@ -118,6 +116,9 @@ const demoSteps: Step[] = [
   },
   {
     targetElementId: 'data-wizard-task-step-2',
+    title: {
+      en: 'Side Panels',
+    },
     content: {
       en: [
         {
@@ -133,6 +134,9 @@ const demoSteps: Step[] = [
   },
   {
     targetElementId: 'data-wizard-task-step-3',
+    title: {
+      en: 'Adding a person',
+    },
     content: {
       en: [
         {
@@ -151,9 +155,26 @@ const demoSteps: Step[] = [
 export default function NameGenerator() {
   return (
     <OnboardWizard
-      steps={demoSteps}
-      name="Information About this Task"
-      priority="Task"
+      wizard={{
+        id: 'name-generator',
+        name: {
+          en: 'Name Generator Help',
+        },
+        priority: 'Task',
+        description: {
+          en: [
+            {
+              type: 'paragraph',
+              children: [
+                {
+                  text: 'Help with the current task, including how to add new people, how to delete people, and how to edit people.',
+                },
+              ],
+            },
+          ],
+        },
+        steps: demoSteps,
+      }}
     >
       <div className="flex grow flex-col gap-4">
         <Prompts

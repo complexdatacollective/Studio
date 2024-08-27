@@ -13,7 +13,7 @@ export default function CloseButton(props: CloseButtonProps) {
   return (
     <Button
       {...rest}
-      title={t('close')}
+      title={t('Close')}
       variant="link"
       size="xs"
       className={cn(

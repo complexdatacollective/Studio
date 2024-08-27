@@ -3,15 +3,18 @@ import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { motion } from 'framer-motion';
 import { cn } from '~/lib/utils';
 import CloseButton from './CloseButton';
+import Heading from '../typography/Heading';
 
 const Popover = ({
   children,
+  title,
   content,
   side,
   modal,
   isOpen,
   onOpenChange,
 }: PropsWithChildren<{
+  title?: string;
   content: string | React.ReactNode;
   side?: 'top' | 'right' | 'bottom' | 'left';
   modal?: boolean;
@@ -32,16 +35,18 @@ const Popover = ({
             'motion-safe:data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
             'motion-safe:data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
             'motion-safe:data-[state=open]:data-[side=left]:animate-slideRightAndFade',
-            'bg-card text-card-foreground max-w-96 rounded-small px-6 py-10 will-change-[transform,opacity]',
+            'max-w-96 rounded-small bg-card px-6 py-10 text-card-foreground will-change-[transform,opacity]',
             'z-50 shadow-xl',
           )}
           sideOffset={5}
           collisionPadding={10}
-          side={side}
+          // side={side}
+          side="right"
           avoidCollisions
           asChild
         >
-          <motion.div layoutId="popover-content">
+          <motion.div layoutId="popover-content" layout="position">
+            {title && <Heading variant="h4">{title}</Heading>}
             {content}
             <PopoverPrimitive.Close asChild>
               <CloseButton />

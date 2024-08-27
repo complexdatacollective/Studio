@@ -50,19 +50,27 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
     },
   );
 
-  // Selector to get the first wizard that has not been seen
-  const firstUnseenWizard = useStore(storeRef.current, ({ wizards }) =>
-    wizards.find((wizard) => !getItem(wizard.name)),
+  const hasUnseenWizard = useStore(storeRef.current, ({ wizards }) =>
+    Object.entries(wizards).some(([id]) => !getItem(id)),
   );
 
-  // Set the active wizard based on the first wizard that has not been seen
   const { setActiveWizard } = useStore(storeRef.current);
 
+  // First run only: set the first unseen wizard as the active wizard
   useEffect(() => {
-    if (firstUnseenWizard) {
-      setActiveWizard(firstUnseenWizard.name);
-    }
-  }, [firstUnseenWizard, setActiveWizard]);
+    const timeout = setTimeout(() => {
+      if (hasUnseenWizard && storeRef.current) {
+        const firstUnseenWizardId = Object.entries(
+          storeRef.current.getState().wizards,
+        ).find(([id]) => !getItem(id))?.[0];
+        if (firstUnseenWizardId) {
+          setActiveWizard(firstUnseenWizardId);
+        }
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [hasUnseenWizard, setActiveWizard, getItem]);
 
   return (
     <WizardContext.Provider value={storeRef.current}>

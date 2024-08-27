@@ -1,6 +1,5 @@
 import Dialog from '~/components/ui/Dialog';
 import Popover from '~/components/ui/Popover';
-import React, { useEffect } from 'react';
 import { Button } from '../ui/Button';
 import { useWizardController } from './useWizardController';
 import RenderRichText from '../RenderRichText';
@@ -10,10 +9,11 @@ import { type Step } from '~/lib/onboarding-wizard/store';
 import { getLocalisedValue } from '~/lib/localisation/utils';
 
 export default function WizardStep({ step }: { step: Step }) {
-  const { content, targetElementId } = step;
+  const { title, content, targetElementId } = step;
   const locale = useLocale();
 
   const localisedStepContent = getLocalisedValue(content, [locale]);
+  const localisedStepTitle = getLocalisedValue(title, [locale]);
 
   const {
     closeWizard,
@@ -37,7 +37,7 @@ export default function WizardStep({ step }: { step: Step }) {
             onClick={() => previousStep()}
             className="flex-1"
           >
-            {t('previous')}
+            {t('Previous')}
           </Button>
         )}
         <div className="flex flex-1 items-center justify-center text-sm">
@@ -49,11 +49,11 @@ export default function WizardStep({ step }: { step: Step }) {
             onClick={() => nextStep()}
             className="flex-1"
           >
-            {t('next')}
+            {t('Next')}
           </Button>
         ) : (
           <Button onClick={() => nextStep()} className="flex-1">
-            {t('done')}
+            {t('Done')}
           </Button>
         )}
       </footer>
@@ -63,6 +63,7 @@ export default function WizardStep({ step }: { step: Step }) {
   if (position) {
     return (
       <Popover
+        title={localisedStepTitle}
         content={renderContent()}
         modal
         isOpen
@@ -89,6 +90,7 @@ export default function WizardStep({ step }: { step: Step }) {
       onOpenChange={() => {
         closeWizard();
       }}
+      title={localisedStepTitle}
     >
       {renderContent()}
     </Dialog>

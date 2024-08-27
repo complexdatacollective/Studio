@@ -2,6 +2,7 @@
 import { type IntlError, IntlErrorCode } from 'next-intl';
 import { type LocalisedRecord } from '~/lib/schemas/shared';
 import { match } from '@formatjs/intl-localematcher';
+import { LocalisedString } from '~/schemas/shared';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {
@@ -26,7 +27,7 @@ export const customErrorLogger = (error: IntlError) => {
  * strings.
  */
 export function getLocalisedValue(
-  localisedRecord: LocalisedRecord,
+  localisedRecord: LocalisedRecord | LocalisedString,
   userLocales: string[],
 ) {
   const bestMatch = match(userLocales, Object.keys(localisedRecord), 'en');

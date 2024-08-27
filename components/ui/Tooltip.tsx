@@ -12,7 +12,7 @@ export const TooltipProvider = TooltipPrimitive.Provider;
 const Tooltip = ({
   children,
   tooltip,
-  side = 'top',
+  side,
 }: PropsWithChildren<{
   tooltip: string | ReactNode;
   side?: 'top' | 'right' | 'bottom' | 'left';
@@ -27,11 +27,10 @@ const Tooltip = ({
             'motion-safe:data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade',
             'motion-safe:data-[state=delayed-open]:data-[side=left]:animate-tooltipSlideRightAndFade',
             'motion-safe:data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade',
-            'shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]',
-            'bg-card text-card-foreground select-none rounded-small px-2 py-2 text-sm will-change-[transform,opacity]',
+            'shadow-md',
+            'select-none rounded-small bg-card px-2 py-2 text-sm text-card-foreground will-change-[transform,opacity]',
           )}
           sideOffset={5} // Distance in PX from the trigger
-          collisionPadding={10} // distance from boundary edge
           side={side}
         >
           {tooltip}

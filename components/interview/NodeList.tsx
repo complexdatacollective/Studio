@@ -13,11 +13,9 @@ export default function NodeList({
   nodeSize?: 'sm' | 'lg';
 }) {
   return (
-    <div className="flex w-full flex-row flex-wrap items-center justify-center">
-      {items.map((node) => (
-        <div key={node.id} className="flex items-center justify-center">
-          <Node label={node.label} size={nodeSize} />
-        </div>
+    <div className="flex w-full items-start justify-center">
+      {items.map((node, index) => (
+        <Node key={index} label={node.label} size={nodeSize} />
       ))}
     </div>
   );

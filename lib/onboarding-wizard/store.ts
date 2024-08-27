@@ -1,145 +1,198 @@
-import { createStore, StoreApi } from 'zustand/vanilla';
-import { type LocalisedRecord } from '../schemas/shared';
-import {
-  createLocalStorageStore,
-  LocalStorageState,
-} from '../createLocalStorageStore';
-import { WizardLocalStore } from './Provider';
+import { createStore } from 'zustand';
+import type { LocalisedString, LocalisedRecord } from '~/schemas/shared';
+import { type LocalStorageState } from '~/lib/createLocalStorageStore';
+
+export const Priorities = {
+  ShowFirst: Infinity,
+  UI: 100,
+  Navigation: 50,
+  Task: 10,
+  ShowLast: -Infinity,
+} as const;
+
+export type Priority = keyof typeof Priorities;
 
 export type Step = {
-  // if targetElementId _not_ provided, render as a modal
   targetElementId?: string;
-  content: LocalisedRecord; // Todo: make the key signature any valid locale
+  title: LocalisedString;
+  content: LocalisedRecord;
 };
 
 export type Wizard = {
-  name: string;
+  id: string;
+  name: LocalisedString;
+  description: LocalisedRecord;
   steps: Step[];
-  priority: number;
+  priority: Priority;
 };
 
 export type WizardState = {
-  wizards: Wizard[];
-  currentStep: number | null; // Only null when there's no active wizard.
-  activeWizardName: string | null;
+  wizards: Record<Wizard['id'], Omit<Wizard, 'id'>>;
+  currentStep: number; // Only null when there's no active wizard.
+  activeWizardId: Wizard['id'] | null;
   progress: {
     current: number;
     total: number;
   };
-  showBeacons: boolean;
 };
 
 export type WizardActions = {
   registerWizard: (wizard: Wizard) => void;
-  deregisterWizard: (name: Wizard['name']) => void;
-  setActiveWizard: (name: Wizard['name'] | null, step?: number) => void;
+  deregisterWizard: (id: Wizard['id']) => void;
+  setActiveWizard: (id: Wizard['id'] | null) => void;
   nextStep: () => void;
   hasNextStep: () => boolean;
   previousStep: () => void;
   hasPreviousStep: () => boolean;
-  setShowBeacons: (show: boolean) => void;
-  getActiveWizard: () => Wizard | null;
+  getActiveWizard: () => Omit<Wizard, 'id'> | null;
 };
 
 export type WizardStore = WizardState & WizardActions;
 
 const defaultInitialState: WizardState = {
-  wizards: [],
-  currentStep: null,
-  activeWizardName: null,
+  wizards: {},
+  currentStep: 0,
+  activeWizardId: null,
   progress: {
     current: 0,
     total: 0,
   },
-  showBeacons: false,
 };
 
 export const createWizardStore = (
   getItem: LocalStorageState<boolean>['get'],
   setItem: LocalStorageState<boolean>['set'],
 ) => {
+  // To calculate the progress through _all_ wizards, we need to know the number of steps for all wizards prior to this one (when sorted by priority), and then to add the current step index.
+  const calculateCurrentProgress = (
+    wizards: WizardState['wizards'],
+    activeWizardId: WizardState['activeWizardId'],
+    currentStep: number,
+  ) => {
+    const sortedWizards = Object.entries(wizards)
+      .map(([id, wizard]) => ({ id, ...wizard }))
+      // .filter((wizard) => !getItem(wizard.id)) // Filter out seen wizards
+      .sort((a, b) => Priorities[b.priority] - Priorities[a.priority]);
+
+    const total = sortedWizards.reduce((t, wizard) => {
+      return t + wizard.steps.length;
+    }, 0);
+
+    const activeWizardIndex = sortedWizards.findIndex(
+      (wizard) => wizard.id === activeWizardId,
+    );
+
+    const current =
+      currentStep +
+      sortedWizards.reduce((t, wizard) => {
+        const currentWizardIndex = sortedWizards.findIndex(
+          (w) => w.id === wizard.id,
+        );
+
+        if (wizard.id === activeWizardId) {
+          return t;
+        }
+
+        if (currentWizardIndex > activeWizardIndex) {
+          return t;
+        }
+
+        console.log(activeWizardId, 'adding', wizard.steps.length, 'to', t);
+        return t + wizard.steps.length;
+      }, 0) +
+      1;
+
+    console.log({ currentStep, activeWizardId, current, total });
+
+    return { current, total };
+  };
+
   return createStore<WizardStore>()((set, get) => ({
     ...defaultInitialState,
     getActiveWizard: () => {
-      const { activeWizardName, wizards } = get();
+      const activeWizardId = get().activeWizardId;
 
-      return activeWizardName
-        ? (wizards.find((wizard) => wizard.name === activeWizardName) ?? null)
-        : null;
-    },
-    setShowBeacons: (show) => {
-      set((state) => ({
-        ...state,
-        showBeacons: show,
-      }));
+      if (!activeWizardId) {
+        return null;
+      }
+
+      return get().wizards[activeWizardId] ?? null;
     },
     registerWizard: (wizard) => {
-      // Check wizard with this name does not already exist
-      if (get().wizards.some((w) => w.name === wizard.name)) {
-        // eslint-disable-next-line no-console
-        console.error(`Wizard with name ${wizard.name} already exists`);
+      const shouldUpdateProgress = !getItem(wizard.id);
+
+      const { wizards, activeWizardId, currentStep } = get();
+
+      const newWizards = {
+        ...wizards,
+        [wizard.id]: wizard,
+      };
+
+      set((state) => ({
+        ...state,
+        wizards: newWizards,
+        progress: shouldUpdateProgress
+          ? calculateCurrentProgress(newWizards, activeWizardId, currentStep)
+          : state.progress,
+      }));
+    },
+    deregisterWizard: (id) => {
+      const shouldUpdateProgress = !getItem(id);
+
+      const { activeWizardId, currentStep } = get();
+
+      set((state) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [id]: _, ...wizards } = state.wizards;
+        return {
+          ...state,
+          wizards,
+          progress: shouldUpdateProgress
+            ? calculateCurrentProgress(wizards, activeWizardId, currentStep)
+            : state.progress,
+        };
+      });
+    },
+    setActiveWizard: (id) => {
+      if (!id) {
+        set((state) => ({
+          ...state,
+          activeWizardId: null,
+          currentStep: 0,
+          progress: calculateCurrentProgress(state.wizards, id, 0),
+        }));
+
         return;
       }
 
-      function compareFn(a: Wizard, b: Wizard) {
-        if (a.priority < b.priority) {
-          return 1;
-        }
+      const wizards = get().wizards;
 
-        if (a.priority > b.priority) {
-          return -1;
-        }
-
-        return 0;
+      if (!Object.keys(wizards).includes(id)) {
+        throw new Error(`Wizard with id ${id} not found`);
       }
 
-      set((state) => ({
-        wizards: [...state.wizards, wizard].sort(compareFn),
-      }));
-    },
-    deregisterWizard: (name) => {
-      set((state) => ({
-        wizards: state.wizards.filter((wizard) => wizard.name !== name),
-      }));
-    },
-    setActiveWizard: (name, step) => {
+      const result = calculateCurrentProgress(wizards, id, 0);
+      console.log('results', result, wizards, id);
+
       set((state) => ({
         ...state,
-        activeWizardName: name,
-        currentStep: step ?? 0,
-        showBeacons: false,
-        progress: {
-          current: step ? step + 1 : 1,
-          total: name
-            ? state.wizards.find((wizard) => wizard.name === name)!.steps.length
-            : 0,
-        },
+        activeWizardId: id,
+        currentStep: 0,
+        progress: result,
       }));
     },
     nextStep() {
-      const {
-        wizards,
-        activeWizardName: activeWizardName,
-        currentStep,
-      } = get();
+      const { wizards, activeWizardId, currentStep } = get();
 
-      if (!activeWizardName || currentStep === null) {
-        // eslint-disable-next-line no-console
-        throw new Error('No active wizard or current step found');
-      }
-
-      const activeWizardIndex = wizards.findIndex(
-        (wizard) => wizard.name === activeWizardName,
-      );
-
-      if (activeWizardIndex === -1) {
+      if (!activeWizardId) {
         throw new Error('No active wizard found');
       }
 
-      const activeWizard = wizards[activeWizardIndex]!;
+      const activeWizard = wizards[activeWizardId]!;
+      const hasNextStep = currentStep < activeWizard.steps.length - 1;
 
       // If there is a next step in the current wizard, move to it
-      if (currentStep < activeWizard.steps.length - 1) {
+      if (hasNextStep) {
         set((state) => ({
           ...state,
           currentStep: currentStep + 1,
@@ -153,54 +206,34 @@ export const createWizardStore = (
       }
 
       // If we are at the last step of the wizard, mark it as seen and move to the next wizard
-      setItem(activeWizardName, true);
+      setItem(activeWizardId, true);
 
-      const nextWizard = wizards.find((wizard, index) => {
-        return index > activeWizardIndex && !getItem(wizard.name);
-      });
+      // Get the wizard with the next highest priority that has not been seen
+      const nextWizard = Object.entries(wizards)
+        .map(([id, wizard]) => ({ id, ...wizard }))
+        .filter((wizard) => !getItem(wizard.id))
+        .sort((a, b) => Priorities[b.priority] - Priorities[a.priority])
+        .find((wizard) => wizard.id !== activeWizardId);
 
       if (nextWizard) {
         set((state) => ({
           ...state,
           activeWizardName: nextWizard.name,
           currentStep: 0,
-          progress: {
-            current: 1,
-            total: nextWizard.steps.length,
-          },
+          progress: calculateCurrentProgress(wizards, nextWizard.id, 0),
         }));
 
         return;
       }
 
       // If there are no more wizards, reset the active wizard
-      set((state) => ({
-        ...state,
-        activeWizardName: null,
-        currentStep: null,
-        progress: {
-          current: 0,
-          total: 0,
-        },
-      }));
+      this.setActiveWizard(null);
     },
     previousStep() {
-      const {
-        wizards,
-        activeWizardName: activeWizardName,
-        currentStep,
-      } = get();
+      const { wizards, activeWizardId, currentStep } = get();
 
-      if (!activeWizardName || !currentStep) {
+      if (!activeWizardId || !currentStep) {
         throw new Error('No active wizard or current step found');
-      }
-
-      const activeWizardIndex = wizards.findIndex(
-        (wizard) => wizard.name === activeWizardName,
-      );
-
-      if (activeWizardIndex === -1) {
-        throw new Error('No active wizard found');
       }
 
       // If there is a previous step in the current wizard, move to it
@@ -208,10 +241,11 @@ export const createWizardStore = (
         set((state) => ({
           ...state,
           currentStep: currentStep - 1,
-          progress: {
-            ...state.progress,
-            current: state.progress.current - 1,
-          },
+          progress: calculateCurrentProgress(
+            wizards,
+            activeWizardId,
+            currentStep - 1,
+          ),
         }));
 
         return;
@@ -219,65 +253,54 @@ export const createWizardStore = (
 
       // If we are at the first step of the wizard, move to the previous wizard
       // TODO: should this ignore the seen status of previous wizards?
-      const previousWizard = wizards
-        .slice(0, activeWizardIndex)
+      const previousWizard = Object.entries(wizards)
+        .map(([id, wizard]) => ({ id, ...wizard }))
+        .sort((a, b) => Priorities[b.priority] - Priorities[a.priority])
         .reverse()
-        .find((wizard) => !getItem(wizard.name));
+        .find((wizard) => wizard.id !== activeWizardId);
 
       if (previousWizard) {
         set((state) => ({
           ...state,
           activeWizardName: previousWizard.name,
           currentStep: previousWizard.steps.length - 1,
-          progress: {
-            current: previousWizard.steps.length,
-            total: previousWizard.steps.length,
-          },
+          progress: calculateCurrentProgress(
+            wizards,
+            previousWizard.id,
+            previousWizard.steps.length - 1,
+          ),
         }));
 
         return;
       }
     },
     hasNextStep() {
-      const {
-        wizards,
-        activeWizardName: activeWizardName,
-        currentStep,
-      } = get();
+      const { wizards, activeWizardId, currentStep } = get();
 
-      if (!activeWizardName || currentStep === null) {
+      if (!activeWizardId || currentStep === null) {
         return false;
       }
 
-      const activeWizardIndex = wizards.findIndex(
-        (wizard) => wizard.name === activeWizardName,
-      );
-
-      if (activeWizardIndex === -1) {
-        return false;
-      }
-
-      const activeWizard = wizards[activeWizardIndex]!;
+      const activeWizard = wizards[activeWizardId]!;
 
       return currentStep < activeWizard.steps.length - 1;
     },
     hasPreviousStep() {
-      const {
-        wizards,
-        activeWizardName: activeWizardName,
-        currentStep,
-      } = get();
+      const { wizards, activeWizardId, currentStep } = get();
 
-      if (!activeWizardName || currentStep === null) {
+      if (!activeWizardId || currentStep === null) {
         return false;
       }
 
-      const activeWizardIndex = wizards.findIndex(
-        (wizard) => wizard.name === activeWizardName,
-      );
+      // Sort wizards by priority, and determine if the current wizard is the first
+      const isFirstWizard = Object.entries(wizards)
+        .map(([id, wizard]) => ({ id, ...wizard }))
+        .sort((a, b) => Priorities[b.priority] - Priorities[a.priority])
+        .reverse()
+        .find((wizard) => wizard.id === activeWizardId);
 
-      if (activeWizardIndex === -1) {
-        return false;
+      if (isFirstWizard) {
+        return currentStep > 0;
       }
 
       return currentStep > 0;

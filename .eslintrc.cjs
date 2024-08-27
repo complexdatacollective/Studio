@@ -20,7 +20,7 @@ const config = {
     project: path.join(__dirname, 'tsconfig.json'),
   },
   plugins: ['@typescript-eslint'],
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/stylistic', 'plugin:@typescript-eslint/recommended', 'next/core-web-vitals', 'prettier', 'plugin:storybook/recommended'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/stylistic', 'plugin:@typescript-eslint/recommended', 'next/core-web-vitals', 'prettier', 'plugin:storybook/recommended', "plugin:jsx-a11y/strict"],
   ignorePatterns: [
     'node_modules',
     '*.test.*',

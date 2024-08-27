@@ -32,6 +32,10 @@
   em {
     @apply italic;
   }
+
+  body {
+    @apply text-base;
+  }
 }
 
 @layer theme {
