@@ -1,7 +1,8 @@
-import {
-  type PropsWithChildren,
-  type ReactNode,
-  type ComponentType,
+import type {
+  PropsWithChildren,
+  ReactNode,
+  ComponentType,
+  HtmlHTMLAttributes,
 } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { cn } from '~/lib/utils';
@@ -41,7 +42,7 @@ const Tooltip = ({
 };
 
 // HOC version of Tooltip that wraps a component with a Tooltip
-export function withTooltip<T extends JSX.IntrinsicAttributes>(
+export function withTooltip<T extends HtmlHTMLAttributes<HTMLDivElement>>(
   WrappedComponent: ComponentType<T>,
 ) {
   // Define the props for the HOC

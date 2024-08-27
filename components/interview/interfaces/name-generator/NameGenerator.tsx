@@ -76,6 +76,9 @@ const demoSteps: Step[] = [
       en: [
         {
           type: 'heading',
+          props: {
+            variant: 'h2',
+          },
           children: [
             {
               text: 'Welcome to the Name Generator',
@@ -152,7 +155,7 @@ export default function NameGenerator() {
       name="Information About this Task"
       priority="Task"
     >
-      <div className="flex grow flex-col gap-4 overflow-hidden">
+      <div className="flex grow flex-col gap-4">
         <Prompts
           prompts={demoPrompts}
           currentPromptId={0}

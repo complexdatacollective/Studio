@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
 import { cn } from '~/lib/utils';
-import ProgressBar from '../../ui/ProgressBar';
+import ProgressBar, { ProgressBarWithTooltip } from '../../ui/ProgressBar';
 import type { IntRange } from 'type-fest';
 import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
@@ -140,7 +140,11 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         >
           <ChevronUp className="h-10 w-10 stroke-[3px]" />
         </NavButtonWithTooltip>
-        <ProgressBar value={progress} ariaLabel="Interview Progress" />
+        <ProgressBarWithTooltip
+          value={progress}
+          orientation="vertical"
+          title="Progress"
+        />
         <NavButtonWithTooltip
           id="nav-wizard-forward"
           className={cn(

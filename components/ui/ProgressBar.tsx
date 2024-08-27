@@ -1,15 +1,14 @@
-import React from 'react';
+import { type HtmlHTMLAttributes } from 'react';
 import { cn } from '~/lib/utils';
+import { withTooltip } from './Tooltip';
 
 type ProgressBarProps = {
   indeterminate?: boolean;
-  onClick?: () => void;
   orientation?: 'horizontal' | 'vertical';
   value?: number;
   nudge?: boolean;
   className?: string;
-  ariaLabel: string;
-};
+} & HtmlHTMLAttributes<HTMLDivElement>;
 
 const fillerValue = (orientation: 'horizontal' | 'vertical', value: number) => {
   const property = orientation === 'horizontal' ? 'width' : 'height';
@@ -19,18 +18,20 @@ const fillerValue = (orientation: 'horizontal' | 'vertical', value: number) => {
   };
 };
 
-const ProgressBar: React.FC<ProgressBarProps> = ({
+const ProgressBar = ({
   indeterminate = false,
-  onClick,
-  orientation = 'vertical',
+  orientation = 'horizontal',
   value = 0,
   nudge = true,
-  ariaLabel,
   className,
-}) => (
+  ...rest
+}: ProgressBarProps) => (
   <div
+    {...rest}
+    role="progressbar"
     className={cn(
       'relative flex-grow overflow-hidden rounded-full',
+      'outline outline-4 outline-offset-8 outline-transparent transition-all duration-300 hover:outline-accent',
       orientation === 'horizontal' ? 'h-3' : 'w-3',
       {
         'bg-muted opacity-20': indeterminate,
@@ -39,12 +40,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       'bg-muted/15',
       className,
     )}
-    onClick={onClick}
-    role="progressbar"
     aria-valuemax={100}
     aria-valuemin={0}
     aria-valuenow={value}
-    aria-label={ariaLabel}
   >
     <div
       className={cn(
@@ -57,5 +55,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     />
   </div>
 );
+
+export const ProgressBarWithTooltip = withTooltip(ProgressBar);
 
 export default ProgressBar;

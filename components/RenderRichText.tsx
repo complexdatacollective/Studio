@@ -45,7 +45,12 @@ const processBlockNode = (blockNode: BlockNode) => {
   const Element = getElementForType(blockNode.type);
   const id = hash(blockNode); //
 
-  return <Element key={id}>{processChildren(blockNode.children)}</Element>;
+  console.log('props', blockNode.props);
+  return (
+    <Element key={id} {...blockNode.props}>
+      {processChildren(blockNode.children)}
+    </Element>
+  );
 };
 
 const processTextNode = (textNode: TextNode) => {

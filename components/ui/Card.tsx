@@ -4,7 +4,7 @@ import { cn } from '~/lib/utils';
 import Heading from '~/components/typography/Heading';
 import Paragraph from '../typography/Paragraph';
 
-const cardClasses = 'rounded border bg-card text-card-foreground';
+const cardClasses = 'rounded border bg-card text-card-foreground shadow-xl';
 
 export const Card = React.forwardRef<
   HTMLDivElement,

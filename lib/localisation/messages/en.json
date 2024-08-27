@@ -1,144 +1,136 @@
 {
-  "Home": {
-    "title": "Studio MVP",
-    "allStudiesHeading": "All Studies",
-    "interviewsHeading": "Interviews"
-  },
-  "SignIn": {
-    "cardTitle": "Sign in to Studio",
-    "cardDescription": "Don't have an account?",
-    "linkText": "Sign up"
-  },
-  "SignUp": {
-    "cardTitle": "Create an account",
-    "cardDescription": "Already have an account?",
-    "linkText": "Sign In"
-  },
-  "AuthForm": {
-    "usernameInput": "Username",
-    "passwordInput": "Password",
-    "formButton": "Continue"
+  "Auth": {
+    "SignIn": {
+      "CardTitle": "Sign in to Studio",
+      "CardDescription": "Don't have an account?",
+      "LinkText": "Sign up"
+    },
+    "SignUp": {
+      "CardTitle": "Create an account",
+      "CardDescription": "Already have an account?",
+      "LinkText": "Sign In"
+    },
+    "AuthForm": {
+      "UsernameInput": "Username",
+      "PasswordInput": "Password",
+      "FormButton": "Continue"
+    },
+    "SignOut": {
+      "ButtonLabel": "Sign Out"
+    }
   },
   "CreateStudyForm": {
-    "formTitle": "Create Study",
-    "inputLabel": "Study Name",
-    "inputPlaceholder": "My New Study",
-    "formButton": "Create Study",
-    "roleSelectLabel": "Select a role",
-    "roleSelectPlaceholder": "Roles..."
-  },
-  "SignOutBtn": {
-    "buttonLabel": "Sign Out"
+    "FormTitle": "Create Study",
+    "InputLabel": "Study Name",
+    "InputPlaceholder": "My New Study",
+    "FormButton": "Create Study",
+    "RoleSelectLabel": "Select a role",
+    "RoleSelectPlaceholder": "Roles..."
   },
   "StudyPage": {
-    "title": "Study Page",
-    "noProjectFoundMessage": "No projects found"
+    "Title": "Study Page",
+    "NoProjectFoundMessage": "No projects found"
   },
   "CreateProjectForm": {
-    "formTitle": "Create Project",
-    "projectNameInputLabel": "Project Name",
-    "projectNameInputPlaceholder": "Studio",
-    "formButton": "Create Project"
-  },
-  "MainNavigation": {
-    "home": "Studio Home"
-  },
-  "TopNavigation": {
-    "home": "Studio",
-    "dashboard": "Dashboard",
-    "settings": "Settings"
-  },
-  "SecondaryNavigation": {
-    "projectParticipantsLink": "Participants",
-    "projectInterviewsLink": "Interviews",
-    "projectProtocolsLink": "Protocols",
-    "projectSettingsLink": "Settings"
-  },
-  "StudySettingsPage": {
-    "title": "Study Settings Page",
-    "description": "slug:"
-  },
-  "ProjectPage": {
-    "title": "Project Page",
-    "description": "slug:",
-    "noProjectFoundMessage": "Project not found"
-  },
-  "ProjectCard": {
-    "subText": "Subtext about the project"
-  },
-  "ProjectSettingsPage": {
-    "title": "Settings Page",
-    "description": "slug:"
-  },
-  "ProjectProtocolsPage": {
-    "title": "Protocols Page",
-    "description": "slug:"
-  },
-  "ProjectInterviewsPage": {
-    "title": "Interviews Page",
-    "description": "slug:"
-  },
-  "ProjectParticipantsPage": {
-    "title": "Participants Page",
-    "description": "slug:"
+    "FormTitle": "Create Project",
+    "ProjectNameInputLabel": "Project Name",
+    "ProjectNameInputPlaceholder": "Studio",
+    "FormButton": "Create Project"
   },
   "Navigation": {
-    "forward": "Move forward",
-    "back": "Move backward",
-    "menu": "Menu",
-    "help": "Help"
+    "Primary": {
+      "Home": "Studio",
+      "Dashboard": "Dashboard",
+      "Settings": "Settings"
+    },
+    "Secondary": {
+      "ParticipantsLink": "Participants",
+      "InterviewsLink": "Interviews",
+      "ProtocolsLink": "Protocols",
+      "SettingsLink": "Settings"
+    }
+  },
+  "Pages": {
+    "Home": {
+      "Title": "Studio MVP",
+      "AllStudiesHeading": "All Studies",
+      "InterviewsHeading": "Interviews"
+    },
+    "Project": {
+      "Title": "Project Page",
+      "Description": "slug:",
+      "NoProjectFoundMessage": "Project not found",
+      "ProjectCard": {
+        "SubText": "Subtext about the project"
+      },
+      "SettingsPage": {
+        "Title": "Settings Page",
+        "Description": "slug:"
+      },
+      "ProtocolsPage": {
+        "Title": "Protocols Page",
+        "Description": "slug:"
+      },
+      "InterviewsPage": {
+        "Title": "Interviews Page",
+        "Description": "slug:"
+      },
+      "ParticipantsPage": {
+        "Title": "Participants Page",
+        "Description": "slug:"
+      }
+    },
+    "Study": {
+      "SettingsPage": {
+        "Title": "Study Settings Page",
+        "Description": "slug:"
+      },
+      "NotFound": {
+        "Title": "Study Not Found",
+        "Description": "The page you are looking for does not exist.",
+        "HomeText": "Home"
+      }
+    },
+    "NotFound": {
+      "Title": "Page Not Found",
+      "Description": "The page you are looking for does not exist.",
+      "HomeText": "Home"
+    }
+  },
+  "Interview": {
+    "Navigation": {
+      "Forward": "Move forward",
+      "Back": "Move backward",
+      "Menu": "Menu",
+      "Help": "Help",
+      "Progress": "You have completed {percent} of the interview"
+    }
   },
   "Generic": {
-    "next": "Next",
-    "previous": "Previous",
-    "done": "Done",
-    "close": "Close",
-    "submit": "Submit",
-    "cancel": "Cancel",
-    "save": "Save",
-    "delete": "Delete",
-    "edit": "Edit",
-    "add": "Add",
-    "remove": "Remove",
-    "create": "Create",
-    "copy": "Copy",
-    "paste": "Paste",
-    "undo": "Undo",
-    "redo": "Redo",
-    "search": "Search",
-    "filter": "Filter",
-    "clear": "Clear"
-  },
-  "PopoverHint": {
-    "hint": "Click this for stage instructions",
-    "close": "Close",
-    "open": "Open"
-  },
-  "ExampleTooltip": {
-    "hint": "Drag and drop this node into a bin below."
-  },
-  "NameGeneratorPopover": {
-    "title": "Name Generator",
-    "hint": "Tap the icon to nominate a person. Type in a name and press enter to add it. Click next to continue. To remove a person, drag and drop the circle into the trash bin."
-  },
-  "InformationPopover": {
-    "title": "Information Interface",
-    "hint": "This interface is used to display information in text, image, or video format. Read the information and click next to continue."
+    "Next": "Next",
+    "Previous": "Previous",
+    "Done": "Done",
+    "Close": "Close",
+    "Submit": "Submit",
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Delete": "Delete",
+    "Edit": "Edit",
+    "Add": "Add",
+    "Remove": "Remove",
+    "Create": "Create",
+    "Copy": "Copy",
+    "Paste": "Paste",
+    "Undo": "Undo",
+    "Redo": "Redo",
+    "Search": "Search",
+    "Filter": "Filter",
+    "Clear": "Clear"
   },
   "StudySwitcher": {
-    "placeholder": "Select a study"
+    "Placeholder": "Select a study"
   },
   "ThemeSwitcher": {
-    "label": "Toggle theme"
-  },
-  "NotFound": {
-    "title": "Page Not Found",
-    "description": "The page you are looking for does not exist.",
-    "homeText": "Home"
-  },
-  "StudyNotFound": {
-    "title": "Study Not Found",
-    "description": "The page you are looking for does not exist.",
-    "homeText": "Home"
+    "Label": "Toggle theme"
   }
 }

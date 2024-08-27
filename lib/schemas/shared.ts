@@ -36,6 +36,7 @@ export type InlineElement = z.infer<typeof InlineElementSchema>;
 // Define the schema for a block node
 const BlockNodeSchema = z.object({
   type: z.enum(['paragraph', 'heading', 'block-quote', 'video']), // Add other block types as needed
+  props: z.record(z.any()).optional(), // Props for the block node
   children: z.array(z.union([TextNodeSchema, InlineElementSchema])), // Block nodes contain children, which could be text or inline elements
 });
 
