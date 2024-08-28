@@ -28,8 +28,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       type,
       label,
       hint,
-      rightAdornment,
-      leftAdornment,
+      rightAdornment: endAdornment,
+      leftAdornment: startAdornment,
       error,
       ...props
     },
@@ -49,25 +49,23 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </span>
         )}
         <div className="relative flex items-center justify-end">
-          {leftAdornment && (
-            <div className="absolute left-4">{leftAdornment}</div>
+          {startAdornment && (
+            <div className="absolute left-4">{startAdornment}</div>
           )}
           <input
             id={id}
             type={type}
             className={cn(
               inputClasses,
-              !!leftAdornment && 'pl-12',
-              !!rightAdornment && 'pr-12',
+              !!startAdornment && 'ps-12',
+              !!endAdornment && 'pe-12',
               !!error && 'border-destructive',
               inputClassName,
             )}
             ref={ref}
             {...props}
           />
-          {rightAdornment && (
-            <div className="absolute right-4">{rightAdornment}</div>
-          )}
+          {endAdornment && <div className="absolute end-4">{endAdornment}</div>}
         </div>
         {error && (
           <span role="alert" className="text-sm text-destructive">

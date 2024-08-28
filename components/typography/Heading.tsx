@@ -18,6 +18,9 @@ export const headingVariants = tv({
         'scroll-m-20 text-sm tracking-normal peer-disabled:opacity-70 peer-disabled:cursor-not-allowed font-extrabold',
     },
   },
+  defaultVariants: {
+    variant: 'h1',
+  },
 });
 
 type VariantPropType = VariantProps<typeof headingVariants>;

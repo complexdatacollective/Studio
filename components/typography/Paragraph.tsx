@@ -5,7 +5,7 @@ import { forwardRef } from 'react';
 import { cn } from '~/lib/utils';
 
 export const paragraphVariants = tv({
-  base: 'text-pretty font-normal text-base [&:not(:last-child)]:mb-3',
+  base: 'text-pretty font-normal [&:not(:last-child)]:mb-3',
   variants: {
     variant: {
       default: '',

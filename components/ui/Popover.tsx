@@ -1,16 +1,20 @@
 import { type PropsWithChildren } from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { X } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { cn } from '~/lib/utils';
+import CloseButton from './CloseButton';
+import Heading from '../typography/Heading';
 
 const Popover = ({
   children,
+  title,
   content,
-  side = 'top',
+  side,
   modal,
   isOpen,
   onOpenChange,
 }: PropsWithChildren<{
+  title?: string;
   content: string | React.ReactNode;
   side?: 'top' | 'right' | 'bottom' | 'left';
   modal?: boolean;
@@ -27,28 +31,32 @@ const Popover = ({
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
           className={cn(
-            'data-[state=open]:data-[side=top]:animate-slideDownAndFade',
-            'data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
-            'data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
-            'data-[state=open]:data-[side=left]:animate-slideRightAndFade',
-            'w-[260px] rounded-small bg-overlay p-5 text-overlay-foreground will-change-[transform,opacity]',
-            'shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)]',
-            'focus:shadow-surface-1',
-            'z-50',
+            'motion-safe:data-[state=open]:data-[side=top]:animate-slideDownAndFade',
+            'motion-safe:data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
+            'motion-safe:data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
+            'motion-safe:data-[state=open]:data-[side=left]:animate-slideRightAndFade',
+            'max-w-96 rounded-small bg-card px-6 py-10 text-card-foreground will-change-[transform,opacity]',
+            'z-50 shadow-xl',
           )}
           sideOffset={5}
           collisionPadding={10}
-          side={side}
+          // side={side}
+          side="right"
           avoidCollisions
+          asChild
         >
-          <div className="flex flex-col gap-2.5">{content}</div>
-          <PopoverPrimitive.Close
-            className="absolute top-2 inline-flex h-[25px] w-[25px] cursor-default items-center justify-center rounded-full text-overlay-foreground outline-none focus:shadow-[0_0_0_2px] focus:shadow-background ltr:right-2 rtl:left-2"
-            aria-label="Close"
-          >
-            <X />
-          </PopoverPrimitive.Close>
-          <PopoverPrimitive.Arrow className="fill-overlay" />
+          <motion.div layoutId="popover-content" layout="position">
+            {title && <Heading variant="h4">{title}</Heading>}
+            {content}
+            <PopoverPrimitive.Close asChild>
+              <CloseButton />
+            </PopoverPrimitive.Close>
+            <PopoverPrimitive.Arrow
+              className="fill-card"
+              width={26}
+              height={16}
+            />
+          </motion.div>
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>

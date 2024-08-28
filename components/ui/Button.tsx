@@ -5,7 +5,7 @@ import { cn } from '~/lib/utils';
 
 const buttonVariants = tv({
   base: cn(
-    'inline-flex items-center justify-center rounded text-sm font-semibold transition-colors text-nowrap truncate text-foreground tracking-wide',
+    'inline-flex items-center justify-center rounded text-sm font-semibold transition-colors text-nowrap truncate tracking-wide',
     'hover:bg-opacity-90',
     'ring-offset-background ',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ',
@@ -13,13 +13,14 @@ const buttonVariants = tv({
   ),
   variants: {
     variant: {
-      default: 'bg-primary text-primary-foreground',
+      default: 'bg-background text-foreground',
+      primary: 'bg-primary text-primary-foreground',
       accent: 'bg-accent text-accent-foreground hover:bg-accent/90',
       destructive:
         'bg-destructive text-destructive-foreground hover:bg-destructive/90',
       success: 'bg-success text-success-foreground',
       outline:
-        'bg-transparent hover:bg-primary hover:text-primary-foreground border border-[currentColor] hover:bg-opacity-100',
+        'bg-transparent hover:bg-primary hover:text-primary-foreground border border-[currentColor] text-[currentColor] hover:bg-opacity-100',
       ghost: 'hover:text-accent',
       tableHeader: 'hover:text-accent -ml-6 data-[state=open]:text-accent',
       link: 'underline-offset-4 hover:underline',

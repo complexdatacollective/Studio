@@ -1,49 +1,85 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { X } from 'lucide-react';
-import cn from 'classnames';
+import { cn } from '~/lib/utils';
+import Heading from '../typography/Heading';
+import CloseButton from './CloseButton';
+import ModalOverlay from './form/ModalOverlay';
+import { motion } from 'framer-motion';
+import { ForwardedRef, forwardRef } from 'react';
+
+const dialogVariants = {
+  closed: { opacity: 0, y: '100px' },
+  open: { opacity: 1, y: 0 },
+};
+
+export const DialogCloseButton = () => (
+  <DialogPrimitive.Close asChild>
+    <CloseButton />
+  </DialogPrimitive.Close>
+);
+
+export const DialogContent = forwardRef(
+  (
+    {
+      children,
+      ...props
+    }: {
+      title: string;
+      description: string;
+    } & DialogPrimitive.DialogContentProps,
+    forwardedRef: ForwardedRef<HTMLDivElement>,
+  ) => {
+    const { title, description, ...rest } = props;
+    return (
+      <DialogPrimitive.Content forceMount ref={forwardedRef} asChild {...rest}>
+        <motion.div
+          variants={dialogVariants}
+          className={cn(
+            'md:w-90% mx-4 max-w-4xl md:mx-auto',
+            'px-6 py-10',
+            'z-50 max-h-[85vh] rounded bg-card text-card-foreground shadow-xl focus:outline-none',
+          )}
+        >
+          <DialogPrimitive.Title asChild>
+            <Heading variant="h2">{title}</Heading>
+          </DialogPrimitive.Title>
+          <DialogPrimitive.Description>
+            {description}
+          </DialogPrimitive.Description>
+          {children}
+          <DialogCloseButton />
+        </motion.div>
+      </DialogPrimitive.Content>
+    );
+  },
+);
+
+DialogContent.displayName = 'DialogContent';
 
 const Dialog = ({
-  content,
   children,
   isOpen,
   onOpenChange,
   title,
+  description,
   className,
 }: {
-  content: React.ReactNode;
   children?: React.ReactNode;
   isOpen?: boolean;
-  title?: string;
+  title: string;
+  description: string;
   onOpenChange?: (open: boolean) => void;
   className?: string;
 }) => {
   return (
-    <DialogPrimitive.Root defaultOpen={isOpen} onOpenChange={onOpenChange}>
-      <DialogPrimitive.Trigger asChild>{children}</DialogPrimitive.Trigger>
-      <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="data-[state=open]:animate-overlayShow fixed inset-0 z-50 backdrop-blur-md backdrop-brightness-75" />
-        <DialogPrimitive.Content
-          aria-describedby={undefined}
-          className={cn(
-            className,
-            'data-[state=open]:animate-contentShow fixed left-[50%] top-[50%] z-50 max-h-[85vh] translate-x-[-50%] translate-y-[-50%] rounded-small bg-overlay p-[25px] text-overlay-foreground shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none',
-          )}
-        >
-          <DialogPrimitive.Title className="font-medium m-0 text-lg text-overlay-foreground">
-            {title}
-          </DialogPrimitive.Title>
-          {content}
-          <DialogPrimitive.Close asChild>
-            <button
-              className="hover:bg-violet4 absolute top-2 inline-flex h-[25px] w-[25px] cursor-default items-center justify-center rounded-full text-overlay-foreground outline-none focus:shadow-[0_0_0_2px] focus:shadow-background ltr:right-2 rtl:left-2"
-              aria-label="Close"
-            >
-              <X />
-            </button>
-          </DialogPrimitive.Close>
-        </DialogPrimitive.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+    <ModalOverlay open={isOpen} onOpenChange={onOpenChange}>
+      <DialogContent
+        className={className}
+        title={title}
+        description={description}
+      >
+        {children}
+      </DialogContent>
+    </ModalOverlay>
   );
 };
 

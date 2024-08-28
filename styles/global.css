@@ -32,6 +32,10 @@
   em {
     @apply italic;
   }
+
+  body {
+    @apply text-base;
+  }
 }
 
 @layer theme {
@@ -69,6 +73,8 @@
 
     --link: var(--neon-coral);
 
+    --overlay: 13% 0.1 var(--base-hue);
+
     /* Surfaces */
     --surface-1-bg: 93% 0.005 var(--base-hue);
     --surface-1-fg: var(--foreground);
@@ -79,11 +85,60 @@
     --surface-4-bg: 84% 0.04 var(--base-hue);
     --surface-4-fg: var(--foreground);
 
+    --card: var(--surface-2-bg);
+    --card-foreground: var(--surface-2-fg);
+
     /* Focus ring */
     --ring: var(--mustard);
 
     --input: var(--white);
     --input-foreground: var(--cyber-grape);
+
+    /* Sequences */
+
+    --seq-node-1: var(--neon-coral);
+    --seq-node-2: var(--seq-serpent);
+    --seq-node-3: var(--purple-pizzazz);
+    --seq-node-4: var(--neon-carrot);
+    --seq-node-5: var(--kiwi);
+    --seq-node-6: var(--cerulean-blue);
+    --seq-node-7: var(--paradise-pink);
+    --seq-node-8: var(--mustard);
+
+    --seq-edge-1: var(--mustard);
+    --seq-edge-2: var(--purple-pizzazz);
+    --seq-edge-3: var(--neon-coral);
+    --seq-edge-4: var(--kiwi);
+    --seq-edge-5: var(--paradise-pink);
+    --seq-edge-6: var(--tomato);
+    --seq-edge-7: var(--sea-serpent);
+    --seq-edge-8: var(--slate-blue);
+    --seq-edge-9: var(--sea-green);
+    --seq-edge-10: var(--cerulean-blue);
+
+    --seq-ord-1: var(--sea-green);
+    --seq-ord-2: var(--sea-serpent);
+    --seq-ord-3: var(--tomato);
+    --seq-ord-4: var(--neon-carrot);
+    --seq-ord-5: var(--kiwi);
+    --seq-ord-6: var(--cerulean-blue);
+    --seq-ord-7: var(--paradise-pink);
+    --seq-ord-8: var(--mustard);
+
+    /* used by categorical and convex hulls */
+    --seq-cat-1: var(--sea-serpent);
+    --seq-cat-2: var(--purple-pizzazz);
+    --seq-cat-3: var(--mustard);
+    --seq-cat-4: var(--paradise-pink);
+    --seq-cat-5: var(--kiwi);
+    --seq-cat-6: var(--cerulean-blue);
+    --seq-cat-7: var(--neon-carrot);
+    --seq-cat-8: var(--barbie-pink);
+    --seq-cat-9: var(--tomato);
+    --seq-cat-10: var(--slate-blue);
+
+    --seq-panel-1: var(--sea-green);
+    --seq-panel-2: var(--sea-serpent);
   }
 
   [data-theme='dark'] {

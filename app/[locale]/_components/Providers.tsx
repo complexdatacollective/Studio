@@ -5,7 +5,10 @@ import { TooltipProvider } from '~/components/ui/Tooltip';
 import { type Locale } from '~/lib/localisation/locales';
 import IntlProvider from './IntlProvider';
 import { ThemeProvider } from 'next-themes';
-import { OnboardWizardProvider } from '~/components/OnboardWizard/OnboardWizardContext';
+import { WizardProvider } from '~/lib/onboarding-wizard/Provider';
+import { MotionConfig } from 'framer-motion';
+import { DialogRenderer } from '~/lib/dialogs/DialogRenderer';
+import { DialogStoreProvider } from '~/lib/dialogs/Provider';
 
 export default function Providers({
   intlParams: { dir, messages, locale, now, timeZone },
@@ -28,11 +31,15 @@ export default function Providers({
         now={now}
         timeZone={timeZone}
       >
-        <RadixDirectionProvider dir={dir}>
-          <TooltipProvider>
-            <OnboardWizardProvider>{children}</OnboardWizardProvider>
-          </TooltipProvider>
-        </RadixDirectionProvider>
+        <MotionConfig reducedMotion="user">
+          <RadixDirectionProvider dir={dir}>
+            <WizardProvider>
+              <DialogStoreProvider>
+                <TooltipProvider>{children}</TooltipProvider>
+              </DialogStoreProvider>
+            </WizardProvider>
+          </RadixDirectionProvider>
+        </MotionConfig>
       </IntlProvider>
     </ThemeProvider>
   );

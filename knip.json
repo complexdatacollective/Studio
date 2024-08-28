@@ -8,6 +8,7 @@
     "@radix-ui/*"
   ],
   "ignore": [
+    "./lib/schemas/**",
     "./components/ui/form/*",
     "./components/layout/*",
     "./components/typography/*",

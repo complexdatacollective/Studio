@@ -1,14 +1,12 @@
 import type { Preview } from '@storybook/react';
 import React, { useEffect, useState } from 'react';
-import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
+import { type AbstractIntlMessages } from 'next-intl';
 import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
-import { TooltipProvider } from '~/components/ui/Tooltip';
-import { DirectionProvider } from '@radix-ui/react-direction';
 import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import '~/styles/global.css';
-import { OnboardWizardProvider } from '~/components/OnboardWizard/OnboardWizardContext';
+import Providers from '~/app/[locale]/_components/Providers';
 
 const loadMessages = async (
   locale: Locale,
@@ -61,42 +59,47 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const [messages, setMessages] = useState<AbstractIntlMessages>();
-      const [langDir, setLangDir] =
-        useState<ReturnType<typeof getLangDir>>('ltr');
+      const [dir, setDir] = useState<ReturnType<typeof getLangDir>>('ltr');
 
       useEffect(() => {
         const fetchMessages = async () => {
           const locale = context.globals.locale as Locale;
           const loadedMessages = await loadMessages(locale);
           setMessages(loadedMessages);
-          setLangDir(getLangDir(locale));
+          setDir(getLangDir(locale));
         };
 
         void fetchMessages();
       }, [context.globals.locale]);
 
       useEffect(() => {
-        document.documentElement.dir = langDir;
-      }, [langDir]);
+        document.documentElement.dir = dir;
+      }, [dir]);
 
+      return (
+        <Providers
+          intlParams={{
+            dir,
+            messages: messages ?? ({} as AbstractIntlMessages),
+            locale: context.globals.locale as Locale,
+            now: new Date(),
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          }}
+        >
+          <Story />
+        </Providers>
+      );
+    },
+    (Story, context) => {
       const theme =
         (context.parameters.forceTheme as string) ??
         (context.globals.visualTheme as string);
 
       return (
-        <TooltipProvider>
+        <>
           <InjectThemeVariables theme={theme} />
-          <DirectionProvider dir={langDir}>
-            <NextIntlClientProvider
-              messages={messages}
-              locale={context.globals.locale as Locale}
-            >
-            <OnboardWizardProvider>
-                {Story()}
-              </OnboardWizardProvider>
-          </NextIntlClientProvider>
-          </DirectionProvider>
-        </TooltipProvider>
+          <Story />
+        </>
       );
     },
     // For some reason, we need this empty decorator here, or the theme switcher
