@@ -3,8 +3,16 @@ import { cn } from '~/lib/utils';
 import Heading from '../typography/Heading';
 import CloseButton from './CloseButton';
 import ModalOverlay from './form/ModalOverlay';
+import { motion } from 'framer-motion';
 
-function DialogContent({
+export const MotionContent = motion(DialogPrimitive.Content);
+
+const dialogVariants = {
+  closed: { opacity: 0, y: '100px' },
+  open: { opacity: 1, y: 0 },
+};
+
+export function DialogContent({
   className,
   children,
   title,
@@ -16,13 +24,17 @@ function DialogContent({
   description?: string;
 }) {
   return (
-    <div
+    <MotionContent
       className={cn(
         className,
         'md:w-90% mx-4 max-w-4xl md:mx-auto',
         'px-6 py-10',
-        'fixed left-1/2 top-1/2 z-50 max-h-[85vh] -translate-x-1/2 -translate-y-1/2 rounded bg-card text-card-foreground shadow-xl focus:outline-none',
+        'z-50 max-h-[85vh] rounded bg-card text-card-foreground shadow-xl focus:outline-none',
       )}
+      variants={dialogVariants}
+      initial="closed"
+      animate="open"
+      exit="closed"
     >
       {title && (
         <DialogPrimitive.Title asChild>
@@ -36,7 +48,7 @@ function DialogContent({
       <DialogPrimitive.Close asChild>
         <CloseButton className="top-4 ltr:right-4 rtl:left-4" />
       </DialogPrimitive.Close>
-    </div>
+    </MotionContent>
   );
 }
 
