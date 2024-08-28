@@ -16,6 +16,7 @@ import {
 import Spotlight from '~/components/Spotlight';
 import { createLocalStorageStore } from '../createLocalStorageStore';
 import { AnimatePresence } from 'framer-motion';
+import WizardStep from '~/components/onboard-wizard/WizardStep';
 
 const WizardContext = createContext<WizardStoreApi | undefined>(undefined);
 
@@ -35,6 +36,19 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
   if (!storeRef.current) {
     storeRef.current = createWizardStore(getItem, setItem);
   }
+
+  const activeStep = useStore(
+    storeRef.current,
+    ({ currentStep, getActiveWizard }) => {
+      const activeWizard = getActiveWizard();
+
+      if (!activeWizard || currentStep === null) {
+        return null;
+      }
+
+      return activeWizard.steps[currentStep];
+    },
+  );
 
   // Selector to get the current step's target element ID (if any)
   const currentTargetElementId = useStore(
@@ -75,6 +89,7 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
   return (
     <WizardContext.Provider value={storeRef.current}>
       <AnimatePresence>
+        {activeStep && <WizardStep step={activeStep} />}
         {currentTargetElementId && (
           <Spotlight targetElementId={currentTargetElementId} />
         )}

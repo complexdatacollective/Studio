@@ -154,28 +154,29 @@ const demoSteps: Step[] = [
 
 export default function NameGenerator() {
   return (
-    <OnboardWizard
-      wizard={{
-        id: 'name-generator',
-        name: {
-          en: 'Name Generator Help',
-        },
-        priority: 'Task',
-        description: {
-          en: [
-            {
-              type: 'paragraph',
-              children: [
-                {
-                  text: 'Help with the current task, including how to add new people, how to delete people, and how to edit people.',
-                },
-              ],
-            },
-          ],
-        },
-        steps: demoSteps,
-      }}
-    >
+    <>
+      <OnboardWizard
+        wizard={{
+          id: 'name-generator',
+          name: {
+            en: 'Name Generator Help',
+          },
+          priority: 'Task',
+          description: {
+            en: [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    text: 'Help with the current task, including how to add new people, how to delete people, and how to edit people.',
+                  },
+                ],
+              },
+            ],
+          },
+          steps: demoSteps,
+        }}
+      />
       <div className="flex grow flex-col gap-4">
         <Prompts
           prompts={demoPrompts}
@@ -191,6 +192,6 @@ export default function NameGenerator() {
         </div>
         <QuickNodeForm />
       </div>
-    </OnboardWizard>
+    </>
   );
 }

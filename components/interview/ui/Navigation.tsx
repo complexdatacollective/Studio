@@ -40,90 +40,91 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const t = useTranslations('Interview.Navigation');
 
   return (
-    <OnboardWizard
-      wizard={{
-        id: 'general-interview-information',
-        name: {
-          en: 'General Interview Information',
-        },
-        priority: 'Navigation',
-        description: {
-          en: [
+    <>
+      <OnboardWizard
+        wizard={{
+          id: 'general-interview-information',
+          name: {
+            en: 'General Interview Information',
+          },
+          priority: 'Navigation',
+          description: {
+            en: [
+              {
+                type: 'paragraph',
+                children: [
+                  {
+                    text: 'Help with the general interview process, including how to navigate the interview, and general tips to help you get started.',
+                  },
+                ],
+              },
+            ],
+          },
+          steps: [
             {
-              type: 'paragraph',
-              children: [
-                {
-                  text: 'Help with the general interview process, including how to navigate the interview, and general tips to help you get started.',
-                },
-              ],
+              title: {
+                en: 'Welcome to the Interview!',
+              },
+              content: {
+                en: [
+                  {
+                    type: 'paragraph',
+                    children: [
+                      {
+                        text: 'Before you begin, here are some general tips to help you navigate the interview process.',
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+            {
+              targetElementId: 'navigation-bar',
+              title: {
+                en: 'Navigation Bar',
+              },
+              content: {
+                en: [
+                  {
+                    type: 'paragraph',
+                    children: [
+                      {
+                        text: 'The navigation bar helps you move through the interview process, and get help if you need it.',
+                      },
+                    ],
+                  },
+                  {
+                    type: 'paragraph',
+                    children: [
+                      {
+                        text: 'You can change the language from the settings button, or access help options by clicking the help button.',
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+            {
+              targetElementId: 'interview-movement',
+              title: {
+                en: 'Navigating the Interview',
+              },
+              content: {
+                en: [
+                  {
+                    type: 'paragraph',
+                    children: [
+                      {
+                        text: 'Use the back and forward buttons to move through the interview, and track your progress using the progress bar.',
+                      },
+                    ],
+                  },
+                ],
+              },
             },
           ],
-        },
-        steps: [
-          {
-            title: {
-              en: 'Welcome to the Interview!',
-            },
-            content: {
-              en: [
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      text: 'Before you begin, here are some general tips to help you navigate the interview process.',
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-          {
-            targetElementId: 'navigation-bar',
-            title: {
-              en: 'Navigation Bar',
-            },
-            content: {
-              en: [
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      text: 'The navigation bar helps you move through the interview process, and get help if you need it.',
-                    },
-                  ],
-                },
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      text: 'You can change the language from the settings button, or access help options by clicking the help button.',
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-          {
-            targetElementId: 'interview-movement',
-            title: {
-              en: 'Navigating the Interview',
-            },
-            content: {
-              en: [
-                {
-                  type: 'paragraph',
-                  children: [
-                    {
-                      text: 'Use the back and forward buttons to move through the interview, and track your progress using the progress bar.',
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-        ],
-      }}
-    >
+        }}
+      />
       <nav
         id="navigation-bar"
         role="navigation"
@@ -174,7 +175,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           </NavButtonWithTooltip>
         </div>
       </nav>
-    </OnboardWizard>
+    </>
   );
 };
 
