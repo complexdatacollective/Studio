@@ -6,8 +6,8 @@ export const backdropClasses =
   'fixed inset-0 flex items-center justify-center bg-overlay/50';
 
 const overlayVariants = {
-  closed: { opacity: 0 },
-  open: { opacity: 1 },
+  closed: { opacity: 0, transition: { when: 'afterChildren' } },
+  open: { opacity: 1, transition: { when: 'beforeChildren' } },
 };
 
 const PopoverBackdrop = forwardRef(

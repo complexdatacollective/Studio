@@ -7,6 +7,8 @@ import IntlProvider from './IntlProvider';
 import { ThemeProvider } from 'next-themes';
 import { WizardProvider } from '~/lib/onboarding-wizard/Provider';
 import { MotionConfig } from 'framer-motion';
+import { DialogRenderer } from '~/lib/dialogs/DialogRenderer';
+import { DialogStoreProvider } from '~/lib/dialogs/Provider';
 
 export default function Providers({
   intlParams: { dir, messages, locale, now, timeZone },
@@ -31,9 +33,11 @@ export default function Providers({
       >
         <MotionConfig reducedMotion="user">
           <RadixDirectionProvider dir={dir}>
-            <TooltipProvider>
-              <WizardProvider>{children}</WizardProvider>
-            </TooltipProvider>
+            <DialogStoreProvider>
+              <TooltipProvider>
+                <WizardProvider>{children}</WizardProvider>
+              </TooltipProvider>
+            </DialogStoreProvider>
           </RadixDirectionProvider>
         </MotionConfig>
       </IntlProvider>
