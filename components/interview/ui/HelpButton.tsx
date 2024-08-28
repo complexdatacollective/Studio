@@ -105,6 +105,7 @@ export default function HelpButton({ id }: { id?: string }) {
 
   const t = useTranslations('Interview.Navigation');
   const t2 = useTranslations('Components.ContextualHelp');
+
   return (
     <>
       <NavButtonWithTooltip
@@ -115,13 +116,6 @@ export default function HelpButton({ id }: { id?: string }) {
       >
         <HelpCircle className="h-10 w-10 stroke-[2px]" />
       </NavButtonWithTooltip>
-      {/* <ModalOverlay
-        open={showWizards}
-        onOpenChange={toggleShowWizards}
-        contentClassName="items-end"
-      >
-        <AvailableWizardsPanel handleClosePanel={toggleShowWizards} />
-      </ModalOverlay> */}
       {showWizards && (
         <Dialog
           isOpen={showWizards}

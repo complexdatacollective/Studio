@@ -33,11 +33,11 @@ export default function Providers({
       >
         <MotionConfig reducedMotion="user">
           <RadixDirectionProvider dir={dir}>
-            <DialogStoreProvider>
-              <TooltipProvider>
-                <WizardProvider>{children}</WizardProvider>
-              </TooltipProvider>
-            </DialogStoreProvider>
+            <WizardProvider>
+              <DialogStoreProvider>
+                <TooltipProvider>{children}</TooltipProvider>
+              </DialogStoreProvider>
+            </WizardProvider>
           </RadixDirectionProvider>
         </MotionConfig>
       </IntlProvider>
