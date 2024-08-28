@@ -73,6 +73,8 @@
 
     --link: var(--neon-coral);
 
+    --overlay: 13% 0.1 var(--base-hue);
+
     /* Surfaces */
     --surface-1-bg: 93% 0.005 var(--base-hue);
     --surface-1-fg: var(--foreground);

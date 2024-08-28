@@ -3,7 +3,7 @@ import NameGenerator from '~/components/interview/interfaces/name-generator/Name
 import SimpleShell from '../interview/ui/SimpleShell';
 
 const meta: Meta<typeof NameGenerator> = {
-  title: 'OnboardWizard/NameGenerator',
+  title: 'Systems/OnboardWizard/Interface',
   component: NameGenerator,
   parameters: {
     nextjs: {

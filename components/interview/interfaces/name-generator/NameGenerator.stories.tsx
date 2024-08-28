@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import NameGenerator from './NameGenerator';
 
 const meta: Meta<typeof NameGenerator> = {
-  title: 'Interfaces/NameGenerator',
+  title: 'Interview/Interfaces/NameGenerator',
   component: NameGenerator,
   parameters: {
     nextjs: {

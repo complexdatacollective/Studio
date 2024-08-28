@@ -95,6 +95,7 @@ export default {
       },
 
       'link': 'oklch(var(--link) / <alpha-value>)',
+      'overlay': 'oklch(var(--overlay) / <alpha-value>)',
 
       'focus': 'oklch(var(--focus) / <alpha-value>)',
 

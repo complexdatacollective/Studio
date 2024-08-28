@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
+import PopoverBackdrop from './ui/PopoverBackdrop';
 
 /**
  * Overlay that darkens the background and highlights a specific element.
  */
 const SpotlightOverlay = ({
-  // targetRef,
   targetElementId,
   margin = 15,
   borderRadius = '1.25rem', // TODO: get this from theme somehow. SVG won't accept CSS variable.
 }: {
-  // targetRef: React.RefObject<HTMLElement>;
   targetElementId?: string;
   margin?: number;
   borderRadius?: number | string;
@@ -49,13 +48,9 @@ const SpotlightOverlay = ({
   }, [targetElementId, margin]);
 
   return createPortal(
-    <motion.div
-      className="pointer-events-none fixed left-0 top-0 z-50 h-full w-full backdrop-blur-sm backdrop-brightness-75 [mask-image:url(#spotlight-mask)] [mask-size:cover]"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <PopoverBackdrop className="[mask-image:url(#spotlight-mask)] [mask-size:cover]">
       <svg
+        className="absolute inset-0"
         width="100%"
         height="100%"
         pointerEvents="visiblePainted" // Prevents clicking background elements: https://stackoverflow.com/questions/48447142/svg-how-to-ignore-pointer-events-on-transparent-parts-of-an-image
@@ -79,7 +74,7 @@ const SpotlightOverlay = ({
           </mask>
         </defs>
       </svg>
-    </motion.div>,
+    </PopoverBackdrop>,
     document.body,
   );
 };
