@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { type IntlError, IntlErrorCode } from 'next-intl';
-import { type LocalisedRecord } from '~/lib/schemas/shared';
+import { JSONRichText, type LocalisedRecord } from '~/schemas/shared';
 import { match } from '@formatjs/intl-localematcher';
 import { LocalisedString } from '~/schemas/shared';
 
@@ -26,16 +26,21 @@ export const customErrorLogger = (error: IntlError) => {
  * Primarily for use in interview contexts where we have user supplied localised
  * strings.
  */
+
+export function getLocalisedValue(
+  localisedRecord: LocalisedRecord,
+  userLocales: string[],
+): JSONRichText;
+export function getLocalisedValue(
+  localisedRecord: LocalisedString,
+  userLocales: string[],
+): string;
+
+// Implementation
 export function getLocalisedValue(
   localisedRecord: LocalisedRecord | LocalisedString,
   userLocales: string[],
 ) {
   const bestMatch = match(userLocales, Object.keys(localisedRecord), 'en');
-
-  if (bestMatch !== 'NOT_FOUND') {
-    return localisedRecord[bestMatch]!;
-  }
-
-  // Fallback
-  return localisedRecord.en;
+  return localisedRecord[bestMatch];
 }

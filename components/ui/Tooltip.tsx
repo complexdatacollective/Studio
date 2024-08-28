@@ -62,7 +62,11 @@ export function withTooltip<T extends HtmlHTMLAttributes<HTMLDivElement>>(
     return (
       <Tooltip tooltip={tooltipContent ?? title} side={tooltipSide}>
         {/* Pass down all original props, including ref */}
-        <WrappedComponent {...(props as T)} tabIndex={0} />
+        <WrappedComponent
+          aria-label={tooltipContent ?? title}
+          {...(props as T)}
+          tabIndex={0}
+        />
       </Tooltip>
     );
   };
