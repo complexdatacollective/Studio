@@ -2,23 +2,15 @@ import { HelpCircle } from 'lucide-react';
 import { NavButtonWithTooltip } from './NavigationButton';
 import { useTranslations } from 'next-intl';
 import { useWizardController } from '~/components/onboard-wizard/useWizardController';
-import { Button } from '~/components/ui/Button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '~/components/ui/Card';
+import { Card, CardHeader } from '~/components/ui/Card';
 import { env } from '~/env';
 import { WIZARD_LOCAL_STORAGE_KEY } from '~/lib/onboarding-wizard/Provider';
-import useToggleState from '~/hooks/useToggleState';
-import ModalOverlay from '~/components/ui/form/ModalOverlay';
 import { getLocalisedValue } from '~/lib/localisation/utils';
 import { renderLocalisedValue } from '~/components/RenderRichText';
 import type { ReactNode } from 'react';
 import Heading from '~/components/typography/Heading';
-import Dialog, { DialogContent } from '~/components/ui/Dialog';
+import { useDialogs } from '~/lib/dialogs/useDialogs';
+import { Button } from '~/components/ui/Button';
 
 const HelpCard = ({
   title,
@@ -31,7 +23,7 @@ const HelpCard = ({
 }) => {
   return (
     <Card
-      className="cursor-pointer text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+      className="w-full cursor-pointer text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
       onClick={onClick}
     >
       <CardHeader>
@@ -40,11 +32,6 @@ const HelpCard = ({
       </CardHeader>
     </Card>
   );
-};
-
-const dialogVariants = {
-  closed: { opacity: 0, y: '100%' },
-  open: { opacity: 1, y: 0 },
 };
 
 function AvailableWizardsPanel({
@@ -61,37 +48,40 @@ function AvailableWizardsPanel({
   };
 
   return (
-    <div className="mb-4 w-10/12">
+    <div className="mt-4 flex flex-col gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {Object.entries(wizards)
+          .map(([id, wizard]) => ({ id, ...wizard }))
+          .map((wizard) => (
+            <HelpCard
+              key={wizard.id}
+              title={getLocalisedValue(wizard.name, ['en'])}
+              description={renderLocalisedValue(
+                getLocalisedValue(wizard.description, ['en']),
+              )}
+              onClick={() => handleStartWizard(wizard.id)}
+            />
+          ))}
+        <HelpCard
+          title="Contact the study organiser"
+          description="Click here if you would like to contact the organiser of this study"
+          onClick={() => {
+            // eslint-disable-next-line no-console
+            console.log('TODO: Implement contact organiser feature');
+          }}
+        />
+      </div>
       {env.NODE_ENV === 'development' && (
         // eslint-disable-next-line jsx-a11y/anchor-is-valid, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-        <a
+        <Button
+          variant="destructive"
           onClick={() => {
             localStorage.removeItem(WIZARD_LOCAL_STORAGE_KEY);
           }}
         >
           &nbsp; Dev mode: Reset local storage
-        </a>
+        </Button>
       )}
-      {Object.entries(wizards)
-        .map(([id, wizard]) => ({ id, ...wizard }))
-        .map((wizard) => (
-          <HelpCard
-            key={wizard.id}
-            title={getLocalisedValue(wizard.name, ['en'])}
-            description={renderLocalisedValue(
-              getLocalisedValue(wizard.description, ['en']),
-            )}
-            onClick={() => handleStartWizard(wizard.id)}
-          />
-        ))}
-      <HelpCard
-        title="Contact the study organiser"
-        description="Click here if you would like to contact the organiser of this study"
-        onClick={() => {
-          // eslint-disable-next-line no-console
-          console.log('TODO: Implement contact organiser feature');
-        }}
-      />
     </div>
   );
 }
@@ -101,10 +91,21 @@ function AvailableWizardsPanel({
  * This popover allows the participant to trigger help wizards.
  */
 export default function HelpButton({ id }: { id?: string }) {
-  const [showWizards, toggleShowWizards] = useToggleState(false);
+  const { openDialog, closeDialog } = useDialogs();
 
   const t = useTranslations('Interview.Navigation');
   const t2 = useTranslations('Components.ContextualHelp');
+
+  const dialog = {
+    id: 'help-dialog',
+    title: t2('Title'),
+    description: t2('Description'),
+    content: <AvailableWizardsPanel handleClosePanel={closeDialog} />,
+  };
+
+  const handleOpenDialog = () => {
+    openDialog(dialog);
+  };
 
   return (
     <>
@@ -112,20 +113,10 @@ export default function HelpButton({ id }: { id?: string }) {
         id={id}
         title={t('Help')}
         tooltipSide="right"
-        onClick={toggleShowWizards}
+        onClick={handleOpenDialog}
       >
         <HelpCircle className="h-10 w-10 stroke-[2px]" />
       </NavButtonWithTooltip>
-      {showWizards && (
-        <Dialog
-          isOpen={showWizards}
-          onOpenChange={toggleShowWizards}
-          title={t2('Title')}
-          description={t2('Description')}
-        >
-          <AvailableWizardsPanel handleClosePanel={toggleShowWizards} />
-        </Dialog>
-      )}
     </>
   );
 }

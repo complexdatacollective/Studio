@@ -4,53 +4,56 @@ import Heading from '../typography/Heading';
 import CloseButton from './CloseButton';
 import ModalOverlay from './form/ModalOverlay';
 import { motion } from 'framer-motion';
-
-export const MotionContent = motion(DialogPrimitive.Content);
+import { ForwardedRef, forwardRef } from 'react';
 
 const dialogVariants = {
   closed: { opacity: 0, y: '100px' },
   open: { opacity: 1, y: 0 },
 };
 
-export function DialogContent({
-  className,
-  children,
-  title,
-  description,
-}: {
-  className?: string;
-  children?: React.ReactNode;
-  title?: string;
-  description?: string;
-}) {
-  return (
-    <MotionContent
-      className={cn(
-        className,
-        'md:w-90% mx-4 max-w-4xl md:mx-auto',
-        'px-6 py-10',
-        'z-50 max-h-[85vh] rounded bg-card text-card-foreground shadow-xl focus:outline-none',
-      )}
-      variants={dialogVariants}
-      initial="closed"
-      animate="open"
-      exit="closed"
-    >
-      {title && (
-        <DialogPrimitive.Title asChild>
-          <Heading variant="h2">{title}</Heading>
-        </DialogPrimitive.Title>
-      )}
-      {description && (
-        <DialogPrimitive.Description>{description}</DialogPrimitive.Description>
-      )}
-      {children}
-      <DialogPrimitive.Close asChild>
-        <CloseButton className="top-4 ltr:right-4 rtl:left-4" />
-      </DialogPrimitive.Close>
-    </MotionContent>
-  );
-}
+export const DialogCloseButton = () => (
+  <DialogPrimitive.Close asChild>
+    <CloseButton />
+  </DialogPrimitive.Close>
+);
+
+export const DialogContent = forwardRef(
+  (
+    {
+      children,
+      ...props
+    }: {
+      title: string;
+      description: string;
+    } & DialogPrimitive.DialogContentProps,
+    forwardedRef: ForwardedRef<HTMLDivElement>,
+  ) => {
+    const { title, description, ...rest } = props;
+    return (
+      <DialogPrimitive.Content forceMount ref={forwardedRef} asChild {...rest}>
+        <motion.div
+          variants={dialogVariants}
+          className={cn(
+            'md:w-90% mx-4 max-w-4xl md:mx-auto',
+            'px-6 py-10',
+            'z-50 max-h-[85vh] rounded bg-card text-card-foreground shadow-xl focus:outline-none',
+          )}
+        >
+          <DialogPrimitive.Title asChild>
+            <Heading variant="h2">{title}</Heading>
+          </DialogPrimitive.Title>
+          <DialogPrimitive.Description>
+            {description}
+          </DialogPrimitive.Description>
+          {children}
+          <DialogCloseButton />
+        </motion.div>
+      </DialogPrimitive.Content>
+    );
+  },
+);
+
+DialogContent.displayName = 'DialogContent';
 
 const Dialog = ({
   children,
@@ -62,8 +65,8 @@ const Dialog = ({
 }: {
   children?: React.ReactNode;
   isOpen?: boolean;
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
   onOpenChange?: (open: boolean) => void;
   className?: string;
 }) => {

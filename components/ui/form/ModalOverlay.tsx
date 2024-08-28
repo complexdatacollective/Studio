@@ -16,11 +16,7 @@ export default function ModalOverlay(
         {props.open && (
           <DialogPrimitive.Portal forceMount>
             <DialogPrimitive.Overlay asChild>
-              <PopoverBackdrop>
-                <DialogPrimitive.Content forceMount {...props} asChild>
-                  {children}
-                </DialogPrimitive.Content>
-              </PopoverBackdrop>
+              <PopoverBackdrop>{children}</PopoverBackdrop>
             </DialogPrimitive.Overlay>
           </DialogPrimitive.Portal>
         )}
