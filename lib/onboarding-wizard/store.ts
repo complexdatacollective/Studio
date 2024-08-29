@@ -173,7 +173,8 @@ export const createWizardStore = (
       }
 
       // If there are no more wizards, reset the active wizard
-      this.setActiveWizard(null);
+      const { setActiveWizard } = get();
+      setActiveWizard(null);
     },
     previousStep() {
       const { wizards, activeWizardId, currentStep } = get();

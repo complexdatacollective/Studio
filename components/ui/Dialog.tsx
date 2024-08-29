@@ -4,7 +4,7 @@ import Heading from '../typography/Heading';
 import CloseButton from './CloseButton';
 import ModalOverlay from './form/ModalOverlay';
 import { motion } from 'framer-motion';
-import { ForwardedRef, forwardRef } from 'react';
+import { type ForwardedRef, forwardRef } from 'react';
 
 const dialogVariants = {
   closed: { opacity: 0, y: '100px' },

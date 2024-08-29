@@ -25,7 +25,7 @@ export const useOnboardWizard = (wizard: Wizard) => {
   );
 
   const activeStep = useMemo(
-    () => (isActive ? wizard.steps[currentStep!]! : null),
+    () => (isActive ? wizard.steps[currentStep]! : null),
     [wizard.steps, isActive, currentStep],
   );
 
