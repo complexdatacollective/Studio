@@ -1,4 +1,4 @@
-import { createElement, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import type {
   BlockNode,
   InlineElement,
@@ -9,7 +9,6 @@ import { hash } from 'ohash';
 import Paragraph from './typography/Paragraph';
 import Heading from './typography/Heading';
 import { cn } from '~/lib/utils';
-import { jsx } from 'react/jsx-runtime';
 
 const getElementForType = (type: string) => {
   switch (type) {
@@ -37,11 +36,21 @@ const processBlockNode = (blockNode: BlockNode) => {
   const id = hash(blockNode);
 
   if (blockNode.type === 'image') {
-    return <img {...blockNode.props} />;
+    return (
+      <img
+        {...blockNode.props}
+        className="h-auto max-h-[50vh] max-w-full object-contain"
+      />
+    );
   }
 
   if (blockNode.type === 'video') {
-    return <video {...blockNode.props} />;
+    return (
+      <video
+        {...blockNode.props}
+        className="h-auto max-h-[50vh] max-w-full object-contain"
+      />
+    );
   }
 
   const Element = getElementForType(blockNode.type);

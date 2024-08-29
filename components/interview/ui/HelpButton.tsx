@@ -25,6 +25,7 @@ const HelpCard = ({
     <Card
       className="w-full cursor-pointer text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
       onClick={onClick}
+      role="button"
     >
       <CardHeader>
         <Heading variant="h4">{title}</Heading>
@@ -79,7 +80,7 @@ function AvailableWizardsPanel({
             localStorage.removeItem(WIZARD_LOCAL_STORAGE_KEY);
           }}
         >
-          &nbsp; Dev mode: Reset local storage
+          Dev mode: Reset local storage
         </Button>
       )}
     </div>

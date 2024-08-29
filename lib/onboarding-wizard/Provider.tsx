@@ -88,14 +88,10 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <WizardContext.Provider value={storeRef.current}>
+      {activeStep && <WizardStep step={activeStep} />}
       <AnimatePresence>
-        {activeStep && (
-          <>
-            <WizardStep step={activeStep} />
-            {currentTargetElementId && (
-              <Spotlight targetElementId={currentTargetElementId} />
-            )}
-          </>
+        {currentTargetElementId && (
+          <Spotlight targetElementId={currentTargetElementId} />
         )}
       </AnimatePresence>
       {children}
