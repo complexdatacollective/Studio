@@ -6,7 +6,7 @@
     --primary: var(--neon-coral);
     --primary-foreground: var(--white);
 
-    --secondary: 34% 0.1 281;
+    --secondary: 100% 0.2 281;
     --secondary-foreground: var(--foreground);
 
     /* Card used for overlays primarily */
@@ -19,7 +19,8 @@
     --input: var(--white);
     --input-foreground: var(--charcoal);
 
-    --accent: var(--sea-green);
+    --accent: var(--slate-blue);
+    --success: var(--sea-green);
     --muted: var(--platinum);
 
     --border-radius: 1.25rem;
