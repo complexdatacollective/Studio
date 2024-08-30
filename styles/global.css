@@ -154,19 +154,19 @@
     --primary: 40% 0.2 var(--base-hue);
     --secondary: 100% 0.1 var(--base-hue);
 
-    --border-color: 28% 0.2 var(--base-hue);
+    --border-color: 28% 0.1 var(--base-hue);
 
-    --input: 20% 0.1 var(--base-hue);
+    --input: var(--background);
     --input-foreground: var(--foreground);
 
     /* Surfaces */
-    --surface-1-bg: 93% 0.005 var(--base-hue);
+    --surface-1-bg: 21% 0.085 var(--base-hue);
     --surface-1-fg: var(--foreground);
-    --surface-2-bg: 90% 0.01 var(--base-hue);
+    --surface-2-bg: 25% 0.1 var(--base-hue);
     --surface-2-fg: var(--foreground);
-    --surface-3-bg: 87% 0.02 var(--base-hue);
+    --surface-3-bg: 27% 0.1 var(--base-hue);
     --surface-3-fg: var(--foreground);
-    --surface-4-bg: 84% 0.04 var(--base-hue);
+    --surface-4-bg: 29% 0.4 var(--base-hue);
     --surface-4-fg: var(--foreground);
   }
 }
