@@ -34,6 +34,7 @@ export default function WizardStep({ step }: { step: Step }) {
         {hasPreviousStep && (
           <Button
             variant="outline"
+            color="primary"
             onClick={() => previousStep()}
             className="flex-1"
           >
@@ -48,7 +49,7 @@ export default function WizardStep({ step }: { step: Step }) {
             {t('Next')}
           </Button>
         ) : (
-          <Button onClick={() => nextStep()} className="flex-1">
+          <Button color="accent" onClick={() => nextStep()} className="flex-1">
             {t('Done')}
           </Button>
         )}

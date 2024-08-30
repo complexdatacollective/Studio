@@ -3,10 +3,10 @@
 import { Button } from '~/components/ui/Button';
 
 export default function ToggleWizardButton({
-  wizardName,
+  // wizardName,
   label,
 }: {
-  wizardName: string;
+  // wizardName: string;
   label: string;
 }) {
   // const { startWizard } = useOnboardWizard();
@@ -14,7 +14,7 @@ export default function ToggleWizardButton({
   return (
     <div>
       <Button
-        variant="accent"
+        color="accent"
         onClick={() => {
           // startWizard(wizardName);
         }}

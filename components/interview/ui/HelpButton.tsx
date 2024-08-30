@@ -75,7 +75,7 @@ function AvailableWizardsPanel({
       {env.NODE_ENV === 'development' && (
         // eslint-disable-next-line jsx-a11y/anchor-is-valid, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <Button
-          variant="destructive"
+          color="destructive"
           onClick={() => {
             localStorage.removeItem(WIZARD_LOCAL_STORAGE_KEY);
           }}

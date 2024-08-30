@@ -6,7 +6,7 @@ import { Button } from '~/components/ui/Button';
 const meta = {
   title: 'Systems/Dialogs/DialogRenderer',
   decorators: [
-    (Story, _context) => {
+    (_Story, _context) => {
       const { openDialog } = useDialogs();
 
       const handleOpenDialog = () => {

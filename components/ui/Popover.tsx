@@ -9,14 +9,12 @@ const Popover = ({
   children,
   title,
   content,
-  side,
   modal,
   isOpen,
   onOpenChange,
 }: PropsWithChildren<{
   title?: string;
   content: string | React.ReactNode;
-  side?: 'top' | 'right' | 'bottom' | 'left';
   modal?: boolean;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -45,6 +43,7 @@ const Popover = ({
           avoidCollisions
           asChild
         >
+          {/* @ts-expect-error has to do with 12.0.0-alpha release */}
           <motion.div layoutId="popover-content" layout="position">
             {title && <Heading variant="h4">{title}</Heading>}
             {content}

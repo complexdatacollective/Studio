@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { type IntlError, IntlErrorCode } from 'next-intl';
-import type { JSONRichText, LocalisedRecord } from '~/schemas/shared';
+import type { LocalisedRecord } from '~/schemas/shared';
 import { match } from '@formatjs/intl-localematcher';
-import { LocalisedString } from '~/schemas/shared';
+import { type LocalisedString } from '~/schemas/shared';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {

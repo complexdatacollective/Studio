@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { createStore } from 'zustand';
 
 export type Dialog = {
@@ -20,7 +20,7 @@ export type DialogActions = {
 export type DialogStore = DialogState & DialogActions;
 
 export const createDialogStore = () => {
-  return createStore<DialogStore>((set, get) => ({
+  return createStore<DialogStore>((set, _get) => ({
     dialogs: [],
     openDialog: (dialog: Dialog) => {
       set((state) => ({

@@ -31,6 +31,7 @@ export const DialogContent = forwardRef(
     const { title, description, ...rest } = props;
     return (
       <DialogPrimitive.Content forceMount ref={forwardedRef} asChild {...rest}>
+        {/* @ts-expect-error has to do with 12.0.0-alpha release */}
         <motion.div
           variants={dialogVariants}
           className={cn(
