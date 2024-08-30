@@ -11,7 +11,7 @@ export default function SignUpForm() {
   const [formState, formAction] = useFormState(signup, {
     error: null,
   });
-  const t = useTranslations('AuthForm');
+  const t = useTranslations('Auth.AuthForm');
 
   return (
     <form action={formAction}>
@@ -22,26 +22,26 @@ export default function SignUpForm() {
       )}
 
       <div className="flex flex-col gap-3 p-2">
-        <Label htmlFor="username">{t('usernameInput')}</Label>
+        <Label htmlFor="username">{t('UsernameInput')}</Label>
         <Input
           name="username"
           id="username"
-          placeholder={t('usernameInput').toLowerCase()}
+          placeholder={t('UsernameInput').toLowerCase()}
         />
       </div>
       <br />
       <div className="flex flex-col gap-3 p-2">
-        <Label htmlFor="password">{t('passwordInput')}</Label>
+        <Label htmlFor="password">{t('PasswordInput')}</Label>
         <Input
           type="password"
           name="password"
           id="password"
           autoComplete="new-password"
-          placeholder={t('passwordInput').toLowerCase()}
+          placeholder={t('PasswordInput').toLowerCase()}
         />
       </div>
       <br />
-      <SubmitButton>{t('formButton')}</SubmitButton>
+      <SubmitButton>{t('FormButton')}</SubmitButton>
     </form>
   );
 }
