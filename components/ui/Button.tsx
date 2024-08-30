@@ -48,7 +48,7 @@ const buttonVariants = tv({
       variant: 'outline',
 
       class:
-        'border-secondary/20 text-secondary-foreground hover:border-secondary hover:bg-secondary/10 hover:text-secondary-foreground',
+        'border-secondary/20 text-secondary-foreground hover:border-transparent hover:bg-secondary/10 hover:text-secondary-foreground',
     },
     {
       color: 'default',
