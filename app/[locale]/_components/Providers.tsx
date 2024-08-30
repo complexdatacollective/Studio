@@ -7,7 +7,6 @@ import IntlProvider from './IntlProvider';
 import { ThemeProvider } from 'next-themes';
 import { WizardProvider } from '~/lib/onboarding-wizard/Provider';
 import { MotionConfig } from 'framer-motion';
-import { DialogRenderer } from '~/lib/dialogs/DialogRenderer';
 import { DialogStoreProvider } from '~/lib/dialogs/Provider';
 
 export default function Providers({

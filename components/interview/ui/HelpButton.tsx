@@ -41,7 +41,7 @@ function AvailableWizardsPanel({
   handleClosePanel: () => void;
 }) {
   const { wizards, setActiveWizard } = useWizardController();
-  const t = useTranslations('Components.ContextualHelp');
+  const t = useTranslations('Components.ContextualHelp.ContactCard');
 
   const handleStartWizard = (name: string) => {
     setActiveWizard(name);
@@ -64,8 +64,8 @@ function AvailableWizardsPanel({
             />
           ))}
         <HelpCard
-          title="Contact the study organiser"
-          description="Click here if you would like to contact the organiser of this study"
+          title={t('Title')}
+          description={t('Description')}
           onClick={() => {
             // eslint-disable-next-line no-console
             console.log('TODO: Implement contact organiser feature');

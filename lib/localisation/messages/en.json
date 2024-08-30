@@ -134,7 +134,11 @@
     },
     "ContextualHelp": {
       "Title": "Help",
-      "Description": "The cards below show the help options available based on the current page. Click on a card to view the help content."
+      "Description": "The cards below show the help options available based on the current page. Click on a card to view the help content.",
+      "ContactCard": {
+        "Title": "Contact the study organiser",
+        "Description": "Click here if you would like to contact the organiser of this study."
+      }
     }
   }
 }
