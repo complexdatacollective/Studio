@@ -1,19 +1,40 @@
+import { useState, useEffect } from 'react';
+
 export const getTargetElement = (dataId: string): HTMLElement | null => {
   return document.querySelector(`[data-id="${dataId}"]`);
 };
 
-export const getElementPosition = (targetElementId?: string) => {
-  if (!targetElementId) {
-    return null;
-  }
+export const useElementPosition = (targetElementId?: string) => {
+  const [position, setPosition] = useState<{
+    top: number;
+    left: number;
+    height: number;
+    width: number;
+  } | null>(null);
 
-  const element = document.getElementById(targetElementId);
+  useEffect(() => {
+    const updatePosition = () => {
+      if (!targetElementId) {
+        setPosition(null);
+        return;
+      }
 
-  if (!element) {
-    return null;
-  }
+      const element = document.getElementById(targetElementId);
 
-  const { top, left, height, width } = element.getBoundingClientRect();
+      if (!element) {
+        setPosition(null);
+        return;
+      }
 
-  return { top, left, height, width };
+      const { top, left, height, width } = element.getBoundingClientRect();
+      setPosition({ top, left, height, width });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+
+    return () => window.removeEventListener('resize', updatePosition);
+  }, [targetElementId]);
+
+  return position;
 };

@@ -4,10 +4,9 @@ import { Button } from '../ui/Button';
 import { useWizardController } from './useWizardController';
 import RenderRichText from '../RenderRichText';
 import { useLocale, useTranslations } from 'next-intl';
-import { getElementPosition } from '~/lib/onboarding-wizard/utils';
+import { useElementPosition } from '~/lib/onboarding-wizard/utils';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { getLocalisedValue } from '~/lib/localisation/utils';
-import { useEffect, useState } from 'react';
 
 export default function WizardStep({ step }: { step: Step }) {
   const { title, content, targetElementId } = step;
@@ -26,18 +25,7 @@ export default function WizardStep({ step }: { step: Step }) {
   } = useWizardController();
 
   const t = useTranslations('Generic');
-  const [position, setPosition] = useState(getElementPosition(targetElementId));
-
-  useEffect(() => {
-    const updatePosition = () => {
-      setPosition(getElementPosition(targetElementId));
-    };
-
-    updatePosition();
-    window.addEventListener('resize', updatePosition);
-
-    return () => window.removeEventListener('resize', updatePosition);
-  }, [targetElementId]);
+  const position = useElementPosition(targetElementId);
 
   const renderContent = () => (
     <div className="flex flex-col gap-2">
