@@ -42,20 +42,20 @@ const buttonVariants = tv({
       variant: 'default',
 
       class:
-        'bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground',
+        'bg-secondary/10 text-secondary-foreground hover:bg-primary hover:text-primary-foreground',
     },
     {
       color: 'default',
       variant: 'outline',
 
       class:
-        'border-secondary text-secondary-foreground hover:border-secondary hover:bg-secondary hover:text-secondary-foreground',
+        'border-secondary/20 text-secondary-foreground hover:border-secondary hover:bg-secondary/10 hover:text-secondary-foreground',
     },
     {
       color: 'default',
       variant: 'text',
 
-      class: 'text-secondary-foreground hover:bg-secondary',
+      class: 'text-secondary-foreground hover:bg-secondary/10',
     },
     {
       color: 'primary',
@@ -65,13 +65,14 @@ const buttonVariants = tv({
     {
       color: 'primary',
       variant: 'outline',
-      class:
+      class: cn(
         'border-primary text-primary hover:bg-primary hover:text-primary-foreground',
+      ),
     },
     {
       color: 'primary',
       variant: 'text',
-      class: 'text-primary hover:bg-primary/10',
+      class: cn('text-primary hover:bg-primary'),
     },
     {
       color: 'destructive',

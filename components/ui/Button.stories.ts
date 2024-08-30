@@ -38,6 +38,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     variant: 'default',
+    size: "default",
+    color: "default"
   },
 };
 

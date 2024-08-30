@@ -1,5 +1,11 @@
-import { createContext, ReactNode, useContext, useRef } from 'react';
-import { createDialogStore, DialogStore, DialogStoreApi } from './store';
+'use client';
+
+import { createContext, type ReactNode, useContext, useRef } from 'react';
+import {
+  createDialogStore,
+  type DialogStore,
+  type DialogStoreApi,
+} from './store';
 import { useStore } from 'zustand';
 import { DialogRenderer } from './DialogRenderer';
 

@@ -14,26 +14,27 @@ import Paragraph from '~/components/typography/Paragraph';
 export default async function Dashboard() {
   await requirePageAuth();
 
-  const t = await getTranslations('Home');
+  const t = await getTranslations('Pages.Home');
   const studies = await getUserStudies();
   const interviews = await getInterviews();
 
   return (
     <>
       <PageHeader
-        headerText={t('title')}
+        headerText={t('Title')}
         subHeaderText={'The dashboard page is a place for things'}
       />
       <CreateStudyForm />
       <Section
-        title={t('allStudiesHeading')}
+        title={t('AllStudiesHeading')}
         footer={
           <div className="flex gap-2">
             <Button>Default</Button>
-            <Button variant="accent">Accent</Button>
-            <Button variant="destructive">Delete</Button>
+            <Button color="primary">Primary</Button>
+            <Button color="accent">Accent</Button>
+            <Button color="destructive">Delete</Button>
             <Button variant="outline">Outline button</Button>
-            <Button variant="link">Link Button</Button>
+            <Button variant="text">Link Button</Button>
           </div>
         }
       >
@@ -48,9 +49,17 @@ export default async function Dashboard() {
         </UnorderedList>
         <Section level={2} title="Nested Section">
           <Paragraph>This is a nested section.</Paragraph>
+          <div className="flex gap-2">
+            <Button>Default</Button>
+            <Button color="primary">Primary</Button>
+            <Button color="accent">Accent</Button>
+            <Button color="destructive">Delete</Button>
+            <Button variant="outline">Outline button</Button>
+            <Button variant="text">Link Button</Button>
+          </div>
         </Section>
       </Section>
-      <Section title={t('interviewsHeading')}>
+      <Section title={t('InterviewsHeading')}>
         <UnorderedList>
           {interviews.map((interview) => (
             <li key={interview.id}>
