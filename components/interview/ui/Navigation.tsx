@@ -139,7 +139,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
               <LanguageSwitcher />
             </>
           }
-          side="right"
+          // side="right"
         >
           <NavButtonWithTooltip title={t('Menu')} tooltipSide="right">
             <Settings2 className="h-10 w-10 stroke-[2px]" />

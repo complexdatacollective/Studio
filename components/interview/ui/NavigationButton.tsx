@@ -30,6 +30,9 @@ const NavigationButton = forwardRef<HTMLButtonElement, NavigationButtonProps>(
 
 NavigationButton.displayName = 'NavigationButton';
 
-export const NavButtonWithTooltip = withTooltip(NavigationButton);
-
+export const NavButtonWithTooltip = withTooltip(
+  NavigationButton as unknown as React.ComponentType<
+    React.HTMLAttributes<HTMLDivElement>
+  >,
+);
 export default NavigationButton;

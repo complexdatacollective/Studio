@@ -88,6 +88,7 @@ export default function WizardStep({ step }: { step: Step }) {
         closeWizard();
       }}
       title={localisedStepTitle}
+      description=""
     >
       {renderContent()}
     </Dialog>

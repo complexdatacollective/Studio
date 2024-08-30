@@ -22,6 +22,7 @@ const PopoverBackdrop = forwardRef(
     ref,
   ) => {
     return (
+      // @ts-expect-error has to do with 12.0.0-alpha release
       <motion.div
         ref={ref}
         className={cn(backdropClasses, className)}

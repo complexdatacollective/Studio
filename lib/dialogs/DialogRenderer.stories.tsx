@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/react';
+import type { StoryContext, StoryObj } from '@storybook/react';
 import { useDialogs } from './useDialogs';
 import { Button } from '~/components/ui/Button';
 
@@ -6,7 +6,7 @@ import { Button } from '~/components/ui/Button';
 const meta = {
   title: 'Systems/Dialogs/DialogRenderer',
   decorators: [
-    (_Story, _context) => {
+    (_Story: React.ComponentType, _context: StoryContext) => {
       const { openDialog } = useDialogs();
 
       const handleOpenDialog = () => {

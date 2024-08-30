@@ -12,12 +12,14 @@ const Popover = ({
   modal,
   isOpen,
   onOpenChange,
+  // side,
 }: PropsWithChildren<{
   title?: string;
   content: string | React.ReactNode;
   modal?: boolean;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  // side?: 'top' | 'right' | 'bottom' | 'left';
 }>) => {
   return (
     <PopoverPrimitive.Root
