@@ -21,7 +21,6 @@ const meta = {
       control: 'select',
       options: Object.keys(buttonVariants.variants.color),
     },
-    children: { control: 'text', defaultValue: 'Button' },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: { onClick: fn(), children: 'Button' },

@@ -71,7 +71,7 @@ const buttonVariants = tv({
     {
       color: 'primary',
       variant: 'text',
-      class: cn('text-primary hover:bg-primary'),
+      class: 'text-primary hover:bg-primary/10',
     },
     {
       color: 'destructive',
