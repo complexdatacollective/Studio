@@ -13,7 +13,11 @@ const stageOptions: Stage[] = [
   },
 ];
 
-const meta: Meta = {
+type StoryArgs = {
+  stage: Stage;
+};
+
+const meta: Meta<StoryArgs> = {
   title: 'Interview/StageShell',
   parameters: {
     nextjs: {

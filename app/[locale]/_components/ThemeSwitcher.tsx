@@ -36,7 +36,7 @@ export default function ThemeSwitcher() {
     <RadioGroup.Root
       className={root()}
       defaultValue={theme}
-      aria-label={t('label')}
+      aria-label={t('Label')}
       orientation="horizontal"
       onValueChange={(value) => setTheme(value)}
     >

@@ -37,6 +37,7 @@ const processBlockNode = (blockNode: BlockNode) => {
 
   if (blockNode.type === 'image') {
     return (
+      // eslint-disable-next-line jsx-a11y/alt-text
       <img
         {...blockNode.props}
         className="h-auto max-h-[50vh] max-w-full object-contain"
@@ -46,6 +47,7 @@ const processBlockNode = (blockNode: BlockNode) => {
 
   if (blockNode.type === 'video') {
     return (
+      // eslint-disable-next-line jsx-a11y/media-has-caption
       <video
         {...blockNode.props}
         className="h-auto max-h-[50vh] max-w-full object-contain"
