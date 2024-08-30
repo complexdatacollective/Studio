@@ -9,10 +9,14 @@ export type LocalStorageState<T> = {
 
 // Utility function to get initial state from local storage or initialize with an empty object
 const getInitialState = <T>(key: string): Record<string, T> => {
-  const storedValue = localStorage.getItem(key);
+  if (typeof window === 'undefined') {
+    return {};
+  }
+
+  const storedValue = window.localStorage.getItem(key);
 
   if (!storedValue) {
-    localStorage.setItem(key, JSON.stringify({}));
+    window.localStorage.setItem(key, JSON.stringify({}));
     return {};
   }
 

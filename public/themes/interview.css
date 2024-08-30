@@ -3,8 +3,11 @@
     --background: var(--navy-taupe);
     --foreground: var(--white);
 
-    --primary: var(--neon-coral);
+    --primary: 67% 0.36 12;
     --primary-foreground: var(--white);
+
+    --secondary: 34% 0.1 281;
+    --secondary-foreground: var(--foreground);
 
     /* Card used for overlays primarily */
     --card: var(--white);

@@ -1,7 +1,7 @@
 import { type Config } from 'tailwindcss';
 
 export default {
-  darkMode: ['selector'],
+  darkMode: ['selector', '[data-mode="dark"]'],
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './lib/interviewer/**/*.{js,ts,jsx,tsx}',
@@ -14,6 +14,7 @@ export default {
       mono: ['var(--font-family-mono)'],
     },
     fontSize: {
+      'xs': ['var(--font-size-xs)', '1.5'],
       'sm': ['var(--font-size-sm)', '1.5'],
       'base-sm': ['var(--font-size-base-sm)', '1.5'],
       'base': ['var(--font-size-base)', '1.5'],
@@ -40,6 +41,10 @@ export default {
       'primary': {
         DEFAULT: 'oklch(var(--primary) / <alpha-value>)',
         foreground: 'oklch(var(--primary-foreground) / <alpha-value>)',
+      },
+      'secondary': {
+        DEFAULT: 'oklch(var(--secondary) / <alpha-value>)',
+        foreground: 'oklch(var(--secondary-foreground) / <alpha-value>)',
       },
       'accent': {
         DEFAULT: 'oklch(var(--accent) / <alpha-value>)',

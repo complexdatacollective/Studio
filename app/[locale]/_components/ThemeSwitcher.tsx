@@ -19,7 +19,7 @@ export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  const t = useTranslations('ThemeSwitcher');
+  const t = useTranslations('Components.ThemeSwitcher');
 
   const { root, item, icon } = variants();
 
