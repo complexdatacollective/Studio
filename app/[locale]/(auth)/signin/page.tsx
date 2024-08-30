@@ -23,7 +23,7 @@ export default async function Page({
   params: { locale: Locale };
 }) {
   unstable_setRequestLocale(locale);
-  const t = await getTranslations('SignIn');
+  const t = await getTranslations('Auth.SignIn');
 
   const { session } = await getServerSession();
 
@@ -35,10 +35,10 @@ export default async function Page({
   return (
     <Card className="w-[28rem]">
       <CardHeader>
-        <CardTitle>{t('cardTitle')}</CardTitle>
+        <CardTitle>{t('CardTitle')}</CardTitle>
         <CardDescription>
-          {t('cardDescription')}{' '}
-          <Link href={routes.signUp()}>{t('linkText')}</Link>
+          {t('CardDescription')}{' '}
+          <Link href={routes.signUp()}>{t('LinkText')}</Link>
         </CardDescription>
       </CardHeader>
       <CardContent>

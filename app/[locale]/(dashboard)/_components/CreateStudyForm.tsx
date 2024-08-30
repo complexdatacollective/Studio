@@ -13,25 +13,25 @@ import {
 import { Role } from '@prisma/client';
 
 export default async function CreateStudyForm() {
-  const t = await getTranslations('CreateStudyForm');
+  const t = await getTranslations('Components.CreateStudyForm');
 
   return (
     <Section
-      title={t('formTitle')}
-      footer={<SubmitButton>{t('formButton')}</SubmitButton>}
+      title={t('FormTitle')}
+      footer={<SubmitButton>{t('FormButton')}</SubmitButton>}
     >
       <form action={createStudy} id="test" className="flex flex-col gap-4">
         <Input
-          label={t('inputLabel')}
+          label={t('InputLabel')}
           type="text"
           id="studyName"
           name="studyName"
-          placeholder={t('inputPlaceholder')}
+          placeholder={t('InputPlaceholder')}
           required
         />
-        <Select id="role" name="role" required label={t('roleSelectLabel')}>
+        <Select id="role" name="role" required label={t('RoleSelectLabel')}>
           <SelectTrigger>
-            <SelectValue placeholder={t('roleSelectPlaceholder')} />
+            <SelectValue placeholder={t('RoleSelectPlaceholder')} />
           </SelectTrigger>
           <SelectContent>
             {Object.values(Role).map((role) => (

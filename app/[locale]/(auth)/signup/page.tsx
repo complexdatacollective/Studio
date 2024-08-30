@@ -19,7 +19,7 @@ export default async function Page({
 }) {
   unstable_setRequestLocale(locale);
   const { session, user } = await getServerSession();
-  const t = await getTranslations('SignUp');
+  const t = await getTranslations('Auth.SignUp');
 
   if (session && user) {
     // If the user is already signed in, redirect to the home page
@@ -29,10 +29,10 @@ export default async function Page({
   return (
     <Card className="w-[28rem]">
       <CardHeader>
-        <CardTitle>{t('cardTitle')}</CardTitle>
+        <CardTitle>{t('CardTitle')}</CardTitle>
         <CardDescription>
-          {t('cardDescription')}{' '}
-          <Link href={routes.signIn()}>{t('linkText')}</Link>
+          {t('CardDescription')}{' '}
+          <Link href={routes.signIn()}>{t('LinkText')}</Link>
         </CardDescription>
       </CardHeader>
       <CardContent>
