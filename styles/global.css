@@ -10,6 +10,7 @@
     --font-family-body: 'Lexend', sans-serif;
 
     /* https://www.fluid-type-scale.com/calculate?minFontSize=14&minWidth=400&minRatio=1.25&maxFontSize=18&maxWidth=1920&maxRatio=1.25&steps=sm%2Cbase%2Clg%2Cxl%2C2xl%2C3xl%2C4xl%2C5xl%2C6xl&baseStep=base&prefix=font-size&decimals=2&useRems=on&remValue=16&previewFont=Inter&previewText=Almost+before+we+knew+it%2C+we+had+left+the+ground&previewWidth=400 */
+    --font-size-xs: clamp(0.64rem, 0.17cqi + 0.76rem, 0.71rem);
     --font-size-sm: clamp(0.8rem, 0.17cqi + 0.76rem, 0.89rem);
     --font-size-base: clamp(1rem, 0.34cqi + 0.91rem, 1.19rem);
     --font-size-lg: clamp(1.25rem, 0.61cqi + 1.1rem, 1.58rem);
@@ -46,9 +47,14 @@
     --background: 97% 0.001 var(--base-hue);
     --foreground: 20% 0.1 var(--base-hue);
 
+    /* "Brand" */
     --primary: 34% 0.2 var(--base-hue);
     --primary-foreground: var(--white);
 
+    --secondary: 90% 0.01 var(--base-hue);
+    --secondary-foreground: var(--foreground);
+
+    /* For visual emphasis */
     --accent-hue: calc(var(--base-hue) - 30);
     --accent: 55% 0.2 var(--accent-hue);
     --accent-foreground: var(--white);
@@ -65,7 +71,7 @@
     --info: var(--cerulean-blue);
     --info-foreground: var(--white);
 
-    --success: var(--sea-green);
+    --success: 51% 0.15 171;
     --success-foreground: var(--white);
 
     --border-radius: 1.75rem;

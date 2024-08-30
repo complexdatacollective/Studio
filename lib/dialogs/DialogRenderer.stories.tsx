@@ -1,5 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 import { useDialogs } from './useDialogs';
+import { Button } from '~/components/ui/Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -17,9 +18,26 @@ const meta = {
         });
       };
 
+      const handle2 = () => {
+        openDialog({
+          id: '2',
+          title: 'Dialog Title',
+          description: 'Dialog Description',
+          content: (
+            <>
+              Dialog Content
+              <Button onClick={handleOpenDialog}>Add Dialog</Button>
+            </>
+          ),
+        });
+      };
+
       return (
-        <div className="h-screen">
-          <button onClick={handleOpenDialog}>Add Dialog</button>
+        <div className="flex h-screen flex-col gap-4">
+          <Button onClick={handleOpenDialog}>Add Dialog</Button>
+          <Button onClick={handle2}>
+            Add Dialog that spawns another dialog
+          </Button>
         </div>
       );
     },
