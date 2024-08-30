@@ -3,7 +3,7 @@
     --background: var(--navy-taupe);
     --foreground: var(--white);
 
-    --primary: 67% 0.36 12;
+    --primary: var(--neon-coral);
     --primary-foreground: var(--white);
 
     --secondary: 34% 0.1 281;

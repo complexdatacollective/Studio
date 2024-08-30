@@ -44,11 +44,7 @@ export default function WizardStep({ step }: { step: Step }) {
           {progress.current} / {progress.total}
         </div>
         {hasNextStep ? (
-          <Button
-            variant="primary"
-            onClick={() => nextStep()}
-            className="flex-1"
-          >
+          <Button color="primary" onClick={() => nextStep()} className="flex-1">
             {t('Next')}
           </Button>
         ) : (

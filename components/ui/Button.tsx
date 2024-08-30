@@ -28,7 +28,6 @@ const buttonVariants = tv({
       sm: 'h-10 px-4 text-base-sm',
       default: 'h-12 px-6 ',
       lg: 'h-16 px-8 text-base',
-      icon: 'h-12 w-12',
     },
   },
   defaultVariants: {
@@ -125,10 +124,12 @@ const buttonVariants = tv({
   ],
 });
 
-type ButtonProps = {
-  variant?: VariantProps<typeof buttonVariants>['variant'];
-  size?: VariantProps<typeof buttonVariants>['size'];
-  color?: VariantProps<typeof buttonVariants>['color'];
+export type ButtonVariants = VariantProps<typeof buttonVariants>;
+
+export type ButtonProps = {
+  variant?: ButtonVariants['variant'];
+  size?: ButtonVariants['size'];
+  color?: ButtonVariants['color'];
   asChild?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
