@@ -21,15 +21,15 @@ export default function SignUpForm() {
         </div>
       )}
       <Input
-        label={t('AuthForm.UsernameLabel')}
-        hint={t('AuthForm.UsernameHint')}
+        label={t('Form.UsernameLabel')}
+        hint={t('Form.UsernameHint')}
         name="username"
         id="username"
       />
       <Input
         type="password"
-        label={t('AuthForm.PasswordLabel')}
-        hint={t('AuthForm.PasswordHint')}
+        label={t('Form.PasswordLabel')}
+        hint={t('Form.PasswordHint')}
         name="password"
         id="password"
         autoComplete="new-password"

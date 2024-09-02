@@ -45,7 +45,7 @@
     --base-hue: 281;
 
     --background: 97% 0.001 var(--base-hue);
-    --foreground: 20% 0.1 var(--base-hue);
+    --foreground: 20% 0.2 var(--base-hue);
 
     /* "Brand" */
     --primary: 34% 0.2 var(--base-hue);
@@ -83,9 +83,9 @@
     --surface-0-bg: var(--white); /* Surface 0 is for foreground elements */
     --surface-0-fg: var(--foreground);
 
-    --surface-1-bg: 93% 0.005 var(--base-hue);
+    --surface-1-bg: 94% 0.005 var(--base-hue);
     --surface-1-fg: var(--foreground);
-    --surface-2-bg: 90% 0.01 var(--base-hue);
+    --surface-2-bg: 91% 0.01 var(--base-hue);
     --surface-2-fg: var(--foreground);
     --surface-3-bg: 87% 0.02 var(--base-hue);
     --surface-3-fg: var(--foreground);

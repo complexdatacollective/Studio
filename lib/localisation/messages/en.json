@@ -12,15 +12,15 @@
       "LinkText": "Sign In",
       "ButtonText": "Sign Up"
     },
-    "AuthForm": {
+    "SignOut": {
+      "ButtonLabel": "Sign Out"
+    },
+    "Form": {
       "UsernameLabel": "Username",
       "UsernameHint": "Create a username between 3 and 20 characters long, containing only letters, numbers, and underscores.",
       "PasswordLabel": "Password",
       "PasswordHint": "Create a password at least 8 characters long, containing at least one uppercase letter, one lowercase letter, one number, and one special character.",
       "ForgotPassword": "Forgot password?"
-    },
-    "SignOut": {
-      "ButtonLabel": "Sign Out"
     }
   },
   "Navigation": {

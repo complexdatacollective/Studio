@@ -1,10 +1,9 @@
 'use client';
 
-import { tv } from 'tailwind-variants';
 import Heading from '../typography/Heading';
 import { cn } from '~/lib/utils';
 import { useId } from 'react';
-import Surface, { SurfaceVariants } from './Surface';
+import Surface, { type SurfaceVariants } from './Surface';
 
 const sectionClasses = 'rounded mb-10';
 

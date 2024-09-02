@@ -1,9 +1,10 @@
+import type { ComponentProps, ReactNode } from 'react';
 import { cn } from '~/lib/utils';
 
 export type FormProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
-} & React.ComponentProps<'form'>;
+} & ComponentProps<'form'>;
 
 export default function Form({ children, className, ...props }: FormProps) {
   return (
@@ -14,27 +15,39 @@ export default function Form({ children, className, ...props }: FormProps) {
 }
 
 export type FormFooterProps = {
-  primaryAction?: React.ReactNode;
-  secondaryAction?: React.ReactNode;
+  primaryAction?: ReactNode;
+  secondaryAction?: ReactNode;
 };
 
-// Place the primary action on the right and the secondary action on the left. If there is only one action, it will be placed on the right.
-// If there are multuple orimary or secondary actions, they will be rendered together with a small gap.
+/**
+ * Aim is to automatically position primary action on the "right" (LTR dependant), and secondary action on the "left".
+ * Each group of actions
+ * @returns
+ */
 function Footer({ primaryAction, secondaryAction }: FormFooterProps) {
-  const childClasses = cn(
-    'flex justify-center gap-2',
-    primaryAction && secondaryAction && 'w-full',
-  );
+  const childClasses = (hasSingleChild: boolean) =>
+    cn(
+      'flex justify-center gap-2 items-center flex-col sm:flex-row',
+      hasSingleChild && 'w-full sm:w-auto',
+    );
 
   return (
     <div
       className={cn(
-        'mt-3 flex flex-col items-center justify-end gap-4 sm:flex-row',
+        'mt-3 flex flex-col items-center justify-end gap-3 sm:flex-row sm:gap-10',
         primaryAction && secondaryAction && 'justify-between',
       )}
     >
-      {secondaryAction && <div className={childClasses}>{secondaryAction}</div>}
-      {primaryAction && <div className={childClasses}>{primaryAction}</div>}
+      {secondaryAction && (
+        <div className={childClasses(!Array.isArray(secondaryAction))}>
+          {secondaryAction}
+        </div>
+      )}
+      {primaryAction && (
+        <div className={childClasses(!Array.isArray(primaryAction))}>
+          {primaryAction}
+        </div>
+      )}
     </div>
   );
 }

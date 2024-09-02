@@ -13,7 +13,7 @@
     "cardDescription": "¿Ya tienes una cuenta?",
     "linkText": "Iniciar sesión"
   },
-  "AuthForm": {
+  "Form": {
     "usernameInput": "Nombre de usuario",
     "passwordInput": "Contraseña",
     "formButton": "Continuar"
