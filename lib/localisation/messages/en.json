@@ -3,17 +3,20 @@
     "SignIn": {
       "Title": "Sign in to Studio",
       "Description": "Don't have an account?",
-      "LinkText": "Sign up"
+      "LinkText": "Sign up",
+      "ButtonText": "Sign In"
     },
     "SignUp": {
       "Title": "Create an account",
       "Description": "Already have an account?",
-      "LinkText": "Sign In"
+      "LinkText": "Sign In",
+      "ButtonText": "Sign Up"
     },
     "AuthForm": {
       "UsernameLabel": "Username",
+      "UsernameHint": "Create a username between 3 and 20 characters long, containing only letters, numbers, and underscores.",
       "PasswordLabel": "Password",
-      "ButtonText": "Sign In",
+      "PasswordHint": "Create a password at least 8 characters long, containing at least one uppercase letter, one lowercase letter, one number, and one special character.",
       "ForgotPassword": "Forgot password?"
     },
     "SignOut": {

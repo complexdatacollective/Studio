@@ -34,7 +34,7 @@ export default async function Page({
       as="main"
       aria-labelledby="signin-heading"
       aria-describedby="signin-description"
-      className="rounded"
+      className="max-w-lg rounded"
       level={1}
     >
       <Heading variant="h2" id="signin-heading">

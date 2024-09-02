@@ -6,26 +6,26 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
 
 export default async function SignInForm() {
-  const t = await getTranslations('Auth.AuthForm');
+  const t = await getTranslations('Auth');
 
   return (
     <Form action={login}>
       <Input
         name="username"
-        label={t('UsernameLabel')}
+        label={t('AuthForm.UsernameLabel')}
         autoComplete="username"
       />
       <Input
         name="password"
         type="password"
-        label={t('PasswordLabel')}
+        label={t('AuthForm.PasswordLabel')}
         autoComplete="current-password"
       />
       <Form.Footer
-        primaryAction={<SubmitButton>{t('ButtonText')}</SubmitButton>}
+        primaryAction={<SubmitButton>{t('SignIn.ButtonText')}</SubmitButton>}
         secondaryAction={
           <Link href="/forgot-password" className="text-sm">
-            {t('ForgotPassword')}
+            {t('AuthForm.ForgotPassword')}
           </Link>
         }
       />

@@ -21,6 +21,11 @@ export type FormFooterProps = {
 // Place the primary action on the right and the secondary action on the left. If there is only one action, it will be placed on the right.
 // If there are multuple orimary or secondary actions, they will be rendered together with a small gap.
 function Footer({ primaryAction, secondaryAction }: FormFooterProps) {
+  const childClasses = cn(
+    'flex justify-center gap-2',
+    primaryAction && secondaryAction && 'w-full',
+  );
+
   return (
     <div
       className={cn(
@@ -28,14 +33,8 @@ function Footer({ primaryAction, secondaryAction }: FormFooterProps) {
         primaryAction && secondaryAction && 'justify-between',
       )}
     >
-      {secondaryAction && (
-        <div className="flex w-full justify-center gap-2">
-          {secondaryAction}
-        </div>
-      )}
-      {primaryAction && (
-        <div className="flex w-full justify-center gap-2">{primaryAction}</div>
-      )}
+      {secondaryAction && <div className={childClasses}>{secondaryAction}</div>}
+      {primaryAction && <div className={childClasses}>{primaryAction}</div>}
     </div>
   );
 }
