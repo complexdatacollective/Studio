@@ -2,11 +2,7 @@ import { type Config } from 'tailwindcss';
 
 export default {
   darkMode: ['selector', '[data-mode="dark"]'],
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './lib/interviewer/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./(app|components|lib)/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
       body: ['var(--font-family-body)'],
@@ -66,9 +62,9 @@ export default {
         DEFAULT: 'oklch(var(--muted) / <alpha-value>)',
         foreground: 'oklch(var(--muted-foreground) / <alpha-value>)',
       },
-      'card': {
-        DEFAULT: 'oklch(var(--card) / <alpha-value>)',
-        foreground: 'oklch(var(--card-foreground) / <alpha-value>)',
+      'surface-0': {
+        DEFAULT: 'oklch(var(--surface-0-bg) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-0-fg) / <alpha-value>)',
       },
       'surface-1': {
         DEFAULT: 'oklch(var(--surface-1-bg) / <alpha-value>)',
@@ -99,7 +95,6 @@ export default {
         DEFAULT: 'oklch(var(--border-color) / <alpha-value>)',
       },
 
-      'link': 'oklch(var(--link) / <alpha-value>)',
       'overlay': 'oklch(var(--overlay) / <alpha-value>)',
 
       'focus': 'oklch(var(--focus) / <alpha-value>)',

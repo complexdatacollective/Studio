@@ -77,11 +77,12 @@
     --border-radius: 1.75rem;
     --border-color: 90% 0.01 var(--base-hue);
 
-    --link: var(--neon-coral);
-
     --overlay: 13% 0.1 var(--base-hue);
 
     /* Surfaces */
+    --surface-0-bg: var(--white); /* Surface 0 is for foreground elements */
+    --surface-0-fg: var(--foreground);
+
     --surface-1-bg: 93% 0.005 var(--base-hue);
     --surface-1-fg: var(--foreground);
     --surface-2-bg: 90% 0.01 var(--base-hue);
@@ -91,8 +92,8 @@
     --surface-4-bg: 84% 0.04 var(--base-hue);
     --surface-4-fg: var(--foreground);
 
-    --card: var(--surface-2-bg);
-    --card-foreground: var(--surface-2-fg);
+    --card: var(--surface-1-bg);
+    --card-foreground: var(--surface-1-fg);
 
     /* Focus ring */
     --ring: var(--mustard);

@@ -1,19 +1,20 @@
 {
   "Auth": {
     "SignIn": {
-      "CardTitle": "Sign in to Studio",
-      "CardDescription": "Don't have an account?",
+      "Title": "Sign in to Studio",
+      "Description": "Don't have an account?",
       "LinkText": "Sign up"
     },
     "SignUp": {
-      "CardTitle": "Create an account",
-      "CardDescription": "Already have an account?",
+      "Title": "Create an account",
+      "Description": "Already have an account?",
       "LinkText": "Sign In"
     },
     "AuthForm": {
-      "UsernameInput": "Username",
-      "PasswordInput": "Password",
-      "FormButton": "Continue"
+      "UsernameLabel": "Username",
+      "PasswordLabel": "Password",
+      "ButtonText": "Sign In",
+      "ForgotPassword": "Forgot password?"
     },
     "SignOut": {
       "ButtonLabel": "Sign Out"

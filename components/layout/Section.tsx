@@ -1,18 +1,12 @@
+'use client';
+
 import { tv } from 'tailwind-variants';
 import Heading from '../typography/Heading';
 import { cn } from '~/lib/utils';
+import { useId } from 'react';
+import Surface, { SurfaceVariants } from './Surface';
 
-const sectionVariants = tv({
-  slots: {
-    base: cn(
-      'rounded my-10 py-10 px-12 bg-surface-1 text-surface-1-foreground',
-      '[&>section]:bg-surface-2 [&>section]:my-6 [&>section]:py-6 [&>section]:px-8 [&>section]:text-surface-2-foreground',
-      '[&>section>section]:bg-surface-3 [&>section>section]:text-surface-3',
-      '[&>section>section>section]:bg-surface-4 [&>section>section>section]:text-surface-4',
-    ),
-    footerSlot: 'mt-4',
-  },
-});
+const sectionClasses = 'rounded mb-10';
 
 export default function Section({
   children,
@@ -22,15 +16,15 @@ export default function Section({
   level = 1,
 }: {
   children: React.ReactNode;
-  title?: string;
+  title: string;
   footer?: React.ReactNode;
   className?: string;
-  level?: 1 | 2 | 3 | 4;
+  level?: SurfaceVariants['level'];
 }) {
-  const { base, footerSlot } = sectionVariants();
-
   const getHeadingLevel = () => {
     switch (level) {
+      case 0:
+        return 'h2';
       case 1:
         return 'h2';
       case 2:
@@ -42,11 +36,20 @@ export default function Section({
     }
   };
 
+  const headingId = useId();
+
   return (
-    <section className={cn(base(), className)}>
-      {title && <Heading variant={getHeadingLevel()}>{title}</Heading>}
+    <Surface
+      as="section"
+      className={cn(sectionClasses, className)}
+      aria-labelledby={headingId}
+      level={level}
+    >
+      <Heading id={headingId} variant={getHeadingLevel()}>
+        {title}
+      </Heading>
       {children}
-      {footer && <footer className={footerSlot()}>{footer}</footer>}
-    </section>
+      {footer && <footer>{footer}</footer>}
+    </Surface>
   );
 }

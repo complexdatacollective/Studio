@@ -8,7 +8,7 @@ export function SubmitButton({ children }: React.PropsWithChildren) {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" disabled={pending}>
+    <Button type="submit" disabled={pending} color="primary">
       {pending && <Loader2 className="mr-2 motion-safe:animate-spin" />}
       {children ?? 'Submit'}
     </Button>
