@@ -56,7 +56,7 @@
 
     /* For visual emphasis */
     --accent-hue: calc(var(--base-hue) - 30);
-    --accent: 55% 0.2 var(--accent-hue);
+    --accent: 50% 0.22 var(--accent-hue);
     --accent-foreground: var(--white);
 
     --muted: 95% 0.001 var(--base-hue);

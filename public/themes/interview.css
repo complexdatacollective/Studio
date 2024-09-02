@@ -21,6 +21,7 @@
 
     --accent: var(--slate-blue);
     --success: var(--sea-green);
+    --success-foreground: var(--black);
     --muted: var(--platinum);
 
     --border-radius: 1.25rem;

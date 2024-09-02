@@ -41,7 +41,7 @@ const buttonVariants = tv({
       variant: 'default',
 
       class:
-        'bg-secondary/10 text-secondary-foreground hover:bg-primary hover:text-primary-foreground',
+        'bg-secondary/10 text-secondary-foreground hover:bg-primary hover:text-primary-foreground hover:bg-opacity-100',
     },
     {
       color: 'default',
