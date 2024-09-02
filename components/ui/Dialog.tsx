@@ -5,6 +5,7 @@ import CloseButton from './CloseButton';
 import ModalOverlay from './form/ModalOverlay';
 import { motion } from 'framer-motion';
 import { type ForwardedRef, forwardRef } from 'react';
+import { MotionSurface } from '../layout/Surface';
 
 const dialogVariants = {
   closed: { opacity: 0, y: '100px' },
@@ -31,13 +32,13 @@ export const DialogContent = forwardRef(
     const { title, description, ...rest } = props;
     return (
       <DialogPrimitive.Content forceMount ref={forwardedRef} asChild {...rest}>
-        {/* @ts-expect-error has to do with 12.0.0-alpha release */}
-        <motion.div
+        <MotionSurface
+          level={0}
           variants={dialogVariants}
           className={cn(
             'md:w-90% mx-4 max-w-4xl md:mx-auto',
             'px-6 py-10',
-            'z-50 max-h-[85vh] rounded bg-card text-card-foreground shadow-xl focus:outline-none',
+            'z-50 max-h-[85vh] rounded',
           )}
         >
           <DialogPrimitive.Title asChild>
@@ -48,7 +49,7 @@ export const DialogContent = forwardRef(
           </DialogPrimitive.Description>
           {children}
           <DialogCloseButton />
-        </motion.div>
+        </MotionSurface>
       </DialogPrimitive.Content>
     );
   },

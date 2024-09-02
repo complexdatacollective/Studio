@@ -4,7 +4,6 @@ import { SubmitButton } from '~/components/ui/form/SubmitButton';
 import Form from '~/components/ui/form/Form';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '~/lib/localisation/navigation';
-import { Button } from '~/components/ui/Button';
 
 export default async function SignInForm() {
   const t = await getTranslations('Auth');
@@ -23,12 +22,7 @@ export default async function SignInForm() {
         autoComplete="current-password"
       />
       <Form.Footer
-        primaryAction={
-          <>
-            <Button>Cancel</Button>
-            <SubmitButton>{t('SignIn.ButtonText')}</SubmitButton>
-          </>
-        }
+        primaryAction={<SubmitButton>{t('SignIn.ButtonText')}</SubmitButton>}
         secondaryAction={
           <Link href="/forgot-password" className="text-sm">
             {t('Form.ForgotPassword')}

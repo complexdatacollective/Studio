@@ -1,6 +1,7 @@
-import { forwardRef, type ElementType, type ReactNode } from 'react';
+import { type Ref, type ElementType, type ReactNode } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';
+import { motion } from 'framer-motion';
 
 export const surfaceVariants = tv({
   base: '',
@@ -36,23 +37,26 @@ type SurfaceProps<E extends ElementType = typeof defaultElement> = {
   as?: E;
   level: SurfaceVariants['level'];
   spacing?: SurfaceVariants['spacing'];
+  ref?: Ref<HTMLDivElement>;
 };
 
 /**
  * The idea of surface is to ensure consistent styling of containers.
  */
-function Surface<E extends ElementType = typeof defaultElement>({
+export default function Surface<E extends ElementType = typeof defaultElement>({
   children,
   as,
   level,
   spacing,
   className,
+  ref,
   ...props
 }: SurfaceProps<E>) {
   const Component = as ?? defaultElement;
 
   return (
     <Component
+      ref={ref}
       {...props}
       className={cn(surfaceVariants({ level, spacing }), className)}
     >
@@ -61,4 +65,4 @@ function Surface<E extends ElementType = typeof defaultElement>({
   );
 }
 
-export default forwardRef(Surface);
+export const MotionSurface = motion(Surface);
