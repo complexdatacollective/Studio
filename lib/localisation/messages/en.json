@@ -87,8 +87,8 @@
   },
   "Interview": {
     "Navigation": {
-      "Forward": "Move forward",
-      "Back": "Move backward",
+      "Next": "Next question",
+      "Previous": "Previous question",
       "Menu": "Main menu",
       "Help": "Help menu",
       "Progress": "You have completed {percent}% of the interview"

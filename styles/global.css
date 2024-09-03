@@ -45,14 +45,15 @@
     --base-hue: 281;
 
     --background: 97% 0.001 var(--base-hue);
-    --foreground: 20% 0.2 var(--base-hue);
+    --foreground: 15% 0.2 var(--base-hue);
 
     /* "Brand" */
     --primary: 34% 0.2 var(--base-hue);
     --primary-foreground: var(--white);
 
-    --secondary: 50% 0.1 var(--base-hue);
-    --secondary-foreground: var(--foreground);
+    /* small amount of contrast against background */
+    --default: 50% 0.1 var(--base-hue);
+    --default-foreground: var(--foreground);
 
     /* For visual emphasis */
     --accent-hue: calc(var(--base-hue) - 30);
@@ -80,20 +81,18 @@
     --overlay: 13% 0.1 var(--base-hue);
 
     /* Surfaces */
-    --surface-0-bg: var(--white); /* Surface 0 is for foreground elements */
-    --surface-0-fg: var(--foreground);
+    /* Surface 0 is for foreground elements, Cards, etc. */
+    --surface-0: var(--white);
+    --surface-0-foreground: var(--foreground);
 
-    --surface-1-bg: 94% 0.005 var(--base-hue);
-    --surface-1-fg: var(--foreground);
-    --surface-2-bg: 91% 0.01 var(--base-hue);
-    --surface-2-fg: var(--foreground);
-    --surface-3-bg: 87% 0.02 var(--base-hue);
-    --surface-3-fg: var(--foreground);
-    --surface-4-bg: 84% 0.04 var(--base-hue);
-    --surface-4-fg: var(--foreground);
-
-    --card: var(--surface-1-bg);
-    --card-foreground: var(--surface-1-fg);
+    --surface-1: 94% 0.005 var(--base-hue);
+    --surface-1-foreground: var(--foreground);
+    --surface-2: 91% 0.01 var(--base-hue);
+    --surface-2-foreground: var(--foreground);
+    --surface-3: 87% 0.02 var(--base-hue);
+    --surface-3-foreground: var(--foreground);
+    --surface-4: 84% 0.04 var(--base-hue);
+    --surface-4-foreground: var(--foreground);
 
     /* Focus ring */
     --ring: var(--mustard);
@@ -153,7 +152,7 @@
     --foreground: 97% 0.001 var(--base-hue);
 
     --primary: 40% 0.2 var(--base-hue);
-    --secondary: 100% 0.1 var(--base-hue);
+    --default: 100% 0.1 var(--base-hue);
 
     --border-color: 28% 0.1 var(--base-hue);
 
@@ -161,13 +160,15 @@
     --input-foreground: var(--foreground);
 
     /* Surfaces */
-    --surface-1-bg: 21% 0.085 var(--base-hue);
-    --surface-1-fg: var(--foreground);
-    --surface-2-bg: 25% 0.1 var(--base-hue);
-    --surface-2-fg: var(--foreground);
-    --surface-3-bg: 27% 0.1 var(--base-hue);
-    --surface-3-fg: var(--foreground);
-    --surface-4-bg: 29% 0.4 var(--base-hue);
-    --surface-4-fg: var(--foreground);
+    --surface-0: 17% 0.1 var(--base-hue);
+    --surface-0-foreground: var(--foreground);
+    --surface-1: 21% 0.085 var(--base-hue);
+    --surface-1-foreground: var(--foreground);
+    --surface-2: 25% 0.1 var(--base-hue);
+    --surface-2-foreground: var(--foreground);
+    --surface-3: 27% 0.1 var(--base-hue);
+    --surface-3-foreground: var(--foreground);
+    --surface-4: 29% 0.4 var(--base-hue);
+    --surface-4-foreground: var(--foreground);
   }
 }

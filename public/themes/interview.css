@@ -6,15 +6,14 @@
     --primary: var(--neon-coral);
     --primary-foreground: var(--white);
 
-    --secondary: 100% 0.2 281;
-    --secondary-foreground: var(--foreground);
+    --default: 100% 0.2 281;
+    --default-foreground: var(--foreground);
 
     /* Card used for overlays primarily */
-    --card: var(--white);
-    --card-foreground: var(--charcoal);
+    --surface-0: var(--white);
+    --surface-0-foreground: var(--charcoal);
 
-    /* Node Panels and Navigation Bar */
-    --surface-1-bg: var(--cyber-grape);
+    --surface-1: 29% 0.09 var(--cyber-grape-hue);
 
     --input: var(--white);
     --input-foreground: var(--charcoal);

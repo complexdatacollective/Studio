@@ -32,19 +32,17 @@ export default function WizardStep({ step }: { step: Step }) {
       <RenderRichText value={localisedStepContent} />
       <footer className="flex justify-between">
         {hasPreviousStep && (
-          <Button onClick={() => previousStep()} className="flex-1">
-            {t('Previous')}
-          </Button>
+          <Button onClick={() => previousStep()}>{t('Previous')}</Button>
         )}
         <div className="flex flex-1 items-center justify-center text-sm">
           {progress.current} / {progress.total}
         </div>
         {hasNextStep ? (
-          <Button color="primary" onClick={() => nextStep()} className="flex-1">
+          <Button color="primary" onClick={() => nextStep()}>
             {t('Next')}
           </Button>
         ) : (
-          <Button color="success" onClick={() => nextStep()} className="flex-1">
+          <Button color="success" onClick={() => nextStep()}>
             {t('Done')}
           </Button>
         )}

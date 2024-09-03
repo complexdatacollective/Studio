@@ -7,11 +7,11 @@ export const surfaceVariants = tv({
   base: '',
   variants: {
     level: {
-      0: 'bg-surface-0 text-surface-0-foreground shadow-xl',
-      1: 'bg-surface-1 text-surface-1-foreground shadow-lg',
-      2: 'bg-surface-2 text-surface-2-foreground shadow-md',
-      3: 'bg-surface-3 text-surface-3-foreground shadow-sm',
-      4: 'bg-surface-4 text-surface-4-foreground shadow',
+      0: 'bg-surface-0 text-surface-0-foreground ',
+      1: 'bg-surface-1 text-surface-1-foreground ',
+      2: 'bg-surface-2 text-surface-2-foreground ',
+      3: 'bg-surface-3 text-surface-3-foreground ',
+      4: 'bg-surface-4 text-surface-4-foreground',
     },
     spacing: {
       none: '',
