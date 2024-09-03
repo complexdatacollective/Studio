@@ -63,6 +63,8 @@
     --accent: 50% 0.22 var(--accent-hue);
     --accent-foreground: var(--white);
 
+    --link: var(--accent);
+
     --muted: 95% 0.001 var(--base-hue);
     --muted-foreground: 40% 0.1 var(--base-hue);
 
@@ -164,6 +166,8 @@
 
     --primary: 40% 0.2 var(--base-hue);
     --default: 100% 0.1 var(--base-hue);
+
+    --link: 65% 0.35 var(--accent-hue);
 
     --border-color: 28% 0.1 var(--base-hue);
 

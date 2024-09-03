@@ -20,7 +20,7 @@
 
     --accent: var(--slate-blue);
     --success: var(--sea-green);
-    --success-foreground: var(--black);
+    --success-foreground: var(--white);
     --muted: var(--platinum);
 
     --border-radius: 1.25rem;

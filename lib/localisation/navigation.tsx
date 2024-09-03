@@ -17,7 +17,7 @@ export const Link = ({ className, ...props }: LinkProps) => {
   return (
     <LocaleLink
       {...props}
-      className={cn('text-primary hover:underline', className)}
+      className={cn('text-link hover:underline', className)}
     />
   );
 };

@@ -22,7 +22,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       level={0}
       ref={ref}
       className={cn(
-        'rounded border text-sm',
+        'rounded border text-left text-sm',
         props.onClick &&
           'focusable cursor-pointer transition-colors hover:bg-primary hover:text-primary-foreground',
         className,

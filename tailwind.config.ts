@@ -38,6 +38,7 @@ export default {
 
       'background': 'oklch(var(--background) / <alpha-value>)',
       'foreground': 'oklch(var(--foreground) / <alpha-value>)',
+      'link': 'oklch(var(--link) / <alpha-value>)',
       'default': {
         DEFAULT: 'oklch(var(--default) / <alpha-value>)',
         foreground: 'oklch(var(--default-foreground) / <alpha-value>)',
