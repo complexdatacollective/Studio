@@ -12,6 +12,7 @@ const Popover = ({
   modal,
   isOpen,
   onOpenChange,
+  context,
   // side,
 }: PropsWithChildren<{
   title?: string;
@@ -19,6 +20,7 @@ const Popover = ({
   modal?: boolean;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  context?: 'interviewer' | 'default';
   // side?: 'top' | 'right' | 'bottom' | 'left';
 }>) => {
   return (
@@ -32,6 +34,7 @@ const Popover = ({
         container={document.getElementById('dialog-portal')}
       >
         <PopoverPrimitive.Content
+          data-context={context}
           className={cn(
             'motion-safe:data-[state=open]:data-[side=top]:animate-slideDownAndFade',
             'motion-safe:data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
