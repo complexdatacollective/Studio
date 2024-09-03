@@ -12,7 +12,7 @@ export const headingVariants = tv({
       'h1': 'scroll-m-20 text-2xl tracking-tight mb-6',
       'h2': 'scroll-m-20 text-xl tracking-tight mb-4',
       'h3': 'scroll-m-20 text-lg mb-3',
-      'h4': 'scroll-m-20 text-base mb-2',
+      'h4': 'scroll-m-20 text-base mb-2 leading-6',
       'h4-all-caps': 'scroll-m-20 text-base tracking-widest uppercase',
       'label':
         'scroll-m-20 text-sm tracking-normal peer-disabled:opacity-70 peer-disabled:cursor-not-allowed font-extrabold',

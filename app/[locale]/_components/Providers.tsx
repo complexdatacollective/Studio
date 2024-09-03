@@ -36,7 +36,10 @@ export default function Providers({
           <RadixDirectionProvider dir={dir}>
             <WizardProvider>
               <DialogStoreProvider>
-                <TooltipProvider>{children}</TooltipProvider>
+                <TooltipProvider>
+                  {children}
+                  <div id="dialog-portal"></div>
+                </TooltipProvider>
               </DialogStoreProvider>
             </WizardProvider>
           </RadixDirectionProvider>

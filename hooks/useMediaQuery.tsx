@@ -1,10 +1,10 @@
-// hooks/useMediaQuery.js
+/* eslint-disable no-console */
 import { useState, useEffect } from 'react';
 import { breakpoints } from '../tailwind.config';
 
-// Convert Tailwind breakpoints to media queries
-const getMediaQuery = (key) => {
-  console.log(breakpoints);
+type Breakpoint = keyof typeof breakpoints;
+
+const getMediaQuery = (key: Breakpoint) => {
   const breakpointValue = breakpoints[key];
   if (!breakpointValue) {
     console.warn(
@@ -15,15 +15,18 @@ const getMediaQuery = (key) => {
 
   if (typeof breakpointValue === 'string') {
     return `(min-width: ${breakpointValue})`;
-  } else if (typeof breakpointValue === 'object') {
-    return `(min-width: ${breakpointValue.min}) and (max-width: ${breakpointValue.max})`;
+  } else {
+    console.warn(`Couldn't parse breakpoint value for ${key}.`);
   }
 
   return null;
 };
 
-// General-purpose useMediaQuery hook
-export const useMediaQuery = (queryKey) => {
+/**
+ * Hook to get the current media query match status for a given breakpoint.
+ * Uses the tailwind theme values.
+ */
+export const useMediaQuery = (queryKey: Breakpoint) => {
   const [matches, setMatches] = useState(false);
 
   useEffect(() => {
@@ -32,17 +35,14 @@ export const useMediaQuery = (queryKey) => {
 
     const mediaQueryList = window.matchMedia(mediaQuery);
 
-    const handleChange = (event) => {
+    const handleChange = (event: MediaQueryListEvent) => {
       setMatches(event.matches);
     };
 
-    // Set initial value
     setMatches(mediaQueryList.matches);
 
-    // Listen for changes
     mediaQueryList.addEventListener('change', handleChange);
 
-    // Cleanup listener on unmount
     return () => {
       mediaQueryList.removeEventListener('change', handleChange);
     };

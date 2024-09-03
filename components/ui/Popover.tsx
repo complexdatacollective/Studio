@@ -28,7 +28,9 @@ const Popover = ({
       onOpenChange={onOpenChange}
     >
       <PopoverPrimitive.Trigger asChild>{children}</PopoverPrimitive.Trigger>
-      <PopoverPrimitive.Portal>
+      <PopoverPrimitive.Portal
+        container={document.getElementById('dialog-portal')}
+      >
         <PopoverPrimitive.Content
           className={cn(
             'motion-safe:data-[state=open]:data-[side=top]:animate-slideDownAndFade',

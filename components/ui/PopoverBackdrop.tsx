@@ -3,11 +3,17 @@ import { motion } from 'framer-motion';
 import { forwardRef, type ReactNode } from 'react';
 
 export const backdropClasses =
-  'fixed inset-0 flex items-center justify-center bg-overlay/50';
+  'fixed inset-0 flex items-center justify-center bg-overlay/70';
 
 const overlayVariants = {
-  closed: { opacity: 0, transition: { when: 'afterChildren' } },
-  open: { opacity: 1, transition: { when: 'beforeChildren' } },
+  closed: {
+    opacity: 0,
+    // transition: { when: 'afterChildren' }
+  },
+  open: {
+    opacity: 1,
+    // transition: { when: 'beforeChildren' }
+  },
 };
 
 const PopoverBackdrop = forwardRef(

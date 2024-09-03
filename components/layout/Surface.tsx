@@ -4,7 +4,7 @@ import { cn } from '~/lib/utils';
 import { motion } from 'framer-motion';
 
 export const surfaceVariants = tv({
-  base: '',
+  base: 'shadow',
   variants: {
     level: {
       0: 'bg-surface-0 text-surface-0-foreground ',

@@ -28,7 +28,7 @@ export default function WizardStep({ step }: { step: Step }) {
   const position = useElementPosition(targetElementId);
 
   const renderContent = () => (
-    <div className="flex flex-col gap-2">
+    <>
       <RenderRichText value={localisedStepContent} />
       <footer className="flex justify-between">
         {hasPreviousStep && (
@@ -47,7 +47,7 @@ export default function WizardStep({ step }: { step: Step }) {
           </Button>
         )}
       </footer>
-    </div>
+    </>
   );
 
   if (position) {

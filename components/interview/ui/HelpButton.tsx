@@ -2,38 +2,13 @@ import { HelpCircle } from 'lucide-react';
 import { NavButtonWithTooltip } from './NavigationButton';
 import { useTranslations } from 'next-intl';
 import { useWizardController } from '~/components/onboard-wizard/useWizardController';
-import { Card, CardHeader } from '~/components/ui/Card';
 import { env } from '~/env';
 import { WIZARD_LOCAL_STORAGE_KEY } from '~/lib/onboarding-wizard/Provider';
 import { getLocalisedValue } from '~/lib/localisation/utils';
 import { renderLocalisedValue } from '~/components/RenderRichText';
-import type { ReactNode } from 'react';
-import Heading from '~/components/typography/Heading';
 import { useDialogs } from '~/lib/dialogs/useDialogs';
 import { Button } from '~/components/ui/Button';
-
-const HelpCard = ({
-  title,
-  description,
-  onClick,
-}: {
-  title: string;
-  description: ReactNode;
-  onClick: () => void;
-}) => {
-  return (
-    <Card
-      className="w-full cursor-pointer text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-      onClick={onClick}
-      role="button"
-    >
-      <CardHeader>
-        <Heading variant="h4">{title}</Heading>
-        {description}
-      </CardHeader>
-    </Card>
-  );
-};
+import { Card } from '~/components/ui/Card';
 
 function AvailableWizardsPanel({
   handleClosePanel,
@@ -54,16 +29,17 @@ function AvailableWizardsPanel({
         {Object.entries(wizards)
           .map(([id, wizard]) => ({ id, ...wizard }))
           .map((wizard) => (
-            <HelpCard
+            <Card
               key={wizard.id}
               title={getLocalisedValue(wizard.name, ['en'])}
-              description={renderLocalisedValue(
+              onClick={() => handleStartWizard(wizard.id)}
+            >
+              {renderLocalisedValue(
                 getLocalisedValue(wizard.description, ['en']),
               )}
-              onClick={() => handleStartWizard(wizard.id)}
-            />
+            </Card>
           ))}
-        <HelpCard
+        <Card
           title={t('Title')}
           description={t('Description')}
           onClick={() => {
@@ -73,7 +49,6 @@ function AvailableWizardsPanel({
         />
       </div>
       {env.NODE_ENV === 'development' && (
-        // eslint-disable-next-line jsx-a11y/anchor-is-valid, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <Button
           color="destructive"
           onClick={() => {

@@ -3,7 +3,6 @@ import { cn } from '~/lib/utils';
 import Heading from '../typography/Heading';
 import CloseButton from './CloseButton';
 import ModalOverlay from './form/ModalOverlay';
-import { motion } from 'framer-motion';
 import { type ForwardedRef, forwardRef } from 'react';
 import { MotionSurface } from '../layout/Surface';
 
@@ -36,7 +35,7 @@ export const DialogContent = forwardRef(
           level={0}
           variants={dialogVariants}
           className={cn(
-            'md:w-90% mx-4 max-w-4xl md:mx-auto',
+            'mx-4 max-w-4xl md:mx-auto',
             'px-6 py-10',
             'z-50 max-h-[85vh] rounded',
           )}

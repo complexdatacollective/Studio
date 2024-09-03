@@ -11,7 +11,6 @@ type NavigationButtonProps = {
 const NavigationButton = forwardRef<HTMLButtonElement, NavigationButtonProps>(
   (props, ref) => {
     const { className, children, color, ...rest } = props;
-    console.log('className', className);
     return (
       <Button
         variant="text"

@@ -11,9 +11,8 @@ export default {
   content: ['./(app|components|lib)/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      body: ['var(--font-family-body)'],
-      heading: ['var(--font-family-heading)'],
-      mono: ['var(--font-family-mono)'],
+      sans: ['var(--font-lexend)'],
+      mono: ['var(--font-roboto-mono)'],
     },
     fontSize: {
       'xs': ['var(--font-size-xs)', '1.5'],
