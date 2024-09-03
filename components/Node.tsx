@@ -21,7 +21,7 @@ export default function Node({
   return (
     <div
       role="button"
-      className={`inline-flex rounded-full ${nodeSizeClasses} items-center justify-center bg-node-1`}
+      className={`inline-flex rounded-full ${nodeSizeClasses} text-node-1-foreground items-center justify-center bg-node-1`}
       aria-label={label}
     >
       <span className={labelClasses}>{labelWithEllipsis}</span>

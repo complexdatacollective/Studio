@@ -106,13 +106,21 @@
     /* Sequences */
 
     --seq-node-1: var(--neon-coral);
+    --seq-node-1-foreground: var(--white);
     --seq-node-2: var(--seq-serpent);
+    --seq-node-2-foreground: var(--white);
     --seq-node-3: var(--purple-pizzazz);
+    --seq-node-3-foreground: var(--white);
     --seq-node-4: var(--neon-carrot);
+    --seq-node-4-foreground: var(--white);
     --seq-node-5: var(--kiwi);
+    --seq-node-5-foreground: var(--white);
     --seq-node-6: var(--cerulean-blue);
+    --seq-node-6-foreground: var(--white);
     --seq-node-7: var(--paradise-pink);
+    --seq-node-7-foreground: var(--white);
     --seq-node-8: var(--mustard);
+    --seq-node-8-foreground: var(--white);
 
     --seq-edge-1: var(--mustard);
     --seq-edge-2: var(--purple-pizzazz);

@@ -105,14 +105,38 @@ export default {
 
       // Sequences
       'node': {
-        '1': 'oklch(var(--seq-node-1) / <alpha-value>)',
-        '2': 'oklch(var(--seq-node-2) / <alpha-value>)',
-        '3': 'oklch(var(--seq-node-3) / <alpha-value>)',
-        '4': 'oklch(var(--seq-node-4) / <alpha-value>)',
-        '5': 'oklch(var(--seq-node-5) / <alpha-value>)',
-        '6': 'oklch(var(--seq-node-6) / <alpha-value>)',
-        '7': 'oklch(var(--seq-node-7) / <alpha-value>)',
-        '8': 'oklch(var(--seq-node-8) / <alpha-value>)',
+        '1': {
+          DEFAULT: 'oklch(var(--seq-node-1) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-1-foreground) / <alpha-value>)',
+        },
+        '2': {
+          DEFAULT: 'oklch(var(--seq-node-2) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-2-foreground) / <alpha-value>)',
+        },
+        '3': {
+          DEFAULT: 'oklch(var(--seq-node-3) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-3-foreground) / <alpha-value>)',
+        },
+        '4': {
+          DEFAULT: 'oklch(var(--seq-node-4) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-4-foreground) / <alpha-value>)',
+        },
+        '5': {
+          DEFAULT: 'oklch(var(--seq-node-5) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-5-foreground) / <alpha-value>)',
+        },
+        '6': {
+          DEFAULT: 'oklch(var(--seq-node-6) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-6-foreground) / <alpha-value>)',
+        },
+        '7': {
+          DEFAULT: 'oklch(var(--seq-node-7) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-7-foreground) / <alpha-value>)',
+        },
+        '8': {
+          DEFAULT: 'oklch(var(--seq-node-8) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-8-foreground) / <alpha-value>)',
+        },
       },
 
       'edge': {
