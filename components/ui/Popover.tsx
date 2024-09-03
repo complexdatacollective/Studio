@@ -44,6 +44,9 @@ const Popover = ({
           side="right"
           avoidCollisions
           asChild
+          // floating-ui prop exposed in @radix-ui/react-popper patch
+          // see https://floating-ui.com/docs/flip#fallbackaxissidedirection
+          fallbackAxisSideDirection="start"
         >
           {/* @ts-expect-error has to do with 12.0.0-alpha release */}
           <motion.div layoutId="popover-content" layout="position">
