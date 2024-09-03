@@ -34,11 +34,7 @@ export const DialogContent = forwardRef(
         <MotionSurface
           level={0}
           variants={dialogVariants}
-          className={cn(
-            'mx-4 max-w-4xl md:mx-auto',
-            'px-6 py-10',
-            'z-50 max-h-[85vh] rounded',
-          )}
+          className={cn('max-w-[55ch] md:mx-auto', 'z-50 max-h-[85vh] rounded')}
         >
           <DialogPrimitive.Title asChild>
             <Heading variant="h2">{title}</Heading>
