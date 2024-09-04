@@ -90,14 +90,8 @@
     --surface-0: var(--white);
     --surface-0-foreground: var(--foreground);
 
-    --surface-1: 94% 0.005 var(--base-hue);
-    --surface-1-foreground: var(--foreground);
-    --surface-2: 91% 0.01 var(--base-hue);
-    --surface-2-foreground: var(--foreground);
-    --surface-3: 87% 0.02 var(--base-hue);
-    --surface-3-foreground: var(--foreground);
-    --surface-4: 84% 0.04 var(--base-hue);
-    --surface-4-foreground: var(--foreground);
+    --surface-base: 94% 0.005 var(--base-hue);
+    --surface-base-foreground: var(--foreground);
 
     /* Focus ring */
     --ring: var(--mustard);
@@ -177,13 +171,7 @@
     /* Surfaces */
     --surface-0: 17% 0.1 var(--base-hue);
     --surface-0-foreground: var(--foreground);
-    --surface-1: 21% 0.085 var(--base-hue);
-    --surface-1-foreground: var(--foreground);
-    --surface-2: 25% 0.1 var(--base-hue);
-    --surface-2-foreground: var(--foreground);
-    --surface-3: 27% 0.1 var(--base-hue);
-    --surface-3-foreground: var(--foreground);
-    --surface-4: 29% 0.4 var(--base-hue);
-    --surface-4-foreground: var(--foreground);
+    --surface-base: 21% 0.085 var(--base-hue);
+    --surface-base-foreground: var(--foreground);
   }
 }
