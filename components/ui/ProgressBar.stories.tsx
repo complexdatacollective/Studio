@@ -1,11 +1,8 @@
 // ProgressBar.stories.tsx
 
 import React from 'react';
-import { Meta, Story, StoryObj } from '@storybook/react';
-import ProgressBar, {
-  ProgressBarWithTooltip,
-  type ProgressBarProps,
-} from './ProgressBar';
+import type { Meta, StoryObj } from '@storybook/react';
+import ProgressBar from './ProgressBar';
 
 // Define meta information for the component
 const meta: Meta<typeof ProgressBar> = {
