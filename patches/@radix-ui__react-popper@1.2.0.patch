@@ -1,0 +1,64 @@
+diff --git a/dist/index.d.mts b/dist/index.d.mts
+index 2224d2490e8a62116a97c63e3e5de002237f0aae..59f61aa7aa62427b821df70a3d4b22153e284fe2 100644
+--- a/dist/index.d.mts
++++ b/dist/index.d.mts
+@@ -42,6 +42,7 @@ interface PopperContentProps extends PrimitiveDivProps {
+     hideWhenDetached?: boolean;
+     updatePositionStrategy?: 'optimized' | 'always';
+     onPlaced?: () => void;
++    fallbackAxisSideDirection?: 'start' | 'end' | 'none';
+ }
+ declare const PopperContent: React.ForwardRefExoticComponent<PopperContentProps & React.RefAttributes<HTMLDivElement>>;
+ type ArrowProps = React.ComponentPropsWithoutRef<typeof ArrowPrimitive.Root>;
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 2224d2490e8a62116a97c63e3e5de002237f0aae..59f61aa7aa62427b821df70a3d4b22153e284fe2 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -42,6 +42,7 @@ interface PopperContentProps extends PrimitiveDivProps {
+     hideWhenDetached?: boolean;
+     updatePositionStrategy?: 'optimized' | 'always';
+     onPlaced?: () => void;
++    fallbackAxisSideDirection?: 'start' | 'end' | 'none';
+ }
+ declare const PopperContent: React.ForwardRefExoticComponent<PopperContentProps & React.RefAttributes<HTMLDivElement>>;
+ type ArrowProps = React.ComponentPropsWithoutRef<typeof ArrowPrimitive.Root>;
+diff --git a/dist/index.js b/dist/index.js
+index 1bac504254894ee10ddab27c4305bf76bda28713..508e0d83308b7b1ce4a08034e7987905b67a3f8f 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -99,6 +99,7 @@ var PopperContent = React.forwardRef(
+       hideWhenDetached = false,
+       updatePositionStrategy = "optimized",
+       onPlaced,
++      fallbackAxisSideDirection, 
+       ...contentProps
+     } = props;
+     const context = usePopperContext(CONTENT_NAME, __scopePopper);
+@@ -113,6 +114,7 @@ var PopperContent = React.forwardRef(
+     const boundary = Array.isArray(collisionBoundary) ? collisionBoundary : [collisionBoundary];
+     const hasExplicitBoundaries = boundary.length > 0;
+     const detectOverflowOptions = {
++      fallbackAxisSideDirection,
+       padding: collisionPadding,
+       boundary: boundary.filter(isNotNull),
+       // with `strategy: 'fixed'`, this is the only way to get it to respect boundaries
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 1ae96b200865a38c5ba43c16722888be632a906f..a598518d1bc8cd9743d77bf1758d211107467e32 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -64,6 +64,7 @@ var PopperContent = React.forwardRef(
+       hideWhenDetached = false,
+       updatePositionStrategy = "optimized",
+       onPlaced,
++      fallbackAxisSideDirection,
+       ...contentProps
+     } = props;
+     const context = usePopperContext(CONTENT_NAME, __scopePopper);
+@@ -78,6 +79,7 @@ var PopperContent = React.forwardRef(
+     const boundary = Array.isArray(collisionBoundary) ? collisionBoundary : [collisionBoundary];
+     const hasExplicitBoundaries = boundary.length > 0;
+     const detectOverflowOptions = {
++      fallbackAxisSideDirection,
+       padding: collisionPadding,
+       boundary: boundary.filter(isNotNull),
+       // with `strategy: 'fixed'`, this is the only way to get it to respect boundaries
