@@ -9,11 +9,9 @@ import {
 import { useStore } from 'zustand';
 import { DialogRenderer } from './DialogRenderer';
 
-export const DialogStoreContext = createContext<DialogStoreApi | undefined>(
-  undefined,
-);
+const DialogStoreContext = createContext<DialogStoreApi | undefined>(undefined);
 
-export type DialogStoreProviderProps = {
+type DialogStoreProviderProps = {
   children: ReactNode;
 };
 

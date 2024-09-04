@@ -11,7 +11,7 @@ const dialogVariants = {
   open: { opacity: 1, y: 0 },
 };
 
-export const DialogCloseButton = () => (
+const DialogCloseButton = () => (
   <DialogPrimitive.Close asChild>
     <CloseButton />
   </DialogPrimitive.Close>

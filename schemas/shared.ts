@@ -42,14 +42,14 @@ const BlockNodeSchema = z.object({
 
 export type BlockNode = z.infer<typeof BlockNodeSchema>;
 
-export const JSONRichTextSchema = z.array(BlockNodeSchema);
+const JSONRichTextSchema = z.array(BlockNodeSchema);
 
 export type JSONRichText = z.infer<typeof JSONRichTextSchema>;
 
 // Utility for protocol keys that must support localisation.
 // TODO: figure out how to make the required key (which represents the default)
 // locale) definable in the protocol
-export const LocalisedRecordSchema = z
+const LocalisedRecordSchema = z
   .object({
     en: JSONRichTextSchema,
   })
@@ -57,7 +57,7 @@ export const LocalisedRecordSchema = z
 
 export type LocalisedRecord = z.infer<typeof LocalisedRecordSchema>;
 
-export const LocalisedStringSchema = z
+const LocalisedStringSchema = z
   .object({
     en: z.string(),
   })

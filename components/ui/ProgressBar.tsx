@@ -2,7 +2,7 @@ import { type HtmlHTMLAttributes } from 'react';
 import { cn } from '~/lib/utils';
 import { withTooltip } from './Tooltip';
 
-export type ProgressBarProps = {
+type ProgressBarProps = {
   indeterminate?: boolean;
   orientation?: 'horizontal' | 'vertical';
   value?: number;

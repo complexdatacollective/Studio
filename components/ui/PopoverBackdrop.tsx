@@ -2,7 +2,7 @@ import { cn } from '~/lib/utils';
 import { motion } from 'framer-motion';
 import { forwardRef, type ReactNode } from 'react';
 
-export const backdropClasses =
+const backdropClasses =
   'fixed inset-0 flex items-center justify-center bg-overlay/70';
 
 const overlayVariants = {

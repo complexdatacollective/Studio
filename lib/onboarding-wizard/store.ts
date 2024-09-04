@@ -2,7 +2,7 @@ import { createStore } from 'zustand';
 import type { LocalisedString, LocalisedRecord } from '~/schemas/shared';
 import { type LocalStorageState } from '~/lib/createLocalStorageStore';
 
-export const Priorities = {
+const Priorities = {
   ShowFirst: Infinity,
   UI: 100,
   Navigation: 50,
@@ -10,7 +10,7 @@ export const Priorities = {
   ShowLast: -Infinity,
 } as const;
 
-export type Priority = keyof typeof Priorities;
+type Priority = keyof typeof Priorities;
 
 export type Step = {
   targetElementId?: string;
@@ -26,7 +26,7 @@ export type Wizard = {
   priority: Priority;
 };
 
-export type WizardState = {
+type WizardState = {
   wizards: Record<Wizard['id'], Omit<Wizard, 'id'>>;
   currentStep: number; // Only null when there's no active wizard.
   activeWizardId: Wizard['id'] | null;
@@ -36,7 +36,7 @@ export type WizardState = {
   };
 };
 
-export type WizardActions = {
+type WizardActions = {
   registerWizard: (wizard: Wizard) => void;
   deregisterWizard: (id: Wizard['id']) => void;
   setActiveWizard: (id: Wizard['id'] | null) => void;
