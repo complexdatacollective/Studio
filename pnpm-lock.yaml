@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@radix-ui/react-popper@1.2.0':
-    hash: pdmyiofuvthgl2fo4do5acm5xa
+    hash: s4lbvjtshel3lcdrallygm5hhi
     path: patches/@radix-ui__react-popper@1.2.0.patch
 
 dependencies:
@@ -33,7 +33,7 @@ dependencies:
     version: 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
   '@radix-ui/react-popper':
     specifier: ^1.2.0
-    version: 1.2.0(patch_hash=pdmyiofuvthgl2fo4do5acm5xa)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
+    version: 1.2.0(patch_hash=s4lbvjtshel3lcdrallygm5hhi)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
   '@radix-ui/react-radio-group':
     specifier: ^1.2.0
     version: 1.2.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
@@ -3358,7 +3358,7 @@ packages:
       '@radix-ui/react-focus-guards': 1.1.0(@types/react@18.3.5)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-focus-scope': 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-id': 1.1.0(@types/react@18.3.5)(react@19.0.0-rc-b57d2823-20240822)
-      '@radix-ui/react-popper': 1.2.0(patch_hash=pdmyiofuvthgl2fo4do5acm5xa)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
+      '@radix-ui/react-popper': 1.2.0(patch_hash=s4lbvjtshel3lcdrallygm5hhi)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-portal': 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-presence': 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
@@ -3372,7 +3372,7 @@ packages:
       react-remove-scroll: 2.5.7(@types/react@18.3.5)(react@19.0.0-rc-b57d2823-20240822)
     dev: false
 
-  /@radix-ui/react-popper@1.2.0(patch_hash=pdmyiofuvthgl2fo4do5acm5xa)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822):
+  /@radix-ui/react-popper@1.2.0(patch_hash=s4lbvjtshel3lcdrallygm5hhi)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822):
     resolution: {integrity: sha512-ZnRMshKF43aBxVWPWvbj21+7TQCvhuULWJ4gNIKYpRlQt5xGRhLx66tMp8pya2UkGHTSlhpXwmjqltDYHhw7Vg==}
     peerDependencies:
       '@types/react': '*'
@@ -3544,7 +3544,7 @@ packages:
       '@radix-ui/react-focus-guards': 1.1.0(@types/react@18.3.5)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-focus-scope': 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-id': 1.1.0(@types/react@18.3.5)(react@19.0.0-rc-b57d2823-20240822)
-      '@radix-ui/react-popper': 1.2.0(patch_hash=pdmyiofuvthgl2fo4do5acm5xa)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
+      '@radix-ui/react-popper': 1.2.0(patch_hash=s4lbvjtshel3lcdrallygm5hhi)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-portal': 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-slot': 1.1.0(@types/react@18.3.5)(react@19.0.0-rc-b57d2823-20240822)
@@ -3619,7 +3619,7 @@ packages:
       '@radix-ui/react-context': 1.1.0(@types/react@18.3.5)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-dismissable-layer': 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-id': 1.1.0(@types/react@18.3.5)(react@19.0.0-rc-b57d2823-20240822)
-      '@radix-ui/react-popper': 1.2.0(patch_hash=pdmyiofuvthgl2fo4do5acm5xa)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
+      '@radix-ui/react-popper': 1.2.0(patch_hash=s4lbvjtshel3lcdrallygm5hhi)(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-portal': 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-presence': 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
       '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@19.0.0-rc-b57d2823-20240822)(react@19.0.0-rc-b57d2823-20240822)
