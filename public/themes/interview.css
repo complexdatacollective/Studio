@@ -3,7 +3,7 @@
     --background: var(--navy-taupe);
     --foreground: var(--white);
 
-    --primary: var(--neon-coral);
+    --primary: var(--slate-blue);
     --primary-foreground: var(--white);
 
     --default: 100% 0.2 281;
@@ -18,7 +18,7 @@
     --input: var(--white);
     --input-foreground: var(--charcoal);
 
-    --accent: var(--slate-blue);
+    --accent: var(--neon-coral);
     --success: var(--sea-green);
     --success-foreground: var(--white);
     --muted: var(--platinum);

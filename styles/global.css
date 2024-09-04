@@ -48,7 +48,7 @@
     --base-hue: 281;
 
     --background: 97% 0.001 var(--base-hue);
-    --foreground: 15% 0.2 var(--base-hue);
+    --foreground: 15% 0.1 var(--base-hue);
 
     /* "Brand" */
     --primary: 34% 0.2 var(--base-hue);
@@ -83,7 +83,7 @@
     --border-radius: 1.75rem;
     --border-color: 90% 0.01 var(--base-hue);
 
-    --overlay: 13% 0.1 var(--base-hue);
+    --overlay: 10% 0.075 var(--base-hue);
 
     /* Surfaces */
     /* Surface 0 is for foreground elements, Cards, etc. */
