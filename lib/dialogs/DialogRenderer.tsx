@@ -15,6 +15,7 @@ import Heading from '~/components/typography/Heading';
 import Form from '~/components/ui/form/Form';
 import { Button } from '~/components/ui/Button';
 import { SubmitButton } from '~/components/ui/form/SubmitButton';
+import { generatePublicId } from '../generatePublicId';
 
 const Dialog = ({ id, children, title, description, ref }) => {
   const { closeDialog } = useDialog();
@@ -42,7 +43,7 @@ const Dialog = ({ id, children, title, description, ref }) => {
           console.log('onSubmit');
           const formData = new FormData(e.target);
           e.preventDefault();
-          // closeDialog(id, formData);
+          closeDialog(id, formData);
         }}
       >
         {children}
@@ -64,7 +65,7 @@ const DialogProvider = ({ children }) => {
   const [dialogs, setDialogs] = useState([]);
 
   const openDialog = useCallback(({ title, description, children }) => {
-    const id = Math.random().toString(36).substr(2, 9);
+    const id = generatePublicId();
     const dialogRef = React.createRef();
     console.log('openDialog', id);
 

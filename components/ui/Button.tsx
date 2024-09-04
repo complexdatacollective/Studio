@@ -131,14 +131,27 @@ export type ButtonProps = {
   size?: ButtonVariants['size'];
   color?: ButtonVariants['color'];
   asChild?: boolean;
+  type?: 'button' | 'submit' | 'reset';
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, color, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      color,
+      type = 'button',
+      asChild = false,
+      ...props
+    },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, color, className }))}
+        type={type}
         ref={ref}
         {...props}
       />
