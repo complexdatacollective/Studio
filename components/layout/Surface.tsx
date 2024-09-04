@@ -1,3 +1,5 @@
+'use client';
+
 import { type Ref, type ElementType, type ReactNode } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';

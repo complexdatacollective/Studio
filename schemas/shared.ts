@@ -57,7 +57,7 @@ const LocalisedRecordSchema = z
 
 export type LocalisedRecord = z.infer<typeof LocalisedRecordSchema>;
 
-const LocalisedStringSchema = z
+export const LocalisedStringSchema = z
   .object({
     en: z.string(),
   })
