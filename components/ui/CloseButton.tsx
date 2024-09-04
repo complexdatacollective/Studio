@@ -15,12 +15,8 @@ export default function CloseButton(props: CloseButtonProps) {
       {...rest}
       title={t('Close')}
       variant="text"
-      color="primary"
-      size="xs"
-      className={cn(
-        'absolute top-2 items-center justify-center rounded-full ltr:right-2 rtl:left-2',
-        className,
-      )}
+      size="icon"
+      className={cn('absolute top-2 ltr:right-2 rtl:left-2', className)}
     >
       <X />
     </Button>

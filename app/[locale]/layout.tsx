@@ -1,5 +1,5 @@
 import { getMessages, getNow, getTimeZone } from 'next-intl/server';
-import { Lexend } from 'next/font/google';
+import { Lexend, Roboto_Mono } from 'next/font/google';
 import { type Metadata } from 'next';
 import '~/styles/global.css';
 import { type Locale } from '~/lib/localisation/locales';
@@ -10,8 +10,18 @@ import { cn } from '~/lib/utils';
 
 const lexend = Lexend({
   weight: 'variable',
+  display: 'swap',
   subsets: ['latin', 'latin-ext', 'vietnamese'],
+  variable: '--font-lexend',
 });
+
+const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
+});
+
+const test = lexend.variable;
 
 export const metadata: Metadata = {
   title: 'Network Canvas Studio',
@@ -35,10 +45,10 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={dir}
-      className={cn('min-h-full', lexend)}
+      className={cn('min-h-full', `${lexend.variable} ${roboto_mono.variable}`)}
       suppressHydrationWarning
     >
-      <body className="font-body min-h-full bg-background text-foreground">
+      <body className="font-sans min-h-full bg-background text-foreground">
         <Providers
           intlParams={{
             dir,

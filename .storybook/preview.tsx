@@ -7,6 +7,21 @@ import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import '~/styles/global.css';
 import Providers from '~/app/[locale]/_components/Providers';
+import { Lexend, Roboto_Mono } from 'next/font/google';
+import { cn } from '~/lib/utils';
+
+const lexend = Lexend({
+  weight: 'variable',
+  display: 'swap',
+  subsets: ['latin', 'latin-ext', 'vietnamese'],
+  variable: '--font-lexend',
+});
+
+const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
+});
 
 const loadMessages = async (
   locale: Locale,
@@ -96,10 +111,15 @@ const preview: Preview = {
         (context.globals.visualTheme as string);
 
       return (
-        <>
+        <div
+          className={cn(
+            'font-sans min-h-full bg-background text-foreground',
+            `${lexend.variable} ${roboto_mono.variable}`,
+          )}
+        >
           <InjectThemeVariables theme={theme} />
           <Story />
-        </>
+        </div>
       );
     },
     // For some reason, we need this empty decorator here, or the theme switcher

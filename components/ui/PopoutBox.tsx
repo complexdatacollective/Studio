@@ -1,6 +1,7 @@
 import Heading from '~/components/typography/Heading';
 import { type ReactNode } from 'react';
 import { cn } from '~/lib/utils';
+import Surface from '../layout/Surface';
 
 export type PopoutBoxProps = {
   title?: string;
@@ -18,9 +19,11 @@ const PopoutBox = ({
   iconClassName,
 }: PopoutBoxProps) => {
   return (
-    <aside
+    <Surface
+      as="aside"
+      level={0}
       className={cn(
-        'rounded-lg relative mx-0 my-5 max-w-full bg-card px-8 py-6 text-base-sm',
+        'rounded-lg relative mx-0 my-5 max-w-full px-8 py-6 text-base-sm',
         '@2xl/article:mx-8 @2xl/article:mt-10', // additional margin when icon is shown
         '@2xl/article:px-8 @2xl/article:py-6',
         className,
@@ -45,7 +48,7 @@ const PopoutBox = ({
         </Heading>
       )}
       {children}
-    </aside>
+    </Surface>
   );
 };
 

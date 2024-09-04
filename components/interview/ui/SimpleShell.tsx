@@ -1,5 +1,6 @@
 import { type IntRange } from 'type-fest';
 import Navigation from './Navigation';
+import { cn } from '~/lib/utils';
 
 // Used so we can share the rendering styles in our storybook
 export default function SimpleShell({
@@ -12,9 +13,14 @@ export default function SimpleShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen gap-4">
+    <div
+      className={cn(
+        'flex h-[100dvh] w-[100dvw] flex-col-reverse gap-4',
+        'md:flex-row',
+      )}
+    >
       <Navigation pulseNext={isReadyForNextStage} progress={progress} />
-      <div className="my-2 flex">{children}</div>
+      {children}
     </div>
   );
 }

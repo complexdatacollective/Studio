@@ -3,6 +3,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import Surface from '~/components/layout/Surface';
 import { cn } from '~/lib/utils';
 
 export default function Panel({
@@ -21,7 +22,7 @@ export default function Panel({
   const [collapsed, setCollapsed] = useState(false);
 
   const panelClasses = cn(
-    'flex flex-1 flex-col rounded-small bg-surface-1 border-b border-b-4 border-panel-1 shadow-xl',
+    'flex flex-1 flex-col rounded-small border-b border-b-4 border-panel-1 shadow-xl',
     {
       'border-b-0': noHighlight,
       'border-b-0 opacity-0 mb-0 flex-grow-0': minimize,
@@ -41,7 +42,7 @@ export default function Panel({
   }, [noCollapse]);
 
   return (
-    <div className={panelClasses}>
+    <Surface level={1} spacing="none" className={panelClasses}>
       <div
         className="flex cursor-pointer flex-col items-center p-4 text-center"
         onClick={toggleCollapsed}
@@ -49,6 +50,6 @@ export default function Panel({
         <h3 className="font-medium text-lg">{title}</h3>
       </div>
       <div className={contentClasses}>{children}</div>
-    </div>
+    </Surface>
   );
 }

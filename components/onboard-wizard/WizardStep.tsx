@@ -28,33 +28,26 @@ export default function WizardStep({ step }: { step: Step }) {
   const position = useElementPosition(targetElementId);
 
   const renderContent = () => (
-    <div className="flex flex-col gap-2">
+    <>
       <RenderRichText value={localisedStepContent} />
-      <footer className="-mb-4 flex justify-between">
+      <footer className="flex justify-between">
         {hasPreviousStep && (
-          <Button
-            variant="outline"
-            color="primary"
-            onClick={() => previousStep()}
-            className="flex-1"
-          >
-            {t('Previous')}
-          </Button>
+          <Button onClick={() => previousStep()}>{t('Previous')}</Button>
         )}
         <div className="flex flex-1 items-center justify-center text-sm">
           {progress.current} / {progress.total}
         </div>
         {hasNextStep ? (
-          <Button color="primary" onClick={() => nextStep()} className="flex-1">
+          <Button color="primary" onClick={() => nextStep()}>
             {t('Next')}
           </Button>
         ) : (
-          <Button color="accent" onClick={() => nextStep()} className="flex-1">
+          <Button color="success" onClick={() => nextStep()}>
             {t('Done')}
           </Button>
         )}
       </footer>
-    </div>
+    </>
   );
 
   if (position) {
@@ -67,6 +60,7 @@ export default function WizardStep({ step }: { step: Step }) {
         onOpenChange={() => {
           closeWizard();
         }}
+        context="interviewer"
       >
         <div
           style={{
@@ -89,6 +83,7 @@ export default function WizardStep({ step }: { step: Step }) {
       }}
       title={localisedStepTitle}
       description=""
+      context="interviewer"
     >
       {renderContent()}
     </Dialog>

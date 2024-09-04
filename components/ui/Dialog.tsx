@@ -3,8 +3,8 @@ import { cn } from '~/lib/utils';
 import Heading from '../typography/Heading';
 import CloseButton from './CloseButton';
 import ModalOverlay from './form/ModalOverlay';
-import { motion } from 'framer-motion';
 import { type ForwardedRef, forwardRef } from 'react';
+import { MotionSurface } from '../layout/Surface';
 
 const dialogVariants = {
   closed: { opacity: 0, y: '100px' },
@@ -31,14 +31,10 @@ export const DialogContent = forwardRef(
     const { title, description, ...rest } = props;
     return (
       <DialogPrimitive.Content forceMount ref={forwardedRef} asChild {...rest}>
-        {/* @ts-expect-error has to do with 12.0.0-alpha release */}
-        <motion.div
+        <MotionSurface
+          level={0}
           variants={dialogVariants}
-          className={cn(
-            'md:w-90% mx-4 max-w-4xl md:mx-auto',
-            'px-6 py-10',
-            'z-50 max-h-[85vh] rounded bg-card text-card-foreground shadow-xl focus:outline-none',
-          )}
+          className={cn('max-w-[55ch] md:mx-auto', 'z-50 max-h-[85vh] rounded')}
         >
           <DialogPrimitive.Title asChild>
             <Heading variant="h2">{title}</Heading>
@@ -48,7 +44,7 @@ export const DialogContent = forwardRef(
           </DialogPrimitive.Description>
           {children}
           <DialogCloseButton />
-        </motion.div>
+        </MotionSurface>
       </DialogPrimitive.Content>
     );
   },
@@ -62,6 +58,7 @@ const Dialog = ({
   onOpenChange,
   title,
   description,
+  context,
   className,
 }: {
   children?: React.ReactNode;
@@ -69,6 +66,7 @@ const Dialog = ({
   title: string;
   description: string;
   onOpenChange?: (open: boolean) => void;
+  context?: 'interviewer' | 'default';
   className?: string;
 }) => {
   return (
@@ -77,6 +75,7 @@ const Dialog = ({
         className={className}
         title={title}
         description={description}
+        data-context={context}
       >
         {children}
       </DialogContent>

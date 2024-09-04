@@ -11,16 +11,14 @@ import {
   SelectItem,
 } from '~/components/ui/select';
 import { Role } from '@prisma/client';
+import Form from '~/components/ui/form/Form';
 
 export default async function CreateStudyForm() {
   const t = await getTranslations('Components.CreateStudyForm');
 
   return (
-    <Section
-      title={t('FormTitle')}
-      footer={<SubmitButton>{t('FormButton')}</SubmitButton>}
-    >
-      <form action={createStudy} id="test" className="flex flex-col gap-4">
+    <Section title={t('FormTitle')}>
+      <Form action={createStudy}>
         <Input
           label={t('InputLabel')}
           type="text"
@@ -41,7 +39,10 @@ export default async function CreateStudyForm() {
             ))}
           </SelectContent>
         </Select>
-      </form>
+        <Form.Footer
+          primaryAction={<SubmitButton>{t('FormButton')}</SubmitButton>}
+        />
+      </Form>
     </Section>
   );
 }

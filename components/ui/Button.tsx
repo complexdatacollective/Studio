@@ -6,8 +6,7 @@ import { cn } from '~/lib/utils';
 const buttonVariants = tv({
   base: cn(
     'inline-flex items-center justify-center rounded text-sm font-semibold transition-colors text-nowrap truncate tracking-wide',
-    'ring-offset-background',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ',
+    'focusable',
     'disabled:pointer-events-none disabled:saturate-50 disabled:cursor-not-allowed',
   ),
   variants: {
@@ -24,10 +23,11 @@ const buttonVariants = tv({
       success: '',
     },
     size: {
-      xs: 'h-8 px-3 text-xs',
-      sm: 'h-10 px-4 text-base-sm',
-      default: 'h-12 px-6 ',
-      lg: 'h-16 px-8 text-base',
+      xs: 'h-8 px-3 text-xs w-full sm:w-auto',
+      sm: 'h-10 px-4 text-base-sm w-full sm:w-auto',
+      default: 'h-12 px-6 w-full sm:w-auto',
+      lg: 'h-16 px-8 text-base w-full sm:w-auto',
+      icon: 'h-10 w-10 flex rounded-full shrink-0',
     },
   },
   defaultVariants: {
@@ -41,20 +41,20 @@ const buttonVariants = tv({
       variant: 'default',
 
       class:
-        'bg-secondary/10 text-secondary-foreground hover:bg-primary hover:text-primary-foreground hover:bg-opacity-100',
+        'bg-default/10 text-default-foreground hover:bg-primary hover:text-primary-foreground hover:bg-opacity-100',
     },
     {
       color: 'default',
       variant: 'outline',
 
       class:
-        'border-secondary/20 text-secondary-foreground hover:border-transparent hover:bg-secondary/10 hover:text-secondary-foreground',
+        'border-secondary/20 text-default-foreground hover:border-transparent hover:bg-default/10 hover:text-default-foreground',
     },
     {
       color: 'default',
       variant: 'text',
 
-      class: 'text-secondary-foreground hover:bg-secondary/10',
+      class: 'text-default-foreground hover:bg-default/10',
     },
     {
       color: 'primary',

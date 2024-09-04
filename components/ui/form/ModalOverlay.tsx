@@ -14,7 +14,10 @@ export default function ModalOverlay(
     <DialogPrimitive.Root {...rest}>
       <AnimatePresence>
         {props.open && (
-          <DialogPrimitive.Portal forceMount>
+          <DialogPrimitive.Portal
+            forceMount
+            container={document.getElementById('dialog-portal')}
+          >
             <DialogPrimitive.Overlay asChild>
               <PopoverBackdrop>{children}</PopoverBackdrop>
             </DialogPrimitive.Overlay>

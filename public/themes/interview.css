@@ -1,27 +1,28 @@
 @layer base {
   :root {
+    --base-hue: 281;
+
     --background: var(--navy-taupe);
     --foreground: var(--white);
 
     --primary: var(--neon-coral);
     --primary-foreground: var(--white);
 
-    --secondary: 100% 0.2 281;
-    --secondary-foreground: var(--foreground);
+    --default: 100% 0.2 var(--base-hue);
+    --default-foreground: var(--foreground);
 
     /* Card used for overlays primarily */
-    --card: var(--white);
-    --card-foreground: var(--charcoal);
+    --surface-0: var(--white);
+    --surface-0-foreground: var(--charcoal);
 
-    /* Node Panels and Navigation Bar */
-    --surface-1-bg: var(--cyber-grape);
+    --surface-1: 29% 0.09 var(--cyber-grape-hue);
 
     --input: var(--white);
     --input-foreground: var(--charcoal);
 
     --accent: var(--slate-blue);
     --success: var(--sea-green);
-    --success-foreground: var(--black);
+    --success-foreground: var(--white);
     --muted: var(--platinum);
 
     --border-radius: 1.25rem;
@@ -71,5 +72,14 @@
 
     --seq-panel-1: var(--sea-green);
     --seq-panel-2: var(--sea-serpent);
+  }
+
+  [data-context='interviewer'] {
+    --background: var(--white);
+    --foreground: var(--charcoal);
+
+    /* small amount of contrast against background */
+    --default: 50% 0.1 var(--base-hue);
+    --default-foreground: var(--foreground);
   }
 }
