@@ -8,6 +8,10 @@ import NodeList from '~/components/interview/NodeList';
 import QuickNodeForm from './QuickNodeForm';
 import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
 import { type Step } from '~/lib/onboarding-wizard/store';
+import { cn } from '~/lib/utils';
+
+// TODO: move these somewhere to be shared
+export const interfaceWrapperClasses = 'my-4';
 
 const demoPrompts = [
   {
@@ -177,7 +181,7 @@ export default function NameGenerator() {
           steps: demoSteps,
         }}
       />
-      <div className="flex grow flex-col gap-4">
+      <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
         <Prompts
           prompts={demoPrompts}
           currentPromptId={0}

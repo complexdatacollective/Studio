@@ -1,22 +1,26 @@
 {
   "Auth": {
     "SignIn": {
-      "CardTitle": "Sign in to Studio",
-      "CardDescription": "Don't have an account?",
-      "LinkText": "Sign up"
+      "Title": "Sign in to Studio",
+      "Description": "Don't have an account?",
+      "LinkText": "Sign up",
+      "ButtonText": "Sign In"
     },
     "SignUp": {
-      "CardTitle": "Create an account",
-      "CardDescription": "Already have an account?",
-      "LinkText": "Sign In"
-    },
-    "AuthForm": {
-      "UsernameInput": "Username",
-      "PasswordInput": "Password",
-      "FormButton": "Continue"
+      "Title": "Create an account",
+      "Description": "Already have an account?",
+      "LinkText": "Sign In",
+      "ButtonText": "Sign Up"
     },
     "SignOut": {
       "ButtonLabel": "Sign Out"
+    },
+    "Form": {
+      "UsernameLabel": "Username",
+      "UsernameHint": "Create a username between 3 and 20 characters long, containing only letters, numbers, and underscores.",
+      "PasswordLabel": "Password",
+      "PasswordHint": "Create a password at least 8 characters long, containing at least one uppercase letter, one lowercase letter, one number, and one special character.",
+      "ForgotPassword": "Forgot password?"
     }
   },
   "Navigation": {
@@ -83,8 +87,8 @@
   },
   "Interview": {
     "Navigation": {
-      "Forward": "Move forward",
-      "Back": "Move backward",
+      "Next": "Next question",
+      "Previous": "Previous question",
       "Menu": "Main menu",
       "Help": "Help menu",
       "Progress": "You have completed {percent}% of the interview"

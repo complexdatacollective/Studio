@@ -1,30 +1,34 @@
 import { login } from '~/server/actions/auth';
 import { Input } from '~/components/ui/form/Input';
 import { SubmitButton } from '~/components/ui/form/SubmitButton';
+import Form from '~/components/ui/form/Form';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '~/lib/localisation/navigation';
 
-export default function SignInForm() {
+export default async function SignInForm() {
+  const t = await getTranslations('Auth');
+
   return (
-    <form action={login} className="flex w-full flex-col">
-      <div className="mb-6 flex flex-wrap">
-        <Input
-          name="username"
-          label="Username"
-          autoComplete="username"
-          className="w-full"
-        />
-      </div>
-      <div className="mb-6 flex flex-wrap">
-        <Input
-          name="password"
-          type="password"
-          label="Password"
-          autoComplete="current-password"
-          className="w-full"
-        />
-      </div>
-      <div className="flex flex-wrap">
-        <SubmitButton>Sign In</SubmitButton>
-      </div>
-    </form>
+    <Form action={login}>
+      <Input
+        name="username"
+        label={t('Form.UsernameLabel')}
+        autoComplete="username"
+      />
+      <Input
+        name="password"
+        type="password"
+        label={t('Form.PasswordLabel')}
+        autoComplete="current-password"
+      />
+      <Form.Footer
+        primaryAction={<SubmitButton>{t('SignIn.ButtonText')}</SubmitButton>}
+        secondaryAction={
+          <Link href="/forgot-password" className="text-sm">
+            {t('Form.ForgotPassword')}
+          </Link>
+        }
+      />
+    </Form>
   );
 }

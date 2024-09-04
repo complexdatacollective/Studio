@@ -20,7 +20,9 @@ const Tooltip = ({
   return (
     <TooltipPrimitive.Root>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipPrimitive.Portal>
+      <TooltipPrimitive.Portal
+        container={document.getElementById('dialog-portal')}
+      >
         <TooltipPrimitive.Content
           className={cn(
             'motion-safe:data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade',
@@ -28,13 +30,13 @@ const Tooltip = ({
             'motion-safe:data-[state=delayed-open]:data-[side=left]:animate-tooltipSlideRightAndFade',
             'motion-safe:data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade',
             'shadow-md',
-            'select-none rounded-small bg-card px-2 py-2 text-sm text-card-foreground will-change-[transform,opacity]',
+            'bg-surface-0 text-surface-0-foreground select-none rounded-small px-2 py-2 text-sm will-change-[transform,opacity]',
           )}
           sideOffset={5} // Distance in PX from the trigger
           side={side}
         >
           {tooltip}
-          <TooltipPrimitive.Arrow className="fill-card" />
+          <TooltipPrimitive.Arrow className="fill-surface-0" />
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>

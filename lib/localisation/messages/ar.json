@@ -13,7 +13,7 @@
     "cardDescription": "لديك حساب بالفعل؟",
     "linkText": "تسجيل الدخول"
   },
-  "AuthForm": {
+  "Form": {
     "usernameInput": "اسم المستخدم",
     "passwordInput": "كلمة المرور",
     "formButton": "استمرار"

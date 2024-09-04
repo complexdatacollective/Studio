@@ -11,6 +11,10 @@ import { routes } from '~/lib/routes';
 import { Link, redirect } from '~/lib/localisation/navigation';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import type { Locale } from '~/lib/localisation/locales';
+import Surface from '~/components/layout/Surface';
+import Heading from '~/components/typography/Heading';
+import Paragraph from '~/components/typography/Paragraph';
+import Divider from '~/components/layout/Divider';
 
 export default async function Page({
   params: { locale },
@@ -27,17 +31,21 @@ export default async function Page({
   }
 
   return (
-    <Card className="w-[28rem]">
-      <CardHeader>
-        <CardTitle>{t('CardTitle')}</CardTitle>
-        <CardDescription>
-          {t('CardDescription')}{' '}
-          <Link href={routes.signIn()}>{t('LinkText')}</Link>
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <SignUpForm />
-      </CardContent>
-    </Card>
+    <Surface
+      as="main"
+      aria-labelledby="signup-heading"
+      aria-describedby="signup-description"
+      className="max-w-lg rounded"
+      level={1}
+    >
+      <Heading variant="h2" id="signup-heading">
+        {t('Title')}
+      </Heading>
+      <Paragraph id="signup-description">
+        {t('Description')} <Link href={routes.signIn()}>{t('LinkText')}</Link>
+      </Paragraph>
+      <Divider />
+      <SignUpForm />
+    </Surface>
   );
 }

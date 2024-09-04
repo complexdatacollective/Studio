@@ -1,17 +1,18 @@
 import { type Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
+
+/**
+ * Export any values that we need to access from JS here.
+ */
+export const breakpoints = defaultTheme.screens;
 
 export default {
   darkMode: ['selector', '[data-mode="dark"]'],
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './lib/interviewer/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./(app|components|lib)/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      body: ['var(--font-family-body)'],
-      heading: ['var(--font-family-heading)'],
-      mono: ['var(--font-family-mono)'],
+      sans: ['var(--font-lexend)'],
+      mono: ['var(--font-roboto-mono)'],
     },
     fontSize: {
       'xs': ['var(--font-size-xs)', '1.5'],
@@ -37,14 +38,14 @@ export default {
 
       'background': 'oklch(var(--background) / <alpha-value>)',
       'foreground': 'oklch(var(--foreground) / <alpha-value>)',
-
+      'link': 'oklch(var(--link) / <alpha-value>)',
+      'default': {
+        DEFAULT: 'oklch(var(--default) / <alpha-value>)',
+        foreground: 'oklch(var(--default-foreground) / <alpha-value>)',
+      },
       'primary': {
         DEFAULT: 'oklch(var(--primary) / <alpha-value>)',
         foreground: 'oklch(var(--primary-foreground) / <alpha-value>)',
-      },
-      'secondary': {
-        DEFAULT: 'oklch(var(--secondary) / <alpha-value>)',
-        foreground: 'oklch(var(--secondary-foreground) / <alpha-value>)',
       },
       'accent': {
         DEFAULT: 'oklch(var(--accent) / <alpha-value>)',
@@ -66,28 +67,28 @@ export default {
         DEFAULT: 'oklch(var(--muted) / <alpha-value>)',
         foreground: 'oklch(var(--muted-foreground) / <alpha-value>)',
       },
-      'card': {
-        DEFAULT: 'oklch(var(--card) / <alpha-value>)',
-        foreground: 'oklch(var(--card-foreground) / <alpha-value>)',
+      'surface-0': {
+        DEFAULT: 'oklch(var(--surface-0) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-0-foreground) / <alpha-value>)',
       },
       'surface-1': {
-        DEFAULT: 'oklch(var(--surface-1-bg) / <alpha-value>)',
-        foreground: 'oklch(var(--surface-1-fg) / <alpha-value>)',
+        DEFAULT: 'oklch(var(--surface-1) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-1-foreground) / <alpha-value>)',
       },
 
       'surface-2': {
-        DEFAULT: 'oklch(var(--surface-2-bg) / <alpha-value>)',
-        foreground: 'oklch(var(--surface-2-fg) / <alpha-value>)',
+        DEFAULT: 'oklch(var(--surface-2) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-2-foreground) / <alpha-value>)',
       },
 
       'surface-3': {
-        DEFAULT: 'oklch(var(--surface-3-bg) / <alpha-value>)',
-        foreground: 'oklch(var(--surface-3-fg) / <alpha-value>)',
+        DEFAULT: 'oklch(var(--surface-3) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-3-foreground) / <alpha-value>)',
       },
 
       'surface-4': {
-        DEFAULT: 'oklch(var(--surface-4-bg) / <alpha-value>)',
-        foreground: 'oklch(var(--surface-4-fg) / <alpha-value>)',
+        DEFAULT: 'oklch(var(--surface-4) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-4-foreground) / <alpha-value>)',
       },
 
       'input': {
@@ -99,21 +100,44 @@ export default {
         DEFAULT: 'oklch(var(--border-color) / <alpha-value>)',
       },
 
-      'link': 'oklch(var(--link) / <alpha-value>)',
       'overlay': 'oklch(var(--overlay) / <alpha-value>)',
 
       'focus': 'oklch(var(--focus) / <alpha-value>)',
 
       // Sequences
       'node': {
-        '1': 'oklch(var(--seq-node-1) / <alpha-value>)',
-        '2': 'oklch(var(--seq-node-2) / <alpha-value>)',
-        '3': 'oklch(var(--seq-node-3) / <alpha-value>)',
-        '4': 'oklch(var(--seq-node-4) / <alpha-value>)',
-        '5': 'oklch(var(--seq-node-5) / <alpha-value>)',
-        '6': 'oklch(var(--seq-node-6) / <alpha-value>)',
-        '7': 'oklch(var(--seq-node-7) / <alpha-value>)',
-        '8': 'oklch(var(--seq-node-8) / <alpha-value>)',
+        '1': {
+          DEFAULT: 'oklch(var(--seq-node-1) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-1-foreground) / <alpha-value>)',
+        },
+        '2': {
+          DEFAULT: 'oklch(var(--seq-node-2) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-2-foreground) / <alpha-value>)',
+        },
+        '3': {
+          DEFAULT: 'oklch(var(--seq-node-3) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-3-foreground) / <alpha-value>)',
+        },
+        '4': {
+          DEFAULT: 'oklch(var(--seq-node-4) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-4-foreground) / <alpha-value>)',
+        },
+        '5': {
+          DEFAULT: 'oklch(var(--seq-node-5) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-5-foreground) / <alpha-value>)',
+        },
+        '6': {
+          DEFAULT: 'oklch(var(--seq-node-6) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-6-foreground) / <alpha-value>)',
+        },
+        '7': {
+          DEFAULT: 'oklch(var(--seq-node-7) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-7-foreground) / <alpha-value>)',
+        },
+        '8': {
+          DEFAULT: 'oklch(var(--seq-node-8) / <alpha-value>)',
+          foreground: 'oklch(var(--seq-node-8-foreground) / <alpha-value>)',
+        },
       },
 
       'edge': {
@@ -165,6 +189,7 @@ export default {
       large: 'calc(var(--border-radius) * 1.5)',
       full: '9999px',
     },
+    screens: breakpoints,
     extend: {
       backdropBlur: {
         xs: '3px',
@@ -183,9 +208,8 @@ export default {
           to: { height: '0' },
         },
         'indeterminate-progress-bar': {
-          '0%': { transform: ' translateX(0) scaleX(0)' },
-          '40%': { transform: 'translateX(0) scaleX(0.4)' },
-          '100%': { transform: 'translateX(100%) scaleX(0.5)' },
+          '0%': { transform: ' translateX(-200%)' },
+          '100%': { transform: 'translateX(200%)' },
         },
         'background-gradient': {
           '0%, 50%': { backgroundPosition: '0% 50%' },
@@ -201,6 +225,19 @@ export default {
           '0%': { backgroundColor: 'var(--tw-gradient-from)' },
           '50%': { backgroundColor: 'var(--tw-gradient-to)' },
           '100%': { backgroundColor: 'var(--tw-gradient-from)' },
+        },
+        'nudge': {
+          '0%': {
+            boxShadow: '0 0 0 0 oklch(var(--success) / 0.8)',
+          },
+
+          '70%': {
+            boxShadow: '0 0 0 2rem oklch(var(--success) / 0)',
+          },
+
+          '100%': {
+            boxShadow: '0 0 0 0 oklch(var(--success) / 0)',
+          },
         },
         'slideDownAndFade': {
           from: { opacity: '0', transform: 'translateY(-4px)' },
@@ -227,7 +264,8 @@ export default {
         'indeterminate-progress-bar':
           'indeterminate-progress-bar 1s infinite linear',
         'background-gradient': 'background-gradient 5s infinite ease-in-out',
-        'pulse-bg': 'pulse-bg 1.5s infinite',
+        'pulse-bg': 'pulse-bg 1s infinite',
+        'nudge': 'nudge 2s infinite',
         'slideDownAndFade': 'slideDownAndFade 1s cubic-bezier(0.16, 1, 0.3, 1)',
         'slideLeftAndFade': 'slideLeftAndFade 1s cubic-bezier(0.16, 1, 0.3, 1)',
         'slideUpAndFade': 'slideUpAndFade 1s cubic-bezier(0.16, 1, 0.3, 1)',

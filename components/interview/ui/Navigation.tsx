@@ -1,6 +1,12 @@
 'use client';
 
-import { ChevronUp, ChevronDown, Settings2 } from 'lucide-react';
+import {
+  ChevronUp,
+  ChevronDown,
+  Settings2,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
@@ -13,6 +19,8 @@ import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
 import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
 import HelpButton from './HelpButton';
 import { NavButtonWithTooltip } from './NavigationButton';
+import Surface from '~/components/layout/Surface';
+import { useMediaQuery } from '~/hooks/useMediaQuery';
 
 type NavigationProps = {
   pulseNext: boolean;
@@ -38,6 +46,9 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   };
 
   const t = useTranslations('Interview.Navigation');
+
+  const isMediumScreen = useMediaQuery('md');
+  const tooltipSide = isMediumScreen ? 'right' : 'top';
 
   return (
     <>
@@ -125,11 +136,15 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           ],
         }}
       />
-      <nav
+      <Surface
+        as="nav"
+        level={1}
+        spacing="none"
         id="navigation-bar"
         role="navigation"
         className={cn(
-          'flex h-full w-28 flex-shrink-0 flex-grow-0 flex-col items-center bg-surface-1 text-foreground',
+          'flex items-center gap-2 px-2',
+          'md:h-full md:w-28 md:flex-shrink-0 md:flex-grow-0 md:flex-col md:px-0 md:py-2',
         )}
       >
         <Popover
@@ -139,42 +154,52 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
               <LanguageSwitcher />
             </>
           }
+          context="interviewer"
           // side="right"
         >
-          <NavButtonWithTooltip title={t('Menu')} tooltipSide="right">
+          <NavButtonWithTooltip title={t('Menu')} tooltipSide={tooltipSide}>
             <Settings2 className="h-10 w-10 stroke-[2px]" />
           </NavButtonWithTooltip>
         </Popover>
         <HelpButton id="nav-wizard-help" />
         <div
           id="interview-movement"
-          className="flex flex-1 flex-col items-center"
+          className={cn(
+            'flex flex-1 flex-row items-center gap-2',
+            'md:flex-col',
+          )}
         >
           <NavButtonWithTooltip
             onClick={moveBackward}
-            title={t('Back')}
-            tooltipSide="right"
+            title={t('Previous')}
+            tooltipSide={tooltipSide}
           >
-            <ChevronUp className="h-10 w-10 stroke-[3px]" />
+            {isMediumScreen ? (
+              <ChevronUp className="h-10 w-10 stroke-[3px]" />
+            ) : (
+              <ChevronLeft className="h-10 w-10 stroke-[3px] rtl:rotate-180" />
+            )}
           </NavButtonWithTooltip>
           <ProgressBarWithTooltip
+            label={t('Progress', { percent: progress })}
             value={progress}
-            orientation="vertical"
+            orientation={isMediumScreen ? 'vertical' : 'horizontal'}
             title={t('Progress', { percent: progress })}
           />
           <NavButtonWithTooltip
-            className={cn(
-              pulseNext &&
-                'from-cyber-grape to-success motion-safe:animate-pulse-bg motion-reduce:bg-success',
-            )}
+            className={cn(pulseNext && 'animate-nudge bg-success')}
             onClick={moveForward}
-            title={t('Forward')}
-            tooltipSide="right"
+            title={t('Next')}
+            tooltipSide={tooltipSide}
           >
-            <ChevronDown className="h-10 w-10 stroke-[3px]" />
+            {isMediumScreen ? (
+              <ChevronDown className="h-10 w-10 stroke-[3px]" />
+            ) : (
+              <ChevronRight className="h-10 w-10 stroke-[3px] rtl:rotate-180" />
+            )}
           </NavButtonWithTooltip>
         </div>
-      </nav>
+      </Surface>
     </>
   );
 };
