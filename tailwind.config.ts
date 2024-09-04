@@ -1,5 +1,6 @@
 import { type Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import plugin from 'tailwindcss/plugin';
 
 /**
  * Export any values that we need to access from JS here.
@@ -255,10 +256,18 @@ export default {
           from: { opacity: '0', transform: 'translateX(-4px)' },
           to: { opacity: '1', transform: 'translateX(0)' },
         },
+        'dialog-in': {
+          from: { transform: 'translateY(-100%)' },
+        },
+        'dialog-out': {
+          to: { scale: '0.75' },
+        },
       },
       animation: {
         'wiggle': 'wiggle 1s ease-in-out infinite',
         'shake': 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
+        'dialog-in': 'dialog-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'dialog-out': 'dialog-out 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'indeterminate-progress-bar':
@@ -281,5 +290,18 @@ export default {
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/container-queries'),
+    plugin(({ addUtilities, addVariant }) => {
+      addUtilities({
+        '.allow-discrete': {
+          transitionBehavior: 'allow-discrete',
+        },
+      });
+
+      addVariant('backdrop', '&::backdrop');
+
+      addVariant('open', '&[open]');
+
+      addVariant('from', '@starting-style');
+    }),
   ],
 } satisfies Config;

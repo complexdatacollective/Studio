@@ -36,10 +36,10 @@ const Popover = ({
         <PopoverPrimitive.Content
           data-context={context}
           className={cn(
-            'motion-safe:data-[state=open]:data-[side=top]:animate-slideDownAndFade',
-            'motion-safe:data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
-            'motion-safe:data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
-            'motion-safe:data-[state=open]:data-[side=left]:animate-slideRightAndFade',
+            'data-[state=open]:data-[side=top]:animate-slideDownAndFade',
+            'data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
+            'data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
+            'data-[state=open]:data-[side=left]:animate-slideRightAndFade',
             'max-w-96 rounded-small will-change-[transform,opacity]',
             'z-50 shadow-xl',
           )}
