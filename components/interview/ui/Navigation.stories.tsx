@@ -9,6 +9,7 @@ const meta: Meta<typeof Navigation> = {
       appDirectory: 'true',
     },
     layout: 'fullscreen',
+    forceTheme: 'interview',
   },
   decorators: [
     (Story, _context) => {

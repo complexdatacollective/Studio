@@ -1,11 +1,6 @@
 import type { Meta } from '@storybook/react';
 import { fn } from '@storybook/test';
-import {
-  Button,
-  type ButtonProps,
-  type ButtonVariants,
-  buttonVariants,
-} from './Button';
+import { Button, ButtonProps, ButtonVariants, buttonVariants } from './Button';
 import Heading from '../typography/Heading';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
@@ -97,12 +92,12 @@ combinations.forEach((combination) => {
 export const ButtonStories = () => (
   <>
     {Object.keys(stories).map((color) => (
-      <div key={color} className="flex flex-col gap-2">
+      <div key={color} className="flex flex-col gap-4">
         <Heading variant="h4">
           {color.charAt(0).toUpperCase() + color.slice(1)}
         </Heading>
         {Object.keys(stories[color]!).map((variant) => (
-          <div key={variant} className="flex flex-col">
+          <div key={variant} className="flex flex-col gap-2">
             <div className="flex flex-1 items-center gap-2">
               {stories[color]![variant]!.map((story) => (
                 <Template key={story.name} {...story.args} />

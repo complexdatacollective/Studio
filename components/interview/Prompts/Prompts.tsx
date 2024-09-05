@@ -20,18 +20,14 @@ export default function Prompts({
   const currentIndex = prompts.findIndex(({ id }) => id === currentPromptId);
 
   return (
-    <div
-      id={id}
-      className="flex w-full flex-col items-center justify-center text-balance text-center leading-tight"
-    >
+    <div id={id} className="flex flex-col items-center justify-center">
       <Pips count={prompts.length} currentIndex={currentIndex} />
-
-      {prompts.map(
-        ({ id, text }) =>
-          prompts[currentIndex]?.id === id && (
-            <Prompt key={id} id={id} text={text} />
-          ),
-      )}
+      <div className="">
+        {prompts.map(
+          ({ id, text }) =>
+            prompts[currentIndex]?.id === id && <Prompt key={id} text={text} />,
+        )}
+      </div>
     </div>
   );
 }

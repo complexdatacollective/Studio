@@ -1,7 +1,6 @@
-import type { StoryContext, StoryObj } from '@storybook/react';
+import type { StoryObj } from '@storybook/react';
 import { Button } from '~/components/ui/Button';
-import Paragraph from '~/components/typography/Paragraph';
-import { useDialog } from './DialogRenderer';
+import { useDialog } from './DialogProvider';
 
 const meta = {
   title: 'Systems/Dialogs/Dialog',

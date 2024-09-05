@@ -1,6 +1,14 @@
 'use client';
 
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, {
+  createContext,
+  use,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Surface from '~/components/layout/Surface';
 import { cn } from '../utils';
 import CloseButton from '~/components/ui/CloseButton';
@@ -10,74 +18,77 @@ import Form from '~/components/ui/form/Form';
 import { Button } from '~/components/ui/Button';
 import { SubmitButton } from '~/components/ui/form/SubmitButton';
 import { generatePublicId } from '../generatePublicId';
+import { flushSync } from 'react-dom';
 
 type Dialog = {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   ref: React.RefObject<HTMLDialogElement>;
-  children?: React.ReactNode;
+  closeDialog: (value: unknown) => void;
+  content?: (resolve: (value: unknown) => unknown) => React.ReactNode;
 };
 
 type DialogProps = Dialog & React.HTMLAttributes<HTMLDialogElement>;
 
-const Dialog = ({
+export const ControlledDialog = ({ open, ...rest }: DialogProps) => {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    if (open) {
+      ref.current?.showModal();
+    } else {
+      ref.current?.close();
+    }
+  }, [open]);
+
+  return <Dialog {...rest} ref={ref} />;
+};
+
+export const Dialog = ({
   id,
-  children,
+  content,
   title,
   description,
   ref,
+  closeDialog,
   ...rest
 }: DialogProps) => {
-  const { closeDialog } = useDialog();
-
   return (
     <Surface
       as="dialog"
       level={0}
       ref={ref}
-      onClose={() => closeDialog(id, null)}
+      onClose={() => closeDialog(null)}
       className={cn(
-        'bg-surface-0 text-surface-0-foreground rounded p-6',
+        'bg-surface-0 text-surface-0-foreground max-w-4xl rounded p-6',
         'allow-discrete -translate-y-6 opacity-0 transition-all duration-300 ease-out',
         'open:from:-translate-y-6 open:from:backdrop:bg-overlay/0 open:translate-y-0 open:opacity-100 open:backdrop:bg-overlay/70',
         'backdrop:bg-overlay/0 backdrop:backdrop-blur-xs backdrop:transition-all backdrop:duration-300 backdrop:ease-out',
         // Accent
-        'border-b-4 border-accent [--primary:var(--accent)]',
+        // 'border-b-4 border-accent [--primary:var(--accent)]',
       )}
       aria-labelledby={`${id}-title`}
-      aria-describedby={`${id}-description`}
+      aria-describedby={description ? `${id}-description` : undefined}
       {...rest}
     >
-      <CloseButton onClick={() => closeDialog(id, false)} />
       <Heading variant="h2" id={`${id}-title`}>
         {title}
       </Heading>
-      <Paragraph id={`${id}-description`}>{description}</Paragraph>
-      <Form
-        onSubmit={(e) => {
-          const formData = new FormData(e.target);
-          e.preventDefault();
-          void closeDialog(id, formData);
-        }}
-      >
-        {children}
-        <Form.Footer
-          primaryAction={<SubmitButton>Submit</SubmitButton>}
-          secondaryAction={
-            <Button onClick={() => closeDialog(id, false)}>Cancel</Button>
-          }
-        />
-      </Form>
+      {description && (
+        <Paragraph id={`${id}-description`}>{description}</Paragraph>
+      )}
+      {content && content(closeDialog)}
+      <CloseButton onClick={() => closeDialog(null)} />
     </Surface>
   );
 };
 
 type TDialogContext = {
   openDialog: (props: {
+    id?: string;
     title: string;
     description: string;
-    children?: React.ReactNode;
+    content?: (resolve: (value: unknown) => unknown) => React.ReactNode;
   }) => Promise<unknown>;
   closeDialog: (id: string, value: unknown) => Promise<void>;
 };
@@ -95,30 +106,41 @@ const DialogProvider = ({ children }: { children: React.ReactNode }) => {
 
   const openDialog = useCallback(
     ({
+      id,
       title,
       description,
-      children,
+      content,
     }: {
+      id?: string;
       title: string;
       description: string;
-      children?: React.ReactNode;
+      content?: (resolve: (value: unknown) => unknown) => React.ReactNode;
     }) => {
-      const id = generatePublicId();
+      // TODO: check for ID collision
+
+      const dialogId = id ?? generatePublicId();
       const dialogRef = React.createRef<HTMLDialogElement>();
 
-      return new Promise((resolve) => {
-        setDialogs((prevDialogs) => [
-          ...prevDialogs,
-          { id, title, description, children, resolve, ref: dialogRef },
-        ]);
+      console.log('Opening dialog', dialogId);
 
-        // Delay `showModal` call until after the dialog has been added to state and rendered
-        // TODO: This is a hack. Can we do it a better way?
-        setTimeout(() => {
-          if (dialogRef.current) {
-            dialogRef.current.showModal();
-          }
-        }, 0);
+      return new Promise(async (resolve) => {
+        flushSync(() =>
+          setDialogs((prevDialogs) => [
+            ...prevDialogs,
+            {
+              id: dialogId,
+              title,
+              description,
+              content,
+              resolve,
+              ref: dialogRef,
+            },
+          ]),
+        );
+
+        if (dialogRef.current) {
+          dialogRef.current.showModal();
+        }
       });
     },
     [],
@@ -148,16 +170,16 @@ const DialogProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <DialogContext.Provider value={{ openDialog, closeDialog }}>
       {children}
-      {dialogs.map(({ id, title, description, children, ref }) => (
+      {dialogs.map(({ id, title, description, content, ref }) => (
         <Dialog
           id={id}
           key={id}
           ref={ref}
           title={title}
           description={description}
-        >
-          {children}
-        </Dialog>
+          closeDialog={(value) => closeDialog(id, value)}
+          content={content}
+        />
       ))}
     </DialogContext.Provider>
   );

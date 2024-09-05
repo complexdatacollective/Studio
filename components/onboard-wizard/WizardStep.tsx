@@ -1,4 +1,3 @@
-import Dialog from '~/components/ui/Dialog';
 import Popover from '~/components/ui/Popover';
 import { Button } from '../ui/Button';
 import { useWizardController } from './useWizardController';
@@ -7,10 +6,18 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useElementPosition } from '~/lib/onboarding-wizard/utils';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { getLocalisedValue } from '~/lib/localisation/utils';
+import {
+  ControlledDialog,
+  Dialog,
+  useDialog,
+} from '~/lib/dialogs/DialogProvider';
+import { useEffect } from 'react';
+import { generatePublicId } from '~/lib/generatePublicId';
 
 export default function WizardStep({ step }: { step: Step }) {
   const { title, content, targetElementId } = step;
   const locale = useLocale();
+  const { openDialog, closeDialog } = useDialog();
 
   const localisedStepContent = getLocalisedValue(content, [locale]);
   const localisedStepTitle = getLocalisedValue(title, [locale]);
@@ -38,11 +45,11 @@ export default function WizardStep({ step }: { step: Step }) {
           {progress.current} / {progress.total}
         </div>
         {hasNextStep ? (
-          <Button color="primary" onClick={() => nextStep()}>
+          <Button color="primary" autoFocus={true} onClick={() => nextStep()}>
             {t('Next')}
           </Button>
         ) : (
-          <Button color="success" onClick={() => nextStep()}>
+          <Button color="success" autoFocus={true} onClick={() => nextStep()}>
             {t('Done')}
           </Button>
         )}
@@ -76,16 +83,13 @@ export default function WizardStep({ step }: { step: Step }) {
   }
 
   return (
-    <Dialog
-      isOpen
-      onOpenChange={() => {
+    <ControlledDialog
+      title={localisedStepTitle}
+      content={() => renderContent()}
+      open
+      closeDialog={() => {
         closeWizard();
       }}
-      title={localisedStepTitle}
-      description=""
-      context="interviewer"
-    >
-      {renderContent()}
-    </Dialog>
+    />
   );
 }

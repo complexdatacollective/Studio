@@ -104,9 +104,7 @@ export const useWizardContext = <T extends WizardStore>(
 ) => {
   const wizardStoreContext = useContext(WizardContext);
   if (!wizardStoreContext) {
-    throw new Error(
-      'useUserActionsContext must be used within a UserActionsProvider',
-    );
+    throw new Error('useWizardContext must be used within a WizardProvider');
   }
 
   const selectorWithDefault = selector ?? ((store) => store);
