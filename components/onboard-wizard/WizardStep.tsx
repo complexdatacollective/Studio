@@ -60,6 +60,7 @@ export default function WizardStep({ step }: { step: Step }) {
         onOpenChange={() => {
           closeWizard();
         }}
+        context="interviewer"
       >
         <div
           style={{
@@ -82,6 +83,7 @@ export default function WizardStep({ step }: { step: Step }) {
       }}
       title={localisedStepTitle}
       description=""
+      context="interviewer"
     >
       {renderContent()}
     </Dialog>

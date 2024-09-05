@@ -11,7 +11,7 @@ const dialogVariants = {
   open: { opacity: 1, y: 0 },
 };
 
-export const DialogCloseButton = () => (
+const DialogCloseButton = () => (
   <DialogPrimitive.Close asChild>
     <CloseButton />
   </DialogPrimitive.Close>
@@ -58,6 +58,7 @@ const Dialog = ({
   onOpenChange,
   title,
   description,
+  context,
   className,
 }: {
   children?: React.ReactNode;
@@ -65,6 +66,7 @@ const Dialog = ({
   title: string;
   description: string;
   onOpenChange?: (open: boolean) => void;
+  context?: 'interviewer' | 'default';
   className?: string;
 }) => {
   return (
@@ -73,6 +75,7 @@ const Dialog = ({
         className={className}
         title={title}
         description={description}
+        data-context={context}
       >
         {children}
       </DialogContent>

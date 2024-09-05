@@ -1,7 +1,7 @@
 // Card.stories.tsx
 
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import { Card, type CardProps } from './Card';
 import Paragraph from '../typography/Paragraph';
 
@@ -15,7 +15,7 @@ const meta: Meta = {
 export default meta;
 
 // Template for the Card component
-const Template: Story<CardProps> = (args) => <Card {...args} />;
+const Template: StoryFn<CardProps> = (args) => <Card {...args} />;
 
 // Default story for the Card component
 export const Default = Template.bind({});

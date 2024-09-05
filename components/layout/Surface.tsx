@@ -1,3 +1,5 @@
+'use client';
+
 import { type Ref, type ElementType, type ReactNode } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';
@@ -38,6 +40,8 @@ type SurfaceProps<E extends ElementType = typeof defaultElement> = {
   level: SurfaceVariants['level'];
   spacing?: SurfaceVariants['spacing'];
   ref?: Ref<HTMLDivElement>;
+  id?: string;
+  role?: string;
 };
 
 /**
@@ -50,6 +54,8 @@ export default function Surface<E extends ElementType = typeof defaultElement>({
   spacing,
   className,
   ref,
+  id,
+  role,
   ...props
 }: SurfaceProps<E>) {
   const Component = as ?? defaultElement;
@@ -57,6 +63,8 @@ export default function Surface<E extends ElementType = typeof defaultElement>({
   return (
     <Component
       ref={ref}
+      id={id}
+      role={role}
       {...props}
       className={cn(surfaceVariants({ level, spacing }), className)}
     >

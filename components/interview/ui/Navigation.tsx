@@ -154,6 +154,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
               <LanguageSwitcher />
             </>
           }
+          context="interviewer"
           // side="right"
         >
           <NavButtonWithTooltip title={t('Menu')} tooltipSide={tooltipSide}>
