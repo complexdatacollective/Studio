@@ -1,10 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '~/components/ui/Card';
 import SignUpForm from '../_components/SignUpForm';
 import { getServerSession } from '~/lib/auth';
 import { routes } from '~/lib/routes';

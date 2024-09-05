@@ -21,8 +21,6 @@ const roboto_mono = Roboto_Mono({
   variable: '--font-roboto-mono',
 });
 
-const test = lexend.variable;
-
 export const metadata: Metadata = {
   title: 'Network Canvas Studio',
   description:
@@ -48,7 +46,7 @@ export default async function RootLayout({
       className={cn('min-h-full', `${lexend.variable} ${roboto_mono.variable}`)}
       suppressHydrationWarning
     >
-      <body className="font-sans min-h-full bg-background text-foreground">
+      <body className="min-h-full bg-background font-sans text-foreground">
         <Providers
           intlParams={{
             dir,

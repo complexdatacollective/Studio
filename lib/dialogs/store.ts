@@ -1,18 +1,18 @@
 import { type ReactNode } from 'react';
 import { createStore } from 'zustand';
 
-export type Dialog = {
+type Dialog = {
   id: string;
   title: string;
   description: string;
   content: ReactNode;
 };
 
-export type DialogState = {
+type DialogState = {
   dialogs: Dialog[];
 };
 
-export type DialogActions = {
+type DialogActions = {
   openDialog: (dialog: Dialog) => void;
   closeDialog: () => void;
 };
