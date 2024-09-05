@@ -11,9 +11,9 @@ export const surfaceVariants = tv({
     level: {
       0: 'bg-surface-0 text-surface-0-foreground [--background:var(--surface-0)] [--foreground:var(--surface-0-foreground)]',
       1: 'bg-surface-base text-surface-base-foreground [--background:var(--surface-base)] [--foreground:var(--surface-base-foreground)]',
-      2: 'bg-[--2] [--2:light-dark(var(--light-bg),var(--dark-bg))] [--dark-bg:color-mix(in_oklch,oklch(var(--background))_95%,white)] [--light-bg:color-mix(in_oklch,oklch(var(--background))_95%,black)]',
-      3: 'bg-[--3] [--3:light-dark(var(--light-bg),var(--dark-bg))] [--dark-bg:color-mix(in_oklch,var(--2)_95%,white)] [--light-bg:color-mix(in_oklch,var(--2)_95%,black)]',
-      4: 'bg-[--4] [--4:light-dark(var(--light-bg),var(--dark-bg))] [--dark-bg:color-mix(in_oklch,var(--3)_95%,white)] [--light-bg:color-mix(in_oklch,var(--3)_95%,black)]',
+      2: 'bg-[--2] [--2:light-dark(var(--light-bg),var(--dark-bg))] [--dark-bg:color-mix(in_oklch,oklch(var(--background))_95%,oklch(var(--foreground)))] [--light-bg:color-mix(in_oklch,oklch(var(--background))_95%,oklch(var(--surface-base-foreground)))]',
+      3: 'bg-[--3] [--3:light-dark(var(--light-bg),var(--dark-bg))] [--dark-bg:color-mix(in_oklch,var(--2)_95%,oklch(var(--foreground)))] [--light-bg:color-mix(in_oklch,var(--2)_95%,oklch(var(--surface-base-foreground)))]',
+      4: 'bg-[--4] [--4:light-dark(var(--light-bg),var(--dark-bg))] [--dark-bg:color-mix(in_oklch,var(--3)_95%,oklch(var(--foreground)))] [--light-bg:color-mix(in_oklch,var(--3)_95%,oklch(var(--surface-base-foreground)))]',
     },
     spacing: {
       none: '',
