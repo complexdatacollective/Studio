@@ -54,32 +54,37 @@ export const Dialog = ({
   ...rest
 }: DialogProps) => {
   return (
-    <Surface
-      as="dialog"
-      level={0}
+    <dialog
       ref={ref}
       onClose={() => closeDialog(null)}
+      aria-labelledby={`${id}-title`}
+      aria-describedby={description ? `${id}-description` : undefined}
       className={cn(
-        'bg-surface-0 text-surface-0-foreground max-w-4xl rounded p-6',
+        'bg-transparent',
         'allow-discrete -translate-y-6 opacity-0 transition-all duration-300 ease-out',
         'open:from:-translate-y-6 open:from:backdrop:bg-overlay/0 open:translate-y-0 open:opacity-100 open:backdrop:bg-overlay/70',
         'backdrop:bg-overlay/0 backdrop:backdrop-blur-xs backdrop:transition-all backdrop:duration-300 backdrop:ease-out',
         // Accent
         // 'border-b-4 border-accent [--primary:var(--accent)]',
       )}
-      aria-labelledby={`${id}-title`}
-      aria-describedby={description ? `${id}-description` : undefined}
       {...rest}
     >
-      <Heading variant="h2" id={`${id}-title`}>
-        {title}
-      </Heading>
-      {description && (
-        <Paragraph id={`${id}-description`}>{description}</Paragraph>
-      )}
-      {content && content(closeDialog)}
-      <CloseButton onClick={() => closeDialog(null)} />
-    </Surface>
+      <Surface
+        level={0}
+        className={cn(
+          'bg-surface-0 text-surface-0-foreground max-w-4xl rounded p-6',
+        )}
+      >
+        <Heading variant="h2" id={`${id}-title`}>
+          {title}
+        </Heading>
+        {description && (
+          <Paragraph id={`${id}-description`}>{description}</Paragraph>
+        )}
+        {content && content(closeDialog)}
+        <CloseButton onClick={() => closeDialog(null)} />
+      </Surface>
+    </dialog>
   );
 };
 

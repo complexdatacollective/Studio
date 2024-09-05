@@ -38,6 +38,10 @@ export default function Providers({
               <WizardProvider>
                 <TooltipProvider>
                   {children}
+                  {/**
+                   * Do not remove!
+                   * This is used to portal Popovers so that they inherit fonts in the storybook
+                   */}
                   <div id="dialog-portal"></div>
                 </TooltipProvider>
               </WizardProvider>

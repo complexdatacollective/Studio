@@ -13,6 +13,7 @@ import {
 } from '~/lib/dialogs/DialogProvider';
 import { useEffect } from 'react';
 import { generatePublicId } from '~/lib/generatePublicId';
+import Form from '../ui/form/Form';
 
 export default function WizardStep({ step }: { step: Step }) {
   const { title, content, targetElementId } = step;
@@ -37,23 +38,29 @@ export default function WizardStep({ step }: { step: Step }) {
   const renderContent = () => (
     <>
       <RenderRichText value={localisedStepContent} />
-      <footer className="flex justify-between">
-        {hasPreviousStep && (
-          <Button onClick={() => previousStep()}>{t('Previous')}</Button>
-        )}
-        <div className="flex flex-1 items-center justify-center text-sm">
-          {progress.current} / {progress.total}
-        </div>
-        {hasNextStep ? (
-          <Button color="primary" autoFocus={true} onClick={() => nextStep()}>
-            {t('Next')}
-          </Button>
-        ) : (
-          <Button color="success" autoFocus={true} onClick={() => nextStep()}>
-            {t('Done')}
-          </Button>
-        )}
-      </footer>
+      <Form.Footer
+        primaryAction={
+          hasNextStep ? (
+            <Button color="primary" autoFocus={true} onClick={() => nextStep()}>
+              {t('Next')}
+            </Button>
+          ) : (
+            <Button color="success" autoFocus={true} onClick={() => nextStep()}>
+              {t('Done')}
+            </Button>
+          )
+        }
+        metaArea={
+          <div className="flex flex-1 items-center justify-center text-sm">
+            {progress.current} / {progress.total}
+          </div>
+        }
+        secondaryAction={
+          hasPreviousStep && (
+            <Button onClick={() => previousStep()}>{t('Previous')}</Button>
+          )
+        }
+      />
     </>
   );
 

@@ -16,6 +16,7 @@ export default function Form({ children, className, ...props }: FormProps) {
 
 export type FormFooterProps = {
   primaryAction?: ReactNode;
+  metaArea?: ReactNode;
   secondaryAction?: ReactNode;
 };
 
@@ -24,7 +25,7 @@ export type FormFooterProps = {
  * Each group of actions
  * @returns
  */
-function Footer({ primaryAction, secondaryAction }: FormFooterProps) {
+function Footer({ primaryAction, secondaryAction, metaArea }: FormFooterProps) {
   const childClasses = (hasSingleChild: boolean) =>
     cn(
       'flex justify-center gap-2 items-center flex-col sm:flex-row',
@@ -43,6 +44,7 @@ function Footer({ primaryAction, secondaryAction }: FormFooterProps) {
           {secondaryAction}
         </div>
       )}
+      {metaArea && <div className="flex-1">{metaArea}</div>}
       {primaryAction && (
         <div className={childClasses(!Array.isArray(primaryAction))}>
           {primaryAction}
