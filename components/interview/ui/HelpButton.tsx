@@ -22,63 +22,61 @@ export default function HelpButton({ id }: { id?: string }) {
   const t2 = useTranslations('Components.ContextualHelp');
   const t3 = useTranslations('Components.ContextualHelp.ContactCard');
 
-  const dialog = {
-    id: 'help-dialog',
-    title: t2('Title'),
-    description: t2('Description'),
-    type: 'form',
-    content: (resolve) => (
-      <>
-        <div className="mt-4 flex flex-col gap-4">
-          <div className="grid grid-cols-1 gap-4">
-            {Object.entries(wizards)
-              .map(([id, wizard]) => ({ id, ...wizard }))
-              .map((wizard) => (
-                <Card
-                  key={wizard.id}
-                  title={getLocalisedValue(wizard.name, ['en'])}
-                  onClick={() => resolve(wizard.id)}
-                >
-                  {renderLocalisedValue(
-                    getLocalisedValue(wizard.description, ['en']),
-                  )}
-                </Card>
-              ))}
-            <Card
-              title={t3('Title')}
-              description={t3('Description')}
-              onClick={() => {
-                // eslint-disable-next-line no-console
-                console.log('TODO: Implement contact organiser feature');
-              }}
-            />
-          </div>
-        </div>
-        <Form.Footer
-          primaryAction={
-            <Button color="primary" onClick={() => resolve(false)}>
-              Cancel
-            </Button>
-          }
-          secondaryAction={
-            env.NODE_ENV === 'development' && (
-              <Button
-                color="destructive"
-                onClick={() => {
-                  localStorage.removeItem(WIZARD_LOCAL_STORAGE_KEY);
-                }}
-              >
-                Dev mode: Reset local storage
-              </Button>
-            )
-          }
-        />
-      </>
-    ),
-  };
-
   const handleOpenDialog = async () => {
-    const result = await openDialog(dialog);
+    const result = await openDialog({
+      id: 'help-dialog',
+      title: t2('Title'),
+      description: t2('Description'),
+      renderContent: (resolve) => (
+        <>
+          <div className="mt-4 flex flex-col gap-4">
+            <div className="grid grid-cols-1 gap-4">
+              {Object.entries(wizards)
+                .map(([id, wizard]) => ({ id, ...wizard }))
+                .map((wizard) => (
+                  <Card
+                    key={wizard.id}
+                    title={getLocalisedValue(wizard.name, ['en'])}
+                    onClick={() => resolve(wizard.id)}
+                  >
+                    {renderLocalisedValue(
+                      getLocalisedValue(wizard.description, ['en']),
+                    )}
+                  </Card>
+                ))}
+              <Card
+                title={t3('Title')}
+                description={t3('Description')}
+                onClick={() => {
+                  // eslint-disable-next-line no-console
+                  console.log('TODO: Implement contact organiser feature');
+                }}
+              />
+            </div>
+          </div>
+          <Form.Footer
+            primaryAction={
+              <Button color="primary" onClick={() => resolve(false)}>
+                Cancel
+              </Button>
+            }
+            secondaryAction={
+              env.NODE_ENV === 'development' && (
+                <Button
+                  color="destructive"
+                  onClick={() => {
+                    localStorage.removeItem(WIZARD_LOCAL_STORAGE_KEY);
+                    resolve(null);
+                  }}
+                >
+                  Dev mode: Reset local storage
+                </Button>
+              )
+            }
+          />
+        </>
+      ),
+    });
     console.log('got result', result);
     if (result) {
       setActiveWizard(result);

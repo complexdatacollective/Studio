@@ -22,7 +22,7 @@ export default function Node({
     <div
       role="button"
       className={cn(
-        `text-node-1-foreground inline-flex items-center justify-center rounded-full bg-node-1 shadow`,
+        'text-node-1-foreground inline-flex items-center justify-center rounded-full bg-node-1',
         'bg-[repeating-linear-gradient(145deg,transparent,transparent_50%,rgba(0,0,0,0.1)_50%,rgba(0,0,0,0.1)_100%)]',
         nodeSizeClasses,
       )}

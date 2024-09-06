@@ -1,165 +1,80 @@
-'use client';
-
-import React, {
-  createContext,
-  use,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import Surface from '~/components/layout/Surface';
-import { cn } from '../utils';
-import CloseButton from '~/components/ui/CloseButton';
-import Paragraph from '~/components/typography/Paragraph';
-import Heading from '~/components/typography/Heading';
-import Form from '~/components/ui/form/Form';
-import { Button } from '~/components/ui/Button';
-import { SubmitButton } from '~/components/ui/form/SubmitButton';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 import { generatePublicId } from '../generatePublicId';
 import { flushSync } from 'react-dom';
+import { Dialog, RenderDialogContent } from './Dialog';
 
-type Dialog = {
-  id: string;
+type OpenDialog<T> = {
+  id?: string;
   title: string;
-  description?: string;
-  ref: React.RefObject<HTMLDialogElement>;
-  closeDialog: (value: unknown) => void;
-  content?: (resolve: (value: unknown) => unknown) => React.ReactNode;
-};
-
-type DialogProps = Dialog & React.HTMLAttributes<HTMLDialogElement>;
-
-export const ControlledDialog = ({ open, ...rest }: DialogProps) => {
-  const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    if (open) {
-      ref.current?.showModal();
-    } else {
-      ref.current?.close();
-    }
-  }, [open]);
-
-  return <Dialog {...rest} ref={ref} />;
-};
-
-export const Dialog = ({
-  id,
-  content,
-  title,
-  description,
-  ref,
-  closeDialog,
-  ...rest
-}: DialogProps) => {
-  return (
-    <dialog
-      ref={ref}
-      onClose={() => closeDialog(null)}
-      aria-labelledby={`${id}-title`}
-      aria-describedby={description ? `${id}-description` : undefined}
-      className={cn(
-        'bg-transparent',
-        'allow-discrete -translate-y-6 opacity-0 transition-all duration-300 ease-out',
-        'open:from:-translate-y-6 open:from:backdrop:bg-overlay/0 open:translate-y-0 open:opacity-100 open:backdrop:bg-overlay/70',
-        'backdrop:bg-overlay/0 backdrop:backdrop-blur-xs backdrop:transition-all backdrop:duration-300 backdrop:ease-out',
-        // Accent
-        // 'border-b-4 border-accent [--primary:var(--accent)]',
-      )}
-      {...rest}
-    >
-      <Surface
-        level={0}
-        className={cn(
-          'bg-surface-0 text-surface-0-foreground max-w-4xl rounded p-6',
-        )}
-      >
-        <Heading variant="h2" id={`${id}-title`}>
-          {title}
-        </Heading>
-        {description && (
-          <Paragraph id={`${id}-description`}>{description}</Paragraph>
-        )}
-        {content && content(closeDialog)}
-        <CloseButton onClick={() => closeDialog(null)} />
-      </Surface>
-    </dialog>
-  );
+  description: string;
+  renderContent?: RenderDialogContent<unknown>;
 };
 
 type TDialogContext = {
-  openDialog: (props: {
-    id?: string;
-    title: string;
-    description: string;
-    content?: (resolve: (value: unknown) => unknown) => React.ReactNode;
-  }) => Promise<unknown>;
+  openDialog: (dialog: OpenDialog<unknown>) => Promise<unknown>;
   closeDialog: (id: string, value: unknown) => Promise<void>;
 };
 
-// Create a context to manage multiple dialogs
 const DialogContext = createContext<TDialogContext | null>(null);
 
-// Adds resolve callback to Dialog type
-type DialogInState = Dialog & {
-  resolve: (value: unknown) => void;
+type DialogInState = {
+  id: string;
+  title: string;
+  description: string;
+  renderContent?: RenderDialogContent<unknown>;
+  resolveCallback: (value: unknown) => void;
+  ref: React.RefObject<HTMLDialogElement>;
 };
 
 const DialogProvider = ({ children }: { children: React.ReactNode }) => {
   const [dialogs, setDialogs] = useState<DialogInState[]>([]);
 
-  const openDialog = useCallback(
-    ({
-      id,
-      title,
-      description,
-      content,
-    }: {
-      id?: string;
-      title: string;
-      description: string;
-      content?: (resolve: (value: unknown) => unknown) => React.ReactNode;
-    }) => {
-      // TODO: check for ID collision
+  const openDialog = useCallback((dialogProps: OpenDialog<unknown>) => {
+    const { id, title, description, renderContent } = dialogProps;
 
-      const dialogId = id ?? generatePublicId();
-      const dialogRef = React.createRef<HTMLDialogElement>();
+    // check for ID collision, if ID is provided
+    if (id && dialogs.some((dialog) => dialog.id === id)) {
+      throw new Error(`Dialog with ID ${id} already exists`);
+    }
 
-      console.log('Opening dialog', dialogId);
+    const dialogId = id ?? generatePublicId();
+    const dialogRef = React.createRef<HTMLDialogElement>();
 
-      return new Promise(async (resolve) => {
-        flushSync(() =>
-          setDialogs((prevDialogs) => [
-            ...prevDialogs,
-            {
-              id: dialogId,
-              title,
-              description,
-              content,
-              resolve,
-              ref: dialogRef,
-            },
-          ]),
-        );
+    return new Promise((resolve) => {
+      // flushSync is used to ensure that the dialog is added to the DOM before
+      // being shown. This is necessary because the dialog is shown immediately
+      // after being added, and we need to ensure that the dialog is in the DOM
+      flushSync(() =>
+        setDialogs((prevDialogs) => [
+          ...prevDialogs,
+          {
+            id: dialogId,
+            title,
+            description,
+            renderContent,
+            resolveCallback: resolve,
+            ref: dialogRef,
+          },
+        ]),
+      );
 
-        if (dialogRef.current) {
-          dialogRef.current.showModal();
-        }
-      });
-    },
-    [],
-  );
+      if (dialogRef.current) {
+        dialogRef.current.showModal();
+      }
+    });
+  }, []);
 
   const closeDialog = useCallback(
     async (id: DialogInState['id'], value: unknown) => {
       const dialog = dialogs.find((dialog) => dialog.id === id);
 
-      if (dialog && dialog.ref.current) {
+      if (!dialog) {
+        throw new Error(`Dialog with ID ${id} does not exist`);
+      }
+
+      if (dialog.ref.current) {
         dialog.ref.current.close();
-        if (dialog.resolve) {
-          dialog.resolve(value);
-        }
+        dialog.resolveCallback(value);
       }
 
       // We need to wait for the out animation to finish before removing the dialog
@@ -175,7 +90,7 @@ const DialogProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <DialogContext.Provider value={{ openDialog, closeDialog }}>
       {children}
-      {dialogs.map(({ id, title, description, content, ref }) => (
+      {dialogs.map(({ id, title, description, renderContent, ref }) => (
         <Dialog
           id={id}
           key={id}
@@ -183,7 +98,7 @@ const DialogProvider = ({ children }: { children: React.ReactNode }) => {
           title={title}
           description={description}
           closeDialog={(value) => closeDialog(id, value)}
-          content={content}
+          renderContent={renderContent}
         />
       ))}
     </DialogContext.Provider>

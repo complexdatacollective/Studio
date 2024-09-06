@@ -95,6 +95,7 @@ export const WizardProvider = ({ children }: { children: ReactNode }) => {
         )}
       </AnimatePresence>
       {children}
+      <div id="dialog-portal"></div>
     </WizardContext.Provider>
   );
 };

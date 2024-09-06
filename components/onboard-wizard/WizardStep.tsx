@@ -6,19 +6,13 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useElementPosition } from '~/lib/onboarding-wizard/utils';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { getLocalisedValue } from '~/lib/localisation/utils';
-import {
-  ControlledDialog,
-  Dialog,
-  useDialog,
-} from '~/lib/dialogs/DialogProvider';
-import { useEffect } from 'react';
-import { generatePublicId } from '~/lib/generatePublicId';
 import Form from '../ui/form/Form';
+import { generatePublicId } from '~/lib/generatePublicId';
+import { ControlledDialog } from '~/lib/dialogs/ControlledDialog';
 
 export default function WizardStep({ step }: { step: Step }) {
   const { title, content, targetElementId } = step;
   const locale = useLocale();
-  const { openDialog, closeDialog } = useDialog();
 
   const localisedStepContent = getLocalisedValue(content, [locale]);
   const localisedStepTitle = getLocalisedValue(title, [locale]);
@@ -91,8 +85,9 @@ export default function WizardStep({ step }: { step: Step }) {
 
   return (
     <ControlledDialog
+      id={generatePublicId()}
       title={localisedStepTitle}
-      content={() => renderContent()}
+      renderContent={() => renderContent()}
       open
       closeDialog={() => {
         closeWizard();
