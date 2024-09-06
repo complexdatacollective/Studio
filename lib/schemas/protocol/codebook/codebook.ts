@@ -49,10 +49,18 @@ export const example: TCodebook = {
     knows: {
       color: 'seq-edge-1',
       directed: false,
+      connections: {
+        from: 'person',
+        to: 'person',
+      },
     },
     livesIn: {
       color: 'seq-edge-2',
       directed: true,
+      connections: {
+        from: 'person',
+        to: 'place',
+      },
     },
   },
   ego: {
