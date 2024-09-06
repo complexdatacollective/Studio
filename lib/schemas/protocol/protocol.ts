@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { StageSchema } from './interfaces/stages';
 import { CodebookSchema } from './codebook/codebook';
+import { WaveSchema } from './wave';
 
 export const AssetManifest = z.object({});
 
@@ -12,6 +13,7 @@ const ProtocolSchema = z
     codebook: CodebookSchema,
     languages: z.array(z.string()), // first language is default
     // assetManifest: AssetManifestScheme.optional(),
+    waves: z.array(WaveSchema).optional(),
   })
   // May not need this - will throw error if extra fields are present
   // when parsing.
@@ -54,6 +56,16 @@ const devProtocol: Protocol = {
       },
     },
   },
+  waves: [
+    {
+      id: '1',
+      label: 'Baseline',
+    },
+    {
+      id: '2',
+      label: '6 month follow-up',
+    },
+  ],
   stages: [
     {
       id: '1',
