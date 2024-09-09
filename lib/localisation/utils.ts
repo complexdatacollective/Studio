@@ -38,3 +38,16 @@ export function getLocalisedString(
   // Fallback
   return localisedRecord.DEFAULT;
 }
+
+export function getBestMatch(
+  protocolLanguages: string[],
+  userLocales: string[],
+): string {
+  const bestMatch = match(userLocales, protocolLanguages, 'NOT_FOUND');
+  if (bestMatch !== 'NOT_FOUND') {
+    return bestMatch;
+  }
+
+  // Fallback
+  return 'DEFAULT';
+}
