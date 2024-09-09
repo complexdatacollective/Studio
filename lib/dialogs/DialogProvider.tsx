@@ -19,13 +19,13 @@ type BaseDialogProps = {
   children?: React.ReactNode;
 };
 
-type ConfirmDialogProps = BaseDialogProps & {
+export type ConfirmDialogProps = BaseDialogProps & {
   hideCancel?: boolean;
   confirmText?: string;
   cancelText?: string;
 };
 
-type CustomDialogProps<T> = BaseDialogProps & {
+export type CustomDialogProps<T> = BaseDialogProps & {
   renderContent: (resolve: (value: T | null) => void) => React.ReactNode;
 };
 

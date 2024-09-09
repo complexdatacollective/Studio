@@ -3,9 +3,28 @@ import type { StoryObj } from '@storybook/react';
 import { Button } from '~/components/ui/Button';
 import { useDialog } from './DialogProvider';
 import Form from '~/components/ui/form/Form';
+import { fn } from '@storybook/test';
 
 const meta = {
   title: 'Systems/Dialogs/useDialog',
+  args: {
+    closeDialog: fn(),
+  },
+  argTypes: {
+    accent: {
+      control: {
+        type: 'select',
+        options: ['default', 'danger', 'success', 'warning', 'info'],
+      },
+    },
+    title: {
+      control: 'text',
+    },
+    description: {
+      control: 'text',
+    },
+  },
+  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },
@@ -36,7 +55,6 @@ export const Default: Story = {
         id: 'custom-dialog',
         title: 'Custom Dialog',
         description: 'This is a custom dialog',
-        accent: 'warning',
         // 'resolve' should be inferred as (value: string | null) => void
         renderContent: (resolve) => {
           const handleConfirm = async () => {
