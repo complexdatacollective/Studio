@@ -95,6 +95,7 @@
     }
   },
   "Generic": {
+    "Acknowledge": "Okay",
     "Next": "Next",
     "Previous": "Previous",
     "Done": "Done",

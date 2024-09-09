@@ -10,6 +10,7 @@ import { flushSync } from 'react-dom';
 import { Dialog } from './Dialog';
 import { Button } from '~/components/ui/Button';
 import Form from '~/components/ui/form/Form';
+import { useTranslations } from 'next-intl';
 
 type BaseDialogProps = {
   id?: string;
@@ -48,6 +49,7 @@ const DialogContext = createContext<DialogContextType | null>(null);
 const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const t = useTranslations('Generic');
   const [dialogs, setDialogs] = useState<DialogState<unknown>[]>([]);
 
   const INTERNAL_openDialog = useCallback(
@@ -105,13 +107,13 @@ const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
           <Form.Footer
             primaryAction={
               <Button color="primary" onClick={() => resolve(true)}>
-                {dialogProps.confirmText ?? 'Confirm'}
+                {dialogProps.confirmText ?? t('Acknowledge')}
               </Button>
             }
             secondaryAction={
               !dialogProps.hideCancel && (
                 <Button onClick={() => resolve(false)}>
-                  {dialogProps.cancelText ?? 'Cancel'}
+                  {dialogProps.cancelText ?? t('Cancel')}
                 </Button>
               )
             }
