@@ -34,6 +34,7 @@ export default async function DashboardLayout({
         <StudySwitcher />
         <ThemeSwitcher />
         <Input
+          name="search"
           type="search"
           placeholder="Search"
           aria-label="Search"
