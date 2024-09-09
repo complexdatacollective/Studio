@@ -35,12 +35,19 @@ function Footer({ primaryAction, secondaryAction, metaArea }: FormFooterProps) {
   return (
     <footer
       className={cn(
-        'mt-6 flex flex-col items-center justify-end gap-3 sm:flex-row sm:gap-10',
-        primaryAction && secondaryAction && 'justify-between',
+        'mt-6 flex flex-col items-center justify-end gap-1 sm:flex-row sm:gap-10',
+        primaryAction && secondaryAction && 'sm:justify-between',
+        // Has secondary but not primary
+        secondaryAction && !primaryAction && 'sm:justify-start',
       )}
     >
       {secondaryAction && (
-        <div className={childClasses(!Array.isArray(secondaryAction))}>
+        <div
+          className={cn(
+            childClasses(!Array.isArray(secondaryAction)),
+            'self-start',
+          )}
+        >
           {secondaryAction}
         </div>
       )}

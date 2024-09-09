@@ -56,22 +56,20 @@ export default function HelpButton({ id }: { id?: string }) {
             </div>
           </div>
           <Form.Footer
-            primaryAction={
-              <Button color="primary" onClick={() => resolve(null)}>
-                Cancel
-              </Button>
-            }
             secondaryAction={
               env.NODE_ENV === 'development' && (
-                <Button
-                  color="destructive"
-                  onClick={() => {
-                    localStorage.removeItem(WIZARD_LOCAL_STORAGE_KEY);
-                    resolve(null);
-                  }}
-                >
-                  Dev mode: Reset local storage
-                </Button>
+                <>
+                  <Button onClick={() => resolve(null)}>Cancel</Button>
+                  <Button
+                    color="destructive"
+                    onClick={() => {
+                      localStorage.removeItem(WIZARD_LOCAL_STORAGE_KEY);
+                      resolve(null);
+                    }}
+                  >
+                    Dev mode: Reset local storage
+                  </Button>
+                </>
               )
             }
           />

@@ -45,7 +45,7 @@ export default function WizardStep({ step }: { step: Step }) {
           )
         }
         metaArea={
-          <div className="flex flex-1 items-center justify-center text-sm">
+          <div className="hidden flex-1 items-center justify-center text-sm sm:flex">
             {progress.current} / {progress.total}
           </div>
         }
