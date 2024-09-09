@@ -40,7 +40,7 @@ const Popover = ({
             'motion-safe:data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
             'motion-safe:data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
             'motion-safe:data-[state=open]:data-[side=left]:animate-slideRightAndFade',
-            'max-w-96 rounded-small will-change-[transform,opacity]',
+            'max-w-lg rounded-small will-change-[transform,opacity]',
             'z-50 shadow-xl',
           )}
           sideOffset={5}

@@ -39,6 +39,18 @@ const loadMessages = async (
 };
 
 const preview: Preview = {
+  parameters: {
+    backgrounds: {
+      disable: true,
+    },
+    /**
+     * This sets the default for our stories, but can be overriden on a per-story
+     * basis. Options are 'centered', 'fullscreen', and 'padded'.
+     *
+     * See: https://storybook.js.org/docs/configure/story-layout#global-layout
+     */
+    layout: 'fullscreen',
+  },
   globalTypes: {
     locale: {
       name: 'Locale',

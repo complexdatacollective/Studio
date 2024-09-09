@@ -1,4 +1,3 @@
-import Dialog from '~/components/ui/Dialog';
 import Popover from '~/components/ui/Popover';
 import { Button } from '../ui/Button';
 import { useWizardController } from './useWizardController';
@@ -7,6 +6,9 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useElementPosition } from '~/lib/onboarding-wizard/utils';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { getLocalisedValue } from '~/lib/localisation/utils';
+import Form from '../ui/form/Form';
+import { generatePublicId } from '~/lib/generatePublicId';
+import { ControlledDialog } from '~/lib/dialogs/ControlledDialog';
 
 export default function WizardStep({ step }: { step: Step }) {
   const { title, content, targetElementId } = step;
@@ -30,23 +32,29 @@ export default function WizardStep({ step }: { step: Step }) {
   const renderContent = () => (
     <>
       <RenderRichText value={localisedStepContent} />
-      <footer className="flex justify-between">
-        {hasPreviousStep && (
-          <Button onClick={() => previousStep()}>{t('Previous')}</Button>
-        )}
-        <div className="flex flex-1 items-center justify-center text-sm">
-          {progress.current} / {progress.total}
-        </div>
-        {hasNextStep ? (
-          <Button color="primary" onClick={() => nextStep()}>
-            {t('Next')}
-          </Button>
-        ) : (
-          <Button color="success" onClick={() => nextStep()}>
-            {t('Done')}
-          </Button>
-        )}
-      </footer>
+      <Form.Footer
+        primaryAction={
+          hasNextStep ? (
+            <Button color="primary" onClick={() => nextStep()}>
+              {t('Next')}
+            </Button>
+          ) : (
+            <Button color="success" onClick={() => nextStep()}>
+              {t('Done')}
+            </Button>
+          )
+        }
+        metaArea={
+          <div className="hidden flex-1 items-center justify-center text-sm sm:flex">
+            {progress.current} / {progress.total}
+          </div>
+        }
+        secondaryAction={
+          hasPreviousStep && (
+            <Button onClick={() => previousStep()}>{t('Previous')}</Button>
+          )
+        }
+      />
     </>
   );
 
@@ -76,16 +84,13 @@ export default function WizardStep({ step }: { step: Step }) {
   }
 
   return (
-    <Dialog
-      isOpen
-      onOpenChange={() => {
-        closeWizard();
-      }}
+    <ControlledDialog
+      id={generatePublicId()}
+      open
       title={localisedStepTitle}
-      description=""
-      context="interviewer"
+      closeDialog={closeWizard}
     >
       {renderContent()}
-    </Dialog>
+    </ControlledDialog>
   );
 }

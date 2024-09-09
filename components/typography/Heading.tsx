@@ -6,7 +6,7 @@ import { cn } from '~/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 
 export const headingVariants = tv({
-  base: 'text-balance font-heading font-bold [&:has(+.lead)]:mb-2',
+  base: 'text-balance font-heading font-bold [&:has(+.lead)]:mb-2 max-w-[55ch]',
   variants: {
     variant: {
       'h1': 'scroll-m-20 text-2xl tracking-tight mb-6',

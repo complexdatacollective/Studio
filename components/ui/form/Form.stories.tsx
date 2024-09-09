@@ -30,7 +30,7 @@ export const Default: Story = {
   },
   render: (args: FormProps) => (
     <Form {...args}>
-      <Input type="text" placeholder="Enter text" />
+      <Input name="text" type="text" placeholder="Enter text" />
       <Button type="submit">Submit</Button>
     </Form>
   ),
@@ -40,7 +40,7 @@ export const WithFooter: Story = {
   args: {
     children: (
       <>
-        <Input type="text" placeholder="Enter text" />
+        <Input name="text" type="text" placeholder="Enter text" />
         <Form.Footer
           primaryAction={<Button type="submit">Primary Action</Button>}
           secondaryAction={<Button>Secondary Action</Button>}

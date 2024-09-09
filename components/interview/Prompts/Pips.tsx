@@ -13,13 +13,13 @@ export default function Pips({
   currentIndex: number;
 }) {
   return (
-    <div className="flex w-full items-center justify-center space-x-2">
+    <div className="flex items-center justify-center space-x-2">
       {Array.from({ length: count }).map((_, index) => (
         <div
           key={index}
           className={cn(
-            'h-4 w-4 rounded-full border-2 border-opacity-15 transition-colors ease-in',
-            index === currentIndex && 'bg-muted/20',
+            'h-4 w-4 rounded-full border-2 border-[currentColor] transition-colors ease-in',
+            index === currentIndex && 'bg-[currentColor]',
           )}
         />
       ))}

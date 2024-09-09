@@ -101,7 +101,7 @@ const demoSteps: Step[] = [
     },
   },
   {
-    targetElementId: 'data-wizard-task-step-1',
+    targetElementId: 'data-wizard-prompts',
     title: {
       en: 'Prompts',
     },
@@ -182,11 +182,7 @@ export default function NameGenerator() {
         }}
       />
       <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
-        <Prompts
-          prompts={demoPrompts}
-          currentPromptId={0}
-          id="data-wizard-task-step-1"
-        />
+        <Prompts prompts={demoPrompts} currentPromptId={0} />
         <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
           <NodePanels panels={demoPanels} />
 

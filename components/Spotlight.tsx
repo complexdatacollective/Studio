@@ -8,7 +8,7 @@ import PopoverBackdrop from './ui/PopoverBackdrop';
  */
 const SpotlightOverlay = ({
   targetElementId,
-  margin = 15,
+  margin = 5,
   borderRadius = '1.25rem', // TODO: get this from theme somehow. SVG won't accept CSS variable.
 }: {
   targetElementId?: string;

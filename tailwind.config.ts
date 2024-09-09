@@ -1,5 +1,6 @@
 import { type Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import plugin from 'tailwindcss/plugin';
 
 /**
  * Export any values that we need to access from JS here.
@@ -266,5 +267,18 @@ export default {
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/container-queries'),
+    plugin(({ addUtilities, addVariant }) => {
+      addUtilities({
+        '.allow-discrete': {
+          transitionBehavior: 'allow-discrete',
+        },
+      });
+
+      addVariant('backdrop', '&::backdrop');
+
+      addVariant('open', '&[open]');
+
+      addVariant('from', '@starting-style');
+    }),
   ],
 } satisfies Config;
