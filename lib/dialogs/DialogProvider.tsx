@@ -20,13 +20,13 @@ type BaseDialogProps = {
   children?: React.ReactNode;
 };
 
-export type ConfirmDialogProps = BaseDialogProps & {
+type ConfirmDialogProps = BaseDialogProps & {
   hideCancel?: boolean;
   confirmText?: string;
   cancelText?: string;
 };
 
-export type CustomDialogProps<T> = BaseDialogProps & {
+type CustomDialogProps<T> = BaseDialogProps & {
   renderContent: (resolve: (value: T | null) => void) => React.ReactNode;
 };
 
@@ -120,7 +120,7 @@ const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
           />
         ),
       }),
-    [INTERNAL_openDialog],
+    [INTERNAL_openDialog, t],
   );
 
   const openCustomDialog = useCallback(
