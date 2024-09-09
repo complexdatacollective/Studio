@@ -9,11 +9,11 @@ export const surfaceVariants = tv({
   base: 'shadow',
   variants: {
     level: {
-      0: 'bg-surface-0 text-surface-0-foreground',
-      1: 'bg-surface-1 text-surface-1-foreground',
-      2: 'bg-surface-2 text-surface-2-foreground',
-      3: 'bg-surface-3 text-surface-3-foreground',
-      4: 'bg-surface-4 text-surface-4-foreground',
+      0: 'bg-surface-0 text-surface-0-foreground [--background:var(--surface-0)] [--foreground:var(--surface-0-foreground)]',
+      1: 'bg-surface-base text-surface-base-foreground [--background:var(--surface-base)] [--foreground:var(--surface-base-foreground)]',
+      2: 'bg-[--2] [--2:color-mix(in_oklch,oklch(var(--background))_95%,oklch(var(--foreground)))]',
+      3: 'bg-[--3] [--3:color-mix(in_oklch,var(--2)_95%,oklch(var(--foreground)))]',
+      4: 'bg-[--4] [--4:color-mix(in_oklch,var(--3)_95%,oklch(var(--foreground)))]',
     },
     spacing: {
       none: '',
