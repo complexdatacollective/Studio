@@ -1,71 +1,82 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  type RefObject,
+} from 'react';
 import { generatePublicId } from '../generatePublicId';
 import { flushSync } from 'react-dom';
-import { Dialog, RenderDialogContent } from './Dialog';
+import { Dialog } from './Dialog';
+import { Button } from '~/components/ui/Button';
+import Form from '~/components/ui/form/Form';
 
-type OpenDialog<T> = {
+type BaseDialogProps = {
   id?: string;
   title: string;
-  description: string;
-  renderContent?: RenderDialogContent<unknown>;
+  accent?: 'default' | 'danger' | 'success' | 'warning' | 'info';
+  description?: string;
+  children?: React.ReactNode;
 };
 
-type TDialogContext = {
-  openDialog: (dialog: OpenDialog<unknown>) => Promise<unknown>;
-  closeDialog: (id: string, value: unknown) => Promise<void>;
+type ConfirmDialogProps = BaseDialogProps & {
+  hideCancel?: boolean;
+  confirmText?: string;
+  cancelText?: string;
 };
 
-const DialogContext = createContext<TDialogContext | null>(null);
+type CustomDialogProps<T> = BaseDialogProps & {
+  renderContent: (resolve: (value: T | null) => void) => React.ReactNode;
+};
 
-type DialogInState = {
+type OpenDialog<T> = ConfirmDialogProps & CustomDialogProps<T>;
+
+type DialogState<T> = OpenDialog<T> & {
   id: string;
-  title: string;
-  description: string;
-  renderContent?: RenderDialogContent<unknown>;
-  resolveCallback: (value: unknown) => void;
-  ref: React.RefObject<HTMLDialogElement>;
+  resolveCallback: (value: T | null) => void;
+  ref: RefObject<HTMLDialogElement>;
 };
 
-const DialogProvider = ({ children }: { children: React.ReactNode }) => {
-  const [dialogs, setDialogs] = useState<DialogInState[]>([]);
+type DialogContextType = {
+  closeDialog: (id: string, value: unknown) => Promise<void>;
+  openDialog: (dialogProps: ConfirmDialogProps) => Promise<boolean | null>;
+  openCustomDialog: <T>(dialogProps: CustomDialogProps<T>) => Promise<T | null>;
+};
 
-  const openDialog = useCallback((dialogProps: OpenDialog<unknown>) => {
-    const { id, title, description, renderContent } = dialogProps;
+const DialogContext = createContext<DialogContextType | null>(null);
 
-    // check for ID collision, if ID is provided
-    if (id && dialogs.some((dialog) => dialog.id === id)) {
-      throw new Error(`Dialog with ID ${id} already exists`);
-    }
+const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [dialogs, setDialogs] = useState<DialogState<unknown>[]>([]);
 
-    const dialogId = id ?? generatePublicId();
-    const dialogRef = React.createRef<HTMLDialogElement>();
+  const INTERNAL_openDialog = useCallback(
+    async <T,>(dialogProps: OpenDialog<T>): Promise<T | null> => {
+      const dialogRef = React.createRef<HTMLDialogElement>();
 
-    return new Promise((resolve) => {
-      // flushSync is used to ensure that the dialog is added to the DOM before
-      // being shown. This is necessary because the dialog is shown immediately
-      // after being added, and we need to ensure that the dialog is in the DOM
-      flushSync(() =>
-        setDialogs((prevDialogs) => [
-          ...prevDialogs,
-          {
-            id: dialogId,
-            title,
-            description,
-            renderContent,
-            resolveCallback: resolve,
-            ref: dialogRef,
-          },
-        ]),
-      );
+      return new Promise((resolveCallback) => {
+        flushSync(() =>
+          setDialogs((prevDialogs) => [
+            ...prevDialogs,
+            {
+              ...dialogProps,
+              id: dialogProps.id ?? generatePublicId(),
+              resolveCallback,
+              ref: dialogRef,
+            } as DialogState<unknown>,
+          ]),
+        );
 
-      if (dialogRef.current) {
-        dialogRef.current.showModal();
-      }
-    });
-  }, []);
+        if (dialogRef.current) {
+          dialogRef.current.showModal();
+        }
+      });
+    },
+    [setDialogs],
+  );
 
   const closeDialog = useCallback(
-    async (id: DialogInState['id'], value: unknown) => {
+    async (id: string, value: unknown) => {
       const dialog = dialogs.find((dialog) => dialog.id === id);
 
       if (!dialog) {
@@ -77,35 +88,82 @@ const DialogProvider = ({ children }: { children: React.ReactNode }) => {
         dialog.resolveCallback(value);
       }
 
-      // We need to wait for the out animation to finish before removing the dialog
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      setDialogs((prevDialogs) => {
-        return prevDialogs.filter((dialog) => dialog.id !== id);
-      });
+      setDialogs((prevDialogs) =>
+        prevDialogs.filter((dialog) => dialog.id !== id),
+      );
     },
-    [dialogs],
+    [dialogs, setDialogs],
   );
 
+  const openDialog = useCallback(
+    (dialogProps: ConfirmDialogProps) =>
+      INTERNAL_openDialog<boolean>({
+        ...dialogProps,
+        renderContent: (resolve) => (
+          <Form.Footer
+            primaryAction={
+              <Button color="primary" onClick={() => resolve(true)}>
+                {dialogProps.confirmText ?? 'Confirm'}
+              </Button>
+            }
+            secondaryAction={
+              !dialogProps.hideCancel && (
+                <Button onClick={() => resolve(false)}>
+                  {dialogProps.cancelText ?? 'Cancel'}
+                </Button>
+              )
+            }
+          />
+        ),
+      }),
+    [INTERNAL_openDialog],
+  );
+
+  const openCustomDialog = useCallback(
+    <T,>(dialogProps: CustomDialogProps<T>) =>
+      INTERNAL_openDialog<T>(dialogProps),
+    [INTERNAL_openDialog],
+  );
+
+  const contextValue: DialogContextType = {
+    closeDialog,
+    openDialog,
+    openCustomDialog,
+  };
+
   return (
-    <DialogContext.Provider value={{ openDialog, closeDialog }}>
+    <DialogContext.Provider value={contextValue}>
       {children}
-      {dialogs.map(({ id, title, description, renderContent, ref }) => (
-        <Dialog
-          id={id}
-          key={id}
-          ref={ref}
-          title={title}
-          description={description}
-          closeDialog={(value) => closeDialog(id, value)}
-          renderContent={renderContent}
-        />
-      ))}
+      {dialogs.map(
+        ({
+          id,
+          ref,
+          title,
+          description,
+          accent,
+          renderContent,
+          children: dialogChildren,
+        }) => (
+          <Dialog
+            key={id}
+            ref={ref}
+            title={title}
+            description={description}
+            closeDialog={() => closeDialog(id, null)}
+            accent={accent}
+          >
+            {dialogChildren}
+            {renderContent((value) => closeDialog(id, value))}
+          </Dialog>
+        ),
+      )}
     </DialogContext.Provider>
   );
 };
 
-export const useDialog = () => {
+export const useDialog = (): DialogContextType => {
   const context = useContext(DialogContext);
   if (!context) {
     throw new Error('useDialog must be used within a DialogProvider');

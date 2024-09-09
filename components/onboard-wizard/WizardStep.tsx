@@ -35,11 +35,11 @@ export default function WizardStep({ step }: { step: Step }) {
       <Form.Footer
         primaryAction={
           hasNextStep ? (
-            <Button color="primary" autoFocus={true} onClick={() => nextStep()}>
+            <Button color="primary" onClick={() => nextStep()}>
               {t('Next')}
             </Button>
           ) : (
-            <Button color="success" autoFocus={true} onClick={() => nextStep()}>
+            <Button color="success" onClick={() => nextStep()}>
               {t('Done')}
             </Button>
           )
@@ -86,12 +86,10 @@ export default function WizardStep({ step }: { step: Step }) {
   return (
     <ControlledDialog
       id={generatePublicId()}
-      title={localisedStepTitle}
-      renderContent={() => renderContent()}
       open
-      closeDialog={() => {
-        closeWizard();
-      }}
+      title={localisedStepTitle}
+      renderContent={renderContent}
+      closeDialog={closeWizard}
     />
   );
 }
