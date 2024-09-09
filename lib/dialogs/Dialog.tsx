@@ -51,8 +51,8 @@ export const Dialog = ({
       onClose={closeDialog} // Needed so that closing via keyboard still returns a value
       className={cn(
         'bg-transparent',
-        '-translate-y-6 opacity-0 transition-all duration-300 ease-out allow-discrete',
-        'open:translate-y-0 open:opacity-100 open:backdrop:bg-overlay/70 open:from:-translate-y-6 open:from:backdrop:bg-overlay/0',
+        'opacity-0 transition-all duration-300 ease-out allow-discrete motion-safe:-translate-y-6',
+        'open:opacity-100 open:backdrop:bg-overlay/70 open:from:backdrop:bg-overlay/0 motion-safe:open:translate-y-0 motion-safe:open:from:-translate-y-6',
         'backdrop:bg-overlay/0 backdrop:backdrop-blur-xs backdrop:transition-all backdrop:delay-100 backdrop:duration-300 backdrop:ease-out open:backdrop:delay-0',
       )}
       {...rest}
