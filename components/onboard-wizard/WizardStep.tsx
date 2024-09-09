@@ -88,8 +88,9 @@ export default function WizardStep({ step }: { step: Step }) {
       id={generatePublicId()}
       open
       title={localisedStepTitle}
-      renderContent={renderContent}
       closeDialog={closeWizard}
-    />
+    >
+      {renderContent()}
+    </ControlledDialog>
   );
 }

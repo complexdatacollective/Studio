@@ -15,58 +15,16 @@ import Form from '~/components/ui/form/Form';
  * This popover allows the participant to trigger help wizards.
  */
 export default function HelpButton({ id }: { id?: string }) {
-  const { openConfirmDialog, openChoiceDialog, openCustomDialog } = useDialog();
+  const { openCustomDialog } = useDialog();
   const { wizards, setActiveWizard } = useWizardController();
 
   const t = useTranslations('Interview.Navigation');
   const t2 = useTranslations('Components.ContextualHelp');
   const t3 = useTranslations('Components.ContextualHelp.ContactCard');
 
-  const confirmDialog = async () => {
-    // Return type should be boolean | null
-    const result = await openConfirmDialog({
-      id: 'confirm-dialog',
-      type: 'confirm',
-      title: 'Are you sure?',
-      description: 'This action cannot be undone.',
-    });
-
-    console.log('got result', result);
-  };
-
-  const choiceDialog = async () => {
-    // Return type should be one of the string values of 'choices' or null
-    const result = await openChoiceDialog({
-      id: 'choice-dialog',
-      type: 'choice',
-      title: 'Choose an option',
-      description: 'This is a choice dialog',
-      choices: ['Primary', 'Secondary'],
-    });
-
-    console.log('got result', result);
-  };
-
-  const customDialog = async () => {
-    // Return type should be inferred as string | null
-    const result = await openCustomDialog<string>({
-      id: 'custom-dialog',
-      type: 'custom',
-      title: 'Custom Dialog',
-      description: 'This is a custom dialog',
-      // 'resolve' should be inferred as (value: string | null) => void
-      renderContent: (resolve) => (
-        <Button onClick={() => resolve('Hello')}>Click me</Button>
-      ),
-    });
-
-    console.log('got result', result);
-  };
-
   const handleOpenDialog = async () => {
     // Return type should be string | null
-    const result = await openDialog<string>({
-      type: 'custom',
+    const result = await openCustomDialog<string>({
       id: 'help-dialog',
       title: t2('Title'),
       description: t2('Description'),
@@ -120,7 +78,6 @@ export default function HelpButton({ id }: { id?: string }) {
         </>
       ),
     });
-    console.log('got result', result);
     if (result) {
       setActiveWizard(result);
     }

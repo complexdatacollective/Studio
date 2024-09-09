@@ -1,5 +1,4 @@
 import type { ComponentProps, ReactNode } from 'react';
-import Divider from '~/components/layout/Divider';
 import { cn } from '~/lib/utils';
 
 export type FormProps = {
@@ -36,7 +35,7 @@ function Footer({ primaryAction, secondaryAction, metaArea }: FormFooterProps) {
   return (
     <footer
       className={cn(
-        '-mb-3 mt-6 flex flex-col items-center justify-end gap-3 sm:flex-row sm:gap-10',
+        'mt-6 flex flex-col items-center justify-end gap-3 sm:flex-row sm:gap-10',
         primaryAction && secondaryAction && 'justify-between',
       )}
     >
