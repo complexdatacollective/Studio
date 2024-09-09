@@ -11,12 +11,13 @@ const buttonVariants = tv({
   ),
   variants: {
     variant: {
-      default: 'hover:bg-opacity-80',
+      default: '',
       outline: 'border', // Border
       text: '', // Text only, opaque fill on hover
     },
     color: {
-      default: '',
+      default:
+        '[--text:oklch(var(--foreground))] [--bg:color-mix(in_oklab,var(--text)_5%,oklch(var(--background)))]',
       primary: '',
       destructive: '',
       accent: '',
@@ -39,22 +40,21 @@ const buttonVariants = tv({
     {
       color: 'default',
       variant: 'default',
-
-      class:
-        'bg-default/10 text-default-foreground hover:bg-primary hover:text-primary-foreground hover:bg-opacity-100',
+      className:
+        'bg-[--bg] text-[--text] hover:bg-[color-mix(in_oklch,var(--bg)_95%,var(--text))]',
     },
     {
       color: 'default',
       variant: 'outline',
 
       class:
-        'border-secondary/20 text-default-foreground hover:border-transparent hover:bg-default/10 hover:text-default-foreground',
+        'border-[--bg] text-[--text] hover:border-transparent hover:bg-[--bg] hover:text-[--text]',
     },
     {
       color: 'default',
       variant: 'text',
 
-      class: 'text-default-foreground hover:bg-default/10',
+      class: 'text-[--text] hover:bg-[--bg] hover:bg-opacity-50',
     },
     {
       color: 'primary',
