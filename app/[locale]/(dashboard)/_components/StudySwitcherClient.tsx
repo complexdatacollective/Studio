@@ -14,7 +14,7 @@ import {
 } from '~/components/ui/select';
 
 export default function StudySwitcherClient({ studies }: { studies: Study[] }) {
-  const t = useTranslations('StudySwitcher');
+  const t = useTranslations('Components.StudySwitcher');
   const router = useRouter();
   const { study: currentStudy } = useParams();
   const [selectedStudy, setSelectedStudy] = useState<Study['slug']>(
@@ -33,7 +33,7 @@ export default function StudySwitcherClient({ studies }: { studies: Study[] }) {
     <Select onValueChange={handleStudyChange} value={selectedStudy}>
       <SelectTrigger>
         <SelectValue
-          placeholder={t('placeholder')}
+          placeholder={t('Placeholder')}
           defaultValue={selectedStudy}
         />
       </SelectTrigger>

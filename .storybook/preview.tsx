@@ -1,13 +1,27 @@
 import type { Preview } from '@storybook/react';
 import React, { useEffect, useState } from 'react';
-import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
+import { type AbstractIntlMessages } from 'next-intl';
 import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
 import { getLangDir } from 'rtl-detect';
-import { TooltipProvider } from '~/components/ui/Tooltip';
-import { DirectionProvider } from '@radix-ui/react-direction';
 import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import '~/styles/global.css';
+import Providers from '~/app/[locale]/_components/Providers';
+import { Lexend, Roboto_Mono } from 'next/font/google';
+import { cn } from '~/lib/utils';
+
+const lexend = Lexend({
+  weight: 'variable',
+  display: 'swap',
+  subsets: ['latin', 'latin-ext', 'vietnamese'],
+  variable: '--font-lexend',
+});
+
+const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
+});
 
 const loadMessages = async (
   locale: Locale,
@@ -25,6 +39,18 @@ const loadMessages = async (
 };
 
 const preview: Preview = {
+  parameters: {
+    backgrounds: {
+      disable: true,
+    },
+    /**
+     * This sets the default for our stories, but can be overriden on a per-story
+     * basis. Options are 'centered', 'fullscreen', and 'padded'.
+     *
+     * See: https://storybook.js.org/docs/configure/story-layout#global-layout
+     */
+    layout: 'fullscreen',
+  },
   globalTypes: {
     locale: {
       name: 'Locale',
@@ -60,40 +86,52 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const [messages, setMessages] = useState<AbstractIntlMessages>();
-      const [langDir, setLangDir] =
-        useState<ReturnType<typeof getLangDir>>('ltr');
+      const [dir, setDir] = useState<ReturnType<typeof getLangDir>>('ltr');
 
       useEffect(() => {
         const fetchMessages = async () => {
           const locale = context.globals.locale as Locale;
           const loadedMessages = await loadMessages(locale);
           setMessages(loadedMessages);
-          setLangDir(getLangDir(locale));
+          setDir(getLangDir(locale));
         };
 
         void fetchMessages();
       }, [context.globals.locale]);
 
       useEffect(() => {
-        document.documentElement.dir = langDir;
-      }, [langDir]);
+        document.documentElement.dir = dir;
+      }, [dir]);
 
+      return (
+        <Providers
+          intlParams={{
+            dir,
+            messages: messages ?? ({} as AbstractIntlMessages),
+            locale: context.globals.locale as Locale,
+            now: new Date(),
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          }}
+        >
+          <Story />
+        </Providers>
+      );
+    },
+    (Story, context) => {
       const theme =
         (context.parameters.forceTheme as string) ??
         (context.globals.visualTheme as string);
 
       return (
-        <TooltipProvider>
+        <div
+          className={cn(
+            'font-sans min-h-full bg-background text-foreground',
+            `${lexend.variable} ${roboto_mono.variable}`,
+          )}
+        >
           <InjectThemeVariables theme={theme} />
-          <DirectionProvider dir={langDir}>
-            <NextIntlClientProvider
-              messages={messages}
-              locale={context.globals.locale as Locale}
-            >
-              {Story()}
-            </NextIntlClientProvider>
-          </DirectionProvider>
-        </TooltipProvider>
+          <Story />
+        </div>
       );
     },
     // For some reason, we need this empty decorator here, or the theme switcher

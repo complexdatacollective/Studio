@@ -1,126 +1,149 @@
 {
-  "Home": {
-    "title": "Studio MVP",
-    "allStudiesHeading": "All Studies",
-    "interviewsHeading": "Interviews"
-  },
-  "SignIn": {
-    "cardTitle": "Sign in to Studio",
-    "cardDescription": "Don't have an account?",
-    "linkText": "Sign up"
-  },
-  "SignUp": {
-    "cardTitle": "Create an account",
-    "cardDescription": "Already have an account?",
-    "linkText": "Sign In"
-  },
-  "AuthForm": {
-    "usernameInput": "Username",
-    "passwordInput": "Password",
-    "formButton": "Continue"
-  },
-  "CreateStudyForm": {
-    "formTitle": "Create Study",
-    "inputLabel": "Study Name",
-    "inputPlaceholder": "My New Study",
-    "formButton": "Create Study",
-    "roleSelectLabel": "Select a role",
-    "roleSelectPlaceholder": "Roles..."
-  },
-  "SignOutBtn": {
-    "buttonLabel": "Sign Out"
-  },
-  "StudyPage": {
-    "title": "Study Page",
-    "noProjectFoundMessage": "No projects found"
-  },
-  "CreateProjectForm": {
-    "formTitle": "Create Project",
-    "projectNameInputLabel": "Project Name",
-    "projectNameInputPlaceholder": "Studio",
-    "formButton": "Create Project"
-  },
-  "MainNavigation": {
-    "home": "Studio Home"
-  },
-  "TopNavigation": {
-    "home": "Studio",
-    "dashboard": "Dashboard",
-    "settings": "Settings"
-  },
-  "SecondaryNavigation": {
-    "projectParticipantsLink": "Participants",
-    "projectInterviewsLink": "Interviews",
-    "projectProtocolsLink": "Protocols",
-    "projectSettingsLink": "Settings"
-  },
-  "StudySettingsPage": {
-    "title": "Study Settings Page",
-    "description": "slug:"
-  },
-  "ProjectPage": {
-    "title": "Project Page",
-    "description": "slug:",
-    "noProjectFoundMessage": "Project not found"
-  },
-  "ProjectCard": {
-    "subText": "Subtext about the project"
-  },
-  "ProjectSettingsPage": {
-    "title": "Settings Page",
-    "description": "slug:"
-  },
-  "ProjectProtocolsPage": {
-    "title": "Protocols Page",
-    "description": "slug:"
-  },
-  "ProjectInterviewsPage": {
-    "title": "Interviews Page",
-    "description": "slug:"
-  },
-  "ProjectParticipantsPage": {
-    "title": "Participants Page",
-    "description": "slug:"
-  },
-  "LanguageSwitcher": {
-    "en": "English",
-    "es": "Español"
+  "Auth": {
+    "SignIn": {
+      "Title": "Sign in to Studio",
+      "Description": "Don't have an account?",
+      "LinkText": "Sign up",
+      "ButtonText": "Sign In"
+    },
+    "SignUp": {
+      "Title": "Create an account",
+      "Description": "Already have an account?",
+      "LinkText": "Sign In",
+      "ButtonText": "Sign Up"
+    },
+    "SignOut": {
+      "ButtonLabel": "Sign Out"
+    },
+    "Form": {
+      "UsernameLabel": "Username",
+      "UsernameHint": "Create a username between 3 and 20 characters long, containing only letters, numbers, and underscores.",
+      "PasswordLabel": "Password",
+      "PasswordHint": "Create a password at least 8 characters long, containing at least one uppercase letter, one lowercase letter, one number, and one special character.",
+      "ForgotPassword": "Forgot password?"
+    }
   },
   "Navigation": {
-    "forward": "Move forward",
-    "back": "Move backward",
-    "menu": "Menu"
+    "Primary": {
+      "Home": "Studio",
+      "Dashboard": "Dashboard",
+      "Settings": "Settings"
+    },
+    "Secondary": {
+      "ParticipantsLink": "Participants",
+      "InterviewsLink": "Interviews",
+      "ProtocolsLink": "Protocols",
+      "SettingsLink": "Settings"
+    }
   },
-  "PopoverHint": {
-    "hint": "Click this for stage instructions",
-    "close": "Close",
-    "open": "Open"
+  "Pages": {
+    "Home": {
+      "Title": "Studio MVP",
+      "AllStudiesHeading": "All Studies",
+      "InterviewsHeading": "Interviews"
+    },
+    "Project": {
+      "Title": "Project Page",
+      "Description": "slug:",
+      "NoProjectFoundMessage": "Project not found",
+      "ProjectCard": {
+        "SubText": "Subtext about the project"
+      },
+      "SettingsPage": {
+        "Title": "Settings Page",
+        "Description": "slug:"
+      },
+      "ProtocolsPage": {
+        "Title": "Protocols Page",
+        "Description": "slug:"
+      },
+      "InterviewsPage": {
+        "Title": "Interviews Page",
+        "Description": "slug:"
+      },
+      "ParticipantsPage": {
+        "Title": "Participants Page",
+        "Description": "slug:"
+      }
+    },
+    "Study": {
+      "Title": "Study Page",
+      "NoProjectFoundMessage": "No projects found",
+      "SettingsPage": {
+        "Title": "Study Settings Page",
+        "Description": "slug:"
+      },
+      "NotFound": {
+        "Title": "Study Not Found",
+        "Description": "The page you are looking for does not exist.",
+        "HomeText": "Home"
+      }
+    },
+    "NotFound": {
+      "Title": "Page Not Found",
+      "Description": "The page you are looking for does not exist.",
+      "HomeText": "Home"
+    }
   },
-  "ExampleTooltip": {
-    "hint": "Drag and drop this node into a bin below."
+  "Interview": {
+    "Navigation": {
+      "Next": "Next question",
+      "Previous": "Previous question",
+      "Menu": "Main menu",
+      "Help": "Help menu",
+      "Progress": "You have completed {percent}% of the interview"
+    }
   },
-  "NameGeneratorPopover": {
-    "title": "Name Generator",
-    "hint": "Tap the icon to nominate a person. Type in a name and press enter to add it. Click next to continue. To remove a person, drag and drop the circle into the trash bin."
+  "Generic": {
+    "Acknowledge": "Okay",
+    "Next": "Next",
+    "Previous": "Previous",
+    "Done": "Done",
+    "Close": "Close",
+    "Submit": "Submit",
+    "Cancel": "Cancel",
+    "Save": "Save",
+    "Delete": "Delete",
+    "Edit": "Edit",
+    "Add": "Add",
+    "Remove": "Remove",
+    "Create": "Create",
+    "Copy": "Copy",
+    "Paste": "Paste",
+    "Undo": "Undo",
+    "Redo": "Redo",
+    "Search": "Search",
+    "Filter": "Filter",
+    "Clear": "Clear"
   },
-  "InformationPopover": {
-    "title": "Information Interface",
-    "hint": "This interface is used to display information in text, image, or video format. Read the information and click next to continue."
-  },
-  "StudySwitcher": {
-    "placeholder": "Select a study"
-  },
-  "ThemeSwitcher": {
-    "label": "Toggle theme"
-  },
-  "NotFound": {
-    "title": "Page Not Found",
-    "description": "The page you are looking for does not exist.",
-    "homeText": "Home"
-  },
-  "StudyNotFound": {
-    "title": "Study Not Found",
-    "description": "The page you are looking for does not exist.",
-    "homeText": "Home"
+  "Components": {
+    "StudySwitcher": {
+      "Placeholder": "Select a study"
+    },
+    "ThemeSwitcher": {
+      "Label": "Toggle theme"
+    },
+    "CreateStudyForm": {
+      "FormTitle": "Create Study",
+      "InputLabel": "Study Name",
+      "InputPlaceholder": "My New Study",
+      "FormButton": "Create Study",
+      "RoleSelectLabel": "Select a role",
+      "RoleSelectPlaceholder": "Roles..."
+    },
+    "CreateProjectForm": {
+      "FormTitle": "Create Project",
+      "ProjectNameInputLabel": "Project Name",
+      "ProjectNameInputPlaceholder": "Studio",
+      "FormButton": "Create Project"
+    },
+    "ContextualHelp": {
+      "Title": "Help",
+      "Description": "The cards below show the help options available based on the current page. Click on a card to view the help content.",
+      "ContactCard": {
+        "Title": "Contact the study organiser",
+        "Description": "Click here if you would like to contact the organiser of this study."
+      }
+    }
   }
 }

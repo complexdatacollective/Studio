@@ -1,5 +1,6 @@
 import { SUPPORTED_LOCALES } from '~/lib/localisation/locales';
 import LanguageSwitcher from '../_components/LanguageSwitcher';
+import ThemeSwitcher from '../_components/ThemeSwitcher';
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
@@ -12,7 +13,8 @@ export default function AuthLayout({
 }) {
   return (
     <div className="flex h-screen w-screen items-center justify-center">
-      <div className="absolute top-2 ltr:right-2 rtl:left-2">
+      <div className="absolute top-2 flex gap-4 ltr:right-2 rtl:left-2">
+        <ThemeSwitcher />
         <LanguageSwitcher />
       </div>
       {children}

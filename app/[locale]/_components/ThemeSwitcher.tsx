@@ -19,7 +19,7 @@ export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  const t = useTranslations('ThemeSwitcher');
+  const t = useTranslations('Components.ThemeSwitcher');
 
   const { root, item, icon } = variants();
 
@@ -36,7 +36,7 @@ export default function ThemeSwitcher() {
     <RadioGroup.Root
       className={root()}
       defaultValue={theme}
-      aria-label={t('label')}
+      aria-label={t('Label')}
       orientation="horizontal"
       onValueChange={(value) => setTheme(value)}
     >

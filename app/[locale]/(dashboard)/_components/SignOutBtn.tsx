@@ -6,11 +6,11 @@ import { useTranslations } from 'next-intl';
 import { SubmitButton } from '~/components/ui/form/SubmitButton';
 
 export default function SignOutBtn() {
-  const t = useTranslations('SignOutBtn');
+  const t = useTranslations('Auth.SignOut');
 
   return (
     <form action={logout}>
-      <SubmitButton>{t('buttonLabel')}</SubmitButton>
+      <SubmitButton>{t('ButtonLabel')}</SubmitButton>
     </form>
   );
 }

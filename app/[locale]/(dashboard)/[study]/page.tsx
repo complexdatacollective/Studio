@@ -6,7 +6,7 @@ import { getServerPath } from '~/lib/serverUtils';
 import { getStudyData } from '~/server/queries/studies';
 
 export default async function StudyPage({ params }: { params?: unknown }) {
-  const t = await getTranslations('StudyPage');
+  const t = await getTranslations('Pages.Study');
   const serverPath = getServerPath();
   const { study } = routes.studyDashboard.$parseParams(params);
   const studyData = await getStudyData(study);
@@ -17,7 +17,7 @@ export default async function StudyPage({ params }: { params?: unknown }) {
 
   return (
     <>
-      <PageHeader headerText={t('title')} subHeaderText={serverPath} />
+      <PageHeader headerText={t('Title')} subHeaderText={serverPath} />
       <p></p>
       <pre>
         <code>{JSON.stringify(studyData, null, 2)}</code>
