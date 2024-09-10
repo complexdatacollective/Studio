@@ -1,63 +1,47 @@
-import * as React from 'react';
+'use client';
 
+import * as React from 'react';
 import { cn } from '~/lib/utils';
 import Heading from '~/components/typography/Heading';
+import Paragraph from '../typography/Paragraph';
+import Surface from '../layout/Surface';
+import Divider from '../layout/Divider';
 
-const cardClasses =
-  'rounded border border-[hsl(var(--platinum--dark))] bg-card text-card-foreground';
+export type CardProps = {
+  title: string;
+  description?: string;
+} & React.HTMLAttributes<HTMLDivElement>;
 
-export const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn(cardClasses, className)} {...props} />
-));
+/**
+ * Card is a display component that uses surface-0 and is optionally clickable.
+ */
+export const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, title, description, children, ...props }, ref) => (
+    <Surface
+      as={props.onClick ? 'button' : 'div'}
+      level={0}
+      ref={ref}
+      className={cn(
+        'rounded border text-left text-sm',
+        props.onClick &&
+          'focusable cursor-pointer transition-colors hover:bg-primary hover:text-primary-foreground',
+        className,
+      )}
+      spacing="sm"
+      {...props}
+    >
+      <Heading variant="h4" className={cn(!description && !children && 'm-0')}>
+        {title}
+      </Heading>
+      {description && (
+        <>
+          <Paragraph>{description}</Paragraph>
+        </>
+      )}
+      {description && children && <Divider />}
+      {children}
+    </Surface>
+  ),
+);
+
 Card.displayName = 'Card';
-
-export const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('flex flex-col p-6', className)} {...props} />
-));
-CardHeader.displayName = 'CardHeader';
-
-export const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <Heading variant="h3" ref={ref} className={className} {...props} />
-));
-CardTitle.displayName = 'CardTitle';
-
-export const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn('text-sm text-muted-foreground', className)}
-    {...props}
-  />
-));
-CardDescription.displayName = 'CardDescription';
-
-export const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
-));
-CardContent.displayName = 'CardContent';
-
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('flex items-center p-6 pt-0', className)}
-    {...props}
-  />
-));
-CardFooter.displayName = 'CardFooter';

@@ -8,13 +8,13 @@
     "@radix-ui/*"
   ],
   "ignore": [
-    "./lib/schemas/**",
+    "./schemas/**",
     "./components/ui/form/*",
     "./components/layout/*",
     "./components/typography/*",
     "./lib/db/seed.ts",
     "./lib/localisation/i18n.ts",
-    "./lib/localisation/navigation.ts",
+    "./lib/localisation/navigation.tsx",
     "./lib/utils.ts"
   ]
 }

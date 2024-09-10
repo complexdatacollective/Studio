@@ -5,12 +5,12 @@ import { routes } from '~/lib/routes';
 export const dynamic = 'force-dynamic';
 
 export default function NotFound() {
-  const t = useTranslations('StudyNotFound');
+  const t = useTranslations('Pages.Study.NotFound');
   return (
     <div>
-      <h2>{t('title')}</h2>
-      <p>{t('description')}</p>
-      <Link href={routes.home()}>{t('homeText')}</Link>
+      <h2>{t('Title')}</h2>
+      <p>{t('Description')}</p>
+      <Link href={routes.home()}>{t('HomeText')}</Link>
     </div>
   );
 }
