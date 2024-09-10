@@ -13,11 +13,16 @@ import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 
 const demoPrompts = [
   {
-    id: 0,
-    text: 'Within the past 6 months, who have you felt close to, or discussed important personal matters with?',
+    id: '1',
+    text: {
+      DEFAULT:
+        'Within the past 6 months, who have you felt close to, or discussed important personal matters with?',
+      en: 'Within the past 6 months, who have you felt close to, or discussed important personal matters with?',
+      fr: 'French prompt',
+    },
   },
   {
-    id: 1,
+    id: '2',
     text: 'Who do you feel most comfortable with?',
   },
 ];
@@ -180,7 +185,7 @@ export default function NameGenerator() {
         }}
       />
       <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
-        <Prompts prompts={demoPrompts} currentPromptId={0} />
+        <Prompts prompts={demoPrompts} currentPromptId="1" />
         <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
           <NodePanels panels={demoPanels} />
 

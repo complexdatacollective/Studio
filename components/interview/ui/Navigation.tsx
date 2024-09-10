@@ -21,6 +21,7 @@ import HelpButton from './HelpButton';
 import { NavButtonWithTooltip } from './NavigationButton';
 import Surface from '~/components/layout/Surface';
 import { useMediaQuery } from '~/hooks/useMediaQuery';
+import InterviewLocaleSwitcher from './InterviewLocaleSwitcher';
 
 type NavigationProps = {
   pulseNext: boolean;
@@ -152,6 +153,8 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
             <>
               <Heading variant="label">Select language</Heading>
               <LanguageSwitcher />
+              <Heading variant="label">Interview Language Selector</Heading>
+              <InterviewLocaleSwitcher />
             </>
           }
           context="interviewer"

@@ -27,10 +27,9 @@ export const customErrorLogger = (error: IntlError) => {
  */
 export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
   localisedRecord: T,
-  userLocales: string[],
+  currentLocale: string,
 ): T[keyof T] {
-  const bestMatch = match(userLocales, Object.keys(localisedRecord), 'en');
-  return localisedRecord[bestMatch] as T[keyof T];
+  return localisedRecord[currentLocale] as T[keyof T];
 }
 
 export function getBestMatch(
