@@ -34,4 +34,3 @@ export const NavButtonWithTooltip = withTooltip(
     React.HTMLAttributes<HTMLDivElement>
   >,
 );
-export default NavigationButton;

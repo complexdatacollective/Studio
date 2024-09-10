@@ -9,9 +9,7 @@ import QuickNodeForm from './QuickNodeForm';
 import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
 import { type Step } from '~/lib/onboarding-wizard/store';
 import { cn } from '~/lib/utils';
-
-// TODO: move these somewhere to be shared
-export const interfaceWrapperClasses = 'my-4';
+import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 
 const demoPrompts = [
   {

@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
 
-export const getTargetElement = (dataId: string): HTMLElement | null => {
-  return document.querySelector(`[data-id="${dataId}"]`);
-};
-
 export const useElementPosition = (targetElementId?: string) => {
   const [position, setPosition] = useState<{
     top: number;

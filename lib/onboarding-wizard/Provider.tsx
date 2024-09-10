@@ -27,8 +27,6 @@ const createWizardLocalStorage = createLocalStorageStore<boolean>(
   WIZARD_LOCAL_STORAGE_KEY,
 );
 
-export type WizardLocalStore = ReturnType<typeof createLocalStorageStore>;
-
 export const WizardProvider = ({ children }: { children: ReactNode }) => {
   const storeRef = useRef<WizardStoreApi>();
   const { get: getItem, set: setItem } = createWizardLocalStorage();

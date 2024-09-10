@@ -44,5 +44,3 @@ export const createLocalStorageStore = <T>(key: string) => {
     ),
   );
 };
-
-export type LocalStorageStore<T> = LocalStorageState<T>;
