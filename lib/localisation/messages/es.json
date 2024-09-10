@@ -13,7 +13,7 @@
     "cardDescription": "¿Ya tienes una cuenta?",
     "linkText": "Iniciar sesión"
   },
-  "AuthForm": {
+  "Form": {
     "usernameInput": "Nombre de usuario",
     "passwordInput": "Contraseña",
     "formButton": "Continuar"
@@ -79,7 +79,8 @@
   "Navigation": {
     "forward": "Avanzar",
     "back": "Retroceder",
-    "menu": "Menú"
+    "menu": "Menú",
+    "help": "Ayuda"
   },
   "PopoverHint": {
     "hint": "Haz clic aquí para las instrucciones de la etapa",

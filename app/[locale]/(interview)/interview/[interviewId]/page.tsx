@@ -1,5 +1,5 @@
 import { getInterviewById } from '~/server/queries/interviews';
-import InterviewShell from '../_components/InterviewShell';
+import InterviewShell from '../../../../../components/interview/ui/InterviewShell';
 import { redirect } from '~/lib/localisation/navigation';
 import { headers } from 'next/headers';
 import { getBestMatch, getLocalisedString } from '~/lib/localisation/utils';

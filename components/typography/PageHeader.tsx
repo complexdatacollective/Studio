@@ -8,7 +8,7 @@ const PageHeader = ({
   headerText: string;
   subHeaderText: string;
 }) => (
-  <div className="my-10 mb-14">
+  <div className="mb-14">
     <Heading variant="h1" className="mb-2">
       {headerText}
     </Heading>

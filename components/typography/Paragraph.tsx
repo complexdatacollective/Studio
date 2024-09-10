@@ -5,14 +5,14 @@ import { forwardRef } from 'react';
 import { cn } from '~/lib/utils';
 
 export const paragraphVariants = tv({
-  base: 'text-pretty font-normal text-base [&:not(:last-child)]:mb-3',
+  base: 'text-pretty font-normal [&:not(:last-child)]:mb-3',
   variants: {
     variant: {
       default: '',
       blockquote: 'mt-6 border-l-2 pl-6 italic',
       inlineCode:
         'relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm',
-      lead: 'text-lg leading-6 font-normal',
+      lead: 'lead text-lg leading-6',
       mutedText: 'text-muted',
       smallText: 'text-sm',
     },

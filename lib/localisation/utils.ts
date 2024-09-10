@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { type IntlError, IntlErrorCode } from 'next-intl';
-import { type LocalisedRecord } from '~/lib/schemas/shared';
+import { type LocalisedRecord } from '~/schemas/shared';
 import { match } from '@formatjs/intl-localematcher';
 
 export const customErrorLogger = (error: IntlError) => {

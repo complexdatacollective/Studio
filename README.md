@@ -6,6 +6,8 @@ This is the GitHub repository that stores the code for Studio. For user facing d
 
 For discussion and support, please visit the [community forum](https://community.networkcanvas.com/).
 
+![Alt](https://repobeats.axiom.co/api/embed/3e2c041a337177e4bb0b83d55c52b47edc95d4ca.svg "Repobeats analytics image")
+
 ## Development
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).

@@ -1,11 +1,11 @@
 import middlewareStacker from './lib/middleware/middlewareStacker';
-import nextIntlMiddleware from './lib/middleware/nextIntlMiddleware';
+import IntlMiddleware from './lib/middleware/IntlMiddleware';
 import CSRFMiddleware from './lib/middleware/CSRFMiddleware';
 import CurrentUrlMiddleware from './lib/middleware/CurrentUrlMiddleware';
 
 export default middlewareStacker([
   CurrentUrlMiddleware,
-  nextIntlMiddleware,
+  IntlMiddleware,
   CSRFMiddleware,
 ]);
 
