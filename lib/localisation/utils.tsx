@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 import { type IntlError, IntlErrorCode } from 'next-intl';
-import type { LocalisedRecord } from '~/schemas/shared';
+import type { LocalisedRecord, LocalisedString } from '../../schemas/shared';
 import { match } from '@formatjs/intl-localematcher';
-import { type LocalisedString } from '~/schemas/shared';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {
@@ -32,4 +31,17 @@ export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
 ): T[keyof T] {
   const bestMatch = match(userLocales, Object.keys(localisedRecord), 'en');
   return localisedRecord[bestMatch] as T[keyof T];
+}
+
+export function getBestMatch(
+  protocolLanguages: string[],
+  userLocales: string[],
+): string {
+  const bestMatch = match(userLocales, protocolLanguages, 'NOT_FOUND');
+  if (bestMatch !== 'NOT_FOUND') {
+    return bestMatch;
+  }
+
+  // Fallback
+  return 'DEFAULT';
 }
