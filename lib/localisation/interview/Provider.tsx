@@ -2,7 +2,7 @@
 
 import { createContext, useState, useEffect, useContext } from 'react';
 import { getBestMatch } from '../utils';
-import { createLocalStorageStore } from '../../createLocalStorageStore';
+import { setInterviewLocale } from '~/server/actions/interviewLocaleCookie';
 
 export type Locale = [string, string];
 
@@ -16,24 +16,26 @@ const InterviewLocaleContext = createContext<
   InterviewLocaleContextType | undefined
 >(undefined);
 
-const useInterviewLocaleStore =
-  createLocalStorageStore<string>('interviewLocale');
-
 export default function InterviewLocaleProvider({
+  initialLocale,
   userLanguageHeader,
   protocolLanguages,
   children,
 }: {
+  initialLocale: string | null;
   userLanguageHeader: string | null;
   protocolLanguages: Locale[];
   children: React.ReactNode;
 }) {
-  const { get: getStoredLocale, set: setStoredLocale } =
-    useInterviewLocaleStore();
-  const [locale, setLocale] = useState(() => getStoredLocale('current') ?? '');
+  const [locale, setLocale] = useState(initialLocale);
 
   useEffect(() => {
     if (!userLanguageHeader) {
+      return;
+    }
+
+    // early return if we already have a locale cookie.
+    if (initialLocale) {
       return;
     }
 
@@ -48,17 +50,18 @@ export default function InterviewLocaleProvider({
     );
 
     // store best match
-    setStoredLocale('current', bestMatch);
+    // call setInterviewLocale server action
+    void setInterviewLocale(bestMatch);
 
     setLocale(bestMatch);
-  }, [userLanguageHeader, protocolLanguages, setStoredLocale]);
+  }, [userLanguageHeader, protocolLanguages, initialLocale]);
 
   const contextValue: InterviewLocaleContextType = {
-    locale,
+    locale: locale ?? 'DEFAULT',
     allInterviewLocales: protocolLanguages,
     setLocale: (newLocale: string) => {
       setLocale(newLocale);
-      setStoredLocale('current', newLocale);
+      void setInterviewLocale(newLocale);
     },
   };
 
