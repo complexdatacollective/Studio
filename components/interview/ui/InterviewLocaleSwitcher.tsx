@@ -28,6 +28,7 @@ const InterviewLocaleSwitcher = () => {
             {name}
           </SelectItem>
         ))}
+        <SelectItem value="DEFAULT">Default</SelectItem>
       </SelectContent>
     </Select>
   );

@@ -3,6 +3,9 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { getBestMatch } from '../utils';
 import { setInterviewLocale } from '~/server/actions/interviewLocaleCookie';
+import { useLocale } from 'next-intl';
+import { usePathname, useRouter } from '~/lib/localisation/navigation';
+import { SUPPORTED_LOCALES } from '~/lib/localisation/locales';
 
 export type Locale = [string, string];
 
@@ -28,6 +31,26 @@ export default function InterviewLocaleProvider({
   children: React.ReactNode;
 }) {
   const [locale, setLocale] = useState(initialLocale);
+
+  const currentNextIntlLocale = useLocale() as unknown as Locale;
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // integrate with next-intl
+  // if locale matches a next-intl locale, set that
+  // todo: what to do if not? default to 'en'?
+  useEffect(() => {
+    if (
+      locale &&
+      locale !== currentNextIntlLocale &&
+      SUPPORTED_LOCALES.includes(locale) // interview locale is also a supported UI locale
+    ) {
+      // set next-intl locale
+      console.log('setting next-intl locale', locale);
+
+      router.push(pathname, { locale });
+    }
+  }, [currentNextIntlLocale, locale, pathname, router]);
 
   useEffect(() => {
     if (!userLanguageHeader) {

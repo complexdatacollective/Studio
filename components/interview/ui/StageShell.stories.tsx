@@ -70,6 +70,7 @@ const meta: Meta<StoryArgs> = {
 
     return (
       <InterviewLocaleProvider
+        initialLocale={null}
         userLanguageHeader={userLanguageHeader}
         protocolLanguages={protocolLanguages}
       >
