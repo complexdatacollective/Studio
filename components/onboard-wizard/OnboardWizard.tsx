@@ -8,3 +8,16 @@ export default function OnboardWizard({ wizard }: { wizard: Wizard }) {
 
   return null;
 }
+
+// A HOC that wraps a stage with an onboarding wizard
+export const withOnboardingWizard = (
+  Component: React.ComponentType,
+  wizard: Wizard,
+) => {
+  return (
+    <>
+      <OnboardWizard wizard={wizard} />
+      <Component />
+    </>
+  );
+};
