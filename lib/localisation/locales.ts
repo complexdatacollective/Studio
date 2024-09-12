@@ -87,6 +87,7 @@ export const LOCALES_DICT = [
   ['ml', 'Malayalam'],
   ['ms', 'Malaysian'],
   ['mt', 'Maltese'],
+  ['mo', 'Moldavian'],
   ['no', 'Norwegian'],
   ['nb', 'Norwegian (Bokmål)'],
   ['nn', 'Norwegian (Nynorsk)'],
