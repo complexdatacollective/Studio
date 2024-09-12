@@ -1,14 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getInterviewById } from '~/server/queries/interviews';
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } },
-) {
-  const { id } = params;
-
+export async function GET(req: Request) {
   try {
-    const interview = await getInterviewById({ interviewId: id });
+    const interview = await getInterviewById({ interviewId: 'interview123' });
     if (!interview) {
       return NextResponse.json(
         { error: 'Interview not found' },

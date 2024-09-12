@@ -32,7 +32,8 @@ async function fetchInterviewLocales(requestPath: string): Promise<string[]> {
 }
 
 async function determineLocales(requestPath: string): Promise<string[]> {
-  if (requestPath.startsWith('/interview')) {
+  // request path can start with interview or it can be /[locale]/interview
+  if (requestPath.includes('/interview')) {
     return await fetchInterviewLocales(requestPath);
   } else {
     return MAIN_LOCALES;
@@ -57,6 +58,5 @@ const IntlMiddleware = async (req: NextRequest) => {
 export default {
   name: 'IntlMiddleware',
   handler: IntlMiddleware,
-  // matcher: ['^/(?!api).*'],
-  matcher: ['^/.*'],
+  matcher: ['^/(?!api).*'],
 };
