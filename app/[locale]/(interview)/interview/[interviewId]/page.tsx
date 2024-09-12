@@ -2,8 +2,6 @@ import { getInterviewById } from '~/server/queries/interviews';
 import InterviewShell from '../../../../../components/interview/ui/InterviewShell';
 import { redirect } from '~/lib/localisation/navigation';
 import { headers } from 'next/headers';
-import InterviewLocaleProvider from '~/lib/localisation/interview/Provider';
-import type { Locale } from '~/lib/localisation/interview/Provider';
 import { cookies } from 'next/headers';
 
 export default async function Page({
@@ -32,13 +30,5 @@ export default async function Page({
   if (!interviewData) {
     return <div>Interview not found</div>;
   }
-  return (
-    <InterviewLocaleProvider
-      initialLocale={initialLocale?.value ?? null}
-      userLanguageHeader={userLanguageHeader}
-      protocolLanguages={protocolLanguages}
-    >
-      <InterviewShell interview={interviewData} currentStage={stage} />
-    </InterviewLocaleProvider>
-  );
+  return <InterviewShell interview={interviewData} currentStage={stage} />;
 }

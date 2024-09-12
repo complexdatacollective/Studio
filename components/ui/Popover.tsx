@@ -31,7 +31,7 @@ const Popover = ({
     >
       <PopoverPrimitive.Trigger asChild>{children}</PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal
-        container={document.getElementById('dialog-portal')}
+      // container={document.getElementById('dialog-portal')}
       >
         <PopoverPrimitive.Content
           data-context={context}

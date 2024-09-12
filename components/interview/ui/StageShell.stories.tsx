@@ -2,9 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import type { Stage } from '@prisma/client';
 import SimpleShell from './SimpleShell';
 import NameGenerator from '../interfaces/name-generator/NameGenerator';
-import InterviewLocaleProvider, {
-  type Locale,
-} from '~/lib/localisation/interview/Provider';
 
 const stageOptions: Stage[] = [
   {
@@ -43,17 +40,12 @@ const meta: Meta<StoryArgs> = {
       ),
       description: 'The stage to display.',
     },
-    userLanguageHeader: {
-      control: 'select',
-      options: ['en', 'fr', 'es'],
-      description: 'The user language header to simulate.',
-    },
   },
   args: {
     stage: stageOptions[0],
     userLanguageHeader: 'en',
   },
-  render: ({ stage, userLanguageHeader }) => {
+  render: ({ stage }) => {
     const getStageComponent = (stage: Stage) => {
       switch (stage.type) {
         case 'NameGenerator':
@@ -63,21 +55,10 @@ const meta: Meta<StoryArgs> = {
       }
     };
 
-    const protocolLanguages: Locale[] = [
-      ['en', 'English'],
-      ['fr', 'French'],
-    ];
-
     return (
-      <InterviewLocaleProvider
-        initialLocale={null}
-        userLanguageHeader={userLanguageHeader}
-        protocolLanguages={protocolLanguages}
-      >
-        <SimpleShell isReadyForNextStage={false} progress={50}>
-          {getStageComponent(stage)}
-        </SimpleShell>
-      </InterviewLocaleProvider>
+      <SimpleShell isReadyForNextStage={false} progress={50}>
+        {getStageComponent(stage)}
+      </SimpleShell>
     );
   },
 };

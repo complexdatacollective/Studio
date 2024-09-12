@@ -2,8 +2,8 @@
 
 import Prompt from './Prompt';
 import Pips from './Pips';
-import { useInterviewLocale } from '~/lib/localisation/interview/Provider';
 import type { TPrompts } from '~/schemas/protocol/shared/prompt';
+import { useTranslations } from 'next-intl';
 
 export default function Prompts({
   prompts,
@@ -15,7 +15,7 @@ export default function Prompts({
   currentPromptId: string;
 }) {
   const currentIndex = prompts.findIndex(({ id }) => id === currentPromptId);
-  const { locale } = useInterviewLocale();
+  const t = useTranslations('Protocol');
 
   return (
     <div id={id} className="flex flex-col items-center justify-center">
@@ -24,7 +24,7 @@ export default function Prompts({
         {prompts.map(
           ({ id, text }) =>
             prompts[currentIndex]?.id === id && (
-              <Prompt key={id} text={text[locale] ?? text.DEFAULT} />
+              <Prompt key={id} text={t('Prompt1')} />
             ),
         )}
       </div>

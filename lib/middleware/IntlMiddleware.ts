@@ -11,19 +11,15 @@ async function fetchInterviewLocales(requestPath: string): Promise<string[]> {
 
   try {
     const response = await fetch(`http://localhost:3000/api`);
-
     if (!response.ok) {
       console.error('Failed to fetch interview:', response.statusText);
       return [];
     }
-
     const data = await response.json();
-
     if (!data.locales) {
       console.log('No protocol locales. Using default');
       return ['en'];
     }
-
     return data.locales;
   } catch (error) {
     console.error('Error fetching interview locales:', error);
@@ -33,6 +29,7 @@ async function fetchInterviewLocales(requestPath: string): Promise<string[]> {
 
 async function determineLocales(requestPath: string): Promise<string[]> {
   // request path can start with interview or it can be /[locale]/interview
+  // TODO: needs to be handled more carefully to avoid false positives in the future (e.g. /dashboard/interviews)
   if (requestPath.includes('/interview')) {
     return await fetchInterviewLocales(requestPath);
   } else {
