@@ -1,4 +1,4 @@
-import type { Protocol } from './schemas/protocol/protocol';
+import type { Protocol } from '~/schemas/protocol/protocol';
 
 const devProtocol: Protocol = {
   name: 'Dev Protocol',
