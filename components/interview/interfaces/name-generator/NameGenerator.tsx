@@ -71,7 +71,7 @@ const demoNodes = [
   },
 ];
 
-export function NameGenerator() {
+function NameGenerator() {
   return (
     <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
       <Prompts prompts={demoPrompts} currentPromptId={0} />
