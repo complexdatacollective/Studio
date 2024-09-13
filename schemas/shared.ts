@@ -59,7 +59,7 @@ export type LocalisedRecord = z.infer<typeof LocalisedRecordSchema>;
 
 export const LocalisedStringSchema = z
   .object({
-    en: z.string(),
+    DEFAULT: z.string(),
   })
   .and(z.record(z.string()));
 

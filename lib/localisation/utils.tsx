@@ -27,8 +27,27 @@ export const customErrorLogger = (error: IntlError) => {
  */
 export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
   localisedRecord: T,
-  userLocales: string[],
+  currentLocale: string,
 ): T[keyof T] {
-  const bestMatch = match(userLocales, Object.keys(localisedRecord), 'en');
-  return localisedRecord[bestMatch] as T[keyof T];
+  return localisedRecord[currentLocale] as T[keyof T];
+}
+
+export function getBestMatch(
+  protocolLanguages: string[],
+  userLocales: string[],
+): string {
+  const bestMatch = match(userLocales, protocolLanguages, 'NOT_FOUND');
+  if (bestMatch !== 'NOT_FOUND') {
+    return bestMatch;
+  }
+
+  // Fallback
+  return 'DEFAULT';
+}
+
+export function isInterviewRoute(currentPath: string): boolean {
+  return (
+    currentPath.startsWith('/interview') ||
+    currentPath.split('/')[2] === 'interview' // For when the path is  /[locale]/interview
+  );
 }

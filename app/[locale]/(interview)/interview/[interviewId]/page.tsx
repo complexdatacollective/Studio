@@ -1,5 +1,5 @@
 import { getInterviewById } from '~/server/queries/interviews';
-import InterviewShell from '../../../../../components/interview/ui/InterviewShell';
+import InterviewShell from '~/components/interview/ui/InterviewShell';
 import { redirect } from '~/lib/localisation/navigation';
 
 export default async function Page({

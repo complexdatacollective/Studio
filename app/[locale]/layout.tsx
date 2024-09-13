@@ -35,6 +35,8 @@ export default async function RootLayout({
   params: { locale: Locale };
 }) {
   const messages = await getMessages();
+  // add interview specific messages to the messages if we're in the interview route group
+
   const dir = getLangDir(locale);
   const now = await getNow();
   const timeZone = await getTimeZone();

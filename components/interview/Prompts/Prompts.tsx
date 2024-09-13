@@ -2,11 +2,8 @@
 
 import Prompt from './Prompt';
 import Pips from './Pips';
-
-type Prompt = {
-  id: number;
-  text: string;
-};
+import type { TPrompts } from '~/schemas/protocol/shared/prompt';
+import { useTranslations } from 'next-intl';
 
 export default function Prompts({
   prompts,
@@ -14,10 +11,11 @@ export default function Prompts({
   id,
 }: {
   id?: string;
-  prompts: Prompt[];
-  currentPromptId: number;
+  prompts: TPrompts;
+  currentPromptId: string;
 }) {
   const currentIndex = prompts.findIndex(({ id }) => id === currentPromptId);
+  const t = useTranslations('Protocol');
 
   return (
     <div id={id} className="flex flex-col items-center justify-center">
@@ -25,7 +23,9 @@ export default function Prompts({
       <div className="">
         {prompts.map(
           ({ id, text }) =>
-            prompts[currentIndex]?.id === id && <Prompt key={id} text={text} />,
+            prompts[currentIndex]?.id === id && (
+              <Prompt key={id} text={t('Prompt1')} />
+            ),
         )}
       </div>
     </div>
