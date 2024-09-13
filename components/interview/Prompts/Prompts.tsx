@@ -15,7 +15,7 @@ export default function Prompts({
   currentPromptId: string;
 }) {
   const currentIndex = prompts.findIndex(({ id }) => id === currentPromptId);
-  const t = useTranslations('Protocol');
+  const t = useTranslations();
 
   return (
     <div id={id} className="flex flex-col items-center justify-center">
@@ -24,7 +24,7 @@ export default function Prompts({
         {prompts.map(
           ({ id, text }) =>
             prompts[currentIndex]?.id === id && (
-              <Prompt key={id} text={t('Prompt1')} />
+              <Prompt key={id} text={t('Stages.1.Prompts.1')} />
             ),
         )}
       </div>

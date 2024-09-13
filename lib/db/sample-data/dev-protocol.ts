@@ -1,15 +1,15 @@
 import type { Protocol } from '~/schemas/protocol/protocol';
 
-const devProtocol: Protocol = {
+export const devProtocol: Protocol = {
   name: 'Dev Protocol',
-  languages: ['ar'],
+  languages: ['en', 'fr', 'es'],
   localisedStrings: {
     en: {
       Stages: {
         '1': {
           label: 'Name Generator',
           Prompts: {
-            '1': 'Who are your classmates at {school}?',
+            '1': 'Who are your classmates at school?',
             '2': 'What are the names of your family members?',
           },
         },
@@ -20,8 +20,19 @@ const devProtocol: Protocol = {
         '1': {
           label: 'Generador de Nombres',
           Prompts: {
-            '1': '¿Quiénes son tus compañeros de clase en {school}?',
+            '1': '¿Quiénes son tus compañeros de clase en school?',
             '2': '¿Cuáles son los nombres de tus familiares?',
+          },
+        },
+      },
+    },
+    fr: {
+      Stages: {
+        '1': {
+          label: 'Générateur de noms',
+          Prompts: {
+            '1': 'Qui sont vos camarades de classe à school?',
+            '2': 'Quels sont les noms de vos membres de famille?',
           },
         },
       },

@@ -50,6 +50,12 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
   const isMediumScreen = useMediaQuery('md');
   const tooltipSide = isMediumScreen ? 'right' : 'top';
 
+  const protocolLocales = [
+    { code: 'en', label: 'English', native: 'English' },
+    { code: 'fr', label: 'French', native: 'Français' },
+    { code: 'es', label: 'Spanish', native: 'Español' },
+  ];
+
   return (
     <>
       <OnboardWizard
@@ -151,7 +157,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           content={
             <>
               <Heading variant="label">Select language</Heading>
-              <LanguageSwitcher />
+              <LanguageSwitcher protocolLocales={protocolLocales} />
             </>
           }
           context="interviewer"

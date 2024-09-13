@@ -9,13 +9,18 @@ import {
   SelectValue,
 } from '~/components/ui/select';
 import {
+  type LocaleObject,
+  MAIN_LOCALE_OBJECTS,
   type Locale,
-  LOCALES_DICT as MAIN_LOCALES,
 } from '~/lib/localisation/locales';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
 import { isInterviewRoute } from '~/lib/localisation/utils';
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = ({
+  protocolLocales,
+}: {
+  protocolLocales?: LocaleObject[];
+}) => {
   const currentLocale = useLocale() as unknown as Locale;
   const pathname = usePathname();
   const router = useRouter();
@@ -25,14 +30,11 @@ const LanguageSwitcher = () => {
     router.refresh();
   }
 
-  // TODO: replace with getting the locale options from the protocol, or as a prop or something
-  const localeOptions = isInterviewRoute(pathname)
-    ? [
-        ['en', 'English'],
-        ['fr', 'French'],
-        ['es', 'Spanish'],
-      ]
-    : MAIN_LOCALES;
+  // Combine protocol-specific locales if they are provided, or fall back to MAIN_LOCALES
+  const localeOptions =
+    isInterviewRoute(pathname) && protocolLocales
+      ? protocolLocales.map(({ code, label }) => [code, label])
+      : MAIN_LOCALE_OBJECTS.map(({ code, label }) => [code, label]);
 
   return (
     <Select onValueChange={handleLanguageChange} value={currentLocale}>
@@ -40,9 +42,9 @@ const LanguageSwitcher = () => {
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {localeOptions.map(([locale, name]) => (
-          <SelectItem key={locale} value={locale}>
-            {name}
+        {localeOptions.map(([code, label]) => (
+          <SelectItem key={code} value={code}>
+            {label}
           </SelectItem>
         ))}
       </SelectContent>

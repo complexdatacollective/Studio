@@ -166,4 +166,14 @@ export const SupportedLocalesSchema = z.enum([
   ...SUPPORTED_LOCALES.slice(0),
 ]);
 
+// the locales we provide translations for in the backend, UI
+export const MAIN_LOCALE_OBJECTS = [
+  { code: 'en', label: 'English', native: '' },
+  { code: 'es', label: 'Spanish', native: '' },
+] as const;
+
+export const MAIN_LOCALES = MAIN_LOCALE_OBJECTS.map(({ code }) => code);
+
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
+
+export type LocaleObject = (typeof LOCALES_OBJECTS)[number];

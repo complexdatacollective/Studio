@@ -1,43 +1,31 @@
 import { NextResponse } from 'next/server';
-import { getInterviewById } from '~/server/queries/interviews';
+import devProtocol from '~/lib/db/sample-data/dev-protocol';
+import type { NextApiRequest } from 'next';
 
-export async function GET(req: Request) {
+export async function GET(req: NextApiRequest) {
+  const url = new URL(req.url);
+
+  const interviewId = url.searchParams.get('interviewId');
+  const locale = url.searchParams.get('locale');
+
+  console.log('interviewId:', interviewId, 'locale in request:', locale);
+
+  if (!interviewId || !locale) {
+    return NextResponse.json(
+      { error: 'Missing required query parameters' },
+      { status: 400 },
+    );
+  }
+
   try {
-    // TODO: replace this with actual protocol query
-    // this is here for now to demonstrate a db query
-    const interview = await getInterviewById({ interviewId: 'interview123' });
-    if (!interview) {
-      return NextResponse.json(
-        { error: 'Interview not found' },
-        { status: 404 },
-      );
-    }
+    // TODO: replace this with actual protocol query, using the interviewId
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    const protocol = devProtocol;
 
-    const placeholderMessages = {
-      en: {
-        Protocol: {
-          Prompt1: 'This is a prompt',
-          Prompt2: 'This is another prompt',
-        },
-      },
-      fr: {
-        Protocol: {
-          Prompt1: 'Ceci est un prompt',
-          Prompt2: 'Ceci est un autre prompt',
-        },
-      },
-      es: {
-        Protocol: {
-          Prompt1: 'Este es un indicio',
-          Prompt2: 'Este es otro indicio',
-        },
-      },
-    };
-
-    // for now, we'll just return a placeholder list of locales and messages
+    // for now, we'll just return a the devProtocol languages and localisedStrings
     return NextResponse.json({
-      locales: ['en', 'es', 'fr'],
-      messages: placeholderMessages,
+      locales: protocol.languages,
+      messages: protocol.localisedStrings[locale],
     });
   } catch (error) {
     return NextResponse.json(

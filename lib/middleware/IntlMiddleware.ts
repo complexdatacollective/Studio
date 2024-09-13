@@ -1,5 +1,5 @@
 import createMiddleware from 'next-intl/middleware';
-import { SUPPORTED_LOCALES as MAIN_LOCALES } from '../localisation/locales';
+import { MAIN_LOCALES } from '../localisation/locales';
 import type { NextRequest } from 'next/server';
 import { isInterviewRoute } from '../localisation/utils';
 
@@ -7,11 +7,14 @@ import { isInterviewRoute } from '../localisation/utils';
 // todo: replace with actual implementation
 async function fetchInterviewLocales(requestPath: string): Promise<string[]> {
   const interviewId = requestPath.split('/interview/')[1];
+  const locale = requestPath.split('/')[1]; //TODO: fix this when we're on default locale
 
   if (!interviewId) return [];
 
   try {
-    const response = await fetch(`http://localhost:3000/api`);
+    const response = await fetch(
+      `http://localhost:3000/api?interviewId=${interviewId}&locale=${locale}`,
+    );
     if (!response.ok) {
       console.error('Failed to fetch interview:', response.statusText);
       return [];
@@ -38,8 +41,6 @@ async function determineLocales(requestPath: string): Promise<string[]> {
 
 const IntlMiddleware = async (req: NextRequest) => {
   const SUPPORTED_LOCALES = await determineLocales(req.nextUrl.pathname);
-
-  console.log('SUPPORTED_LOCALES', SUPPORTED_LOCALES);
 
   const intlMiddleware = createMiddleware({
     locales: SUPPORTED_LOCALES,

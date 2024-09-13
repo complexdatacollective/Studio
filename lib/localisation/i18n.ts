@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
-import { SUPPORTED_LOCALES } from './locales';
+import { Locale, MAIN_LOCALES, SUPPORTED_LOCALES } from './locales';
 import {
   type IntlError,
   IntlErrorCode,
@@ -11,30 +11,39 @@ import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers } from 'next/headers';
 
 export default getRequestConfig(async ({ locale }) => {
+  console.log('locale:', locale);
   const currentPath = headers().get('x-current-path') ?? '';
 
   // Validate that the incoming `locale` parameter is valid
-  // TODO: validate interview route locale parameter against the new list of all locales
-  if (!SUPPORTED_LOCALES.includes(locale) && !isInterviewRoute(currentPath))
+  if (!SUPPORTED_LOCALES.includes(locale)) {
+    console.error(`Invalid locale: ${locale}`);
     notFound();
+  }
+
+  // TODO: validate interview route locale parameter against the new list of all locales
 
   // Load the UI messages for the current locale
   // Includes fallback to English if the locale is not supported.
   // This is for Interview route groups using languages not supported by the UI translations
   const messages = (
     (await import(
-      `./messages/${SUPPORTED_LOCALES.includes(locale) ? locale : 'en'}.json`
+      `./messages/${MAIN_LOCALES.includes(locale) ? locale : 'en'}.json`
     )) as { default: AbstractIntlMessages }
   ).default;
 
   // if we're in the interview route group, we need to fetch the messages from the protocol and merge them with the main messages
   if (isInterviewRoute(currentPath)) {
-    const interviewMessages = await fetchInterviewMessages();
-    const localizedInterviewMessages = interviewMessages?.[locale] as {
-      default: AbstractIntlMessages;
-    };
+    console.log('Fetching interview messages');
+    const interviewMessages = await fetchInterviewMessages(
+      locale as Locale,
+      currentPath.split('/interview/')[1] ?? '',
+    );
+
+    const mergedMessages = { ...interviewMessages, ...messages };
+    console.log('Merged messages:', mergedMessages);
+
     return {
-      messages: { ...messages, ...localizedInterviewMessages },
+      messages: { ...messages, ...interviewMessages },
       onError: customErrorLogger,
       getMessageFallback,
     };
@@ -66,11 +75,14 @@ const getMessageFallback = ({
   }
 };
 
-async function fetchInterviewMessages(): Promise<
-  Record<string, AbstractIntlMessages> | undefined
-> {
+async function fetchInterviewMessages(
+  locale: Locale,
+  interviewId: string,
+): Promise<AbstractIntlMessages> {
   try {
-    const response = await fetch(`http://localhost:3000/api`);
+    const response = await fetch(
+      `http://localhost:3000/api?interviewId=${interviewId}&locale=${locale}`,
+    );
     if (!response.ok) {
       console.error('Failed to fetch messages:', response.statusText);
       return;
