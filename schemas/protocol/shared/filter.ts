@@ -66,18 +66,10 @@ export type FilterDefinition = {
   rules: (FilterRule | FilterDefinition)[];
 };
 
-const BranchingFilterSchema = z.object({
-  condition: FilterRuleSchema,
-  stagesToShow: z.array(z.string()), // branched stages to show
-});
-
-export type BranchingFilter = z.infer<typeof BranchingFilterSchema>;
-
 export const SkipDefinitionSchema = z.object({
   action: z.enum(['SKIP', 'SHOW']),
   filter: FilterDefinitionSchema,
   targetStage: z.string().optional(), // specific stage to skip to
-  stagesToShow: z.array(z.string()).optional(), // optional stages to show for branching
 });
 
 export type SkipDefinition = z.infer<typeof SkipDefinitionSchema>;

@@ -13,7 +13,7 @@ const ProtocolSchema = z
     // Hack to work around this: https://github.com/colinhacks/zod/issues/2376
     languages: z.array(SupportedLocalesSchema),
     localisedStrings: z.record(SupportedLocalesSchema, z.unknown()),
-    stages: z.array(StageSchema),
+    stages: z.array(StageSchema.or(z.array(StageSchema))),
     codebook: CodebookSchema,
     waves: z.array(WaveSchema).optional(),
   })
