@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { StageSchema } from './interfaces/stages';
 import { CodebookSchema } from './codebook/codebook';
 import { WaveSchema } from './wave';
+import { SupportedLocalesSchema } from '~/lib/localisation/locales';
 
 export const AssetManifest = z.object({});
 
@@ -9,10 +10,11 @@ const ProtocolSchema = z
   .object({
     name: z.string(),
     description: z.string().optional(),
-    stages: z.array(StageSchema),
+    // Hack to work around this: https://github.com/colinhacks/zod/issues/2376
+    languages: z.array(SupportedLocalesSchema),
+    localisedStrings: z.record(SupportedLocalesSchema, z.unknown()),
+    stages: z.array(StageSchema.or(z.array(StageSchema))),
     codebook: CodebookSchema,
-    languages: z.array(z.string()), // first language is default
-    // assetManifest: AssetManifestScheme.optional(),
     waves: z.array(WaveSchema).optional(),
   })
   // May not need this - will throw error if extra fields are present
