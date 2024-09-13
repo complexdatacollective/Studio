@@ -12,7 +12,7 @@
     "./components/ui/form/*",
     "./components/layout/*",
     "./components/typography/*",
-    "./lib/db/seed.ts",
+    "./lib/db/**",
     "./lib/localisation/i18n.ts",
     "./lib/localisation/navigation.tsx",
     "./lib/utils.ts"

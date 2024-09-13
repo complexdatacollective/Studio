@@ -1,10 +1,16 @@
 import { z } from 'zod';
 import { EdgeTypeSchema, EntityTypeSchema, NodeTypeSchema } from './entities';
 
+const WaveEntitySchema = z.record(z.string(), NodeTypeSchema);
+
 export const CodebookSchema = z.object({
-  nodes: z.record(z.string(), NodeTypeSchema).optional(),
-  edges: z.record(z.string(), EdgeTypeSchema).optional(),
-  ego: EntityTypeSchema.optional(),
+  nodes: z
+    .record(z.string(), z.union([NodeTypeSchema, WaveEntitySchema]))
+    .optional(),
+  edges: z
+    .record(z.string(), z.union([EdgeTypeSchema, WaveEntitySchema]))
+    .optional(),
+  ego: z.union([EntityTypeSchema, WaveEntitySchema]).optional(),
 });
 
 export type TCodebook = z.infer<typeof CodebookSchema>;
@@ -12,16 +18,23 @@ export type TCodebook = z.infer<typeof CodebookSchema>;
 export const example: TCodebook = {
   nodes: {
     person: {
-      variables: {
-        name: {
-          type: 'text',
+      '1': {
+        variables: {
+          name: { type: 'text' },
+          age: { type: 'number' },
         },
-        age: {
-          type: 'number',
-        },
+        color: 'seq-node-1',
+        icon: 'add-a-person',
       },
-      color: 'seq-node-1',
-      icon: 'add-a-person',
+      '2': {
+        variables: {
+          name: { type: 'text' },
+          age: { type: 'number' },
+          school: { type: 'text' }, // new var in wave 2
+        },
+        color: 'seq-node-1',
+        icon: 'add-a-person',
+      },
     },
     place: {
       variables: {
@@ -36,10 +49,18 @@ export const example: TCodebook = {
     knows: {
       color: 'seq-edge-1',
       directed: false,
+      connections: {
+        from: 'person',
+        to: 'person',
+      },
     },
     livesIn: {
       color: 'seq-edge-2',
       directed: true,
+      connections: {
+        from: 'person',
+        to: 'place',
+      },
     },
   },
   ego: {

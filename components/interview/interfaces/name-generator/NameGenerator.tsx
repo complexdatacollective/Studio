@@ -6,10 +6,9 @@ import Prompts from '~/components/interview/Prompts/Prompts';
 import NodePanels from './NodePanels';
 import NodeList from '~/components/interview/NodeList';
 import QuickNodeForm from './QuickNodeForm';
-import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
-import { type Step } from '~/lib/onboarding-wizard/store';
 import { cn } from '~/lib/utils';
 import { interfaceWrapperClasses } from '../../ui/SimpleShell';
+import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
 
 const demoPrompts = [
   {
@@ -72,124 +71,118 @@ const demoNodes = [
   },
 ];
 
-const demoSteps: Step[] = [
-  {
-    title: {
-      en: 'Welcome to the Name Generator',
-    },
-    content: {
-      en: [
-        {
-          type: 'paragraph',
-          children: [
-            {
-              text: 'This is the name generator interface. This interface allows you to nominate people. First, read the prompt and think about the people who meet the criteria.',
-            },
-          ],
-        },
-        {
-          type: 'image',
-          props: {
-            src: 'https://documentation.networkcanvas.com/assets/img/interface-documentation/name-generators/ng-quick.png',
-            alt: 'Name Generator Interface',
-          },
-          children: [],
-        },
-      ],
-    },
-  },
-  {
-    targetElementId: 'data-wizard-prompts',
-    title: {
-      en: 'Prompts',
-    },
-    content: {
-      en: [
-        {
-          type: 'paragraph',
-          children: [
-            {
-              text: 'These are the prompts. They help you think about the people you want to nominate.',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    targetElementId: 'data-wizard-task-step-2',
-    title: {
-      en: 'Side Panels',
-    },
-    content: {
-      en: [
-        {
-          type: 'paragraph',
-          children: [
-            {
-              text: 'These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them.',
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    targetElementId: 'data-wizard-task-step-3',
-    title: {
-      en: 'Adding a person',
-    },
-    content: {
-      en: [
-        {
-          type: 'paragraph',
-          children: [
-            {
-              text: 'Click this button to add a new person',
-            },
-          ],
-        },
-      ],
-    },
-  },
-];
-
-export default function NameGenerator() {
+function NameGenerator() {
   return (
-    <>
-      <OnboardWizard
-        wizard={{
-          id: 'name-generator',
-          name: {
-            en: 'Name Generator Help',
+    <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
+      <Prompts prompts={demoPrompts} currentPromptId={0} />
+      <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
+        <NodePanels panels={demoPanels} />
+        <div className="flex-basis-auto flex h-full flex-shrink flex-grow">
+          <NodeList items={demoNodes} />
+        </div>
+      </div>
+      <QuickNodeForm />
+    </div>
+  );
+}
+
+export default withOnboardingWizard(NameGenerator, {
+  id: 'name-generator',
+  name: {
+    en: 'Name Generator Help',
+  },
+  priority: 'Task',
+  description: {
+    en: [
+      {
+        type: 'paragraph',
+        children: [
+          {
+            text: 'Help with the current task, including how to add new people, how to delete people, and how to edit people.',
           },
-          priority: 'Task',
-          description: {
-            en: [
+        ],
+      },
+    ],
+  },
+  steps: [
+    {
+      title: {
+        en: 'Welcome to the Name Generator',
+      },
+      content: {
+        en: [
+          {
+            type: 'paragraph',
+            children: [
               {
-                type: 'paragraph',
-                children: [
-                  {
-                    text: 'Help with the current task, including how to add new people, how to delete people, and how to edit people.',
-                  },
-                ],
+                text: 'This is the name generator interface. This interface allows you to nominate people. First, read the prompt and think about the people who meet the criteria.',
               },
             ],
           },
-          steps: demoSteps,
-        }}
-      />
-      <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
-        <Prompts prompts={demoPrompts} currentPromptId={0} />
-        <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
-          <NodePanels panels={demoPanels} />
-
-          <div className="flex-basis-auto flex h-full flex-shrink flex-grow">
-            <NodeList items={demoNodes} />
-          </div>
-        </div>
-        <QuickNodeForm />
-      </div>
-    </>
-  );
-}
+          {
+            type: 'image',
+            props: {
+              src: 'https://documentation.networkcanvas.com/assets/img/interface-documentation/name-generators/ng-quick.png',
+              alt: 'Name Generator Interface',
+            },
+            children: [],
+          },
+        ],
+      },
+    },
+    {
+      targetElementId: 'data-wizard-prompts',
+      title: {
+        en: 'Prompts',
+      },
+      content: {
+        en: [
+          {
+            type: 'paragraph',
+            children: [
+              {
+                text: 'These are the prompts. They help you think about the people you want to nominate.',
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      targetElementId: 'data-wizard-task-step-2',
+      title: {
+        en: 'Side Panels',
+      },
+      content: {
+        en: [
+          {
+            type: 'paragraph',
+            children: [
+              {
+                text: 'These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them.',
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
+      targetElementId: 'data-wizard-task-step-3',
+      title: {
+        en: 'Adding a person',
+      },
+      content: {
+        en: [
+          {
+            type: 'paragraph',
+            children: [
+              {
+                text: 'Click this button to add a new person',
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+});

@@ -21,6 +21,8 @@ export const EdgeSchema = EntitySchema.extend({
   _type: z.string(),
   _source: z.string(),
   _target: z.string(),
+  _sourceType: z.string(),
+  _targetType: z.string(),
 });
 
 export type TEdge = z.infer<typeof EdgeSchema>;

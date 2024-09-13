@@ -47,9 +47,15 @@ export const NodeTypeSchema = EntityTypeSchema.extend({
 
 export type TNodeType = z.infer<typeof NodeTypeSchema>;
 
+export const EdgeConnectionSchema = z.object({
+  from: z.string(), // source node types
+  to: z.string(), // target node types
+});
+
 export const EdgeTypeSchema = EntityTypeSchema.extend({
   color: z.enum(EdgeColors),
   directed: z.boolean(),
+  connections: EdgeConnectionSchema,
 });
 
 export type TEdgeType = z.infer<typeof EdgeTypeSchema>;
