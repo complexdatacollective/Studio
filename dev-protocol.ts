@@ -60,7 +60,7 @@ const devProtocol: Protocol = {
         {
           id: '1',
           text: {
-            DEFAULT: 'Who are your classmates at {school}?',
+            en: 'Who are your classmates at {school}?',
           },
           injectedVariables: ['school'],
         },

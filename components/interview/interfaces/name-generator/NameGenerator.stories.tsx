@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import NameGenerator from './NameGenerator';
 
-const meta: Meta<typeof NameGenerator> = {
+const meta: Meta<React.ComponentType> = {
   title: 'Interview/Interfaces/NameGenerator',
   component: NameGenerator,
   parameters: {

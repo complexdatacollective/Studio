@@ -6,9 +6,9 @@ import Prompts from '~/components/interview/Prompts/Prompts';
 import NodePanels from './NodePanels';
 import NodeList from '~/components/interview/NodeList';
 import QuickNodeForm from './QuickNodeForm';
-import { withOnboardingWizard } from '~/components/onboard-wizard/OnboardWizard';
 import { cn } from '~/lib/utils';
 import { interfaceWrapperClasses } from '../../ui/SimpleShell';
+import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
 
 const demoPrompts = [
   {
