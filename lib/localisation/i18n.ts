@@ -2,78 +2,69 @@
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
 import { SUPPORTED_LOCALES } from './locales';
-import { IntlErrorCode, type AbstractIntlMessages } from 'next-intl';
-import { customErrorLogger } from './utils';
+import {
+  type IntlError,
+  IntlErrorCode,
+  type AbstractIntlMessages,
+} from 'next-intl';
+import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers } from 'next/headers';
 
 export default getRequestConfig(async ({ locale }) => {
   const currentPath = headers().get('x-current-path') ?? '';
 
   // Validate that the incoming `locale` parameter is valid
-  // TODO: validate against the new list of all locales
-
-  if (
-    !SUPPORTED_LOCALES.includes(locale) &&
-    !currentPath.includes('/interview')
-  )
+  // TODO: validate interview route locale parameter against the new list of all locales
+  if (!SUPPORTED_LOCALES.includes(locale) && !isInterviewRoute(currentPath))
     notFound();
 
-  // If we're in the main app (researcher backend), just import the messages directly
-
-  let messages;
-
-  if (SUPPORTED_LOCALES.includes(locale)) {
-    messages = (
-      (await import(`./messages/${locale}.json`)) as {
-        default: AbstractIntlMessages | undefined;
-      }
-    ).default;
-  } else {
-    // load default messages (en). this is for when a protocol supported locale is not in our UI locales
-    messages = (
-      (await import(`./messages/en.json`)) as {
-        default: AbstractIntlMessages | undefined;
-      }
-    ).default;
-  }
+  // Load the UI messages for the current locale
+  // Includes fallback to English if the locale is not supported.
+  // This is for Interview route groups using languages not supported by the UI translations
+  const messages = (
+    (await import(
+      `./messages/${SUPPORTED_LOCALES.includes(locale) ? locale : 'en'}.json`
+    )) as { default: AbstractIntlMessages }
+  ).default;
 
   // if we're in the interview route group, we need to fetch the messages from the protocol and merge them with the main messages
-
-  if (currentPath.includes('/interview')) {
+  if (isInterviewRoute(currentPath)) {
     const interviewMessages = await fetchInterviewMessages();
     const localizedInterviewMessages = interviewMessages?.[locale] as {
-      default: AbstractIntlMessages | undefined;
+      default: AbstractIntlMessages;
     };
-    const mergedMessages = { ...messages, ...localizedInterviewMessages };
     return {
-      messages: mergedMessages,
+      messages: { ...messages, ...localizedInterviewMessages },
       onError: customErrorLogger,
-      getMessageFallback({ namespace, key, error }) {
-        const path = [namespace, key].filter((part) => part != null).join('.');
-
-        if (error.code === IntlErrorCode.MISSING_MESSAGE) {
-          return `⚠️ ${path}`;
-        } else {
-          return 'Dear developer, please fix this message: ' + path;
-        }
-      },
+      getMessageFallback,
     };
   }
 
+  // If we're in the main app (researcher backend), just pass the messages directly.
   return {
     messages: messages,
     onError: customErrorLogger,
-    getMessageFallback({ namespace, key, error }) {
-      const path = [namespace, key].filter((part) => part != null).join('.');
-
-      if (error.code === IntlErrorCode.MISSING_MESSAGE) {
-        return `⚠️ ${path}`;
-      } else {
-        return 'Dear developer, please fix this message: ' + path;
-      }
-    },
+    getMessageFallback,
   };
 });
+
+const getMessageFallback = ({
+  namespace,
+  key,
+  error,
+}: {
+  namespace?: string;
+  key?: string;
+  error: IntlError;
+}) => {
+  const path = [namespace, key].filter((part) => part != null).join('.');
+
+  if (error.code === IntlErrorCode.MISSING_MESSAGE) {
+    return `⚠️ ${path}`;
+  } else {
+    return 'Dear developer, please fix this message: ' + path;
+  }
+};
 
 async function fetchInterviewMessages(): Promise<
   Record<string, AbstractIntlMessages> | undefined

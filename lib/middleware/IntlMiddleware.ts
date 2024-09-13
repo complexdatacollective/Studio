@@ -1,6 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import { SUPPORTED_LOCALES as MAIN_LOCALES } from '../localisation/locales';
 import type { NextRequest } from 'next/server';
+import { isInterviewRoute } from '../localisation/utils';
 
 // simulate getting interview locales from the protocol
 // todo: replace with actual implementation
@@ -28,9 +29,7 @@ async function fetchInterviewLocales(requestPath: string): Promise<string[]> {
 }
 
 async function determineLocales(requestPath: string): Promise<string[]> {
-  // request path can start with interview or it can be /[locale]/interview
-  // TODO: needs to be handled more carefully to avoid false positives in the future (e.g. /dashboard/interviews)
-  if (requestPath.includes('/interview')) {
+  if (isInterviewRoute(requestPath)) {
     return await fetchInterviewLocales(requestPath);
   } else {
     return MAIN_LOCALES;

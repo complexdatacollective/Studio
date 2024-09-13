@@ -3,7 +3,6 @@ import type { Interview } from '@prisma/client';
 import type { IntRange } from 'type-fest';
 import NameGenerator from '../interfaces/name-generator/NameGenerator';
 import SimpleShell from './SimpleShell';
-import { cookies } from 'next/headers';
 
 // This is the shell for the interview. It contains the navigation and the current stage shell.
 export default async function InterviewShell({
@@ -27,10 +26,6 @@ export default async function InterviewShell({
     protocolRevisionId: interview.protocolRevisionId,
   });
   const progress = ((currentStage / stageCount) * 100) as IntRange<0, 100>;
-
-  // access locale in server components
-  const interviewLocale = cookies().get('interviewLocale');
-  console.log('interviewLocale', interviewLocale?.value);
 
   return (
     <SimpleShell isReadyForNextStage={isReadyForNextStage} progress={progress}>

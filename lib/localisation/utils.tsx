@@ -44,3 +44,10 @@ export function getBestMatch(
   // Fallback
   return 'DEFAULT';
 }
+
+export function isInterviewRoute(currentPath: string): boolean {
+  return (
+    currentPath.startsWith('/interview') ||
+    currentPath.split('/')[2] === 'interview' // For when the path is  /[locale]/interview
+  );
+}

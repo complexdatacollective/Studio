@@ -13,14 +13,12 @@ import {
   LOCALES_DICT as MAIN_LOCALES,
 } from '~/lib/localisation/locales';
 import { usePathname, useRouter } from '~/lib/localisation/navigation';
+import { isInterviewRoute } from '~/lib/localisation/utils';
 
 const LanguageSwitcher = () => {
   const currentLocale = useLocale() as unknown as Locale;
   const pathname = usePathname();
   const router = useRouter();
-
-  // TODO: improve this so that there aren't false positives
-  const isInterviewRoute = pathname.includes('/interview');
 
   function handleLanguageChange(value: Locale) {
     router.push(pathname, { locale: value });
@@ -28,7 +26,7 @@ const LanguageSwitcher = () => {
   }
 
   // TODO: replace with getting the locale options from the protocol, or as a prop or something
-  const localeOptions = isInterviewRoute
+  const localeOptions = isInterviewRoute(pathname)
     ? [
         ['en', 'English'],
         ['fr', 'French'],
