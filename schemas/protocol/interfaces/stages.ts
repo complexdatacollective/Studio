@@ -15,7 +15,6 @@ import { TieStrengthCensusSchema } from './tie-strength-census';
 
 export const StageTypeSchema = z.enum([
   'NameGenerator',
-  // 'NameGeneratorRoster', // Can we merge?
   'Sociogram',
   'Information',
   'OrdinalBin',

@@ -4,6 +4,11 @@ import type { IntRange } from 'type-fest';
 import NameGenerator from '../interfaces/name-generator/NameGenerator';
 import SimpleShell from './SimpleShell';
 
+// TODO: This is a placeholder for after the schema work is done.
+export type InterviewStage = {
+  configuration?: Record<string, unknown>;
+};
+
 // This is the shell for the interview. It contains the navigation and the current stage shell.
 export default async function InterviewShell({
   interview,
