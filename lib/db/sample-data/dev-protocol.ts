@@ -2,7 +2,31 @@ import type { Protocol } from '~/schemas/protocol/protocol';
 
 const devProtocol: Protocol = {
   name: 'Dev Protocol',
-  languages: ['en', 'es'],
+  languages: ['ar'],
+  localisedStrings: {
+    en: {
+      Stages: {
+        '1': {
+          label: 'Name Generator',
+          Prompts: {
+            '1': 'Who are your classmates at {school}?',
+            '2': 'What are the names of your family members?',
+          },
+        },
+      },
+    },
+    es: {
+      Stages: {
+        '1': {
+          label: 'Generador de Nombres',
+          Prompts: {
+            '1': '¿Quiénes son tus compañeros de clase en {school}?',
+            '2': '¿Cuáles son los nombres de tus familiares?',
+          },
+        },
+      },
+    },
+  },
   codebook: {
     ego: {
       variables: {
@@ -49,7 +73,6 @@ const devProtocol: Protocol = {
     {
       id: '1',
       type: 'NameGenerator',
-      label: 'Name Generator',
       subject: {
         entity: 'node',
         id: 'person',
@@ -59,55 +82,9 @@ const devProtocol: Protocol = {
       prompts: [
         {
           id: '1',
-          text: {
-            en: 'Who are your classmates at {school}?',
-          },
           injectedVariables: ['school'],
         },
       ],
-    },
-    {
-      id: '2',
-      type: 'Sociogram',
-      label: 'Count & ability to skip to specific stage',
-      skipLogic: {
-        action: 'SKIP',
-        filter: {
-          join: 'AND',
-          rules: [
-            {
-              operator: 'COUNT',
-              count: 3,
-              type: 'ego',
-              entityId: 'person',
-              id: '1',
-            },
-          ],
-        },
-        targetStage: '4', // skip here if count condition is met
-      },
-    },
-    {
-      id: '3',
-      type: 'Sociogram',
-      label: 'Branching Filter Example',
-      skipLogic: {
-        action: 'SHOW',
-        filter: {
-          join: 'AND',
-          rules: [
-            {
-              operator: 'INCLUDES',
-              entityVariable: 'name',
-              value: 'John',
-              type: 'node',
-              entityId: 'person',
-              id: '1',
-            },
-          ],
-        },
-        stagesToShow: ['7', '8'],
-      },
     },
   ],
 };

@@ -30,7 +30,6 @@ export const StageTypeSchema = z.enum([
 
 const BaseStageSchema = z.object({
   id: z.string(),
-  label: z.string(),
   interviewScript: z.string().optional(),
   skipLogic: SkipDefinitionSchema.optional(),
 });
