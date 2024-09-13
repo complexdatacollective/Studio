@@ -82,7 +82,6 @@ const devProtocol: Protocol = {
       prompts: [
         {
           id: '1',
-          injectedVariables: ['school'],
         },
       ],
     },

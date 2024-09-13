@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 export const PromptSchema = z.object({
   id: z.string(),
-  injectedVariables: z.array(z.string()).optional(), // variables to inject into the prompt text
   // Todo:
   // additionalAttributes: z.any().optional(),
   // variable: z.string().optional(),
