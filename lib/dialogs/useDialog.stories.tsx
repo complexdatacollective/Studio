@@ -72,7 +72,9 @@ export const Default: Story = {
           return (
             <Form.Footer
               primaryAction={
-                <Button onClick={handleConfirm}>Do a dangerous thing</Button>
+                <Button onClick={handleConfirm} color="primary">
+                  Do a dangerous thing
+                </Button>
               }
               secondaryAction={
                 <Button onClick={() => resolve(null)}>Cancel</Button>
