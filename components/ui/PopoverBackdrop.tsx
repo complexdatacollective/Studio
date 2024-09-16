@@ -28,7 +28,7 @@ const PopoverBackdrop = forwardRef(
     ref,
   ) => {
     return (
-      // @ts-expect-error has to do with 12.0.0-alpha release
+      // @ts-expect-error incompatibility between framer-motion 12.x and new react types
       <motion.div
         ref={ref}
         className={cn(backdropClasses, className)}
