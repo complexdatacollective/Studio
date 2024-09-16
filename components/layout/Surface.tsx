@@ -3,7 +3,7 @@
 import { type Ref, type ElementType, type ReactNode } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 
 export const surfaceVariants = tv({
   base: 'shadow',
@@ -33,7 +33,7 @@ export type SurfaceVariants = VariantProps<typeof surfaceVariants>;
 
 const defaultElement = 'div';
 
-type SurfaceProps<E extends ElementType = typeof defaultElement> = {
+type SurfaceProps<E extends ElementType> = {
   children: ReactNode;
   className?: string;
   as?: E;
@@ -73,4 +73,9 @@ export default function Surface<E extends ElementType = typeof defaultElement>({
   );
 }
 
-export const MotionSurface = motion(Surface);
+// @ts-expect-error incompatibility between framer-motion 12.x and new react types
+export const MotionSurface = motion.create(Surface) as <
+  E extends ElementType = typeof defaultElement,
+>(
+  props: MotionProps & SurfaceProps<E>,
+) => JSX.Element;
