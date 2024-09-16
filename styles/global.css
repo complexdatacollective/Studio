@@ -48,15 +48,11 @@
     --base-hue: 281;
 
     --background: 97% 0.001 var(--base-hue);
-    --foreground: 15% 0.1 var(--base-hue);
+    --foreground: 10% 0.22 var(--base-hue);
 
     /* "Brand" */
     --primary: 34% 0.2 var(--base-hue);
     --primary-foreground: var(--white);
-
-    /* small amount of contrast against background */
-    --default: 50% 0.1 var(--base-hue);
-    --default-foreground: var(--foreground);
 
     /* For visual emphasis */
     --accent-hue: calc(var(--base-hue) - 30);
@@ -66,7 +62,7 @@
     --link: var(--accent);
 
     --muted: 95% 0.001 var(--base-hue);
-    --muted-foreground: 40% 0.1 var(--base-hue);
+    --muted-foreground: 70% 0.01 var(--base-hue);
 
     --destructive: var(--tomato);
     --destructive-foreground: var(--white);
@@ -90,8 +86,14 @@
     --surface-0: var(--white);
     --surface-0-foreground: var(--foreground);
 
-    --surface-base: 94% 0.005 var(--base-hue);
-    --surface-base-foreground: var(--foreground);
+    --surface-1: 94% 0.0075 var(--base-hue);
+    --surface-1-foreground: var(--foreground);
+    --surface-2: 91.5% 0.01 var(--base-hue);
+    --surface-2-foreground: var(--foreground);
+    --surface-3: 88% 0.015 var(--base-hue);
+    --surface-3-foreground: var(--foreground);
+    --surface-4: 85% 0.015 var(--base-hue);
+    --surface-4-foreground: var(--foreground);
 
     /* Focus ring */
     --ring: var(--mustard);
@@ -154,24 +156,37 @@
     --seq-panel-2: var(--sea-serpent);
   }
 
+  /** 
+    The dark interview theme has purple background with light text.
+  */
   [data-theme='dark'] {
-    --background: 13% 0.1 var(--base-hue);
+    --background: 19% 0.03 var(--base-hue);
     --foreground: 97% 0.001 var(--base-hue);
 
-    --primary: 40% 0.2 var(--base-hue);
-    --default: 100% 0.1 var(--base-hue);
+    /* Reduce chroma for better contrast */
+    --primary: 34% 0.15 var(--base-hue);
+    --accent: 50% 0.15 var(--accent-hue);
+
+    --muted-foreground: 40% 0.01 var(--base-hue);
 
     --link: 65% 0.35 var(--accent-hue);
 
-    --border-color: 28% 0.1 var(--base-hue);
+    --border-color: 33% 0.01 var(--base-hue);
 
     --input: var(--background);
     --input-foreground: var(--foreground);
 
     /* Surfaces */
-    --surface-0: 17% 0.1 var(--base-hue);
+    --surface-0: var(--background);
     --surface-0-foreground: var(--foreground);
-    --surface-base: 21% 0.085 var(--base-hue);
-    --surface-base-foreground: var(--foreground);
+
+    --surface-1: 26% 0.03 var(--base-hue);
+    --surface-1-foreground: var(--foreground);
+    --surface-2: 30% 0.03 var(--base-hue);
+    --surface-2-foreground: var(--foreground);
+    --surface-3: 33% 0.03 var(--base-hue);
+    --surface-3-foreground: var(--foreground);
+    --surface-4: 36% 0.03 var(--base-hue);
+    --surface-4-foreground: var(--foreground);
   }
 }

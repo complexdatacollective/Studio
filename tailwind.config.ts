@@ -40,10 +40,6 @@ export default {
       'background': 'oklch(var(--background) / <alpha-value>)',
       'foreground': 'oklch(var(--foreground) / <alpha-value>)',
       'link': 'oklch(var(--link) / <alpha-value>)',
-      'default': {
-        DEFAULT: 'oklch(var(--default) / <alpha-value>)',
-        foreground: 'oklch(var(--default-foreground) / <alpha-value>)',
-      },
       'primary': {
         DEFAULT: 'oklch(var(--primary) / <alpha-value>)',
         foreground: 'oklch(var(--primary-foreground) / <alpha-value>)',
@@ -72,9 +68,24 @@ export default {
         DEFAULT: 'oklch(var(--surface-0) / <alpha-value>)',
         foreground: 'oklch(var(--surface-0-foreground) / <alpha-value>)',
       },
-      'surface-base': {
-        DEFAULT: 'oklch(var(--surface-base) / <alpha-value>)',
-        foreground: 'oklch(var(--surface-base-foreground) / <alpha-value>)',
+      'surface-1': {
+        DEFAULT: 'oklch(var(--surface-1) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-1-foreground) / <alpha-value>)',
+      },
+
+      'surface-2': {
+        DEFAULT: 'oklch(var(--surface-2) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-2-foreground) / <alpha-value>)',
+      },
+
+      'surface-3': {
+        DEFAULT: 'oklch(var(--surface-3) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-3-foreground) / <alpha-value>)',
+      },
+
+      'surface-4': {
+        DEFAULT: 'oklch(var(--surface-4) / <alpha-value>)',
+        foreground: 'oklch(var(--surface-4-foreground) / <alpha-value>)',
       },
 
       'input': {

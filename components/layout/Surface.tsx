@@ -1,19 +1,20 @@
 'use client';
 
-import { type Ref, type ElementType, type ReactNode } from 'react';
+import { type ElementType, type ReactNode } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';
 import { motion, type MotionProps } from 'framer-motion';
 
 export const surfaceVariants = tv({
-  base: 'shadow',
+  base: '',
   variants: {
     level: {
+      // Level 0 is for dialogs and popovers
       0: 'bg-surface-0 text-surface-0-foreground [--background:var(--surface-0)] [--foreground:var(--surface-0-foreground)]',
-      1: 'bg-surface-base text-surface-base-foreground [--background:var(--surface-base)] [--foreground:var(--surface-base-foreground)]',
-      2: 'bg-[--2] [--2:color-mix(in_oklch,oklch(var(--background))_95%,oklch(var(--foreground)))]',
-      3: 'bg-[--3] [--3:color-mix(in_oklch,var(--2)_95%,oklch(var(--foreground)))]',
-      4: 'bg-[--4] [--4:color-mix(in_oklch,var(--3)_95%,oklch(var(--foreground)))]',
+      1: 'bg-surface-1 text-surface-1-foreground [--background:var(--surface-1)] [--foreground:var(--surface-1-foreground)]',
+      2: 'bg-surface-2 text-surface-2-foreground [--background:var(--surface-2)] [--foreground:var(--surface-2-foreground)]',
+      3: 'bg-surface-3 text-surface-3-foreground [--background:var(--surface-3)] [--foreground:var(--surface-3-foreground)]',
+      4: 'bg-surface-4 text-surface-4-foreground [--background:var(--surface-4)] [--foreground:var(--surface-4-foreground)]',
     },
     spacing: {
       none: '',
@@ -33,15 +34,12 @@ export type SurfaceVariants = VariantProps<typeof surfaceVariants>;
 
 const defaultElement = 'div';
 
-type SurfaceProps<E extends ElementType> = {
+export type SurfaceProps<E extends ElementType = typeof defaultElement> = {
   children: ReactNode;
   className?: string;
   as?: E;
   level: SurfaceVariants['level'];
   spacing?: SurfaceVariants['spacing'];
-  ref?: Ref<HTMLDivElement>;
-  id?: string;
-  role?: string;
 };
 
 /**
@@ -53,20 +51,14 @@ export default function Surface<E extends ElementType = typeof defaultElement>({
   level,
   spacing,
   className,
-  ref,
-  id,
-  role,
   ...props
 }: SurfaceProps<E>) {
   const Component = as ?? defaultElement;
 
   return (
     <Component
-      ref={ref}
-      id={id}
-      role={role}
-      {...props}
       className={cn(surfaceVariants({ level, spacing }), className)}
+      {...props}
     >
       {children}
     </Component>

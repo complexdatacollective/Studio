@@ -5,9 +5,9 @@ import { cn } from '~/lib/utils';
 
 const buttonVariants = tv({
   base: cn(
-    'inline-flex items-center justify-center rounded text-sm font-semibold transition-colors text-nowrap truncate tracking-wide',
+    'font-semibold inline-flex items-center justify-center truncate text-nowrap rounded text-sm tracking-wide transition-colors',
     'focusable',
-    'disabled:pointer-events-none disabled:saturate-50 disabled:cursor-not-allowed',
+    'disabled:pointer-events-none disabled:cursor-not-allowed disabled:saturate-50',
   ),
   variants: {
     variant: {
@@ -16,19 +16,23 @@ const buttonVariants = tv({
       text: '', // Text only, opaque fill on hover
     },
     color: {
-      default:
-        '[--text:oklch(var(--foreground))] [--bg:color-mix(in_oklab,var(--text)_5%,oklch(var(--background)))]',
+      default: cn(
+        // bg: mix of 5% of text color and background color
+        '[--bg:color-mix(in_oklab,var(--text)_8%,oklch(var(--background)))]',
+        // text: use the foreground color
+        '[--text:oklch(var(--foreground))]',
+      ),
       primary: '',
       destructive: '',
       accent: '',
       success: '',
     },
     size: {
-      xs: 'h-8 px-3 text-xs w-full sm:w-auto',
-      sm: 'h-10 px-4 text-base-sm w-full sm:w-auto',
-      default: 'h-12 px-6 w-full sm:w-auto',
-      lg: 'h-16 px-8 text-base w-full sm:w-auto',
-      icon: 'h-10 w-10 flex rounded-full shrink-0',
+      xs: 'h-8 w-full px-3 text-xs sm:w-auto',
+      sm: 'h-10 w-full px-4 text-base-sm sm:w-auto',
+      default: 'h-12 w-full px-6 sm:w-auto',
+      lg: 'h-16 w-full px-8 text-base sm:w-auto',
+      icon: 'flex h-10 w-10 shrink-0 rounded-full',
     },
   },
   defaultVariants: {
@@ -131,33 +135,26 @@ export type ButtonProps = {
   size?: ButtonVariants['size'];
   color?: ButtonVariants['color'];
   asChild?: boolean;
-  type?: 'button' | 'submit' | 'reset';
+  ref?: React.Ref<HTMLButtonElement>;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      color,
-      type = 'button',
-      asChild = false,
-      ...props
-    },
-    ref,
-  ) => {
-    const Comp = asChild ? Slot : 'button';
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, color, className }))}
-        type={type}
-        ref={ref}
-        {...props}
-      />
-    );
-  },
-);
-Button.displayName = 'Button';
+const Button = ({
+  className,
+  variant,
+  size,
+  color,
+  asChild = false,
+  ref,
+  ...props
+}: ButtonProps) => {
+  const Comp = asChild ? Slot : 'button';
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, color, className }))}
+      ref={ref}
+      {...props}
+    />
+  );
+};
 
 export { Button, buttonVariants };
