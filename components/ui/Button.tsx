@@ -18,7 +18,7 @@ const buttonVariants = tv({
     color: {
       default: cn(
         // bg: mix of 5% of text color and background color
-        '[--bg:color-mix(in_oklab,var(--text)_8%,oklch(var(--background)))]',
+        '[--bg:color-mix(in_oklab,var(--text)_6%,oklch(var(--background)))]',
         // text: use the foreground color
         '[--text:oklch(var(--foreground))]',
       ),

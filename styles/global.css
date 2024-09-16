@@ -86,13 +86,13 @@
     --surface-0: var(--white);
     --surface-0-foreground: var(--foreground);
 
-    --surface-1: 94% 0.0075 var(--base-hue);
+    --surface-1: 94% 0.005 var(--base-hue);
     --surface-1-foreground: var(--foreground);
     --surface-2: 91.5% 0.01 var(--base-hue);
     --surface-2-foreground: var(--foreground);
     --surface-3: 88% 0.015 var(--base-hue);
     --surface-3-foreground: var(--foreground);
-    --surface-4: 85% 0.015 var(--base-hue);
+    --surface-4: 85% 0.019 var(--base-hue);
     --surface-4-foreground: var(--foreground);
 
     /* Focus ring */
@@ -169,7 +169,7 @@
 
     --muted-foreground: 40% 0.01 var(--base-hue);
 
-    --link: 65% 0.35 var(--accent-hue);
+    --link: 65% 0.15 var(--accent-hue);
 
     --border-color: 33% 0.01 var(--base-hue);
 
