@@ -74,7 +74,7 @@ export default function Surface<E extends ElementType = typeof defaultElement>({
 }
 
 // @ts-expect-error incompatibility between framer-motion 12.x and new react types
-export const MotionSurface = motion(Surface) as <
+export const MotionSurface = motion.create(Surface) as <
   E extends ElementType = typeof defaultElement,
 >(
   props: MotionProps & SurfaceProps<E>,
