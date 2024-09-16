@@ -1,7 +1,6 @@
 'use client';
 
-import { headingVariants } from '~/components/typography/Heading';
-import { cn } from '~/lib/utils';
+import Heading from '~/components/typography/Heading';
 
 /**
  * Building block for Prompt component
@@ -10,14 +9,12 @@ import { cn } from '~/lib/utils';
 
 export default function Prompt({ text }: { text: string }) {
   return (
-    <h1
+    <Heading
+      variant="h2"
       id="data-wizard-prompts"
-      className={cn(
-        headingVariants({ variant: 'h2' }),
-        'mx-auto mb-0 text-center',
-      )}
+      className="mx-auto mb-0 text-center"
     >
       {text}
-    </h1>
+    </Heading>
   );
 }

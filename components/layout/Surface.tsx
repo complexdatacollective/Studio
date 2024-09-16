@@ -32,20 +32,23 @@ export const surfaceVariants = tv({
 
 export type SurfaceVariants = VariantProps<typeof surfaceVariants>;
 
-const defaultElement = 'div';
-
-export type SurfaceProps<E extends ElementType = typeof defaultElement> = {
+export type SurfaceProps<E extends ElementType> = {
   children: ReactNode;
   className?: string;
   as?: E;
   level: SurfaceVariants['level'];
   spacing?: SurfaceVariants['spacing'];
-};
+} & React.HTMLAttributes<HTMLElement>;
 
 /**
- * The idea of surface is to ensure consistent styling of containers.
+ * Surface is a layout component that provides a background and foreground color
+ * and allows for spacing to be applied. It is intended to be used as a container
+ * to construct hierarchical layouts, and is explicitly designed to support
+ * being nested.
+ *
+ * Note that Surface level '0' is a special case that is used for dialogs and popovers.
  */
-export default function Surface<E extends ElementType = typeof defaultElement>({
+export default function Surface<E extends ElementType>({
   children,
   as,
   level,
@@ -53,7 +56,7 @@ export default function Surface<E extends ElementType = typeof defaultElement>({
   className,
   ...props
 }: SurfaceProps<E>) {
-  const Component = as ?? defaultElement;
+  const Component = as ?? 'div';
 
   return (
     <Component
@@ -66,8 +69,6 @@ export default function Surface<E extends ElementType = typeof defaultElement>({
 }
 
 // @ts-expect-error incompatibility between framer-motion 12.x and new react types
-export const MotionSurface = motion.create(Surface) as <
-  E extends ElementType = typeof defaultElement,
->(
-  props: MotionProps & SurfaceProps<E>,
+export const MotionSurface = motion.create(Surface) as <E extends ElementType>(
+  props: SurfaceProps<E> & MotionProps,
 ) => JSX.Element;
