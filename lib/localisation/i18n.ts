@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
-import { Locale, MAIN_LOCALES, SUPPORTED_LOCALES } from './locales';
+import { type Locale, MAIN_LOCALES, SUPPORTED_LOCALES } from './locales';
 import {
   type IntlError,
   IntlErrorCode,
@@ -11,7 +11,6 @@ import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers } from 'next/headers';
 
 export default getRequestConfig(async ({ locale }) => {
-  console.log('locale:', locale);
   const currentPath = headers().get('x-current-path') ?? '';
 
   // Validate that the incoming `locale` parameter is valid
@@ -33,14 +32,11 @@ export default getRequestConfig(async ({ locale }) => {
 
   // if we're in the interview route group, we need to fetch the messages from the protocol and merge them with the main messages
   if (isInterviewRoute(currentPath)) {
-    console.log('Fetching interview messages');
+    console.log('IS INTERVIEW ROUTE');
     const interviewMessages = await fetchInterviewMessages(
       locale as Locale,
       currentPath.split('/interview/')[1] ?? '',
     );
-
-    const mergedMessages = { ...interviewMessages, ...messages };
-    console.log('Merged messages:', mergedMessages);
 
     return {
       messages: { ...messages, ...interviewMessages },

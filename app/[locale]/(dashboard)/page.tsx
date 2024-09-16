@@ -16,7 +16,7 @@ export default async function Dashboard() {
 
   const t = await getTranslations('Pages.Home');
   const studies = await getUserStudies();
-  const interviews = await getInterviews();
+  const interviews = await getInterviews(); // need to get locales on these too
 
   return (
     <>
@@ -65,6 +65,7 @@ export default async function Dashboard() {
             <li key={interview.id}>
               <Link
                 href={routes.interview({ interviewId: interview.publicId })}
+                protocolLanguages={['en', 'es', 'fr']}
               >
                 {interview.id}
               </Link>

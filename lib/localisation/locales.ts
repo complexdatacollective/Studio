@@ -170,6 +170,7 @@ export const SupportedLocalesSchema = z.enum([
 export const MAIN_LOCALE_OBJECTS = [
   { code: 'en', label: 'English', native: '' },
   { code: 'es', label: 'Spanish', native: '' },
+  { code: 'ar', label: 'Arabic', native: '' },
 ] as const;
 
 export const MAIN_LOCALES = MAIN_LOCALE_OBJECTS.map(({ code }) => code);

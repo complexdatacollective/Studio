@@ -3,13 +3,13 @@ import { MAIN_LOCALES } from '../localisation/locales';
 import type { NextRequest } from 'next/server';
 import { isInterviewRoute } from '../localisation/utils';
 
-// simulate getting interview locales from the protocol
-// todo: replace with actual implementation
-async function fetchInterviewLocales(requestPath: string): Promise<string[]> {
+export async function fetchInterviewLocales(
+  requestPath: string,
+): Promise<string[]> {
   const interviewId = requestPath.split('/interview/')[1];
   const locale = requestPath.split('/')[1]; //TODO: fix this when we're on default locale
 
-  if (!interviewId) return [];
+  if (!interviewId) return ['en'];
 
   try {
     const response = await fetch(
@@ -24,10 +24,11 @@ async function fetchInterviewLocales(requestPath: string): Promise<string[]> {
       console.log('No protocol locales. Using default');
       return ['en'];
     }
+
     return data.locales;
   } catch (error) {
     console.error('Error fetching interview locales:', error);
-    return [];
+    return ['en'];
   }
 }
 
