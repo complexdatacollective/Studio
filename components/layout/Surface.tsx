@@ -3,7 +3,7 @@
 import { type Ref, type ElementType, type ReactNode } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';
-import { motion, MotionProps } from 'framer-motion';
+import { motion, type MotionProps } from 'framer-motion';
 
 export const surfaceVariants = tv({
   base: 'shadow',

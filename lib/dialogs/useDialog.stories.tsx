@@ -36,14 +36,17 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
   render: () => {
-    const { openDialog, openCustomDialog } = useDialog();
+    const { openDialog } = useDialog();
 
     const confirmDialog = async () => {
       // Return type should be boolean | null
       const result = await openDialog({
-        id: 'confirm-dialog',
-        title: 'Are you sure?',
-        description: 'This action cannot be undone.',
+        type: 'confirm',
+        title: 'Confirm dialog title',
+        description:
+          'confirm dialog description, which is read by screen readers',
+        cancelText: 'Custom cancel text',
+        confirmText: 'Custom confirm text',
       });
 
       console.log('got result', result);
@@ -51,14 +54,15 @@ export const Default: Story = {
 
     const customDialog = async () => {
       // Return type should be inferred as string | null
-      const result = await openCustomDialog<string>({
-        id: 'custom-dialog',
+      const result = await openDialog<string>({
+        type: 'custom',
         title: 'Custom Dialog',
         description: 'This is a custom dialog',
         // 'resolve' should be inferred as (value: string | null) => void
         renderContent: (resolve) => {
           const handleConfirm = async () => {
             const confirmed = await openDialog({
+              type: 'confirm',
               title: 'Are you really sure?',
               accent: 'danger',
               description: 'This action cannot be undone.',

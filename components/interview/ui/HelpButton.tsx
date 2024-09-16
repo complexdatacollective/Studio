@@ -15,7 +15,7 @@ import Form from '~/components/ui/form/Form';
  * This popover allows the participant to trigger help wizards.
  */
 export default function HelpButton({ id }: { id?: string }) {
-  const { openCustomDialog } = useDialog();
+  const { openDialog } = useDialog();
   const { wizards, setActiveWizard } = useWizardController();
 
   const t = useTranslations('Interview.Navigation');
@@ -24,7 +24,8 @@ export default function HelpButton({ id }: { id?: string }) {
 
   const handleOpenDialog = async () => {
     // Return type should be string | null
-    const result = await openCustomDialog<string>({
+    const result = await openDialog<string>({
+      type: 'custom',
       id: 'help-dialog',
       title: t2('Title'),
       description: t2('Description'),
