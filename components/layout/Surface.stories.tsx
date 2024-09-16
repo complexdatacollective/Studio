@@ -1,12 +1,8 @@
 // src/components/Surface.stories.tsx
 
-import React, { ElementType } from 'react';
-import type { Meta, Story } from '@storybook/react';
-import Surface, {
-  MotionSurface,
-  SurfaceProps,
-  SurfaceVariants,
-} from './Surface';
+import React, { type ElementType } from 'react';
+import type { Meta, StoryFn } from '@storybook/react';
+import Surface, { MotionSurface, type SurfaceVariants } from './Surface';
 import { Button } from '../ui/Button';
 
 // Define the metadata for the Storybook
@@ -61,7 +57,7 @@ const meta: Meta<typeof Surface> = {
 export default meta;
 
 // Surface with Different Levels
-export const DifferentLevels: Story<typeof Surface> = () => (
+export const DifferentLevels: StoryFn<typeof Surface> = () => (
   <div className="space-y-4">
     {[0, 1, 2, 3, 4].map((level) => (
       <Surface
@@ -77,7 +73,7 @@ export const DifferentLevels: Story<typeof Surface> = () => (
 );
 
 // Surface with Different Spacing
-export const DifferentSpacing: Story<typeof Surface> = () => (
+export const DifferentSpacing: StoryFn<typeof Surface> = () => (
   <div className="space-y-4">
     {['none', 'xs', 'sm', 'md', 'lg', 'xl'].map((spacing) => (
       <Surface
@@ -92,7 +88,7 @@ export const DifferentSpacing: Story<typeof Surface> = () => (
 );
 
 // Surface as Different HTML Elements
-export const AsDifferentElements: Story<typeof Surface> = () => (
+export const AsDifferentElements: StoryFn<typeof Surface> = () => (
   <div className="space-y-4">
     {['div', 'section', 'article', 'main', 'header', 'footer'].map(
       (element) => (
@@ -110,14 +106,14 @@ export const AsDifferentElements: Story<typeof Surface> = () => (
 );
 
 // Surface with Additional Class Names
-export const WithAdditionalClassName: Story<typeof Surface> = () => (
+export const WithAdditionalClassName: StoryFn<typeof Surface> = () => (
   <Surface level={1} spacing="md" className="border-danger border-2">
     Surface with additional border classes
   </Surface>
 );
 
 // MotionSurface Story with Animation
-export const MotionSurfaceExample: Story<typeof Surface> = () => (
+export const MotionSurfaceExample: StoryFn<typeof Surface> = () => (
   <MotionSurface
     level={2}
     spacing="lg"
@@ -130,7 +126,7 @@ export const MotionSurfaceExample: Story<typeof Surface> = () => (
 );
 
 // **New Story: Nested Surfaces**
-export const NestedSurfaces: Story<typeof Surface> = () => (
+export const NestedSurfaces: StoryFn<typeof Surface> = () => (
   <div className="bg-background p-10 text-foreground">
     <div className="flex items-center gap-10">
       Background
