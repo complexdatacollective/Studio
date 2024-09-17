@@ -4,7 +4,7 @@ import { db } from '~/lib/db';
 import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
 import { env } from '~/env';
 import { cache } from 'react';
-import { redirect } from '~/lib/localisation/navigation';
+import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import 'server-only';
 import { getServerPath } from '../serverUtils';

@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { Link } from '~/lib/localisation/navigation';
+import Link from 'next/link';
 import { routes } from '~/lib/routes';
 
 export const dynamic = 'force-dynamic';

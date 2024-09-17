@@ -1,9 +1,9 @@
 import SignInForm from '../_components/SignInForm';
 import { routes } from '~/lib/routes';
-import { Link, redirect } from '~/lib/localisation/navigation';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getServerSession } from '~/lib/auth';
-import type { Locale } from '~/lib/localisation/locales';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import Surface from '~/components/layout/Surface';
 import Heading from '~/components/typography/Heading';
@@ -14,12 +14,8 @@ import Divider from '~/components/layout/Divider';
 // Possibly a bug?
 export const dynamic = 'force-dynamic';
 
-export default async function Page({
-  params: { locale },
-}: {
-  params: { locale: Locale };
-}) {
-  unstable_setRequestLocale(locale);
+export default async function Page() {
+  unstable_setRequestLocale('en');
   const t = await getTranslations('Auth.SignIn');
 
   const { session } = await getServerSession();

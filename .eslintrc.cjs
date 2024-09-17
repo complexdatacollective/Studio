@@ -20,7 +20,15 @@ const config = {
     project: path.join(__dirname, 'tsconfig.json'),
   },
   plugins: ['@typescript-eslint'],
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/stylistic', 'plugin:@typescript-eslint/recommended', 'next/core-web-vitals', 'prettier', 'plugin:storybook/recommended', "plugin:jsx-a11y/strict"],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/stylistic',
+    'plugin:@typescript-eslint/recommended',
+    'next/core-web-vitals',
+    'prettier',
+    'plugin:storybook/recommended',
+    'plugin:jsx-a11y/strict',
+  ],
   ignorePatterns: [
     'node_modules',
     '*.test.*',
@@ -54,24 +62,6 @@ const config = {
       },
     ],
     'no-unreachable': 'error',
-    // Consistently import navigation APIs from `~/lib/localisation/navigation`
-    'no-restricted-imports': [
-      'error',
-      {
-        name: 'next/link',
-        message: 'Please import from `~/lib/localisation/navigation` instead.',
-      },
-      {
-        name: 'next/navigation',
-        importNames: [
-          'redirect',
-          'permanentRedirect',
-          'useRouter',
-          'usePathname',
-        ],
-        message: 'Please import from `~/lib/localisation/navigation` instead.',
-      },
-    ],
   },
 };
 

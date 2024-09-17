@@ -1,7 +1,7 @@
 import { getUserStudies } from '~/server/queries/studies';
 import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '~/lib/localisation/navigation';
+import Link from 'next/link';
 import UnorderedList from '~/components/typography/UnorderedList';
 import Section from '~/components/layout/Section';
 import PageHeader from '~/components/typography/PageHeader';

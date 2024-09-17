@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { usePathname, useRouter } from '~/lib/localisation/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '~/lib/utils';
 import { ProgressBarWithTooltip } from '../../ui/ProgressBar';
 import type { IntRange } from 'type-fest';

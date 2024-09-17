@@ -1,12 +1,13 @@
 import SignUpForm from '../_components/SignUpForm';
 import { getServerSession } from '~/lib/auth';
-import { routes } from '~/lib/routes';
-import { Link, redirect } from '~/lib/localisation/navigation';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import Surface from '~/components/layout/Surface';
 import Heading from '~/components/typography/Heading';
 import Paragraph from '~/components/typography/Paragraph';
 import Divider from '~/components/layout/Divider';
+import { routes } from '~/lib/routes';
 
 export default async function Page() {
   unstable_setRequestLocale('en');

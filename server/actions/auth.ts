@@ -4,7 +4,7 @@ import { db } from '~/lib/db';
 import { cookies } from 'next/headers';
 import { hash, verify } from '@node-rs/argon2';
 import { getServerSession, lucia } from '~/lib/auth';
-import { redirect } from '~/lib/localisation/navigation';
+import { redirect } from 'next/navigation';
 import { generateIdFromEntropySize } from 'lucia';
 import { revalidatePath } from 'next/cache';
 import { zfd } from 'zod-form-data';

@@ -1,4 +1,4 @@
-import { Link } from '~/lib/localisation/navigation';
+import Link from 'next/link';
 import { routes } from '~/lib/routes';
 
 export default function NotFound() {

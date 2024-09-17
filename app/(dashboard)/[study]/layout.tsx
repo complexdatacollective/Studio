@@ -1,4 +1,4 @@
-import { Link } from '~/lib/localisation/navigation';
+import Link from 'next/link';
 import { routes } from '~/lib/routes';
 
 export default function DashboardLayout({
@@ -7,7 +7,6 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
   params: {
-    locale: string;
     study: string;
   };
 }) {

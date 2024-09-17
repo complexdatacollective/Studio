@@ -1,8 +1,7 @@
 'use client';
 
 import { type Study } from '@prisma/client';
-import { useParams } from 'next/navigation';
-import { useRouter } from '~/lib/localisation/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import {

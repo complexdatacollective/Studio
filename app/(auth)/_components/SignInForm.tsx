@@ -3,7 +3,7 @@ import { Input } from '~/components/ui/form/Input';
 import { SubmitButton } from '~/components/ui/form/SubmitButton';
 import Form from '~/components/ui/form/Form';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '~/lib/localisation/navigation';
+import Link from 'next/link';
 
 export default async function SignInForm() {
   const t = await getTranslations('Auth');

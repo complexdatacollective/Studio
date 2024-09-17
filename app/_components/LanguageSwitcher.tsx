@@ -13,7 +13,7 @@ import {
   MAIN_LOCALE_OBJECTS,
   type Locale,
 } from '~/lib/localisation/locales';
-import { usePathname, useRouter } from '~/lib/localisation/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { isInterviewRoute } from '~/lib/localisation/utils';
 
 const LanguageSwitcher = ({
