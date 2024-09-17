@@ -32,13 +32,23 @@ export const surfaceVariants = tv({
 
 export type SurfaceVariants = VariantProps<typeof surfaceVariants>;
 
-export type SurfaceProps<E extends ElementType> = {
-  children: ReactNode;
-  className?: string;
+// 1. Define a generic type for the `as` prop and component props
+type AsProp<E extends React.ElementType> = {
   as?: E;
-  level: SurfaceVariants['level'];
-  spacing?: SurfaceVariants['spacing'];
-} & React.HTMLAttributes<HTMLElement>;
+};
+
+// 2. Combine the `as` prop with the props of the specified element
+type SurfaceProps<E extends React.ElementType> = AsProp<E> &
+  Omit<React.ComponentPropsWithoutRef<E>, keyof AsProp<E>>;
+
+// 3. Define the component type with generics and ref forwarding
+type SurfaceComponent = <E extends React.ElementType = 'div'>(
+  props: SurfaceProps<E> & {
+    level: SurfaceVariants['level'];
+    spacing?: SurfaceVariants['spacing'];
+    children?: React.ReactNode;
+  },
+) => React.ReactElement | null;
 
 /**
  * Surface is a layout component that provides a background and foreground color
@@ -48,25 +58,26 @@ export type SurfaceProps<E extends ElementType> = {
  *
  * Note that Surface level '0' is a special case that is used for dialogs and popovers.
  */
-export default function Surface<E extends ElementType>({
-  children,
+const Surface: SurfaceComponent = ({
   as,
+  children,
+  ref,
   level,
   spacing,
   className,
-  ...props
-}: SurfaceProps<E>) {
-  const Component = as ?? 'div';
-
+  ...rest
+}) => {
+  const Component = as ?? 'div'; // Default to 'div' if `as` is not provided
   return (
     <Component
+      ref={ref}
+      {...rest}
       className={cn(surfaceVariants({ level, spacing }), className)}
-      {...props}
     >
       {children}
     </Component>
   );
-}
+};
 
 // @ts-expect-error incompatibility between framer-motion 12.x and new react types
 export const MotionSurface = motion.create(Surface) as <E extends ElementType>(
