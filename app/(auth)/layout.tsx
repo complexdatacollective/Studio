@@ -1,6 +1,6 @@
 import { SUPPORTED_LOCALES } from '~/lib/localisation/locales';
-import LanguageSwitcher from '../_components/LanguageSwitcher';
-import ThemeSwitcher from '../_components/ThemeSwitcher';
+import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
+import ThemeSwitcher from '~/app/_components/ThemeSwitcher';
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));

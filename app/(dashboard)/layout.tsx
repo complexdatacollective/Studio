@@ -2,11 +2,11 @@ import { SearchIcon } from 'lucide-react';
 import { Input } from '~/components/ui/form/Input';
 import Image from 'next/image';
 import StudySwitcher from './_components/StudySwitcher';
-import LanguageSwitcher from '../_components/LanguageSwitcher';
+import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
 import SignOutBtn from './_components/SignOutBtn';
 import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
-import ThemeSwitcher from '../_components/ThemeSwitcher';
+import ThemeSwitcher from '~/app/_components/ThemeSwitcher';
 
 export default async function DashboardLayout({
   children,

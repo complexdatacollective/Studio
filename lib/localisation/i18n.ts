@@ -10,8 +10,12 @@ import {
 import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers } from 'next/headers';
 
-export default getRequestConfig(async ({ locale }) => {
+export default getRequestConfig(async () => {
   const currentPath = headers().get('x-current-path') ?? '';
+
+  // get the locale from the cookies, or default to 'en'
+  //TODO: implement
+  const locale = 'en';
 
   // Validate that the incoming `locale` parameter is valid
   if (!SUPPORTED_LOCALES.includes(locale)) {
@@ -39,6 +43,7 @@ export default getRequestConfig(async ({ locale }) => {
     );
 
     return {
+      locale,
       messages: { ...messages, ...interviewMessages },
       onError: customErrorLogger,
       getMessageFallback,
@@ -47,6 +52,7 @@ export default getRequestConfig(async ({ locale }) => {
 
   // If we're in the main app (researcher backend), just pass the messages directly.
   return {
+    locale,
     messages: messages,
     onError: customErrorLogger,
     getMessageFallback,

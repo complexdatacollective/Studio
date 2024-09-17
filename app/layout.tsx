@@ -1,4 +1,4 @@
-import { getMessages, getNow, getTimeZone } from 'next-intl/server';
+import { getLocale, getMessages, getNow, getTimeZone } from 'next-intl/server';
 import { Lexend, Roboto_Mono } from 'next/font/google';
 import { type Metadata } from 'next';
 import '~/styles/global.css';
@@ -29,11 +29,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: Locale };
 }) {
+  const locale = 'en';
   const messages = await getMessages();
   // add interview specific messages to the messages if we're in the interview route group
 

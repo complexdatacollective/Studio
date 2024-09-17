@@ -6,7 +6,7 @@ import { getLangDir } from 'rtl-detect';
 import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import '~/styles/global.css';
-import Providers from '~/app/[locale]/_components/Providers';
+import Providers from '~/app/_components/Providers';
 import { Lexend, Roboto_Mono } from 'next/font/google';
 import { cn } from '~/lib/utils';
 
@@ -125,7 +125,7 @@ const preview: Preview = {
       return (
         <div
           className={cn(
-            'font-sans min-h-full bg-background text-foreground',
+            'min-h-full bg-background font-sans text-foreground',
             `${lexend.variable} ${roboto_mono.variable}`,
           )}
         >

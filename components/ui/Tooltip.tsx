@@ -30,7 +30,7 @@ const Tooltip = ({
             'motion-safe:data-[state=delayed-open]:data-[side=left]:animate-tooltipSlideRightAndFade',
             'motion-safe:data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade',
             'shadow-md',
-            'bg-surface-0 text-surface-0-foreground select-none rounded-small px-2 py-2 text-sm will-change-[transform,opacity]',
+            'select-none rounded-small bg-surface-0 px-2 py-2 text-sm text-surface-0-foreground will-change-[transform,opacity]',
           )}
           sideOffset={5} // Distance in PX from the trigger
           side={side}

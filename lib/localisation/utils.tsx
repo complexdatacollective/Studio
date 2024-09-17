@@ -46,8 +46,5 @@ export function getBestMatch(
 }
 
 export function isInterviewRoute(currentPath: string): boolean {
-  return (
-    currentPath.startsWith('/interview') ||
-    currentPath.split('/')[2] === 'interview' // For when the path is  /[locale]/interview
-  );
+  return currentPath.startsWith('/interview');
 }
