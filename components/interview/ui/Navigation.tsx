@@ -157,7 +157,13 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           content={
             <>
               <Heading variant="label">Select language</Heading>
-              <LanguageSwitcher />
+              <LanguageSwitcher
+                protocolLocales={[
+                  { code: 'en', label: 'English', native: '' },
+                  { code: 'es', label: 'Spanish', native: '' },
+                  { code: 'fr', label: 'French', native: '' },
+                ]}
+              />
             </>
           }
           context="interviewer"

@@ -5,9 +5,9 @@ import { MAIN_LOCALES } from '../localisation/locales';
 async function IntlMiddleware(req: NextRequest) {
   // check if we already have a locale cookie.
   // if so, we don't need to do anything
-  if (req.cookies.get('locale')) {
-    return NextResponse.next();
-  }
+  // if (req.cookies.get('locale')) {
+  //   return NextResponse.next();
+  // }
 
   let locale = 'en';
   const acceptLanguageHeader = req.headers.get('accept-language') ?? '';

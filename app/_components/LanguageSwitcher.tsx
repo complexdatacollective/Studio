@@ -13,8 +13,9 @@ import {
   MAIN_LOCALE_OBJECTS,
   type Locale,
 } from '~/lib/localisation/locales';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { isInterviewRoute } from '~/lib/localisation/utils';
+import { setUserLocale } from '~/server/actions/locale';
 
 const LanguageSwitcher = ({
   protocolLocales,
@@ -22,13 +23,13 @@ const LanguageSwitcher = ({
   protocolLocales?: LocaleObject[];
 }) => {
   const currentLocale = useLocale() as unknown as Locale;
+  console.log('Current locale:', currentLocale);
   const pathname = usePathname();
-  const router = useRouter();
 
   function handleLanguageChange(value: Locale) {
-    router.push(pathname, { locale: value });
-    router.refresh();
+    void setUserLocale(value);
   }
+  console.log(isInterviewRoute(pathname));
 
   // Combine protocol-specific locales if they are provided, or fall back to MAIN_LOCALES
   const localeOptions =

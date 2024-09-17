@@ -14,8 +14,10 @@ export default function WizardStep({ step }: { step: Step }) {
   const { title, content, targetElementId } = step;
   const locale = useLocale();
 
-  const localisedStepContent = getLocalisedValue(content, [locale]);
-  const localisedStepTitle = getLocalisedValue(title, [locale]);
+  console.log('locale in WizardStep', locale);
+
+  const localisedStepContent = getLocalisedValue(content, locale);
+  const localisedStepTitle = getLocalisedValue(title, locale);
 
   const {
     closeWizard,

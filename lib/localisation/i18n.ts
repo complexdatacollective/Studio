@@ -8,14 +8,14 @@ import {
   type AbstractIntlMessages,
 } from 'next-intl';
 import { customErrorLogger, isInterviewRoute } from './utils';
-import { headers } from 'next/headers';
-import { cookies } from 'next/headers';
+import { headers, cookies } from 'next/headers';
 
 export default getRequestConfig(async () => {
+  console.log('GET REQUEST CONFIG');
   const currentPath = headers().get('x-current-path') ?? '';
   const cookieStore = cookies();
   const locale = cookieStore.get('locale')?.value ?? 'en';
-  console.log('LOCALE:', locale);
+  console.log('LOCALE cookie in i18n', locale);
 
   // Validate that the incoming `locale` parameter is valid
   if (!SUPPORTED_LOCALES.includes(locale)) {
@@ -41,8 +41,6 @@ export default getRequestConfig(async () => {
       locale as Locale,
       currentPath.split('/interview/')[1] ?? '',
     );
-
-    console.log('INTERVIEW MESSAGES:', interviewMessages);
 
     return {
       locale,
