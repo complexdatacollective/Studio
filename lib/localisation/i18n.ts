@@ -10,12 +10,13 @@ import {
 import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers, cookies } from 'next/headers';
 
-export default getRequestConfig(async () => {
+export default getRequestConfig(async (...all) => {
+  console.log('args passed to getRequestConfig', all);
+
   console.log('GET REQUEST CONFIG');
   const currentPath = headers().get('x-current-path') ?? '';
-  const cookieStore = cookies();
-  const locale = cookieStore.get('locale')?.value ?? 'en';
-  console.log('LOCALE cookie in i18n', locale);
+
+  const locale = cookies().get('locale')?.value ?? 'en';
 
   // Validate that the incoming `locale` parameter is valid
   if (!SUPPORTED_LOCALES.includes(locale)) {

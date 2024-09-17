@@ -40,6 +40,7 @@ async function IntlMiddleware(req: NextRequest) {
       locale = getBestMatch(data.locales, acceptedLanguages) ?? 'en';
       const res = NextResponse.next();
       res.cookies.set('locale', locale);
+      return res;
     } catch (error) {
       console.error('Failed to fetch interview locales:', error);
     }

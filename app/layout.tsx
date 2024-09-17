@@ -1,4 +1,4 @@
-import { getLocale, getMessages, getNow, getTimeZone } from 'next-intl/server';
+import { getMessages, getNow, getTimeZone } from 'next-intl/server';
 import { Lexend, Roboto_Mono } from 'next/font/google';
 import { type Metadata } from 'next';
 import '~/styles/global.css';
@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
 import Providers from './_components/Providers';
 import { cn } from '~/lib/utils';
+import { cookies } from 'next/headers';
 
 const lexend = Lexend({
   weight: 'variable',
@@ -32,7 +33,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const locale = 'en';
+  const locale = cookies().get('locale')?.value ?? ('en' as Locale);
+
   const messages = await getMessages();
   // add interview specific messages to the messages if we're in the interview route group
 
