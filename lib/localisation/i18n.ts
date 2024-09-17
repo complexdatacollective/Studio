@@ -9,13 +9,13 @@ import {
 } from 'next-intl';
 import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers } from 'next/headers';
+import { cookies } from 'next/headers';
 
 export default getRequestConfig(async () => {
   const currentPath = headers().get('x-current-path') ?? '';
-
-  // get the locale from the cookies, or default to 'en'
-  //TODO: implement
-  const locale = 'en';
+  const cookieStore = cookies();
+  const locale = cookieStore.get('locale')?.value ?? 'en';
+  console.log('LOCALE:', locale);
 
   // Validate that the incoming `locale` parameter is valid
   if (!SUPPORTED_LOCALES.includes(locale)) {
@@ -41,6 +41,8 @@ export default getRequestConfig(async () => {
       locale as Locale,
       currentPath.split('/interview/')[1] ?? '',
     );
+
+    console.log('INTERVIEW MESSAGES:', interviewMessages);
 
     return {
       locale,
@@ -83,21 +85,17 @@ async function fetchInterviewMessages(
 ): Promise<AbstractIntlMessages> {
   try {
     const response = await fetch(
-      `http://localhost:3000/api?interviewId=${interviewId}&locale=${locale}`,
+      `http://localhost:3000/api/interview/${interviewId}/messages?locale=${locale}`,
     );
     if (!response.ok) {
       console.error('Failed to fetch messages:', response.statusText);
-      return;
+      return [];
     }
     const data = await response.json();
 
-    if (!data.messages) {
-      console.log('No protocol messages provided');
-      return;
-    }
     return data.messages;
   } catch (error) {
     console.error('Error fetching protocol messages:', error);
-    return;
+    return [];
   }
 }
