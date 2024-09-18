@@ -2,9 +2,9 @@ import type { Protocol } from '~/schemas/protocol/protocol';
 
 export const devProtocol: Protocol = {
   name: 'Dev Protocol',
-  languages: ['en', 'fr', 'es'],
+  languages: ['en-GB', 'fr', 'es'],
   localisedStrings: {
-    en: {
+    'en-GB': {
       Stages: {
         '1': {
           label: 'Name Generator',
@@ -15,7 +15,7 @@ export const devProtocol: Protocol = {
         },
       },
     },
-    es: {
+    'es': {
       Stages: {
         '1': {
           label: 'Generador de Nombres',
@@ -26,7 +26,7 @@ export const devProtocol: Protocol = {
         },
       },
     },
-    fr: {
+    'fr': {
       Stages: {
         '1': {
           label: 'Générateur de noms',

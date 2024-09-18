@@ -10,7 +10,7 @@ import {
 import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers, cookies } from 'next/headers';
 
-const getMessageFallback = ({
+export const getMessageFallback = ({
   namespace,
   key,
   error,
@@ -28,7 +28,7 @@ const getMessageFallback = ({
   }
 };
 
-async function fetchInterviewMessages(
+export async function fetchInterviewMessages(
   locale: Locale,
   interviewId: string,
 ): Promise<AbstractIntlMessages> {

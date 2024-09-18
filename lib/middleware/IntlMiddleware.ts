@@ -8,26 +8,6 @@ export const LOCALE_COOKIES = {
   INTERVIEW: 'interview-locale',
 } as const;
 
-async function getProtocolLocales(interviewId: string): Promise<string[]> {
-  try {
-    const response = await fetch(
-      `http://localhost:3000/api/interview/${interviewId}/languages`,
-    );
-    if (!response.ok) {
-      throw new Error('Failed to fetch interview locales');
-    }
-    const data = (await response.json()) as { locales: string[] } | null;
-
-    if (!data?.locales) {
-      throw new Error('No locales found in interview data');
-    }
-
-    return data.locales;
-  } catch (error) {
-    throw new Error('Error fetching protocol locales');
-  }
-}
-
 async function IntlMiddleware(req: NextRequest) {
   const pathname = new URL(req.url).pathname;
   const appContext = isInterviewRoute(pathname) ? 'INTERVIEW' : 'MAIN';

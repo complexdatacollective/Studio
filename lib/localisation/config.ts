@@ -185,7 +185,7 @@ export type LocaleObject = (typeof SUPPORTED_LOCALE_OBJECTS)[number];
 
 export const LOCALE_COOKIES = {
   MAIN: 'locale',
-  INTERVIEW: 'interview-locale',
+  INTERVIEW: 'locale',
 } as const;
 
 export type LocaleCookieName = keyof typeof LOCALE_COOKIES;

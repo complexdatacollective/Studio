@@ -1,27 +1,34 @@
 import { getRequestConfig } from 'next-intl/server';
-import { getUserLocale } from './locale';
-import { type AbstractIntlMessages } from 'next-intl';
-import { headers } from 'next/headers';
-
-async function getLocaleMessages(locale: string) {
-  const messages = (await import(`./messages/${locale}.json`)) as {
-    default: AbstractIntlMessages;
-  };
-
-  return messages.default;
-}
+import {
+  getAvilableLocales,
+  getBestLocale,
+  getLocaleContext,
+  getLocaleMessages,
+  getUserLocale,
+} from './locale';
 
 export default getRequestConfig(async () => {
-  const currentPath = headers().get('x-current-path') ?? '';
+  const localeContext = await getLocaleContext();
+  const availableLocales = await getAvilableLocales(localeContext);
+  let userLocale = await getUserLocale(localeContext);
 
-  console.log('currentPath:', currentPath);
+  // If there's no user locale, or the user locale is not supported, get the best match
+  if (!userLocale || !availableLocales.includes(userLocale)) {
+    userLocale = await getBestLocale(availableLocales);
+    console.log('Setting user locale');
+  }
 
-  const locale = await getUserLocale();
+  const messages = await getLocaleMessages(localeContext, userLocale);
 
-  const messages = await getLocaleMessages(locale);
+  console.log('Locale context:', {
+    localeContext,
+    userLocale,
+    availableLocales,
+    messages,
+  });
 
   return {
-    locale,
+    locale: userLocale,
     messages,
   };
 });
@@ -29,13 +36,7 @@ export default getRequestConfig(async () => {
 // export default getRequestConfig(async () => {
 //   const currentPath = headers().get('x-current-path') ?? '';
 
-//   const locale = cookies().get('locale')?.value ?? 'en';
-
-//   // Validate that the incoming `locale` parameter is valid
-//   if (!SUPPORTED_LOCALES.includes(locale)) {
-//     console.error(`Invalid locale: ${locale}`);
-//     notFound();
-//   }
+//   // const locale = cookies().get('locale')?.value ?? 'en';
 
 //   // TODO: validate interview route locale parameter against the new list of all locales
 
@@ -50,6 +51,7 @@ export default getRequestConfig(async () => {
 
 //   // if we're in the interview route group, we need to fetch the messages from the protocol and merge them with the main messages
 //   if (isInterviewRoute(currentPath)) {
+//     console.log('Fetching interview messages');
 //     const interviewMessages = await fetchInterviewMessages(
 //       locale as Locale,
 //       currentPath.split('/interview/')[1] ?? '',
@@ -63,6 +65,7 @@ export default getRequestConfig(async () => {
 //     };
 //   }
 
+//   console.log('Using main messages');
 //   // If we're in the main app (researcher backend), just pass the messages directly.
 //   return {
 //     locale,

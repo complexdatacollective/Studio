@@ -2,6 +2,7 @@
 import { type IntlError, IntlErrorCode } from 'next-intl';
 import type { LocalisedRecord, LocalisedString } from '../../schemas/shared';
 import { match } from '@formatjs/intl-localematcher';
+import { defaultLocale } from './config';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {
@@ -36,13 +37,7 @@ export function getBestMatch(
   protocolLocales: string[],
   userLocales: string[],
 ): string {
-  const bestMatch = match(userLocales, protocolLocales, 'NOT_FOUND');
-  if (bestMatch !== 'NOT_FOUND') {
-    return bestMatch;
-  }
-
-  // Fallback
-  return 'DEFAULT';
+  return match(userLocales, protocolLocales, defaultLocale);
 }
 
 export function isInterviewRoute(currentPath: string): boolean {
