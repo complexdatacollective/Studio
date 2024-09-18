@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { notFound } from 'next/navigation';
 import { getRequestConfig } from 'next-intl/server';
-import { type Locale, MAIN_LOCALES, SUPPORTED_LOCALES } from './locales';
+import { type Locale, MAIN_LOCALES, SUPPORTED_LOCALES } from './config';
 import {
   type IntlError,
   IntlErrorCode,
@@ -9,52 +9,6 @@ import {
 } from 'next-intl';
 import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers, cookies } from 'next/headers';
-
-export default getRequestConfig(async () => {
-  const currentPath = headers().get('x-current-path') ?? '';
-
-  const locale = cookies().get('locale')?.value ?? 'en';
-
-  // Validate that the incoming `locale` parameter is valid
-  if (!SUPPORTED_LOCALES.includes(locale)) {
-    console.error(`Invalid locale: ${locale}`);
-    notFound();
-  }
-
-  // TODO: validate interview route locale parameter against the new list of all locales
-
-  // Load the UI messages for the current locale
-  // Includes fallback to English if the locale is not supported.
-  // This is for Interview route groups using languages not supported by the UI translations
-  const messages = (
-    (await import(
-      `./messages/${MAIN_LOCALES.includes(locale) ? locale : 'en'}.json`
-    )) as { default: AbstractIntlMessages }
-  ).default;
-
-  // if we're in the interview route group, we need to fetch the messages from the protocol and merge them with the main messages
-  if (isInterviewRoute(currentPath)) {
-    const interviewMessages = await fetchInterviewMessages(
-      locale as Locale,
-      currentPath.split('/interview/')[1] ?? '',
-    );
-
-    return {
-      locale,
-      messages: { ...messages, ...interviewMessages },
-      onError: customErrorLogger,
-      getMessageFallback,
-    };
-  }
-
-  // If we're in the main app (researcher backend), just pass the messages directly.
-  return {
-    locale,
-    messages: messages,
-    onError: customErrorLogger,
-    getMessageFallback,
-  };
-});
 
 const getMessageFallback = ({
   namespace,

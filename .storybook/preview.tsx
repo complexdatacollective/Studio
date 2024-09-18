@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
 import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages } from 'next-intl';
-import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
+import { LOCALES_DICT, type Locale } from '~/lib/localisation/config';
 import { getLangDir } from 'rtl-detect';
 import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';

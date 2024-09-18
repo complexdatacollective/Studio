@@ -1,7 +1,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import type { Locale } from '~/lib/localisation/locales';
+import type { Locale } from '~/lib/localisation/config';
 
 // server action to set the locale cookie, as in the language switcher
 const COOKIE_NAME = 'locale';

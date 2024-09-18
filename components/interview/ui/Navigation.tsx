@@ -15,7 +15,7 @@ import { ProgressBarWithTooltip } from '../../ui/ProgressBar';
 import type { IntRange } from 'type-fest';
 import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
-import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
+import LanguageSwitcher from '~/app/_components/LocaleSwitcherSelect';
 import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
 import HelpButton from './HelpButton';
 import { NavButtonWithTooltip } from './NavigationButton';

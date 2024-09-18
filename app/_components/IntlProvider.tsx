@@ -1,7 +1,7 @@
 'use client';
 
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
-import { type Locale } from '~/lib/localisation/locales';
+import { type Locale } from '~/lib/localisation/config';
 import { customErrorLogger } from '~/lib/localisation/utils';
 
 export default function IntlProvider({

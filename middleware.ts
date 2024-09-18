@@ -5,7 +5,7 @@ import CurrentUrlMiddleware from './lib/middleware/CurrentUrlMiddleware';
 
 export default middlewareStacker([
   CurrentUrlMiddleware,
-  IntlMiddleware,
+  // IntlMiddleware,
   CSRFMiddleware,
 ]);
 

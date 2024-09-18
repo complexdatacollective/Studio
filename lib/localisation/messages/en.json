@@ -1,4 +1,7 @@
 {
+  "LocaleSwitcher": {
+    "Label": "Select a language"
+  },
   "Auth": {
     "SignIn": {
       "Title": "Sign in to Studio",

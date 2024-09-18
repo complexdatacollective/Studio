@@ -1,5 +1,5 @@
-import { SUPPORTED_LOCALES } from '~/lib/localisation/locales';
-import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
+import { SUPPORTED_LOCALES } from '~/lib/localisation/config';
+import LanguageSwitcher from '~/app/_components/LocaleSwitcher';
 import ThemeSwitcher from '~/app/_components/ThemeSwitcher';
 
 export function generateStaticParams() {

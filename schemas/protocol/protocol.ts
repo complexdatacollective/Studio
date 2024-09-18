@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { StageSchema } from './interfaces/stages';
 import { CodebookSchema } from './codebook/codebook';
 import { WaveSchema } from './wave';
-import { SupportedLocalesSchema } from '~/lib/localisation/locales';
+import { SupportedLocalesSchema } from '~/lib/localisation/config';
 
 export const AssetManifest = z.object({});
 

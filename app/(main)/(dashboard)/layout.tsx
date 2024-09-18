@@ -2,7 +2,7 @@ import { SearchIcon } from 'lucide-react';
 import { Input } from '~/components/ui/form/Input';
 import Image from 'next/image';
 import StudySwitcher from './_components/StudySwitcher';
-import LanguageSwitcher from '~/app/_components/LanguageSwitcher';
+import LanguageSwitcher from '~/app/_components/LocaleSwitcher';
 import SignOutBtn from './_components/SignOutBtn';
 import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';

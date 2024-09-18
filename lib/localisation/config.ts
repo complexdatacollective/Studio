@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const LOCALES_OBJECTS = [
+export const SUPPORTED_LOCALE_OBJECTS = [
   { code: 'af', label: 'Afrikaans', native: '' },
   { code: 'sq', label: 'Albanian', native: '' },
   { code: 'am', label: 'Amharic', native: '' },
@@ -159,7 +159,9 @@ export const LOCALES_OBJECTS = [
   { code: 'zu', label: 'Zulu', native: '' },
 ] as const;
 
-export const SUPPORTED_LOCALES = LOCALES_OBJECTS.map(({ code }) => code);
+export const SUPPORTED_LOCALES = SUPPORTED_LOCALE_OBJECTS.map(
+  ({ code }) => code,
+);
 
 export const SupportedLocalesSchema = z.enum([
   SUPPORTED_LOCALES[0]!,
@@ -175,6 +177,15 @@ export const MAIN_LOCALE_OBJECTS = [
 
 export const MAIN_LOCALES = MAIN_LOCALE_OBJECTS.map(({ code }) => code);
 
+export const defaultLocale: Locale = 'en';
+
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
-export type LocaleObject = (typeof LOCALES_OBJECTS)[number];
+export type LocaleObject = (typeof SUPPORTED_LOCALE_OBJECTS)[number];
+
+export const LOCALE_COOKIES = {
+  MAIN: 'locale',
+  INTERVIEW: 'interview-locale',
+} as const;
+
+export type LocaleCookieName = keyof typeof LOCALE_COOKIES;

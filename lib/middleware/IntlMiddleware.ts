@@ -1,7 +1,7 @@
 import Negotiator from 'negotiator';
 import { type NextRequest, NextResponse } from 'next/server';
 import { getBestMatch, isInterviewRoute } from '~/lib/localisation/utils';
-import { MAIN_LOCALES } from '../localisation/locales';
+import { MAIN_LOCALES } from '../localisation/config';
 
 export const LOCALE_COOKIES = {
   MAIN: 'locale',
