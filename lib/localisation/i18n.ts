@@ -10,10 +10,7 @@ import {
 import { customErrorLogger, isInterviewRoute } from './utils';
 import { headers, cookies } from 'next/headers';
 
-export default getRequestConfig(async (...all) => {
-  console.log('args passed to getRequestConfig', all);
-
-  console.log('GET REQUEST CONFIG');
+export default getRequestConfig(async () => {
   const currentPath = headers().get('x-current-path') ?? '';
 
   const locale = cookies().get('locale')?.value ?? 'en';

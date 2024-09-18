@@ -22,7 +22,8 @@ const LanguageSwitcher = ({
 }: {
   protocolLocales?: LocaleObject[];
 }) => {
-  const currentLocale = useLocale() as unknown as Locale;
+  const currentLocale = useLocale() as Locale;
+
   console.log('Current locale:', currentLocale);
   const pathname = usePathname();
 

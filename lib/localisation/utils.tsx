@@ -33,10 +33,10 @@ export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
 }
 
 export function getBestMatch(
-  protocolLanguages: string[],
+  protocolLocales: string[],
   userLocales: string[],
 ): string {
-  const bestMatch = match(userLocales, protocolLanguages, 'NOT_FOUND');
+  const bestMatch = match(userLocales, protocolLocales, 'NOT_FOUND');
   if (bestMatch !== 'NOT_FOUND') {
     return bestMatch;
   }
