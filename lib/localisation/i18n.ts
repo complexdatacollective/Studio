@@ -37,7 +37,6 @@ export default getRequestConfig(async (...all) => {
 
   // if we're in the interview route group, we need to fetch the messages from the protocol and merge them with the main messages
   if (isInterviewRoute(currentPath)) {
-    console.log('IS INTERVIEW ROUTE');
     const interviewMessages = await fetchInterviewMessages(
       locale as Locale,
       currentPath.split('/interview/')[1] ?? '',

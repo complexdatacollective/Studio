@@ -1,5 +1,3 @@
-import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
-
 import { getMessages, getLocale, getNow, getTimeZone } from 'next-intl/server';
 import { Lexend, Roboto_Mono } from 'next/font/google';
 import { type Metadata } from 'next';
@@ -28,7 +26,7 @@ export const metadata: Metadata = {
     'A platform for designing and building impactful personal networks research.',
 };
 
-export default async function InterviewLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -61,7 +59,6 @@ export default async function InterviewLayout({
               timeZone,
             }}
           >
-            <InjectThemeVariables theme="interview" />
             {children}
           </Providers>
           <Analytics />
