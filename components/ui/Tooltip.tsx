@@ -15,9 +15,7 @@ const Tooltip = ({
   return (
     <TooltipPrimitive.Root>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipPrimitive.Portal
-        container={document.getElementById('dialog-portal')}
-      >
+      <TooltipPrimitive.Portal>
         <TooltipPrimitive.Content
           className={cn(
             'motion-safe:data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade',
