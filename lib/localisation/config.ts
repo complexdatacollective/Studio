@@ -164,9 +164,7 @@ export const SUPPORTED_LOCALE_OBJECTS = [
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 export type LocaleObject = (typeof SUPPORTED_LOCALE_OBJECTS)[number];
 
-export const SUPPORTED_LOCALES = SUPPORTED_LOCALE_OBJECTS.map(
-  ({ code }) => code,
-);
+const SUPPORTED_LOCALES = SUPPORTED_LOCALE_OBJECTS.map(({ code }) => code);
 
 export const SupportedLocalesSchema = z.enum([
   SUPPORTED_LOCALES[0]!,
