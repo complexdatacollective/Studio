@@ -18,6 +18,7 @@ export default getRequestConfig(async () => {
     localeContext,
     interviewId,
   );
+
   let userLocale = await getUserLocale(localeContext);
 
   // If there's no user locale, or the user locale is not supported, set the

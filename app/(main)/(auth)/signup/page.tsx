@@ -1,6 +1,6 @@
 import SignUpForm from '../_components/SignUpForm';
 import { getServerSession } from '~/lib/auth';
-import Link from 'next/link';
+import Link from '~/components/Link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import Surface from '~/components/layout/Surface';

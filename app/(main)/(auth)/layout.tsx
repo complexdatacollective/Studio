@@ -1,4 +1,3 @@
-import { BACKEND_LOCALES } from '~/lib/localisation/config';
 import LanguageSwitcher from '~/app/_components/LocaleSwitcher';
 import ThemeSwitcher from '~/app/_components/ThemeSwitcher';
 
@@ -11,7 +10,7 @@ export default function AuthLayout({
     <div className="flex h-screen w-screen items-center justify-center">
       <div className="absolute top-2 flex gap-4 ltr:right-2 rtl:left-2">
         <ThemeSwitcher />
-        <LanguageSwitcher codes={BACKEND_LOCALES} />
+        <LanguageSwitcher />
       </div>
       {children}
     </div>

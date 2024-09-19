@@ -62,6 +62,13 @@ const config = {
       },
     ],
     'no-unreachable': 'error',
+    'no-restricted-imports': [
+      'error',
+      {
+        name: 'next/link',
+        message: 'Please import from `~/components/link` instead.',
+      },
+    ],
   },
 };
 

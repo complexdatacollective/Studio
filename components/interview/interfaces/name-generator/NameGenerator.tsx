@@ -14,8 +14,6 @@ const demoPrompts = [
   {
     id: '1',
     text: {
-      DEFAULT:
-        'Within the past 6 months, who have you felt close to, or discussed important personal matters with?',
       en: 'Within the past 6 months, who have you felt close to, or discussed important personal matters with?',
       fr: 'French prompt',
     },

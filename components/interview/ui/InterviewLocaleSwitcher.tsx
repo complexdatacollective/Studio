@@ -19,10 +19,9 @@ export default function InterviewLocaleSwitcher({
 
   const localeRecords = getLocaleRecordsFromCodes(codes);
 
-  function onChange(value: string) {
-    const locale = value as Locale;
+  function onChange(value: Locale) {
     startTransition(async () => {
-      await setUserLocale(locale);
+      await setUserLocale(value);
     });
   }
 

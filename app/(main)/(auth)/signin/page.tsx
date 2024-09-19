@@ -1,6 +1,6 @@
 import SignInForm from '../_components/SignInForm';
 import { routes } from '~/lib/routes';
-import Link from 'next/link';
+import Link from '~/components/Link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getServerSession } from '~/lib/auth';

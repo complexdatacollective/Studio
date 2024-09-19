@@ -7,7 +7,6 @@ import SignOutBtn from './_components/SignOutBtn';
 import { requirePageAuth } from '~/lib/auth';
 import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import ThemeSwitcher from '~/app/_components/ThemeSwitcher';
-import { BACKEND_LOCALES } from '~/lib/localisation/config';
 
 export default async function DashboardLayout({
   children,
@@ -43,7 +42,7 @@ export default async function DashboardLayout({
           leftAdornment={<SearchIcon className="h-5 w-5" />}
         />
 
-        <LanguageSwitcher codes={BACKEND_LOCALES} />
+        <LanguageSwitcher />
         <div className="ml-4 flex items-center pr-0.5">
           <SignOutBtn />
         </div>
