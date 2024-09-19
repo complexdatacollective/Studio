@@ -79,6 +79,8 @@ const Surface: SurfaceComponent = ({
   );
 };
 
+export default Surface;
+
 // @ts-expect-error incompatibility between framer-motion 12.x and new react types
 export const MotionSurface = motion.create(Surface) as <E extends ElementType>(
   props: SurfaceProps<E> & MotionProps,
