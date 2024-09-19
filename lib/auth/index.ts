@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import { Lucia } from 'lucia';
 import { db } from '~/lib/db';
 import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
@@ -5,9 +6,8 @@ import { env } from '~/env';
 import { cache } from 'react';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import 'server-only';
 import { getCurrentPath } from '../serverUtils';
-import { unstable_noStore } from 'next/cache';
+import 'server-only';
 
 const adapter = new PrismaAdapter(db.session, db.user);
 

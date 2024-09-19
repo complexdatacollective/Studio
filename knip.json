@@ -13,8 +13,10 @@
     "./components/layout/*",
     "./components/typography/*",
     "./lib/db/**",
-    "./lib/localisation/i18n.ts",
+    "./lib/localisation/request.ts",
     "./lib/localisation/navigation.tsx",
+    "./lib/localisation/locale.ts",
+    "./lib/localisation/utils.ts",
     "./lib/utils.ts"
   ]
 }

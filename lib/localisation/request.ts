@@ -5,8 +5,7 @@ import {
   getLocaleMessages,
   getUserLocale,
 } from './locale';
-import { getLocaleContext } from './utils';
-import { headers } from 'next/headers';
+import { getLocaleContext, getMessageFallback } from './utils';
 import { getCurrentPath, getInterviewId } from '../serverUtils';
 
 export default getRequestConfig(async () => {
@@ -30,15 +29,9 @@ export default getRequestConfig(async () => {
 
   const messages = await getLocaleMessages(localeContext, userLocale);
 
-  console.log('Request config:', {
-    localeContext,
-    userLocale,
-    availableLocales,
-    // messages,
-  });
-
   return {
     locale: userLocale,
     messages,
+    getMessageFallback,
   };
 });

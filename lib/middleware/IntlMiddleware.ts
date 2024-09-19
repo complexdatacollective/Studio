@@ -14,15 +14,15 @@ import { getInterviewId } from '../serverUtils';
  */
 async function IntlMiddleware(req: NextRequest) {
   const response = NextResponse.next();
-  const currentPath = req.nextUrl.pathname!;
+  const currentPath = req.nextUrl.pathname;
   const localeContext = getLocaleContext(currentPath);
   const interviewId = getInterviewId(currentPath);
   const availableLocales = await getAvailableLocales(
     localeContext,
     interviewId,
   );
+
   let userLocale = await getUserLocale(localeContext);
-  console.log('userLocale:', userLocale);
 
   // If there's no user locale, or the user locale is not supported, set the
   // user locale to the best available match.

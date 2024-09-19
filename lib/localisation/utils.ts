@@ -1,6 +1,15 @@
-import { AbstractIntlMessages, type IntlError, IntlErrorCode } from 'next-intl';
+import {
+  type AbstractIntlMessages,
+  type IntlError,
+  IntlErrorCode,
+} from 'next-intl';
 import type { LocalisedRecord, LocalisedString } from '../../schemas/shared';
-import { Locale, LocaleCookieName, SUPPORTED_LOCALE_OBJECTS } from './config';
+import {
+  type Locale,
+  type LocaleCookieName,
+  type LocaleObject,
+  SUPPORTED_LOCALE_OBJECTS,
+} from './config';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {
@@ -37,7 +46,7 @@ export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
 /**
  * Determine if the current path is an interview route.
  */
-export function isInterviewRoute(currentPath: string): boolean {
+function isInterviewRoute(currentPath: string): boolean {
   return currentPath.startsWith('/interview');
 }
 
@@ -45,7 +54,7 @@ export function isInterviewRoute(currentPath: string): boolean {
  * Given Locale[], return the corresponding Locale records from the
  * SUPPORTED_LOCALE_OBJECTS array.
  */
-export function getLocaleRecordsFromCodes(codes: Locale[]) {
+export function getLocaleRecordsFromCodes(codes: Locale[]): LocaleObject[] {
   return codes.map((code) => {
     const record = SUPPORTED_LOCALE_OBJECTS.find(
       (record) => record.code === code,
@@ -91,14 +100,16 @@ export async function fetchProtocolMessages(
     );
     if (!response.ok) {
       console.error('Failed to fetch messages:', response.statusText);
-      return [];
+      return {};
     }
-    const data = await response.json();
+    const data = (await response.json()) as {
+      messages: AbstractIntlMessages;
+    } | null;
 
-    return data.messages;
+    return data!.messages;
   } catch (error) {
     console.error('Error fetching protocol messages:', error);
-    return [];
+    return {};
   }
 }
 

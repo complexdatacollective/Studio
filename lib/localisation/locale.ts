@@ -9,19 +9,13 @@ import {
   BACKEND_LOCALES,
   FALLBACK_LOCALE,
 } from './config';
-import {
-  fetchProtocolMessages,
-  getLocaleContext,
-  isInterviewRoute,
-} from './utils';
+import { fetchProtocolMessages, getLocaleContext } from './utils';
 import Negotiator from 'negotiator';
 import { type AbstractIntlMessages } from 'next-intl';
 import { match } from '@formatjs/intl-localematcher';
 import { getCurrentPath, getInterviewId } from '../serverUtils';
 
-export async function getProtocolLocales(
-  interviewId: string,
-): Promise<Locale[]> {
+async function getProtocolLocales(interviewId: string): Promise<Locale[]> {
   try {
     const response = await fetch(
       `http://localhost:3000/api/interview/${interviewId}/languages`,

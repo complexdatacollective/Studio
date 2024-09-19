@@ -22,7 +22,7 @@ export default function Prompts({
       <Pips count={prompts.length} currentIndex={currentIndex} />
       <div className="">
         {prompts.map(
-          ({ id, text }) =>
+          ({ id }) =>
             prompts[currentIndex]?.id === id && (
               <Prompt key={id} text={t('Stages.1.Prompts.1')} />
             ),

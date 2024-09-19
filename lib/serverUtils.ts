@@ -15,8 +15,9 @@ export function getCurrentPath(): string {
 export function getInterviewId(currentPath: string) {
   const match = currentPath.match(/^\/interview\/([^/]+)/);
 
-  if (!match || !match[1]) {
+  if (!match?.[1]) {
     return undefined;
   }
+
   return match[1];
 }
