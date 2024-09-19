@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { FALLBACK_LOCALE } from '~/lib/localisation/config';
 
 /**
  * This is a placeholder for whatever we end up using for an AST for storing
@@ -51,7 +52,7 @@ export type JSONRichText = z.infer<typeof JSONRichTextSchema>;
 // locale) definable in the protocol
 const LocalisedRecordSchema = z
   .object({
-    en: JSONRichTextSchema,
+    [FALLBACK_LOCALE]: JSONRichTextSchema,
   })
   .and(z.record(JSONRichTextSchema));
 
@@ -59,7 +60,7 @@ export type LocalisedRecord = z.infer<typeof LocalisedRecordSchema>;
 
 export const LocalisedStringSchema = z
   .object({
-    DEFAULT: z.string(),
+    [FALLBACK_LOCALE]: z.string(),
   })
   .and(z.record(z.string()));
 

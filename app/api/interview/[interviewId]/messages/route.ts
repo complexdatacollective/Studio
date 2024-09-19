@@ -9,10 +9,7 @@ export async function GET(
   const locale = searchParams.get('locale');
 
   try {
-    await new Promise((resolve) => setTimeout(resolve, 100));
     const protocol = devProtocol;
-
-    console.log('examining protocol for messages...', protocol, locale);
 
     return Response.json({
       messages: protocol.localisedStrings[locale],
