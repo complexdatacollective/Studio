@@ -15,6 +15,7 @@ const stageOptions: Stage[] = [
 
 type StoryArgs = {
   stage: Stage;
+  userLanguageHeader: string;
 };
 
 const meta: Meta<StoryArgs> = {
@@ -42,8 +43,9 @@ const meta: Meta<StoryArgs> = {
   },
   args: {
     stage: stageOptions[0],
+    userLanguageHeader: 'en',
   },
-  render: (args) => {
+  render: ({ stage }) => {
     const getStageComponent = (stage: Stage) => {
       switch (stage.type) {
         case 'NameGenerator':
@@ -55,7 +57,7 @@ const meta: Meta<StoryArgs> = {
 
     return (
       <SimpleShell isReadyForNextStage={false} progress={50}>
-        {getStageComponent(args.stage)}
+        {getStageComponent(stage)}
       </SimpleShell>
     );
   },

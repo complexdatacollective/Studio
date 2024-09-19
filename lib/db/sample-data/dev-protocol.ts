@@ -1,8 +1,67 @@
 import type { Protocol } from '~/schemas/protocol/protocol';
 
-const devProtocol: Protocol = {
+export const devProtocol: Protocol = {
   name: 'Dev Protocol',
-  languages: ['en', 'es'],
+  languages: ['en-GB', 'fr', 'es'],
+  localisedStrings: {
+    'en-GB': {
+      Stages: {
+        '1': {
+          Label: 'Name Generator',
+          Prompts: {
+            '1': 'Who are your classmates at school?',
+            '2': 'What are the names of your family members?',
+          },
+          Panels: {
+            '1': {
+              Title: 'People you have already mentioned',
+            },
+            '2': {
+              Title: 'People from your last interview',
+            },
+          },
+        },
+      },
+    },
+    'es': {
+      Stages: {
+        '1': {
+          Label: 'Generador de Nombres',
+          Prompts: {
+            '1': '¿Quiénes son tus compañeros de clase en school?',
+            '2': '¿Cuáles son los nombres de tus familiares?',
+          },
+          Panels: {
+            '1': {
+              Title: 'Personas que ya has mencionado',
+            },
+            '2': {
+              Title: 'Personas de tu última entrevista',
+            },
+          },
+        },
+      },
+    },
+    'fr': {
+      Stages: {
+        '1': {
+          Label: 'Générateur de noms',
+          Prompts: {
+            '1': 'Qui sont vos camarades de classe à school?',
+            '2': 'Quels sont les noms de vos membres de famille?',
+          },
+          Panels: {
+            '1': {
+              Title: 'Personnes que vous avez déjà mentionnées',
+            },
+            '2': {
+              Title: 'Personnes de votre dernière interview',
+            },
+          },
+        },
+      },
+    },
+  },
   codebook: {
     ego: {
       variables: {
@@ -49,7 +108,6 @@ const devProtocol: Protocol = {
     {
       id: '1',
       type: 'NameGenerator',
-      label: 'Name Generator',
       subject: {
         entity: 'node',
         id: 'person',
@@ -59,55 +117,8 @@ const devProtocol: Protocol = {
       prompts: [
         {
           id: '1',
-          text: {
-            en: 'Who are your classmates at {school}?',
-          },
-          injectedVariables: ['school'],
         },
       ],
-    },
-    {
-      id: '2',
-      type: 'Sociogram',
-      label: 'Count & ability to skip to specific stage',
-      skipLogic: {
-        action: 'SKIP',
-        filter: {
-          join: 'AND',
-          rules: [
-            {
-              operator: 'COUNT',
-              count: 3,
-              type: 'ego',
-              entityId: 'person',
-              id: '1',
-            },
-          ],
-        },
-        targetStage: '4', // skip here if count condition is met
-      },
-    },
-    {
-      id: '3',
-      type: 'Sociogram',
-      label: 'Branching Filter Example',
-      skipLogic: {
-        action: 'SHOW',
-        filter: {
-          join: 'AND',
-          rules: [
-            {
-              operator: 'INCLUDES',
-              entityVariable: 'name',
-              value: 'John',
-              type: 'node',
-              entityId: 'person',
-              id: '1',
-            },
-          ],
-        },
-        stagesToShow: ['7', '8'],
-      },
     },
   ],
 };

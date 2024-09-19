@@ -1,12 +1,15 @@
 import type { Preview } from '@storybook/react';
 import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages } from 'next-intl';
-import { LOCALES_DICT, type Locale } from '~/lib/localisation/locales';
+import {
+  SUPPORTED_LOCALE_OBJECTS,
+  type Locale,
+} from '~/lib/localisation/config';
 import { getLangDir } from 'rtl-detect';
 import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import '~/styles/global.css';
-import Providers from '~/app/[locale]/_components/Providers';
+import Providers from '~/app/_components/Providers';
 import { Lexend, Roboto_Mono } from 'next/font/google';
 import { cn } from '~/lib/utils';
 
@@ -59,9 +62,9 @@ const preview: Preview = {
       toolbar: {
         icon: 'globe',
         items: [
-          ...LOCALES_DICT.map(([locale, name]) => ({
-            value: locale,
-            title: name,
+          ...SUPPORTED_LOCALE_OBJECTS.map(({ code, label }) => ({
+            value: code,
+            title: label,
           })),
         ],
         showName: true,
@@ -125,7 +128,7 @@ const preview: Preview = {
       return (
         <div
           className={cn(
-            'font-sans min-h-full bg-background text-foreground',
+            'min-h-full bg-background font-sans text-foreground',
             `${lexend.variable} ${roboto_mono.variable}`,
           )}
         >

@@ -4,11 +4,10 @@ import { db } from '~/lib/db';
 import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
 import { env } from '~/env';
 import { cache } from 'react';
-import { redirect } from '~/lib/localisation/navigation';
+import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { getCurrentPath } from '../serverUtils';
 import 'server-only';
-import { getServerPath } from '../serverUtils';
-import { unstable_noStore } from 'next/cache';
 
 const adapter = new PrismaAdapter(db.session, db.user);
 
@@ -75,12 +74,11 @@ export async function requirePageAuth({
 }: {
   returnToCurrentPath?: boolean;
 } = {}) {
-  unstable_noStore();
   const { session } = await getServerSession();
 
   if (!session) {
     if (returnToCurrentPath) {
-      const redirectPath = getServerPath();
+      const redirectPath = getCurrentPath();
       redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath));
     }
 

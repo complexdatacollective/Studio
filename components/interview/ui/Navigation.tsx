@@ -3,35 +3,40 @@
 import {
   ChevronUp,
   ChevronDown,
-  Settings2,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { usePathname, useRouter } from '~/lib/localisation/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '~/lib/utils';
 import { ProgressBarWithTooltip } from '../../ui/ProgressBar';
 import type { IntRange } from 'type-fest';
-import Popover from '~/components/ui/Popover';
-import Heading from '~/components/typography/Heading';
-import LanguageSwitcher from '~/app/[locale]/_components/LanguageSwitcher';
 import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
 import HelpButton from './HelpButton';
 import { NavButtonWithTooltip } from './NavigationButton';
 import Surface from '~/components/layout/Surface';
+import { type Locale } from '~/lib/localisation/config';
 import { useMediaQuery } from '~/hooks/useMediaQuery';
+import InterviewLocaleSwitcher from './InterviewLocaleSwitcher';
 
 type NavigationProps = {
   pulseNext: boolean;
   progress: IntRange<0, 100>;
+  availableLocales: Locale[];
 };
 
-const Navigation = ({ pulseNext, progress }: NavigationProps) => {
+const Navigation = ({
+  pulseNext,
+  progress,
+  availableLocales,
+}: NavigationProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const stage = searchParams.get('stage');
+  const t = useTranslations('Interview.Navigation');
+  const isMediumScreen = useMediaQuery('md');
 
   const moveBackward = () => {
     if (!stage) return;
@@ -44,11 +49,6 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
     const newStage = parseInt(stage) + 1;
     router.push(`${pathname}/?stage=${newStage}`);
   };
-
-  const t = useTranslations('Interview.Navigation');
-
-  const isMediumScreen = useMediaQuery('md');
-  const tooltipSide = isMediumScreen ? 'right' : 'top';
 
   return (
     <>
@@ -108,7 +108,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
                     type: 'paragraph',
                     children: [
                       {
-                        text: 'You can change the language from the settings button, or access help options by clicking the help button.',
+                        text: 'You can change the language by clicking the globe icon, or access help options by clicking the help button.',
                       },
                     ],
                   },
@@ -147,20 +147,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           'md:h-full md:w-28 md:flex-shrink-0 md:flex-grow-0 md:flex-col md:px-0 md:py-2',
         )}
       >
-        <Popover
-          content={
-            <>
-              <Heading variant="label">Select language</Heading>
-              <LanguageSwitcher />
-            </>
-          }
-          context="interviewer"
-          // side="right"
-        >
-          <NavButtonWithTooltip title={t('Menu')} tooltipSide={tooltipSide}>
-            <Settings2 className="h-10 w-10 stroke-[2px]" />
-          </NavButtonWithTooltip>
-        </Popover>
+        <InterviewLocaleSwitcher codes={availableLocales} />
         <HelpButton id="nav-wizard-help" />
         <div
           id="interview-movement"
@@ -171,8 +158,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
         >
           <NavButtonWithTooltip
             onClick={moveBackward}
-            title={t('Previous')}
-            tooltipSide={tooltipSide}
+            tooltipContent={t('Previous')}
           >
             {isMediumScreen ? (
               <ChevronUp className="h-10 w-10 stroke-[3px]" />
@@ -184,13 +170,12 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
             label={t('Progress', { percent: progress })}
             value={progress}
             orientation={isMediumScreen ? 'vertical' : 'horizontal'}
-            title={t('Progress', { percent: progress })}
+            tooltipContent={t('Progress', { percent: progress })}
           />
           <NavButtonWithTooltip
             className={cn(pulseNext && 'animate-nudge bg-success')}
             onClick={moveForward}
-            title={t('Next')}
-            tooltipSide={tooltipSide}
+            tooltipContent={t('Next')}
           >
             {isMediumScreen ? (
               <ChevronDown className="h-10 w-10 stroke-[3px]" />

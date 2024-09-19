@@ -1,4 +1,7 @@
 {
+  "LocaleSwitcher": {
+    "Label": "Select a language"
+  },
   "Auth": {
     "SignIn": {
       "Title": "Sign in to Studio",
@@ -89,7 +92,7 @@
     "Navigation": {
       "Next": "Next question",
       "Previous": "Previous question",
-      "Menu": "Main menu",
+      "LanguageSwitcher": "Change interview language",
       "Help": "Help menu",
       "Progress": "You have completed {percent}% of the interview"
     }
