@@ -1,10 +1,6 @@
-import { BACKEND_LOCALES, SUPPORTED_LOCALES } from '~/lib/localisation/config';
+import { BACKEND_LOCALES } from '~/lib/localisation/config';
 import LanguageSwitcher from '~/app/_components/LocaleSwitcher';
 import ThemeSwitcher from '~/app/_components/ThemeSwitcher';
-
-export function generateStaticParams() {
-  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
-}
 
 export default function AuthLayout({
   children,
