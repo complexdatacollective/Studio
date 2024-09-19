@@ -8,40 +8,39 @@ import React, {
 import { generatePublicId } from '../generatePublicId';
 import { flushSync } from 'react-dom';
 import { Dialog } from './Dialog';
-import { Button } from '~/components/ui/Button';
-import Form from '~/components/ui/form/Form';
 import { useTranslations } from 'next-intl';
+import Form from '~/components/ui/form/Form';
+import { Button } from '~/components/ui/Button';
 
-type BaseDialogProps = {
-  id?: string;
-  title: string;
-  accent?: 'default' | 'danger' | 'success' | 'warning' | 'info';
-  description?: string;
-  children?: React.ReactNode;
-};
-
-type ConfirmDialogProps = BaseDialogProps & {
+type ConfirmDialog = {
+  type: 'confirm';
   hideCancel?: boolean;
   confirmText?: string;
   cancelText?: string;
+  children?: React.ReactNode;
 };
 
-type CustomDialogProps<T> = BaseDialogProps & {
+type CustomDialog<T> = {
+  type: 'custom';
   renderContent: (resolve: (value: T | null) => void) => React.ReactNode;
 };
 
-type OpenDialog<T> = ConfirmDialogProps & CustomDialogProps<T>;
+type Dialog<T> = {
+  id?: string;
+  title: string;
+  description: string;
+  accent?: 'default' | 'danger' | 'success' | 'warning' | 'info';
+} & (ConfirmDialog | CustomDialog<T>);
 
-type DialogState<T> = OpenDialog<T> & {
+type DialogState = Dialog<unknown> & {
   id: string;
-  resolveCallback: (value: T | null) => void;
+  resolveCallback: (value: unknown) => void;
   ref: RefObject<HTMLDialogElement>;
 };
 
 type DialogContextType = {
-  closeDialog: (id: string, value: unknown) => Promise<void>;
-  openDialog: (dialogProps: ConfirmDialogProps) => Promise<boolean | null>;
-  openCustomDialog: <T>(dialogProps: CustomDialogProps<T>) => Promise<T | null>;
+  closeDialog: <T = boolean>(id: string, value: T | null) => Promise<void>;
+  openDialog: <T = boolean>(dialogProps: Dialog<T>) => Promise<T | null>;
 };
 
 const DialogContext = createContext<DialogContextType | null>(null);
@@ -50,10 +49,10 @@ const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const t = useTranslations('Generic');
-  const [dialogs, setDialogs] = useState<DialogState<unknown>[]>([]);
+  const [dialogs, setDialogs] = useState<DialogState[]>([]);
 
-  const INTERNAL_openDialog = useCallback(
-    async <T,>(dialogProps: OpenDialog<T>): Promise<T | null> => {
+  const openDialog = useCallback(
+    async <T = boolean,>(dialogProps: Dialog<T>): Promise<T | null> => {
       const dialogRef = React.createRef<HTMLDialogElement>();
 
       return new Promise((resolveCallback) => {
@@ -65,7 +64,7 @@ const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
               id: dialogProps.id ?? generatePublicId(),
               resolveCallback,
               ref: dialogRef,
-            } as DialogState<unknown>,
+            } as DialogState,
           ]),
         );
 
@@ -78,7 +77,7 @@ const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 
   const closeDialog = useCallback(
-    async (id: string, value: unknown) => {
+    async <T = boolean,>(id: string, value: T | null) => {
       const dialog = dialogs.find((dialog) => dialog.id === id);
 
       if (!dialog) {
@@ -90,6 +89,7 @@ const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
         dialog.resolveCallback(value);
       }
 
+      // Wait for the animation to finish before removing from state
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       setDialogs((prevDialogs) =>
@@ -99,68 +99,62 @@ const DialogProvider: React.FC<{ children: React.ReactNode }> = ({
     [dialogs, setDialogs],
   );
 
-  const openDialog = useCallback(
-    (dialogProps: ConfirmDialogProps) =>
-      INTERNAL_openDialog<boolean>({
-        ...dialogProps,
-        renderContent: (resolve) => (
-          <Form.Footer
-            primaryAction={
-              <Button color="primary" onClick={() => resolve(true)}>
-                {dialogProps.confirmText ?? t('Acknowledge')}
-              </Button>
-            }
-            secondaryAction={
-              !dialogProps.hideCancel && (
-                <Button onClick={() => resolve(false)}>
-                  {dialogProps.cancelText ?? t('Cancel')}
-                </Button>
-              )
-            }
-          />
-        ),
-      }),
-    [INTERNAL_openDialog, t],
-  );
-
-  const openCustomDialog = useCallback(
-    <T,>(dialogProps: CustomDialogProps<T>) =>
-      INTERNAL_openDialog<T>(dialogProps),
-    [INTERNAL_openDialog],
-  );
-
   const contextValue: DialogContextType = {
     closeDialog,
     openDialog,
-    openCustomDialog,
   };
 
   return (
     <DialogContext.Provider value={contextValue}>
       {children}
-      {dialogs.map(
-        ({
-          id,
-          ref,
-          title,
-          description,
-          accent,
-          renderContent,
-          children: dialogChildren,
-        }) => (
-          <Dialog
-            key={id}
-            ref={ref}
-            title={title}
-            description={description}
-            closeDialog={() => closeDialog(id, null)}
-            accent={accent}
-          >
-            {dialogChildren}
-            {renderContent((value) => closeDialog(id, value))}
-          </Dialog>
-        ),
-      )}
+      {dialogs.map((dialog) => {
+        if (dialog.type === 'confirm') {
+          return (
+            <Dialog
+              key={dialog.id}
+              title={dialog.title}
+              description={dialog.description}
+              closeDialog={() => closeDialog(dialog.id, null)}
+              accent={dialog.accent}
+              ref={dialog.ref}
+            >
+              {dialog.children}
+              <Form.Footer
+                primaryAction={
+                  <Button
+                    onClick={() => closeDialog(dialog.id, true)}
+                    color="primary"
+                  >
+                    {dialog.confirmText ?? t('Acknowledge')}
+                  </Button>
+                }
+                secondaryAction={
+                  !dialog.hideCancel && (
+                    <Button onClick={() => closeDialog(dialog.id, null)}>
+                      {dialog.cancelText ?? t('Cancel')}
+                    </Button>
+                  )
+                }
+              />
+            </Dialog>
+          );
+        }
+
+        if (dialog.type === 'custom') {
+          return (
+            <Dialog
+              key={dialog.id}
+              title={dialog.title}
+              description={dialog.description}
+              closeDialog={() => closeDialog(dialog.id, null)}
+              accent={dialog.accent}
+              ref={dialog.ref}
+            >
+              {dialog.renderContent((value) => closeDialog(dialog.id, value))}
+            </Dialog>
+          );
+        }
+      })}
     </DialogContext.Provider>
   );
 };

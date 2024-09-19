@@ -11,7 +11,6 @@ export type DialogProps = {
   ref?: React.RefObject<HTMLDialogElement>;
   accent?: 'default' | 'danger' | 'success' | 'warning' | 'info';
   closeDialog: () => void;
-  childrenWithRenderProp?: (closeDialog: () => void) => React.ReactNode;
 } & React.DialogHTMLAttributes<HTMLDialogElement>;
 
 /**
@@ -62,7 +61,7 @@ export const Dialog = ({
         className={cn(
           'max-w-4xl rounded bg-surface-0 text-surface-0-foreground',
 
-          // Accent
+          // Accent overrides the primary hue so that nested buttons inherit color
           accent === 'success' && '[--primary:var(--success)]',
           accent === 'warning' && '[--primary:var(--warning)]',
           accent === 'info' && '[--primary:var(--info)]',

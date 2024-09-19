@@ -1,6 +1,6 @@
 import { cn } from '~/lib/utils';
-import { motion } from 'framer-motion';
-import { forwardRef, type ReactNode } from 'react';
+import * as motion from 'framer-motion/client';
+import { type ReactNode } from 'react';
 
 const backdropClasses =
   'fixed inset-0 flex items-center justify-center bg-overlay/70 backdrop-blur-xs';
@@ -16,33 +16,27 @@ const overlayVariants = {
   },
 };
 
-const PopoverBackdrop = forwardRef(
-  (
-    {
-      className,
-      children,
-    }: {
-      className?: string;
-      children: ReactNode;
-    },
-    ref,
-  ) => {
-    return (
-      // @ts-expect-error has to do with 12.0.0-alpha release
-      <motion.div
-        ref={ref}
-        className={cn(backdropClasses, className)}
-        variants={overlayVariants}
-        initial="closed"
-        animate="open"
-        exit="closed"
-      >
-        {children}
-      </motion.div>
-    );
-  },
-);
-
-PopoverBackdrop.displayName = 'PopoverBackdrop';
+const PopoverBackdrop = ({
+  className,
+  children,
+  ref,
+}: {
+  className?: string;
+  children: ReactNode;
+  ref?: React.Ref<HTMLDivElement>;
+}) => {
+  return (
+    <motion.div
+      ref={ref}
+      className={cn(backdropClasses, className)}
+      variants={overlayVariants}
+      initial="closed"
+      animate="open"
+      exit="closed"
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 export default PopoverBackdrop;
