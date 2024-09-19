@@ -9,6 +9,7 @@ import QuickNodeForm from './QuickNodeForm';
 import { cn } from '~/lib/utils';
 import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
+import { type InterviewStage } from '../../ui/InterviewShell';
 
 const demoPrompts = [
   {
@@ -74,7 +75,7 @@ const demoNodes = [
   },
 ];
 
-function NameGenerator() {
+function NameGenerator(_props: InterviewStage) {
   return (
     <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
       <Prompts prompts={demoPrompts} currentPromptId="1" />

@@ -1,6 +1,6 @@
 'use client';
 
-import { type ElementType, type ReactNode } from 'react';
+import { type ElementType } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '~/lib/utils';
 import { motion, type MotionProps } from 'framer-motion';
@@ -32,23 +32,10 @@ export const surfaceVariants = tv({
 
 export type SurfaceVariants = VariantProps<typeof surfaceVariants>;
 
-// 1. Define a generic type for the `as` prop and component props
-type AsProp<E extends React.ElementType> = {
-  as?: E;
-};
-
-// 2. Combine the `as` prop with the props of the specified element
-type SurfaceProps<E extends React.ElementType> = AsProp<E> &
-  Omit<React.ComponentPropsWithoutRef<E>, keyof AsProp<E>>;
-
-// 3. Define the component type with generics and ref forwarding
-type SurfaceComponent = <E extends React.ElementType = 'div'>(
-  props: SurfaceProps<E> & {
-    level: SurfaceVariants['level'];
-    spacing?: SurfaceVariants['spacing'];
-    children?: React.ReactNode;
-  },
-) => React.ReactElement | null;
+type SurfaceProps<T extends ElementType = 'div'> = {
+  as?: T;
+} & SurfaceVariants &
+  Omit<React.ComponentPropsWithRef<T>, keyof SurfaceVariants | 'as'>;
 
 /**
  * Surface is a layout component that provides a background and foreground color
@@ -58,7 +45,7 @@ type SurfaceComponent = <E extends React.ElementType = 'div'>(
  *
  * Note that Surface level '0' is a special case that is used for dialogs and popovers.
  */
-const Surface: SurfaceComponent = ({
+const Surface = <T extends ElementType = 'div'>({
   as,
   children,
   ref,
@@ -66,7 +53,7 @@ const Surface: SurfaceComponent = ({
   spacing,
   className,
   ...rest
-}) => {
+}: SurfaceProps<T>) => {
   const Component = as ?? 'div'; // Default to 'div' if `as` is not provided
   return (
     <Component
