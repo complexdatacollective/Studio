@@ -25,7 +25,7 @@ export default async function InterviewShell({
   });
 
   // eslint-disable-next-line no-console
-  console.log('stage', stage, currentStage, interview.protocolRevisionId);
+  // console.log('stage', stage, currentStage, interview.protocolRevisionId);
 
   const stageCount = await getStageCount({
     protocolRevisionId: interview.protocolRevisionId,

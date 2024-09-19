@@ -13,9 +13,9 @@ export const CodebookSchema = z.object({
   ego: z.union([EntityTypeSchema, WaveEntitySchema]).optional(),
 });
 
-export type TCodebook = z.infer<typeof CodebookSchema>;
+export type Codebook = z.infer<typeof CodebookSchema>;
 
-export const example: TCodebook = {
+export const example: Codebook = {
   nodes: {
     person: {
       '1': {

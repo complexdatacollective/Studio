@@ -79,13 +79,4 @@
     --seq-panel-1: var(--sea-green);
     --seq-panel-2: var(--sea-serpent);
   }
-
-  [data-context='interviewer'] {
-    --background: var(--white);
-    --foreground: var(--charcoal);
-
-    /* small amount of contrast against background */
-    --default: 50% 0.1 var(--base-hue);
-    --default-foreground: var(--foreground);
-  }
 }

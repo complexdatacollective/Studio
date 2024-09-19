@@ -1,10 +1,7 @@
 import { z } from 'zod';
-import { LocalisedStringSchema } from '~/schemas/shared';
 
 export const PromptSchema = z.object({
   id: z.string(),
-  text: LocalisedStringSchema,
-  injectedVariables: z.array(z.string()).optional(), // variables to inject into the prompt text
   // Todo:
   // additionalAttributes: z.any().optional(),
   // variable: z.string().optional(),
