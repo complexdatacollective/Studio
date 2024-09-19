@@ -85,8 +85,7 @@ export default function HelpButton({ id }: { id?: string }) {
     <>
       <NavButtonWithTooltip
         id={id}
-        title={t('Help')}
-        tooltipSide="right"
+        tooltipContent={t('Help')}
         onClick={handleOpenDialog}
       >
         <HelpCircle className="h-10 w-10 stroke-[2px]" />

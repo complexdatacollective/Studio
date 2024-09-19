@@ -70,7 +70,6 @@ export default function WizardStep({ step }: { step: Step }) {
         onOpenChange={() => {
           closeWizard();
         }}
-        context="interviewer"
       >
         <div
           style={{

@@ -12,16 +12,12 @@ const Popover = ({
   modal,
   isOpen,
   onOpenChange,
-  context,
-  // side,
 }: PropsWithChildren<{
   title?: string;
   content: string | React.ReactNode;
   modal?: boolean;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  context?: 'interviewer' | 'default';
-  // side?: 'top' | 'right' | 'bottom' | 'left';
 }>) => {
   return (
     <PopoverPrimitive.Root
@@ -30,12 +26,10 @@ const Popover = ({
       onOpenChange={onOpenChange}
     >
       <PopoverPrimitive.Trigger asChild>{children}</PopoverPrimitive.Trigger>
-      <PopoverPrimitive.Portal
-      // container={document.getElementById('dialog-portal')}
-      >
+      <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
-          data-context={context}
           className={cn(
+            'bg-surface-0 text-surface-0-foreground',
             'motion-safe:data-[state=open]:data-[side=top]:animate-slideDownAndFade',
             'motion-safe:data-[state=open]:data-[side=right]:animate-slideLeftAndFade',
             'motion-safe:data-[state=open]:data-[side=bottom]:animate-slideUpAndFade',
@@ -45,8 +39,6 @@ const Popover = ({
           )}
           sideOffset={5}
           collisionPadding={10}
-          // side={side}
-          side="right"
           avoidCollisions
           asChild
           // floating-ui prop exposed in @radix-ui/react-popper patch

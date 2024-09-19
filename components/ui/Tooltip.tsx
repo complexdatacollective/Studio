@@ -1,9 +1,4 @@
-import type {
-  PropsWithChildren,
-  ReactNode,
-  ComponentType,
-  HtmlHTMLAttributes,
-} from 'react';
+import type { PropsWithChildren, ReactNode } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { cn } from '~/lib/utils';
 
@@ -44,41 +39,24 @@ const Tooltip = ({
 };
 
 // HOC version of Tooltip that wraps a component with a Tooltip
-export function withTooltip<T extends HtmlHTMLAttributes<HTMLDivElement>>(
-  WrappedComponent: ComponentType<T>,
-) {
+export function withTooltip<P>(WrappedComponent: React.ComponentType<P>) {
   // Define the props for the HOC
-  type WithTooltipProps = T & {
-    title?: string;
-    tooltipSide?: 'top' | 'right' | 'bottom' | 'left';
-    tooltipContent?: ReactNode;
+  type WithTooltipProps = P & {
+    tooltipContent: ReactNode;
   };
 
   // Create a new component with forwardRef
-  const WithTooltip = ({
-    title,
-    tooltipSide = 'top',
-    tooltipContent,
-    ...props
-  }: WithTooltipProps) => {
+  const WithTooltip = ({ tooltipContent, ...props }: WithTooltipProps) => {
     return (
-      <Tooltip tooltip={tooltipContent ?? title} side={tooltipSide}>
-        {/* Pass down all original props, including ref */}
+      <Tooltip tooltip={tooltipContent}>
         <WrappedComponent
-          aria-label={tooltipContent ?? title}
-          {...(props as T)}
+          {...(props as P)} // Type casting props to match WrappedComponent's props
           tabIndex={0}
         />
       </Tooltip>
     );
   };
 
-  // Set the display name for easier debugging
-  const wrappedComponentName =
-    (WrappedComponent.displayName ?? WrappedComponent.name) || 'Component';
-  WithTooltip.displayName = `WithTooltip(${wrappedComponentName})`;
-
   return WithTooltip;
 }
-
 export default Tooltip;
