@@ -1,54 +1,40 @@
-import Negotiator from 'negotiator';
-import { type NextRequest, NextResponse } from 'next/server';
-import { getBestMatch, isInterviewRoute } from '~/lib/localisation/utils';
-import { BACKEND_LOCALES } from '../localisation/config';
+import { NextResponse, type NextRequest } from 'next/server';
+import {
+  getAvailableLocales,
+  getBestLocale,
+  getUserLocale,
+} from '../localisation/locale';
+import { LOCALE_COOKIES } from '../localisation/config';
+import { getLocaleContext } from '../localisation/utils';
 import { getInterviewId } from '../serverUtils';
 
-export const LOCALE_COOKIES = {
-  MAIN: 'locale',
-  INTERVIEW: 'interview-locale',
-} as const;
-
+/**
+ * Middleware to set a locale cookie (context dependent) if one is not already
+ * set, or if the current cookie locale is not supported.
+ */
 async function IntlMiddleware(req: NextRequest) {
-  const pathname = new URL(req.url).pathname;
-  const appContext = isInterviewRoute(pathname) ? 'INTERVIEW' : 'MAIN';
+  const response = NextResponse.next();
+  const currentPath = req.nextUrl.pathname!;
+  const localeContext = getLocaleContext(currentPath);
+  const interviewId = getInterviewId(currentPath);
+  const availableLocales = await getAvailableLocales(
+    localeContext,
+    interviewId,
+  );
+  let userLocale = await getUserLocale(localeContext);
+  console.log('userLocale:', userLocale);
 
-  const cookieForContext = LOCALE_COOKIES[appContext];
+  // If there's no user locale, or the user locale is not supported, set the
+  // user locale to the best available match.
+  if (!userLocale || !availableLocales.includes(userLocale)) {
+    userLocale = await getBestLocale(availableLocales);
 
-  // Check if we already have a locale cookie set
-  if (req.cookies.get(cookieForContext)) {
-    console.log('Locale cookie already set');
-    return NextResponse.next();
+    // eslint-disable-next-line no-console
+    console.log(`Setting locale cookie to: ${userLocale}`);
+    response.cookies.set(LOCALE_COOKIES[localeContext], userLocale);
   }
 
-  // Construct a response object
-  const res = NextResponse.next();
-  let locale: string;
-
-  // Get the user's accepted languages
-  const userLanguages = new Negotiator({
-    headers: {
-      'accept-language': req.headers.get('accept-language') ?? undefined,
-    },
-  }).languages();
-
-  // In the main app, use our built-in locales
-  if (appContext === 'MAIN') {
-    locale = getBestMatch(BACKEND_LOCALES, userLanguages);
-    return res;
-  } else {
-    // check if we're in an interview route
-    const interviewId = getInterviewId();
-
-    // fetch the protocol accepted locales and use that to set best match
-    const protocolLocales = await getProtocolLocales(interviewId);
-    locale = getBestMatch(protocolLocales, userLanguages);
-  }
-
-  // Set the cookie for the current context
-  res.cookies.set(cookieForContext, locale);
-
-  return res;
+  return response;
 }
 
 export default {

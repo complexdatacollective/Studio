@@ -2,6 +2,7 @@ import { type IntRange } from 'type-fest';
 import Navigation from './Navigation';
 import { cn } from '~/lib/utils';
 import { getAvailableLocales } from '~/lib/localisation/locale';
+import { getCurrentPath, getInterviewId } from '~/lib/serverUtils';
 
 // Shared styles for all interfaces, providing margin.
 export const interfaceWrapperClasses = 'my-4';
@@ -16,7 +17,9 @@ export default async function SimpleShell({
   progress: IntRange<0, 100>;
   children: React.ReactNode;
 }) {
-  const availableLocales = await getAvailableLocales('INTERVIEW');
+  const currentPath = getCurrentPath();
+  const interviewId = getInterviewId(currentPath);
+  const availableLocales = await getAvailableLocales('INTERVIEW', interviewId);
   return (
     <div
       className={cn(

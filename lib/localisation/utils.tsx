@@ -1,6 +1,6 @@
 import { AbstractIntlMessages, type IntlError, IntlErrorCode } from 'next-intl';
 import type { LocalisedRecord, LocalisedString } from '../../schemas/shared';
-import { Locale, SUPPORTED_LOCALE_OBJECTS } from './config';
+import { Locale, LocaleCookieName, SUPPORTED_LOCALE_OBJECTS } from './config';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {
@@ -100,4 +100,15 @@ export async function fetchProtocolMessages(
     console.error('Error fetching protocol messages:', error);
     return [];
   }
+}
+
+/**
+ * Get the locale context for the current request. We use this to determine if
+ * we're in the main app or in an interview route, which in turn determines
+ * where we fetch the locale messages from.
+ *
+ * The locale "context" is either "MAIN" or "INTERVIEW".
+ */
+export function getLocaleContext(currentPath: string): LocaleCookieName {
+  return isInterviewRoute(currentPath) ? 'INTERVIEW' : 'MAIN';
 }

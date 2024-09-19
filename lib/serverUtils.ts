@@ -12,18 +12,11 @@ export function getCurrentPath(): string {
   return path;
 }
 
-export function getInterviewId(): string {
-  const path = getCurrentPath();
+export function getInterviewId(currentPath: string) {
+  const match = currentPath.match(/^\/interview\/([^/]+)/);
 
-  const match = path.match(/^\/interview\/([^/]+)/);
-
-  if (!match) {
-    throw new Error('No interview ID found in path');
+  if (!match || !match[1]) {
+    return undefined;
   }
-
-  if (!match[1]) {
-    throw new Error('No interview ID found in path');
-  }
-
   return match[1];
 }

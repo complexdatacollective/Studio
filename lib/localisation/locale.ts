@@ -9,7 +9,11 @@ import {
   BACKEND_LOCALES,
   FALLBACK_LOCALE,
 } from './config';
-import { fetchProtocolMessages, isInterviewRoute } from './utils';
+import {
+  fetchProtocolMessages,
+  getLocaleContext,
+  isInterviewRoute,
+} from './utils';
 import Negotiator from 'negotiator';
 import { type AbstractIntlMessages } from 'next-intl';
 import { match } from '@formatjs/intl-localematcher';
@@ -38,18 +42,6 @@ export async function getProtocolLocales(
 }
 
 /**
- * Get the locale context for the current request. We use this to determine if
- * we're in the main app or in an interview route, which in turn determines
- * where we fetch the locale messages from.
- *
- * The locale "context" is either "MAIN" or "INTERVIEW".
- */
-export async function getLocaleContext() {
-  const path = getCurrentPath();
-  return isInterviewRoute(path) ? 'INTERVIEW' : 'MAIN';
-}
-
-/**
  * Get the user's locale from the cookie. This is either the locale cookie set
  * by the main app, or the locale cookie set by the protocol for the current
  * interview.
@@ -63,12 +55,18 @@ export async function getUserLocale(context: LocaleCookieName) {
  * either the list of locales supported by the main app, or the list of locales
  * supported by the protocol for the current interview.
  */
-export async function getAvailableLocales(context: LocaleCookieName) {
+export async function getAvailableLocales(
+  context: LocaleCookieName,
+  interviewId?: string,
+) {
   if (context === 'MAIN') {
     return BACKEND_LOCALES;
   }
 
-  const interviewId = getInterviewId();
+  if (!interviewId) {
+    throw new Error('No interview ID provided for protocol locales');
+  }
+
   const protocolLocales = await getProtocolLocales(interviewId);
 
   return protocolLocales;
@@ -113,7 +111,8 @@ export async function getLocaleMessages(
   // For protocol contexts we have to get the messages from the protocol, and
   // merge with the main messages for the locale (if available) or the best
   // match of the main locale translations if not.
-  const interviewId = getInterviewId();
+  const currentPath = getCurrentPath();
+  const interviewId = getInterviewId(currentPath);
 
   const protocolMessages = await fetchProtocolMessages(locale, interviewId);
 
@@ -134,6 +133,7 @@ export async function getLocaleMessages(
 }
 
 export async function setUserLocale(locale: Locale) {
-  const context = await getLocaleContext();
+  const currentPath = getCurrentPath();
+  const context = getLocaleContext(currentPath);
   cookies().set(LOCALE_COOKIES[context], locale);
 }
