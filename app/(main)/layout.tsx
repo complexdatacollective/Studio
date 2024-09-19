@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
 import Providers from '~/app/_components/Providers';
 import { cn } from '~/lib/utils';
+import { type Locale } from '~/lib/localisation/config';
 
 const lexend = Lexend({
   weight: 'variable',
@@ -31,7 +32,7 @@ export default async function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const locale = await getLocale();
+  const locale = (await getLocale()) as Locale;
 
   const messages = await getMessages();
 

@@ -106,7 +106,7 @@ export async function getLocaleMessages(
   // merge with the main messages for the locale (if available) or the best
   // match of the main locale translations if not.
   const currentPath = getCurrentPath();
-  const interviewId = getInterviewId(currentPath);
+  const interviewId = getInterviewId(currentPath)!;
 
   const protocolMessages = await fetchProtocolMessages(locale, interviewId);
 

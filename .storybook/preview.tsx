@@ -1,7 +1,10 @@
 import type { Preview } from '@storybook/react';
 import React, { useEffect, useState } from 'react';
 import { type AbstractIntlMessages } from 'next-intl';
-import { LOCALES_DICT, type Locale } from '~/lib/localisation/config';
+import {
+  SUPPORTED_LOCALE_OBJECTS,
+  type Locale,
+} from '~/lib/localisation/config';
 import { getLangDir } from 'rtl-detect';
 import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
@@ -59,9 +62,9 @@ const preview: Preview = {
       toolbar: {
         icon: 'globe',
         items: [
-          ...LOCALES_DICT.map(([locale, name]) => ({
-            value: locale,
-            title: name,
+          ...SUPPORTED_LOCALE_OBJECTS.map(({ code, label }) => ({
+            value: code,
+            title: label,
           })),
         ],
         showName: true,

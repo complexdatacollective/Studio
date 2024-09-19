@@ -24,6 +24,7 @@ export default function Prompts({
         {prompts.map(
           ({ id }) =>
             prompts[currentIndex]?.id === id && (
+              // @ts-expect-error we haven't worked this out yet.
               <Prompt key={id} text={t('Stages.1.Prompts.1')} />
             ),
         )}
