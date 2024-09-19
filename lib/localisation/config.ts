@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+// List of all possible locales in the app. Both main locales and prootocl
+// locales must reference items in this list.
 export const SUPPORTED_LOCALE_OBJECTS = [
   { code: 'af', label: 'Afrikaans', native: '' },
   { code: 'sq', label: 'Albanian', native: '' },
@@ -159,6 +161,9 @@ export const SUPPORTED_LOCALE_OBJECTS = [
   { code: 'zu', label: 'Zulu', native: '' },
 ] as const;
 
+export type Locale = (typeof SUPPORTED_LOCALES)[number];
+export type LocaleObject = (typeof SUPPORTED_LOCALE_OBJECTS)[number];
+
 export const SUPPORTED_LOCALES = SUPPORTED_LOCALE_OBJECTS.map(
   ({ code }) => code,
 );
@@ -168,24 +173,16 @@ export const SupportedLocalesSchema = z.enum([
   ...SUPPORTED_LOCALES.slice(0),
 ]);
 
-// the locales we provide translations for in the backend, UI
-export const MAIN_LOCALE_OBJECTS = [
-  { code: 'en', label: 'English', native: '' },
-  { code: 'es', label: 'Spanish', native: '' },
-  { code: 'ar', label: 'Arabic', native: '' },
-] as const;
+export const FALLBACK_LOCALE: Locale = 'en';
 
-export const MAIN_LOCALES = MAIN_LOCALE_OBJECTS.map(({ code }) => code);
+// Locales we provide for our backend. For now, english, spanish, and arabic
+// for testing RTL support.
+export const BACKEND_LOCALES: Locale[] = ['en', 'es', 'ar'] as const;
 
-export const defaultLocale: Locale = 'en';
-
-export type Locale = (typeof SUPPORTED_LOCALES)[number];
-
-export type LocaleObject = (typeof SUPPORTED_LOCALE_OBJECTS)[number];
-
+// Changing these values will reset all localisation preferences.
 export const LOCALE_COOKIES = {
-  MAIN: 'locale',
-  INTERVIEW: 'locale',
+  MAIN: 'studio-backend-locale',
+  INTERVIEW: 'studio-interview-locale',
 } as const;
 
 export type LocaleCookieName = keyof typeof LOCALE_COOKIES;

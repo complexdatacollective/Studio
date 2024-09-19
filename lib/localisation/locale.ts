@@ -1,20 +1,23 @@
+/* eslint-disable @typescript-eslint/require-await */
 'use server';
 
 import { cookies, headers } from 'next/headers';
 import {
   type Locale,
   LOCALE_COOKIES,
-  LocaleCookieName,
-  MAIN_LOCALES,
+  type LocaleCookieName,
+  BACKEND_LOCALES,
+  FALLBACK_LOCALE,
 } from './config';
-import { getBestMatch, isInterviewRoute } from './utils';
+import { fetchProtocolMessages, isInterviewRoute } from './utils';
 import Negotiator from 'negotiator';
-import { AbstractIntlMessages } from 'next-intl';
-import { fetchInterviewMessages } from './i18n';
+import { type AbstractIntlMessages } from 'next-intl';
+import { match } from '@formatjs/intl-localematcher';
+import { getCurrentPath, getInterviewId } from '../serverUtils';
 
 export async function getProtocolLocales(
   interviewId: string,
-): Promise<string[]> {
+): Promise<Locale[]> {
   try {
     const response = await fetch(
       `http://localhost:3000/api/interview/${interviewId}/languages`,
@@ -28,79 +31,109 @@ export async function getProtocolLocales(
       throw new Error('No locales found in interview data');
     }
 
-    return data.locales;
+    return data.locales as Locale[];
   } catch (error) {
     throw new Error('Error fetching protocol locales');
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
+/**
+ * Get the locale context for the current request. We use this to determine if
+ * we're in the main app or in an interview route, which in turn determines
+ * where we fetch the locale messages from.
+ *
+ * The locale "context" is either "MAIN" or "INTERVIEW".
+ */
 export async function getLocaleContext() {
-  const path = headers().get('x-current-path') ?? '';
-  console.log('Path:', path);
+  const path = getCurrentPath();
   return isInterviewRoute(path) ? 'INTERVIEW' : 'MAIN';
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
+/**
+ * Get the user's locale from the cookie. This is either the locale cookie set
+ * by the main app, or the locale cookie set by the protocol for the current
+ * interview.
+ */
 export async function getUserLocale(context: LocaleCookieName) {
-  return cookies().get(LOCALE_COOKIES[context])?.value;
+  return (cookies().get(LOCALE_COOKIES[context])?.value as Locale) ?? undefined;
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export async function getAvilableLocales(context: LocaleCookieName) {
+/**
+ * Get the list of available locales for the current request context. This is
+ * either the list of locales supported by the main app, or the list of locales
+ * supported by the protocol for the current interview.
+ */
+export async function getAvailableLocales(context: LocaleCookieName) {
   if (context === 'MAIN') {
-    return MAIN_LOCALES;
+    return BACKEND_LOCALES;
   }
 
-  // Fetch the available locales from the protocol
-
-  const interviewId =
-    headers().get('x-current-path')?.split('/interview/')[1] ?? null;
-
-  if (!interviewId) {
-    throw new Error('Interview route without interview ID');
-  }
-
+  const interviewId = getInterviewId();
   const protocolLocales = await getProtocolLocales(interviewId);
 
   return protocolLocales;
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export async function getBestLocale(locales: string[]) {
-  const userLanguages = new Negotiator({
+export async function getBestLocale(availableLocales: Locale[]) {
+  const userAcceptedLocales = new Negotiator({
     headers: {
       'accept-language': headers().get('accept-language') ?? undefined,
     },
   }).languages();
 
-  const bestMatch = getBestMatch(locales, userLanguages);
-
-  return bestMatch;
+  return match(
+    userAcceptedLocales,
+    availableLocales,
+    FALLBACK_LOCALE,
+  ) as Locale;
 }
 
+/**
+ * Get the locale messages for the current request context and user locale.
+ *
+ * If the context is "MAIN", directly import our JSON messages.
+ *
+ * If the context is "INTERVIEW", fetch the messages from the protocol, and
+ * merge with the main messages for the locale (if available) or the best match
+ * of the main locale translations if not.
+ */
 export async function getLocaleMessages(
   context: LocaleCookieName,
-  locale: Locale,
+  locale: Locale, // Locale is valid for the context, but not necessarily for both main and interview messages
 ) {
   if (context === 'MAIN') {
+    // It is safe to assume that the locale exists for the main context,
+    // because it was selected from the list of available locales.
     const messages = (await import(`./messages/${locale}.json`)) as {
       default: AbstractIntlMessages;
     };
     return messages.default;
   }
 
-  // For protocol contexts we have to get the messages from the protocol
-  const interviewId =
-    headers().get('x-current-path')?.split('/interview/')[1] ?? '';
+  // For protocol contexts we have to get the messages from the protocol, and
+  // merge with the main messages for the locale (if available) or the best
+  // match of the main locale translations if not.
+  const interviewId = getInterviewId();
 
-  console.log('Fetching interview messages', interviewId);
+  const protocolMessages = await fetchProtocolMessages(locale, interviewId);
 
-  const messages = await fetchInterviewMessages(locale, interviewId);
-  return messages;
+  const mainMessageLocale = BACKEND_LOCALES.includes(locale)
+    ? locale
+    : await getBestLocale(BACKEND_LOCALES);
+
+  const mainMessages = (await import(
+    `./messages/${mainMessageLocale}.json`
+  )) as {
+    default: AbstractIntlMessages;
+  };
+
+  return {
+    ...mainMessages.default,
+    ...protocolMessages,
+  };
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function setUserLocale(locale: Locale) {
-  cookies().set(LOCALE_COOKIES.MAIN, locale);
+  const context = await getLocaleContext();
+  cookies().set(LOCALE_COOKIES[context], locale);
 }

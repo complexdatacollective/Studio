@@ -1,7 +1,8 @@
 import Negotiator from 'negotiator';
 import { type NextRequest, NextResponse } from 'next/server';
 import { getBestMatch, isInterviewRoute } from '~/lib/localisation/utils';
-import { MAIN_LOCALES } from '../localisation/config';
+import { BACKEND_LOCALES } from '../localisation/config';
+import { getInterviewId } from '../serverUtils';
 
 export const LOCALE_COOKIES = {
   MAIN: 'locale',
@@ -33,17 +34,11 @@ async function IntlMiddleware(req: NextRequest) {
 
   // In the main app, use our built-in locales
   if (appContext === 'MAIN') {
-    locale = getBestMatch(MAIN_LOCALES, userLanguages);
+    locale = getBestMatch(BACKEND_LOCALES, userLanguages);
     return res;
   } else {
     // check if we're in an interview route
-    const interviewId =
-      req.headers.get('x-current-path')?.split('/interview/')[1] ?? null;
-
-    // TODO: probably don't want to throw here, but we need to handle this case
-    if (!interviewId) {
-      throw new Error('Interview route without interview ID');
-    }
+    const interviewId = getInterviewId();
 
     // fetch the protocol accepted locales and use that to set best match
     const protocolLocales = await getProtocolLocales(interviewId);

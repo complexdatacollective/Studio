@@ -15,7 +15,7 @@ import { ProgressBarWithTooltip } from '../../ui/ProgressBar';
 import type { IntRange } from 'type-fest';
 import Popover from '~/components/ui/Popover';
 import Heading from '~/components/typography/Heading';
-import LanguageSwitcher from '~/app/_components/LocaleSwitcherSelect';
+import LocaleSwitcher from '~/app/_components/LocaleSwitcher';
 import OnboardWizard from '~/components/onboard-wizard/OnboardWizard';
 import HelpButton from './HelpButton';
 import { NavButtonWithTooltip } from './NavigationButton';
@@ -49,12 +49,6 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
 
   const isMediumScreen = useMediaQuery('md');
   const tooltipSide = isMediumScreen ? 'right' : 'top';
-
-  const protocolLocales = [
-    { code: 'en', label: 'English', native: 'English' },
-    { code: 'fr', label: 'French', native: 'Français' },
-    { code: 'es', label: 'Spanish', native: 'Español' },
-  ];
 
   return (
     <>
@@ -157,13 +151,7 @@ const Navigation = ({ pulseNext, progress }: NavigationProps) => {
           content={
             <>
               <Heading variant="label">Select language</Heading>
-              <LanguageSwitcher
-                protocolLocales={[
-                  { code: 'en', label: 'English', native: '' },
-                  { code: 'es', label: 'Spanish', native: '' },
-                  { code: 'fr', label: 'French', native: '' },
-                ]}
-              />
+              <LocaleSwitcher codes={['en', 'es']} />
             </>
           }
           context="interviewer"

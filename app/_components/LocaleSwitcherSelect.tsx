@@ -8,21 +8,24 @@ import {
   SelectValue,
 } from '~/components/ui/select';
 import { type Locale } from '~/lib/localisation/config';
-import { setUserLocale } from '~/server/actions/locale';
 import { useTransition } from 'react';
+import { setUserLocale } from '~/lib/localisation/locale';
+import { getLocaleRecordsFromCodes } from '~/lib/localisation/utils';
 
 type Props = {
   defaultValue: string;
-  items: { code: string; label: string }[];
+  codes: Locale[];
   label: string;
 };
 
 export default function LocaleSwitcherSelect({
   defaultValue,
-  items,
+  codes,
   label,
 }: Props) {
   const [isPending, startTransition] = useTransition();
+
+  const localeRecords = getLocaleRecordsFromCodes(codes);
 
   function onChange(value: string) {
     const locale = value as Locale;
@@ -41,7 +44,7 @@ export default function LocaleSwitcherSelect({
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {items.map(({ code, label }) => (
+        {localeRecords.map(({ code, label }) => (
           <SelectItem key={code} value={code}>
             {label}
           </SelectItem>
