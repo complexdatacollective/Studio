@@ -2,6 +2,7 @@ import { getMessages, getLocale, getNow, getTimeZone } from 'next-intl/server';
 import { Lexend, Roboto_Mono } from 'next/font/google';
 import { type Metadata } from 'next';
 import '~/styles/global.css';
+import '~/styles/themes/default.css';
 import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
 import Providers from '~/app/_components/Providers';

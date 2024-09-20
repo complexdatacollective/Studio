@@ -34,5 +34,6 @@ export default getRequestConfig(async () => {
     locale: userLocale,
     messages,
     getMessageFallback,
+    timeZone: 'UTC',
   };
 });
