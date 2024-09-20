@@ -6,13 +6,38 @@ import { SupportedLocalesSchema } from '~/lib/localisation/config';
 
 export const AssetManifest = z.object({});
 
+export const ProtocolMessagesSchema = z.object({
+  Stages: z.record(
+    z.string(),
+    z.object({
+      Label: z.string(),
+      Prompts: z.record(z.string(), z.string()).optional(),
+      Panels: z
+        .record(
+          z.string(),
+          z.object({
+            Title: z.string(),
+          }),
+        )
+        .optional(),
+    }),
+  ),
+});
+
+const LocalisedStringsSchema = z.record(
+  SupportedLocalesSchema,
+  ProtocolMessagesSchema,
+);
+
+export type ProtocolMessages = z.infer<typeof ProtocolMessagesSchema>;
+
 const ProtocolSchema = z
   .object({
     name: z.string(),
     description: z.string().optional(),
     // Hack to work around this: https://github.com/colinhacks/zod/issues/2376
     languages: z.array(SupportedLocalesSchema),
-    localisedStrings: z.record(SupportedLocalesSchema, z.unknown()),
+    localisedStrings: LocalisedStringsSchema,
     stages: z.array(StageSchema.or(z.array(StageSchema))),
     codebook: CodebookSchema,
     waves: z.array(WaveSchema).optional(),

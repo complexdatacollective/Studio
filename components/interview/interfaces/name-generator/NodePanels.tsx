@@ -10,10 +10,10 @@ type Panel = {
 };
 
 export default forwardRef(function NodePanels(
-  { currentPromptId, panels }: { currentPromptId: string; panels: Panel[] },
+  { panels }: { panels: Panel[] },
   ref: ForwardedRef<HTMLDivElement>,
 ) {
-  const t = useTranslations(`Stages.${currentPromptId}.Panels`);
+  const t = useTranslations(`Stages.1.Panels`);
 
   return (
     <div id="data-wizard-task-step-2" ref={ref} className="flex flex-col gap-4">

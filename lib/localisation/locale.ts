@@ -11,9 +11,9 @@ import {
 } from './config';
 import { fetchProtocolMessages, getLocaleContext } from './utils';
 import Negotiator from 'negotiator';
-import { type AbstractIntlMessages } from 'next-intl';
 import { match } from '@formatjs/intl-localematcher';
 import { getCurrentPath, getInterviewId } from '../serverUtils';
+import type { ProtocolMessages } from '~/schemas/protocol/protocol';
 
 async function getProtocolLocales(interviewId: string): Promise<Locale[]> {
   try {
@@ -97,7 +97,7 @@ export async function getLocaleMessages(
     // It is safe to assume that the locale exists for the main context,
     // because it was selected from the list of available locales.
     const messages = (await import(`./messages/${locale}.json`)) as {
-      default: AbstractIntlMessages;
+      default: IntlMessages;
     };
     return messages.default;
   }
@@ -108,7 +108,10 @@ export async function getLocaleMessages(
   const currentPath = getCurrentPath();
   const interviewId = getInterviewId(currentPath)!;
 
-  const protocolMessages = await fetchProtocolMessages(locale, interviewId);
+  const protocolMessages = (await fetchProtocolMessages(
+    locale,
+    interviewId,
+  )) as ProtocolMessages;
 
   const mainMessageLocale = BACKEND_LOCALES.includes(locale)
     ? locale
@@ -117,7 +120,7 @@ export async function getLocaleMessages(
   const mainMessages = (await import(
     `./messages/${mainMessageLocale}.json`
   )) as {
-    default: AbstractIntlMessages;
+    default: IntlMessages;
   };
 
   return {

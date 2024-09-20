@@ -80,7 +80,7 @@ function NameGenerator(_props: InterviewStage) {
     <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
       <Prompts prompts={demoPrompts} currentPromptId="1" />
       <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
-        <NodePanels currentPromptId="1" panels={demoPanels} />
+        <NodePanels panels={demoPanels} />
         <div className="flex-basis-auto flex h-full flex-shrink flex-grow">
           <NodeList items={demoNodes} />
         </div>
