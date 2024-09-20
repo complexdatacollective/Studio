@@ -24,7 +24,7 @@ export default async function SignInForm() {
       <Form.Footer
         primaryAction={<SubmitButton>{t('SignIn.ButtonText')}</SubmitButton>}
         secondaryAction={
-          <Link href="/forgot-password" className="text-sm">
+          <Link href="/" className="text-sm">
             {t('Form.ForgotPassword')}
           </Link>
         }
