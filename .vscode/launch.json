@@ -12,7 +12,6 @@
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
-      "runtimeExecutable": "/path/to/chrome/executable"
     },
     {
       "name": "Next.js: debug full stack",
