@@ -25,8 +25,8 @@ export default function DashboardLayout({
               </Link>
               <Link
                 href={route({
-                  pathname: '/[study]/dashboard',
-                  params: { study: params.study },
+                  pathname: '/[study]',
+                  query: { study: params.study },
                 })}
               >
                 Dashboard
@@ -34,7 +34,7 @@ export default function DashboardLayout({
               <Link
                 href={route({
                   pathname: '/[study]/settings',
-                  params: { study: params.study },
+                  query: { study: params.study },
                 })}
               >
                 Settings

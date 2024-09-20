@@ -11,22 +11,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
+import { route } from 'nextjs-routes';
 
 export default function StudySwitcherClient({ studies }: { studies: Study[] }) {
   const t = useTranslations('Components.StudySwitcher');
+  const params = useParams();
+
   const router = useRouter();
-  const { study: currentStudy } = useParams();
   const [selectedStudy, setSelectedStudy] = useState<Study['slug']>(
-    currentStudy as Study['slug'],
+    params?.study as string,
   );
 
-  function handleStudyChange(value: Study['slug']) {
-    router.push(value);
+  function handleStudyChange(value: string) {
+    router.push(
+      route({
+        pathname: '/[study]',
+        query: { study: value },
+      }),
+    );
   }
 
   useEffect(() => {
-    setSelectedStudy(currentStudy as Study['slug']);
-  }, [currentStudy]);
+    setSelectedStudy(params?.study as string);
+  }, [params?.study]);
 
   return (
     <Select onValueChange={handleStudyChange} value={selectedStudy}>

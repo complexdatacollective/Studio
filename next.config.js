@@ -10,9 +10,9 @@ const withNextIntl = createNextIntlPlugin('./lib/localisation/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  experimental: {
-    typedRoutes: true,
-  }
+  // experimental: {
+  //   typedRoutes: true,
+  // }
 };
 
 export default withRoutes(withNextIntl(nextConfig));
