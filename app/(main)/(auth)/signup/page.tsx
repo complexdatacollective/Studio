@@ -7,7 +7,6 @@ import Surface from '~/components/layout/Surface';
 import Heading from '~/components/typography/Heading';
 import Paragraph from '~/components/typography/Paragraph';
 import Divider from '~/components/layout/Divider';
-import { routes } from '~/lib/routes';
 
 export default async function Page() {
   const { session, user } = await getServerSession();
@@ -15,7 +14,7 @@ export default async function Page() {
 
   if (session && user) {
     // If the user is already signed in, redirect to the home page
-    redirect(routes.home());
+    redirect('/');
   }
 
   return (
@@ -30,7 +29,7 @@ export default async function Page() {
         {t('Title')}
       </Heading>
       <Paragraph id="signup-description">
-        {t('Description')} <Link href={routes.signIn()}>{t('LinkText')}</Link>
+        {t('Description')} <Link href="/signin">{t('LinkText')}</Link>
       </Paragraph>
       <Divider />
       <SignUpForm />
