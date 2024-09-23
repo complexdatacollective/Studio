@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  useState,
-  type PropsWithChildren,
-  type ReactNode,
-} from 'react';
+import { type PropsWithChildren, type ReactNode } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { cn } from '~/lib/utils';
 
@@ -18,16 +13,10 @@ const Tooltip = ({
   side?: 'top' | 'right' | 'bottom' | 'left';
 }>) => {
   // defer getting portal container until the component mounts
-  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
-    null,
-  );
-  useEffect(() => {
-    if (!document) return;
-    const portal = document.getElementById('dialog-portal');
-    if (portal) {
-      setPortalContainer(portal);
-    }
-  }, []);
+  const portalContainer =
+    typeof window !== 'undefined'
+      ? document.getElementById('dialog-portal')
+      : null;
   return (
     <TooltipPrimitive.Root>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
