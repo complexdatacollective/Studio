@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Navigation from './Navigation';
+import { FALLBACK_LOCALE } from '~/lib/localisation/config';
 
 const meta: Meta<typeof Navigation> = {
   title: 'Interview/Navigation',
@@ -37,7 +38,7 @@ const meta: Meta<typeof Navigation> = {
   args: {
     pulseNext: false,
     progress: 50,
-    availableLocales: ['en'],
+    availableLocales: [FALLBACK_LOCALE],
   },
 };
 

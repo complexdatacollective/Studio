@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import type { Stage } from '@prisma/client';
 import SimpleShell from './SimpleShell';
 import NameGenerator from '../interfaces/name-generator/NameGenerator';
+import { FALLBACK_LOCALE } from '~/lib/localisation/config';
 
 const stageOptions: Stage[] = [
   {
@@ -57,7 +58,7 @@ const meta: Meta<StoryArgs> = {
       <SimpleShell
         isReadyForNextStage={false}
         progress={50}
-        availableLocales={['en']}
+        availableLocales={[FALLBACK_LOCALE]}
       >
         {getStageComponent(stage)}
       </SimpleShell>

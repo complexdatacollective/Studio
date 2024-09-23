@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import NameGenerator from '~/components/interview/interfaces/name-generator/NameGenerator';
 import SimpleShell from '../interview/ui/SimpleShell';
+import { FALLBACK_LOCALE } from '~/lib/localisation/config';
 
 const meta: Meta<typeof NameGenerator> = {
   title: 'Systems/OnboardWizard/Interface',
@@ -17,7 +18,7 @@ const meta: Meta<typeof NameGenerator> = {
         <SimpleShell
           progress={50}
           isReadyForNextStage={false}
-          availableLocales={['en']}
+          availableLocales={[FALLBACK_LOCALE]}
         >
           <Story />
         </SimpleShell>
