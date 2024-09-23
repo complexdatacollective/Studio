@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from 'react';
+import { useEffect, useState, type PropsWithChildren } from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { cn } from '~/lib/utils';
 import CloseButton from './CloseButton';
@@ -19,6 +19,17 @@ const Popover = ({
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }>) => {
+  // defer getting portal container until the component mounts
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
+    null,
+  );
+  useEffect(() => {
+    if (!document) return;
+    const portal = document.getElementById('dialog-portal');
+    if (portal) {
+      setPortalContainer(portal);
+    }
+  }, []);
   return (
     <PopoverPrimitive.Root
       modal={modal}
@@ -26,7 +37,7 @@ const Popover = ({
       onOpenChange={onOpenChange}
     >
       <PopoverPrimitive.Trigger asChild>{children}</PopoverPrimitive.Trigger>
-      <PopoverPrimitive.Portal>
+      <PopoverPrimitive.Portal container={portalContainer}>
         <PopoverPrimitive.Content
           className={cn(
             'bg-surface-0 text-surface-0-foreground',
