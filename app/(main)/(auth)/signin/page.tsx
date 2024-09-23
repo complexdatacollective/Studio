@@ -1,5 +1,4 @@
 import SignInForm from '../_components/SignInForm';
-import { routes } from '~/lib/routes';
 import Link from '~/components/Link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
@@ -16,7 +15,7 @@ export default async function Page() {
 
   if (session) {
     // If the user is already signed in, redirect to the home page
-    redirect(routes.home());
+    redirect('/');
   }
 
   return (
@@ -31,7 +30,7 @@ export default async function Page() {
         {t('Title')}
       </Heading>
       <Paragraph id="signin-description">
-        {t('Description')} <Link href={routes.signUp()}>{t('LinkText')}</Link>
+        {t('Description')} <Link href={'/signup'}>{t('LinkText')}</Link>
       </Paragraph>
       <Divider />
       <SignInForm />

@@ -1,9 +1,8 @@
-import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
-
 import { getMessages, getLocale, getNow, getTimeZone } from 'next-intl/server';
 import { Lexend, Roboto_Mono } from 'next/font/google';
 import { type Metadata } from 'next';
 import '~/styles/global.css';
+import '~/styles/themes/interview.css';
 import { Analytics } from '@vercel/analytics/react';
 import { getLangDir } from 'rtl-detect';
 import Providers from '~/app/_components/Providers';
@@ -24,9 +23,7 @@ const roboto_mono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Network Canvas Studio',
-  description:
-    'A platform for designing and building impactful personal networks research.',
+  title: 'Network Canvas Studio: Interview',
 };
 
 export default async function InterviewLayout({
@@ -62,7 +59,6 @@ export default async function InterviewLayout({
               timeZone,
             }}
           >
-            <InjectThemeVariables theme="interview" />
             {children}
           </Providers>
           <Analytics />

@@ -1,5 +1,4 @@
 import { getUserStudies } from '~/server/queries/studies';
-import { routes } from '~/lib/routes';
 import { getTranslations } from 'next-intl/server';
 import Link from '~/components/Link';
 import UnorderedList from '~/components/typography/UnorderedList';
@@ -10,6 +9,7 @@ import CreateStudyForm from './_components/CreateStudyForm';
 import { requirePageAuth } from '~/lib/auth';
 import { Button } from '~/components/ui/Button';
 import Paragraph from '~/components/typography/Paragraph';
+import { route } from 'nextjs-routes';
 
 export default async function Dashboard() {
   await requirePageAuth();
@@ -41,7 +41,12 @@ export default async function Dashboard() {
         <UnorderedList>
           {studies.map((study) => (
             <li key={study.id}>
-              <Link href={routes.studyDashboard({ study: study.slug })}>
+              <Link
+                href={route({
+                  pathname: '/[study]',
+                  query: { study: study.slug },
+                })}
+              >
                 {study.name}
               </Link>
             </li>
@@ -64,7 +69,10 @@ export default async function Dashboard() {
           {interviews.map((interview) => (
             <li key={interview.id}>
               <Link
-                href={routes.interview({ interviewId: interview.publicId })}
+                href={route({
+                  pathname: '/interview/[interviewId]',
+                  query: { interviewId: interview.publicId },
+                })}
               >
                 {interview.id}
               </Link>

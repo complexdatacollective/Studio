@@ -1,5 +1,5 @@
 import Link from '~/components/Link';
-import { routes } from '~/lib/routes';
+import { route } from 'nextjs-routes';
 
 export default function DashboardLayout({
   children,
@@ -16,10 +16,27 @@ export default function DashboardLayout({
         <div className="grid grid-cols-3 items-center gap-8">
           <div className="col-span-2">
             <nav className="flex space-x-4">
-              <Link href={routes.studyDashboard({ study: params.study })}>
-                Home
+              <Link
+                href={route({
+                  pathname: '/',
+                })}
+              >
+                Overview
               </Link>
-              <Link href={routes.studySettings({ study: params.study })}>
+              <Link
+                href={route({
+                  pathname: '/[study]',
+                  query: { study: params.study },
+                })}
+              >
+                Dashboard
+              </Link>
+              <Link
+                href={route({
+                  pathname: '/[study]/settings',
+                  query: { study: params.study },
+                })}
+              >
                 Settings
               </Link>
             </nav>
