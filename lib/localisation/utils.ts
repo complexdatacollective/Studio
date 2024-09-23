@@ -9,6 +9,7 @@ import {
   type LocaleCookieName,
   type LocaleObject,
   SUPPORTED_LOCALE_OBJECTS,
+  FALLBACK_LOCALE,
 } from './config';
 
 export const customErrorLogger = (error: IntlError) => {
@@ -40,6 +41,10 @@ export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
   localisedRecord: T,
   currentLocale: string,
 ): T[keyof T] {
+  // default to fallback if the current locale is not in the record
+  if (!localisedRecord[currentLocale]) {
+    return localisedRecord[FALLBACK_LOCALE] as T[keyof T];
+  }
   return localisedRecord[currentLocale] as T[keyof T];
 }
 
