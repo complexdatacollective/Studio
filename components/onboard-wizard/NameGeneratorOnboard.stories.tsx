@@ -14,7 +14,11 @@ const meta: Meta<typeof NameGenerator> = {
   decorators: [
     (Story, _context) => {
       return (
-        <SimpleShell progress={50} isReadyForNextStage={false}>
+        <SimpleShell
+          progress={50}
+          isReadyForNextStage={false}
+          availableLocales={['en']}
+        >
           <Story />
         </SimpleShell>
       );

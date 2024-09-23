@@ -15,7 +15,6 @@ const stageOptions: Stage[] = [
 
 type StoryArgs = {
   stage: Stage;
-  userLanguageHeader: string;
 };
 
 const meta: Meta<StoryArgs> = {
@@ -43,7 +42,6 @@ const meta: Meta<StoryArgs> = {
   },
   args: {
     stage: stageOptions[0],
-    userLanguageHeader: 'en',
   },
   render: ({ stage }) => {
     const getStageComponent = (stage: Stage) => {
@@ -56,7 +54,11 @@ const meta: Meta<StoryArgs> = {
     };
 
     return (
-      <SimpleShell isReadyForNextStage={false} progress={50}>
+      <SimpleShell
+        isReadyForNextStage={false}
+        progress={50}
+        availableLocales={['en']}
+      >
         {getStageComponent(stage)}
       </SimpleShell>
     );

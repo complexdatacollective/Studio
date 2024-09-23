@@ -37,6 +37,7 @@ const meta: Meta<typeof Navigation> = {
   args: {
     pulseNext: false,
     progress: 50,
+    availableLocales: ['en'],
   },
 };
 
