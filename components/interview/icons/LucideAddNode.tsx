@@ -1,5 +1,4 @@
 import { cn } from '~/lib/utils';
-import { type NodeIcon } from '~/schemas/protocol/codebook/entities';
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { type LucideProps } from 'lucide-react';

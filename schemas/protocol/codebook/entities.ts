@@ -1,8 +1,10 @@
 import { z } from 'zod';
 import { VariableDefinitionSchema } from './variables';
-import * as lucide from 'lucide-react';
+import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
-const lucideIcons = Object.keys(lucide) as (keyof typeof lucide)[];
+const lucideIcons = Object.keys(
+  dynamicIconImports,
+) as (keyof typeof dynamicIconImports)[];
 
 export const NodeColors = [
   'seq-node-1',

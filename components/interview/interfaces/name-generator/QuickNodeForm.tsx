@@ -27,7 +27,7 @@ export default function QuickNodeForm() {
       )}
       {!showForm && (
         <div className="mr-8" id="data-wizard-task-step-3">
-          <ActionButton onClick={() => setShowForm(true)} icon="Backpack" />
+          <ActionButton onClick={() => setShowForm(true)} icon="backpack" />
         </div>
       )}
     </div>

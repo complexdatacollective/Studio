@@ -90,7 +90,7 @@ export const devProtocol: Protocol = {
           },
         },
         color: 'seq-node-2',
-        icon: 'Backpack', // example of using lucide icon
+        icon: 'backpack', // example of using lucide icon
       },
     },
   },
