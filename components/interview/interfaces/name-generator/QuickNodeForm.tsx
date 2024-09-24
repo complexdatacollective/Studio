@@ -5,8 +5,9 @@
 import { useState } from 'react';
 import ActionButton from '~/components/interview/ActionButton';
 import Node from '~/components/Node';
+import type { TNodeType } from '~/schemas/protocol/codebook/entities';
 
-export default function QuickNodeForm() {
+export default function QuickNodeForm({ nodeType }: { nodeType: TNodeType }) {
   const [showForm, setShowForm] = useState(false);
 
   return (
@@ -27,7 +28,10 @@ export default function QuickNodeForm() {
       )}
       {!showForm && (
         <div className="mr-8" id="data-wizard-task-step-3">
-          <ActionButton onClick={() => setShowForm(true)} icon="backpack" />
+          <ActionButton
+            onClick={() => setShowForm(true)}
+            icon={nodeType.icon}
+          />
         </div>
       )}
     </div>

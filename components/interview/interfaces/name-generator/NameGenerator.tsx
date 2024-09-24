@@ -10,6 +10,7 @@ import { cn } from '~/lib/utils';
 import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
 import { type InterviewStage } from '../../ui/InterviewShell';
+import { TNodeType } from '~/schemas/protocol/codebook/entities';
 
 const demoPrompts = [
   {
@@ -75,6 +76,11 @@ const demoNodes = [
   },
 ];
 
+const demoNodeType = {
+  color: 'seq-node-1',
+  icon: 'school',
+} as TNodeType;
+
 function NameGenerator(_props: InterviewStage) {
   return (
     <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
@@ -85,7 +91,7 @@ function NameGenerator(_props: InterviewStage) {
           <NodeList items={demoNodes} />
         </div>
       </div>
-      <QuickNodeForm />
+      <QuickNodeForm nodeType={demoNodeType} />
     </div>
   );
 }

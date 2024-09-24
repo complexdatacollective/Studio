@@ -5,6 +5,7 @@ import type { LucideProps } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 import { Circle } from 'lucide-react';
 
+// do we need a fallback for this?
 const fallback = <Circle size={60} />;
 
 type IconProps = {
