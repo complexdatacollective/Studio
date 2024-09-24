@@ -120,6 +120,21 @@ export const devProtocol: Protocol = {
         },
       ],
     },
+    {
+      id: '2',
+      type: 'NameGenerator',
+      subject: {
+        entity: 'node',
+        id: 'school',
+      },
+      mode: 'quickAdd',
+      quickAddVariable: 'school',
+      prompts: [
+        {
+          id: '2',
+        },
+      ],
+    },
   ],
 };
 

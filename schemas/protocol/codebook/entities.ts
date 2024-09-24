@@ -21,6 +21,8 @@ export const NodeIcons = [
   ...lucideIcons,
 ] as const;
 
+export type NodeIcon = (typeof NodeIcons)[number];
+
 export const EdgeColors = [
   'seq-edge-1',
   'seq-edge-2',
