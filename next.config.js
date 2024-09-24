@@ -13,7 +13,6 @@ const nextConfig = {
   // experimental: {
   //   typedRoutes: true,
   // }
-  transpilePackages: ['lucide-react'], // https://lucide.dev/guide/packages/lucide-react#nextjs-example
 };
 
 export default withRoutes(withNextIntl(nextConfig));
