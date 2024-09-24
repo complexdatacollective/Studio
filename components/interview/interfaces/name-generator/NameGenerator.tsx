@@ -10,7 +10,7 @@ import { cn } from '~/lib/utils';
 import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
 import { type InterviewStage } from '../../ui/InterviewShell';
-import { TNodeType } from '~/schemas/protocol/codebook/entities';
+import { type TNodeType } from '~/schemas/protocol/codebook/entities';
 
 const demoPrompts = [
   {
