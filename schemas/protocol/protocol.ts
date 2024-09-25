@@ -12,16 +12,16 @@ export const ProtocolMessagesSchema = z.object({
       z.string(),
       z.object({
         Label: z.string(),
-        Panels: z
-          .record(
-            z.string(),
-            z.object({
-              Title: z.string(),
-            }),
-          )
-          .optional(),
       }),
     ),
+    Panels: z
+      .record(
+        z.string(),
+        z.object({
+          Title: z.string(),
+        }),
+      )
+      .optional(),
     Prompts: z.record(z.string(), z.string()).optional(),
   }),
 });

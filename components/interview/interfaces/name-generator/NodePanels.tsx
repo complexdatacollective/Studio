@@ -13,7 +13,7 @@ export default forwardRef(function NodePanels(
   { panels }: { panels: Panel[] },
   ref: ForwardedRef<HTMLDivElement>,
 ) {
-  const t = useTranslations(`Protocol.Stages.1.Panels`);
+  const t = useTranslations(`Protocol.Panels`);
 
   return (
     <div id="data-wizard-task-step-2" ref={ref} className="flex flex-col gap-4">

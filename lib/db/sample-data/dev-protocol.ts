@@ -9,20 +9,19 @@ export const devProtocol: Protocol = {
         Stages: {
           '1': {
             Label: 'Name Generator',
-
-            Panels: {
-              '1': {
-                Title: 'People you have already mentioned',
-              },
-              '2': {
-                Title: 'People from your last interview',
-              },
-            },
           },
         },
         Prompts: {
           '1': 'Who are your classmates at school?',
           '2': 'What are the names of your family members?',
+        },
+        Panels: {
+          '1': {
+            Title: 'People you have already mentioned',
+          },
+          '2': {
+            Title: 'People from your last interview',
+          },
         },
       },
     },
@@ -31,20 +30,19 @@ export const devProtocol: Protocol = {
         Stages: {
           '1': {
             Label: 'Generador de Nombres',
-
-            Panels: {
-              '1': {
-                Title: 'Personas que ya has mencionado',
-              },
-              '2': {
-                Title: 'Personas de tu última entrevista',
-              },
-            },
           },
         },
         Prompts: {
           '1': '¿Quiénes son tus compañeros de clase en school?',
           '2': '¿Cuáles son los nombres de tus familiares?',
+        },
+        Panels: {
+          '1': {
+            Title: 'Personas que ya has mencionado',
+          },
+          '2': {
+            Title: 'Personas de tu última entrevista',
+          },
         },
       },
     },
@@ -53,20 +51,19 @@ export const devProtocol: Protocol = {
         Stages: {
           '1': {
             Label: 'Générateur de noms',
-
-            Panels: {
-              '1': {
-                Title: 'Personnes que vous avez déjà mentionnées',
-              },
-              '2': {
-                Title: 'Personnes de votre dernière interview',
-              },
-            },
           },
         },
         Prompts: {
           '1': 'Qui sont vos camarades de classe à school?',
           '2': 'Quels sont les noms de vos membres de famille?',
+        },
+        Panels: {
+          '1': {
+            Title: 'Personnes que vous avez déjà mentionnées',
+          },
+          '2': {
+            Title: 'Personnes de votre dernière interview',
+          },
         },
       },
     },
