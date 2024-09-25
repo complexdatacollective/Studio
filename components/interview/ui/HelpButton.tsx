@@ -23,8 +23,21 @@ export default function HelpButton({ id }: { id?: string }) {
   const t2 = useTranslations('Components.ContextualHelp');
   const t3 = useTranslations('Components.ContextualHelp.ContactCard');
 
+  const fetchLocalizedWizards = async () => {
+    const localizedWizards = await Promise.all(
+      Object.entries(wizards).map(async ([id, wizard]) => ({
+        id,
+        name: await getLocalisedValue(wizard.name, locale),
+        description: await getLocalisedValue(wizard.description, locale),
+      })),
+    );
+    return localizedWizards;
+  };
+
   const handleOpenDialog = async () => {
     // Return type should be string | null
+    const localizedWizards = await fetchLocalizedWizards();
+
     const result = await openDialog<string>({
       type: 'custom',
       id: 'help-dialog',
@@ -34,19 +47,16 @@ export default function HelpButton({ id }: { id?: string }) {
         <>
           <div className="mt-4 flex flex-col gap-4">
             <div className="grid grid-cols-1 gap-4">
-              {Object.entries(wizards)
-                .map(([id, wizard]) => ({ id, ...wizard }))
-                .map((wizard) => (
-                  <Card
-                    key={wizard.id}
-                    title={getLocalisedValue(wizard.name, locale)}
-                    onClick={() => resolve(wizard.id)}
-                  >
-                    {renderLocalisedValue(
-                      getLocalisedValue(wizard.description, locale),
-                    )}
-                  </Card>
-                ))}
+              {localizedWizards.map((wizard) => (
+                <Card
+                  key={wizard.id}
+                  title={wizard.name ?? ''}
+                  onClick={() => resolve(wizard.id)}
+                >
+                  {wizard.description &&
+                    renderLocalisedValue(wizard.description)}
+                </Card>
+              ))}
               <Card
                 title={t3('Title')}
                 description={t3('Description')}

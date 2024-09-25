@@ -9,10 +9,8 @@ import {
   type LocaleCookieName,
   type LocaleObject,
   SUPPORTED_LOCALE_OBJECTS,
-  FALLBACK_LOCALE,
-  BACKEND_LOCALES,
 } from './config';
-import { match } from '@formatjs/intl-localematcher';
+import { getBestLocale } from './locale';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {
@@ -39,15 +37,12 @@ export const customErrorLogger = (error: IntlError) => {
  * Primarily for use in interview contexts where we have user supplied localised
  * strings.
  */
-export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
-  localisedRecord: T,
-  currentLocale: string,
-): T[keyof T] {
+export async function getLocalisedValue<
+  T extends LocalisedRecord | LocalisedString,
+>(localisedRecord: T, currentLocale: string): Promise<T[keyof T]> {
   if (!localisedRecord[currentLocale]) {
-    const localeMatch = match(
-      Object.keys(localisedRecord),
-      BACKEND_LOCALES,
-      FALLBACK_LOCALE,
+    const localeMatch = await getBestLocale(
+      Object.keys(localisedRecord) as Locale[],
     );
     return localisedRecord[localeMatch] as T[keyof T];
   }
