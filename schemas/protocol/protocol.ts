@@ -22,7 +22,7 @@ export const ProtocolMessagesSchema = z.object({
           .optional(),
       }),
     ),
-    Prompts: z.record(z.string(), z.string()),
+    Prompts: z.record(z.string(), z.string()).optional(),
   }),
 });
 
