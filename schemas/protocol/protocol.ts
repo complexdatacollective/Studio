@@ -7,21 +7,23 @@ import { SupportedLocalesSchema } from '~/lib/localisation/config';
 export const AssetManifest = z.object({});
 
 export const ProtocolMessagesSchema = z.object({
-  Stages: z.record(
-    z.string(),
-    z.object({
-      Label: z.string(),
-      Prompts: z.record(z.string(), z.string()).optional(),
-      Panels: z
-        .record(
-          z.string(),
-          z.object({
-            Title: z.string(),
-          }),
-        )
-        .optional(),
-    }),
-  ),
+  Protocol: z.object({
+    Stages: z.record(
+      z.string(),
+      z.object({
+        Label: z.string(),
+        Panels: z
+          .record(
+            z.string(),
+            z.object({
+              Title: z.string(),
+            }),
+          )
+          .optional(),
+      }),
+    ),
+    Prompts: z.record(z.string(), z.string()),
+  }),
 });
 
 const LocalisedStringsSchema = z.record(
