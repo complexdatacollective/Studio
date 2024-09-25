@@ -10,7 +10,9 @@ import {
   type LocaleObject,
   SUPPORTED_LOCALE_OBJECTS,
   FALLBACK_LOCALE,
+  BACKEND_LOCALES,
 } from './config';
+import { match } from '@formatjs/intl-localematcher';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {
@@ -41,9 +43,13 @@ export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
   localisedRecord: T,
   currentLocale: string,
 ): T[keyof T] {
-  // default to fallback if the current locale is not in the record
   if (!localisedRecord[currentLocale]) {
-    return localisedRecord[FALLBACK_LOCALE] as T[keyof T];
+    const localeMatch = match(
+      Object.keys(localisedRecord),
+      BACKEND_LOCALES,
+      FALLBACK_LOCALE,
+    );
+    return localisedRecord[localeMatch] as T[keyof T];
   }
   return localisedRecord[currentLocale] as T[keyof T];
 }
