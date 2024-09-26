@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Popover from '~/components/ui/Popover';
 import { Button } from '../ui/Button';
 import { useWizardController } from './useWizardController';
@@ -14,6 +13,8 @@ import { ControlledDialog } from '~/lib/dialogs/ControlledDialog';
 export default function WizardStep({ step }: { step: Step }) {
   const { title, content, targetElementId } = step;
   const locale = useLocale();
+  const localisedStepContent = getLocalisedValue(content, locale);
+  const localisedStepTitle = getLocalisedValue(title, locale);
 
   const {
     closeWizard,
@@ -26,27 +27,6 @@ export default function WizardStep({ step }: { step: Step }) {
 
   const t = useTranslations('Generic');
   const position = useElementPosition(targetElementId);
-
-  const [localisedStepContent, setLocalisedStepContent] = useState<
-    string | null
-  >(null);
-  const [localisedStepTitle, setLocalisedStepTitle] = useState<string | null>(
-    null,
-  );
-
-  useEffect(() => {
-    const fetchLocalizedValues = async () => {
-      const [contentValue, titleValue] = await Promise.all([
-        getLocalisedValue(content, locale),
-        getLocalisedValue(title, locale),
-      ]);
-
-      setLocalisedStepContent(contentValue);
-      setLocalisedStepTitle(titleValue);
-    };
-
-    void fetchLocalizedValues();
-  }, [content, title, locale]);
 
   const renderContent = () => (
     <>
@@ -76,10 +56,6 @@ export default function WizardStep({ step }: { step: Step }) {
       />
     </>
   );
-
-  if (!localisedStepContent || !localisedStepTitle) {
-    return null;
-  }
 
   if (position) {
     return (

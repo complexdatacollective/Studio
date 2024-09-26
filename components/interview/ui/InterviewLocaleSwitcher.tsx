@@ -13,7 +13,7 @@ export default function InterviewLocaleSwitcher({
 }: {
   codes: Locale[];
 }) {
-  const defaultValue = useLocale();
+  const defaultValue = useLocale().split(',')[0];
   const [isPending, startTransition] = useTransition();
   const t = useTranslations('Interview.Navigation');
 

@@ -99,7 +99,10 @@ export async function getLocaleMessages(
     const messages = (await import(`./messages/${locale}.json`)) as {
       default: AbstractIntlMessages;
     };
-    return messages.default;
+    return {
+      messages: messages.default,
+      locale,
+    };
   }
 
   // For protocol contexts we have to get the messages from the protocol, and
@@ -121,8 +124,11 @@ export async function getLocaleMessages(
   };
 
   return {
-    ...mainMessages.default,
-    ...protocolMessages,
+    messages: {
+      ...mainMessages.default,
+      ...protocolMessages,
+    },
+    mainLocale: mainMessageLocale, // Return the main message locale
   };
 }
 

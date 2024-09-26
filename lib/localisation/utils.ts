@@ -5,12 +5,12 @@ import {
 } from 'next-intl';
 import type { LocalisedRecord, LocalisedString } from '../../schemas/shared';
 import {
+  FALLBACK_LOCALE,
   type Locale,
   type LocaleCookieName,
   type LocaleObject,
   SUPPORTED_LOCALE_OBJECTS,
 } from './config';
-import { getBestLocale } from './locale';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {
@@ -37,16 +37,22 @@ export const customErrorLogger = (error: IntlError) => {
  * Primarily for use in interview contexts where we have user supplied localised
  * strings.
  */
-export async function getLocalisedValue<
-  T extends LocalisedRecord | LocalisedString,
->(localisedRecord: T, currentLocale: string): Promise<T[keyof T]> {
-  if (!localisedRecord[currentLocale]) {
-    const localeMatch = await getBestLocale(
-      Object.keys(localisedRecord) as Locale[],
-    );
-    return localisedRecord[localeMatch] as T[keyof T];
+export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
+  localisedRecord: T,
+  currentLocales: string,
+): T[keyof T] {
+  const interviewLocale = currentLocales.split(',')[0] as Locale;
+  const mainLocale = currentLocales.split(',')[1] as Locale;
+  if (localisedRecord[interviewLocale]) {
+    return localisedRecord[interviewLocale] as T[keyof T];
   }
-  return localisedRecord[currentLocale] as T[keyof T];
+
+  if (localisedRecord[mainLocale]) {
+    // first check if the main locale is available
+    return localisedRecord[mainLocale] as T[keyof T];
+  }
+
+  return localisedRecord[FALLBACK_LOCALE] as T[keyof T]; // Fallback to the default locale
 }
 
 /**
