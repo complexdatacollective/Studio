@@ -14,6 +14,7 @@ import Negotiator from 'negotiator';
 import { match } from '@formatjs/intl-localematcher';
 import { getCurrentPath, getInterviewId } from '../serverUtils';
 import type { ProtocolMessages } from '~/schemas/protocol/protocol';
+import deepmerge from 'deepmerge';
 
 async function getProtocolLocales(interviewId: string): Promise<Locale[]> {
   try {
@@ -123,10 +124,7 @@ export async function getLocaleMessages(
     default: IntlMessages;
   };
 
-  return {
-    ...mainMessages.default,
-    ...protocolMessages,
-  };
+  return deepmerge(mainMessages.default, protocolMessages);
 }
 
 export async function setUserLocale(locale: Locale) {
