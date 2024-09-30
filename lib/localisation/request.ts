@@ -27,18 +27,10 @@ export default getRequestConfig(async () => {
   if (!userLocale || !availableLocales.includes(userLocale)) {
     userLocale = await getBestLocale(availableLocales);
   }
-
-  const { messages, mainLocale } = await getLocaleMessages(
-    localeContext,
-    userLocale,
-  );
-
-  const combinedLocale = mainLocale
-    ? `${userLocale},${mainLocale}`
-    : userLocale;
+  const messages = await getLocaleMessages(localeContext, userLocale);
 
   return {
-    locale: combinedLocale,
+    locale: userLocale,
     messages,
     getMessageFallback,
     timeZone: 'UTC',

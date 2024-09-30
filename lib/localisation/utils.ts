@@ -5,7 +5,6 @@ import {
 } from 'next-intl';
 import type { LocalisedRecord, LocalisedString } from '../../schemas/shared';
 import {
-  FALLBACK_LOCALE,
   type Locale,
   type LocaleCookieName,
   type LocaleObject,
@@ -39,20 +38,9 @@ export const customErrorLogger = (error: IntlError) => {
  */
 export function getLocalisedValue<T extends LocalisedRecord | LocalisedString>(
   localisedRecord: T,
-  currentLocales: string,
+  currentLocale: string,
 ): T[keyof T] {
-  const interviewLocale = currentLocales.split(',')[0] as Locale;
-  const mainLocale = currentLocales.split(',')[1] as Locale;
-  if (localisedRecord[interviewLocale]) {
-    return localisedRecord[interviewLocale] as T[keyof T];
-  }
-
-  if (localisedRecord[mainLocale]) {
-    // first check if the main locale is available
-    return localisedRecord[mainLocale] as T[keyof T];
-  }
-
-  return localisedRecord[FALLBACK_LOCALE] as T[keyof T]; // Fallback to the default locale
+  return localisedRecord[currentLocale] as T[keyof T];
 }
 
 /**
