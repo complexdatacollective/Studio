@@ -66,6 +66,20 @@ export const devProtocol: Protocol = {
           },
         },
       },
+      Interview: {
+        Wizards: {
+          General: {
+            Name: "Informations générales sur l'entretien",
+            Description: "Description de l'étape",
+            Steps: {
+              Welcome: {
+                Title: 'Bienvenue',
+                Text: "Bienvenue dans l'entretien",
+              },
+            },
+          },
+        },
+      },
     },
   },
   codebook: {

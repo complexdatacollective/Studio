@@ -1,10 +1,9 @@
 import { HelpCircle } from 'lucide-react';
 import { NavButtonWithTooltip } from './NavigationButton';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useWizardController } from '~/components/onboard-wizard/useWizardController';
 import { env } from '~/env';
 import { WIZARD_LOCAL_STORAGE_KEY } from '~/lib/onboarding-wizard/Provider';
-import { getLocalisedValue } from '~/lib/localisation/utils';
 import { renderLocalisedValue } from '~/components/RenderRichText';
 import { useDialog } from '~/lib/dialogs/DialogProvider';
 import { Button } from '~/components/ui/Button';
@@ -17,7 +16,6 @@ import Form from '~/components/ui/form/Form';
 export default function HelpButton({ id }: { id?: string }) {
   const { openDialog } = useDialog();
   const { wizards, setActiveWizard } = useWizardController();
-  const locale = useLocale();
 
   const t = useTranslations('Interview.Navigation');
   const t2 = useTranslations('Components.ContextualHelp');
@@ -39,12 +37,10 @@ export default function HelpButton({ id }: { id?: string }) {
                 .map((wizard) => (
                   <Card
                     key={wizard.id}
-                    title={getLocalisedValue(wizard.name, locale)}
+                    title={wizard.name}
                     onClick={() => resolve(wizard.id)}
                   >
-                    {renderLocalisedValue(
-                      getLocalisedValue(wizard.description, locale),
-                    )}
+                    {renderLocalisedValue(wizard.description)}
                   </Card>
                 ))}
               <Card

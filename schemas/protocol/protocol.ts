@@ -24,6 +24,21 @@ export const ProtocolMessagesSchema = z.object({
       .optional(),
     Prompts: z.record(z.string(), z.string()).optional(),
   }),
+  Interview: z.object({
+    Wizards: z.object({
+      General: z.object({
+        Name: z.string(),
+        Description: z.string(),
+        Steps: z.record(
+          z.string(),
+          z.object({
+            Title: z.string(),
+            Text: z.string(),
+          }),
+        ),
+      }),
+    }),
+  }),
 });
 
 const LocalisedStringsSchema = z.record(
