@@ -91,8 +91,17 @@ function NameGenerator(_props: InterviewStage) {
   );
 }
 
-export default withOnboardingWizard(NameGenerator, () => {
-  const t = useTranslations('Interview.Wizards.NameGenerator');
+export default withOnboardingWizard(NameGenerator, (_props) => {
+  // TODO: get the stage id from the props
+  const stageId = '1';
+
+  let t = useTranslations(`Protocol.Stages.${stageId}.Wizard`);
+
+  // hacky way to check if the translation exists. This tells us if there are stage-level translations for the wizard
+  if (t('Name').includes(`Protocol.Stages.${stageId}.Wizard.Name`)) {
+    // use the default stage type wizard steps. will either be user-supplied or our defaults
+    t = useTranslations('Interview.Wizards.NameGenerator');
+  }
 
   return {
     id: 'name-generator',

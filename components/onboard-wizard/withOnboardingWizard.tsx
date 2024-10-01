@@ -1,12 +1,13 @@
 import type { Wizard } from '~/lib/onboarding-wizard/store';
 import OnboardWizard from './OnboardWizard';
 
+// A HOC that wraps a stage with an onboarding wizard
 export function withOnboardingWizard<P extends object>(
   WrappedComponent: React.ComponentType<P>,
-  getWizard: () => Wizard, // function to create a wizard
+  getWizard: (props: P) => Wizard, // function to create a wizard
 ) {
   const WithOnboardingWizard = (props: P) => {
-    const wizard = getWizard();
+    const wizard = getWizard(props);
     return (
       <>
         <OnboardWizard wizard={wizard} />

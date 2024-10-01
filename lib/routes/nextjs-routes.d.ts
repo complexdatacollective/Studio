@@ -89,26 +89,35 @@ declare module "nextjs-routes" {
 declare module "next/link" {
   import type { Route, RouteLiteral } from "nextjs-routes";;
   import type { LinkProps as NextLinkProps } from "next/dist/client/link";
-  import type React from "react";
+  import type {
+    AnchorHTMLAttributes,
+    DetailedReactHTMLElement,
+    MouseEventHandler,
+    PropsWithChildren,
+  } from "react";
+  export * from "next/dist/client/link";
 
   type StaticRoute = Exclude<Route, { query: any }>["pathname"];
 
-  export type LinkProps = Omit<NextLinkProps, "href" | "locale"> & {
+  export interface LinkProps
+    extends Omit<NextLinkProps, "href" | "locale">,
+      AnchorHTMLAttributes<HTMLAnchorElement> {
     href: StaticRoute | RouteLiteral;
     locale?: false;
   }
 
-  /**
-   * A React component that extends the HTML `<a>` element to provide [prefetching](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#2-prefetching)
-   * and client-side navigation between routes.
-   *
-   * It is the primary way to navigate between routes in Next.js.
-   *
-   * Read more: [Next.js docs: `<Link>`](https://nextjs.org/docs/app/api-reference/components/link)
-   */
-  declare const Link: React.ForwardRefExoticComponent<Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & LinkProps & {
-      children?: React.ReactNode;
-  } & React.RefAttributes<HTMLAnchorElement>>;
+  type LinkReactElement = DetailedReactHTMLElement<
+    {
+      onMouseEnter?: MouseEventHandler<Element> | undefined;
+      onClick: MouseEventHandler;
+      href?: string | undefined;
+      ref?: any;
+    },
+    HTMLElement
+  >;
+
+  declare function Link(props: PropsWithChildren<LinkProps>): LinkReactElement;
+
   export default Link;
 }
 
@@ -178,41 +187,41 @@ declare module "next/navigation" {
   export * from "next/dist/client/components/navigation";
   import type { RoutedQuery, RouteLiteral } from "nextjs-routes";
 
-  /**
-   * A [Client Component](https://nextjs.org/docs/app/building-your-application/rendering/client-components) hook
-   * that lets you read the current URL's pathname.
-   *
-   * @example
-   * ```ts
-   * "use client"
-   * import { usePathname } from 'next/navigation'
-   *
-   * export default function Page() {
-   *  const pathname = usePathname() // returns "/dashboard" on /dashboard?foo=bar
-   *  // ...
-   * }
-   * ```
-   *
-   * Read more: [Next.js Docs: `usePathname`](https://nextjs.org/docs/app/api-reference/functions/use-pathname)
-   */
+/**
+ * A [Client Component](https://nextjs.org/docs/app/building-your-application/rendering/client-components) hook
+ * that lets you read the current URL's pathname.
+ *
+ * @example
+ * ```ts
+ * "use client"
+ * import { usePathname } from 'next/navigation'
+ *
+ * export default function Page() {
+ *  const pathname = usePathname() // returns "/dashboard" on /dashboard?foo=bar
+ *  // ...
+ * }
+ * ```
+ *
+ * Read more: [Next.js Docs: `usePathname`](https://nextjs.org/docs/app/api-reference/functions/use-pathname)
+ */
   export function usePathname(): RouteLiteral;
 
-  /**
-   * A [Client Component](https://nextjs.org/docs/app/building-your-application/rendering/client-components) hook
-   * that lets you read a route's dynamic params filled in by the current URL.
-   *
-   * @example
-   * ```ts
-   * "use client"
-   * import { useParams } from 'next/navigation'
-   *
-   * export default function Page() {
-   *   // on /dashboard/[team] where pathname is /dashboard/nextjs
-   *   const { team } = useParams() // team === "nextjs"
-   * }
-   * ```
-   *
-   * Read more: [Next.js Docs: `useParams`](https://nextjs.org/docs/app/api-reference/functions/use-params)
-   */
+/**
+ * A [Client Component](https://nextjs.org/docs/app/building-your-application/rendering/client-components) hook
+ * that lets you read a route's dynamic params filled in by the current URL.
+ *
+ * @example
+ * ```ts
+ * "use client"
+ * import { useParams } from 'next/navigation'
+ *
+ * export default function Page() {
+ *   // on /dashboard/[team] where pathname is /dashboard/nextjs
+ *   const { team } = useParams() // team === "nextjs"
+ * }
+ * ```
+ *
+ * Read more: [Next.js Docs: `useParams`](https://nextjs.org/docs/app/api-reference/functions/use-params)
+ */
   export function useParams<Pathname extends Route["pathname"] = Route["pathname"]>(): RoutedQuery<Pathname>;
 }
