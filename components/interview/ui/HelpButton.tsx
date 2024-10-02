@@ -25,6 +25,7 @@ export default function HelpButton({ id }: { id?: string }) {
 
   const handleOpenDialog = async () => {
     // Return type should be string | null
+
     const result = await openDialog<string>({
       type: 'custom',
       id: 'help-dialog',

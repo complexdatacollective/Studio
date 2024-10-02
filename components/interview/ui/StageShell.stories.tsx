@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import type { Stage } from '@prisma/client';
 import SimpleShell from './SimpleShell';
 import NameGenerator from '../interfaces/name-generator/NameGenerator';
+import { FALLBACK_LOCALE } from '~/lib/localisation/config';
 
 const stageOptions: Stage[] = [
   {
@@ -15,7 +16,6 @@ const stageOptions: Stage[] = [
 
 type StoryArgs = {
   stage: Stage;
-  userLanguageHeader: string;
 };
 
 const meta: Meta<StoryArgs> = {
@@ -43,7 +43,6 @@ const meta: Meta<StoryArgs> = {
   },
   args: {
     stage: stageOptions[0],
-    userLanguageHeader: 'en',
   },
   render: ({ stage }) => {
     const getStageComponent = (stage: Stage) => {
@@ -56,7 +55,11 @@ const meta: Meta<StoryArgs> = {
     };
 
     return (
-      <SimpleShell isReadyForNextStage={false} progress={50}>
+      <SimpleShell
+        isReadyForNextStage={false}
+        progress={50}
+        availableLocales={[FALLBACK_LOCALE]}
+      >
         {getStageComponent(stage)}
       </SimpleShell>
     );

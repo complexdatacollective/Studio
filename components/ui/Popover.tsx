@@ -19,6 +19,12 @@ const Popover = ({
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }>) => {
+  // defer getting portal container until the component mounts
+  const portalContainer =
+    typeof window !== 'undefined'
+      ? document.getElementById('dialog-portal')
+      : null;
+
   return (
     <PopoverPrimitive.Root
       modal={modal}
@@ -26,7 +32,7 @@ const Popover = ({
       onOpenChange={onOpenChange}
     >
       <PopoverPrimitive.Trigger asChild>{children}</PopoverPrimitive.Trigger>
-      <PopoverPrimitive.Portal>
+      <PopoverPrimitive.Portal container={portalContainer}>
         <PopoverPrimitive.Content
           className={cn(
             'bg-surface-0 text-surface-0-foreground',

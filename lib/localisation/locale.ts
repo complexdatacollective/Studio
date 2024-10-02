@@ -119,7 +119,6 @@ export async function getLocaleMessages(
   )) as {
     default: AbstractIntlMessages;
   };
-
   return {
     ...mainMessages.default,
     ...protocolMessages,
