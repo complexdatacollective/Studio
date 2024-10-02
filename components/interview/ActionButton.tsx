@@ -1,33 +1,50 @@
-import AddAPersonIcon from './icons/add-a-person-svg-react';
-import MenuNewSessionIcon from './icons/menu-new-session.svg.react';
-import AddNode from './icons/LucideAddNode';
-import type { NodeIcon } from '~/schemas/protocol/codebook/entities';
+import type { NodeColor, NodeIcon } from '~/schemas/protocol/codebook/entities';
+import { PlusIcon } from 'lucide-react';
+import DynamicLucideIcon from '../DynamicLucideIcon';
+import { cn } from '~/lib/utils';
 
-const renderIcon = (icon: NodeIcon) => {
-  switch (icon) {
-    case 'add-a-person':
-      return <AddAPersonIcon />;
-    case 'add-a-place':
-      return <div>Place</div>; // TODO: implement add-a-place icon
-    default:
-      return <AddNode iconName={icon} />;
-  }
+type ActionButtonProps = React.ComponentProps<'button'> & {
+  iconName: NodeIcon;
+  color?: NodeColor;
 };
 
 export default function ActionButton({
-  onClick,
-  icon,
-}: {
-  onClick: () => void;
-  icon: NodeIcon;
-}) {
+  iconName,
+  color = 'node-1',
+  ...rest
+}: ActionButtonProps) {
   return (
-    <button onClick={onClick} className="relative flex h-40 w-40">
-      <div className="absolute inset-0 flex items-center justify-center rounded-full">
-        {renderIcon(icon)}
+    <button
+      {...rest}
+      aria-label="Add a person"
+      className="group relative flex h-40 w-40 rounded-full"
+    >
+      <div
+        className={cn(
+          // TODO: write helper function to generate this sort of thing
+          color === 'node-1' && 'bg-node-1 text-node-1-foreground',
+          color === 'node-2' && 'bg-node-2 text-node-2-foreground',
+          color === 'node-3' && 'bg-node-3 text-node-3-foreground',
+          color === 'node-4' && 'bg-node-4 text-node-4-foreground',
+          color === 'node-5' && 'bg-node-5 text-node-5-foreground',
+          color === 'node-6' && 'bg-node-6 text-node-6-foreground',
+          color === 'node-7' && 'bg-node-7 text-node-7-foreground',
+          color === 'node-8' && 'bg-node-8 text-node-8-foreground',
+          'scale-90 transition-transform duration-300 ease-in-out group-hover:scale-100',
+          'absolute inset-0 flex items-center justify-center rounded-full shadow-2xl',
+          'bg-[repeating-linear-gradient(145deg,transparent,transparent_50%,rgba(0,0,0,0.1)_50%,rgba(0,0,0,0.1)_100%)]',
+        )}
+      >
+        <DynamicLucideIcon
+          name={iconName}
+          className="h-24 w-24"
+          strokeWidth={1.5}
+        />
       </div>
-      <div className="absolute right-0 top-3 flex h-16 w-16 items-center justify-center rounded-full bg-muted p-5">
-        <MenuNewSessionIcon />
+      <div className="absolute -right-4 -top-2 flex h-16 w-16 items-center justify-center rounded-full bg-muted p-5 text-muted-foreground shadow-md transition-transform duration-300 ease-in-out group-hover:rotate-90">
+        <div>
+          <PlusIcon className="h-10 w-10" strokeWidth={3} />
+        </div>
       </div>
     </button>
   );

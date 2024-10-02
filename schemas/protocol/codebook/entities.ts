@@ -2,28 +2,24 @@ import { z } from 'zod';
 import { VariableDefinitionSchema } from './variables';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
-const lucideIcons = Object.keys(
+export const NodeIcons = Object.keys(
   dynamicIconImports,
 ) as (keyof typeof dynamicIconImports)[];
 
-export const NodeColors = [
-  'seq-node-1',
-  'seq-node-2',
-  'seq-node-3',
-  'seq-node-4',
-  'seq-node-5',
-  'seq-node-6',
-  'seq-node-7',
-  'seq-node-8',
-] as const;
-
-export const NodeIcons = [
-  'add-a-person',
-  'add-a-place',
-  ...lucideIcons,
-] as const;
-
 export type NodeIcon = (typeof NodeIcons)[number];
+
+export const NodeColors = [
+  'node-1',
+  'node-2',
+  'node-3',
+  'node-4',
+  'node-5',
+  'node-6',
+  'node-7',
+  'node-8',
+] as const;
+
+export type NodeColor = (typeof NodeColors)[number];
 
 export const EdgeColors = [
   'seq-edge-1',
@@ -38,6 +34,8 @@ export const EdgeColors = [
   'seq-edge-10',
 ] as const;
 
+export type EdgeColor = (typeof EdgeColors)[number];
+
 export const EntityTypeSchema = z.object({
   variables: z.record(z.string(), VariableDefinitionSchema).optional(),
 });
@@ -46,7 +44,7 @@ export type TEntityType = z.infer<typeof EntityTypeSchema>;
 
 export const NodeTypeSchema = EntityTypeSchema.extend({
   color: z.enum(NodeColors),
-  icon: z.enum(NodeIcons),
+  icon: z.enum([NodeIcons[0]!, ...NodeIcons.slice(0)]),
 });
 
 export type TNodeType = z.infer<typeof NodeTypeSchema>;

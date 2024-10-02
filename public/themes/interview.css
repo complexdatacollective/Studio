@@ -30,6 +30,7 @@
     --success-foreground: var(--white);
 
     --muted: var(--platinum);
+    --muted-foreground: var(--charcoal);
 
     --border-radius: 1.25rem;
 

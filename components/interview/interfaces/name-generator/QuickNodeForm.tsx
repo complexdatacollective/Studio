@@ -30,7 +30,7 @@ export default function QuickNodeForm({ nodeType }: { nodeType: TNodeType }) {
         <div className="mr-8" id="data-wizard-task-step-3">
           <ActionButton
             onClick={() => setShowForm(true)}
-            icon={nodeType.icon}
+            iconName={nodeType.icon}
           />
         </div>
       )}
