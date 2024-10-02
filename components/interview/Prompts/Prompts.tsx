@@ -8,24 +8,22 @@ import { useTranslations } from 'next-intl';
 export default function Prompts({
   prompts,
   currentPromptId,
-  id,
+  ...props
 }: {
-  id?: string;
   prompts: TPrompts;
   currentPromptId: string;
-}) {
+} & React.HTMLProps<HTMLDivElement>) {
   const currentIndex = prompts.findIndex(({ id }) => id === currentPromptId);
-  const t = useTranslations();
+  const t = useTranslations(`Protocol.Prompts`);
 
   return (
-    <div id={id} className="flex flex-col items-center justify-center">
+    <div {...props} className="flex flex-col items-center justify-center">
       <Pips count={prompts.length} currentIndex={currentIndex} />
       <div className="">
         {prompts.map(
           ({ id }) =>
             prompts[currentIndex]?.id === id && (
-              // @ts-expect-error we haven't worked this out yet.
-              <Prompt key={id} text={t('Stages.1.Prompts.1')} />
+              <Prompt key={id} text={t(`${currentPromptId}`)} />
             ),
         )}
       </div>
