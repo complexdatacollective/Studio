@@ -5,19 +5,23 @@ import { cn } from '~/lib/utils';
 
 type ActionButtonProps = React.ComponentProps<'button'> & {
   iconName: NodeIcon;
-  color?: NodeColor;
+  color: NodeColor;
 };
 
 export default function ActionButton({
   iconName,
-  color = 'node-1',
+  className,
+  color,
   ...rest
 }: ActionButtonProps) {
   return (
     <button
       {...rest}
       aria-label="Add a person"
-      className="group relative flex h-40 w-40 rounded-full"
+      className={cn(
+        'group relative mt-2 flex h-40 w-40 rounded-full',
+        className,
+      )}
     >
       <div
         className={cn(
@@ -40,9 +44,12 @@ export default function ActionButton({
           strokeWidth={1.5}
         />
       </div>
-      <div className="absolute -right-4 -top-2 flex h-16 w-16 items-center justify-center rounded-full bg-muted p-5 text-muted-foreground shadow-md transition-transform duration-300 ease-in-out group-hover:rotate-90">
+      <div className="absolute -right-4 -top-2 flex h-16 w-16 items-center justify-center rounded-full bg-muted p-5 text-muted-foreground shadow-md">
         <div>
-          <PlusIcon className="h-10 w-10" strokeWidth={3} />
+          <PlusIcon
+            className="h-10 w-10 transition-transform duration-300 ease-in-out group-hover:rotate-90"
+            strokeWidth={3}
+          />
         </div>
       </div>
     </button>

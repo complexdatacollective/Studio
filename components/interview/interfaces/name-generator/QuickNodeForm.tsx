@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 'use client';
 
 import { useState } from 'react';
@@ -21,19 +19,15 @@ export default function QuickNodeForm({ nodeType }: { nodeType: TNodeType }) {
               className="font-semibold rounded-full bg-input px-6 py-4 text-lg text-input-foreground placeholder-input-foreground"
             />
           </form>
-          <div onClick={() => setShowForm(false)}>
-            <Node label="" />
-          </div>
+          <Node label="" onClick={() => setShowForm(false)} />
         </div>
       )}
-      {!showForm && (
-        <div className="mr-8" id="data-wizard-task-step-3">
-          <ActionButton
-            onClick={() => setShowForm(true)}
-            iconName={nodeType.icon}
-          />
-        </div>
-      )}
+      {!showForm && <div className="mr-8" id="data-wizard-task-step-3"></div>}
+      <ActionButton
+        onClick={() => setShowForm(true)}
+        color={nodeType.color}
+        iconName={nodeType.icon}
+      />
     </div>
   );
 }

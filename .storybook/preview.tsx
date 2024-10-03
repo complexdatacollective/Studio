@@ -1,17 +1,19 @@
 import type { Preview } from '@storybook/react';
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { type AbstractIntlMessages } from 'next-intl';
 import {
   SUPPORTED_LOCALE_OBJECTS,
   type Locale,
 } from '~/lib/localisation/config';
 import { getLangDir } from 'rtl-detect';
-import InjectThemeVariables from '~/lib/theme/InjectThemeVariables';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import '~/styles/global.css';
+import '~/styles/themes/default.css';
 import Providers from '~/app/_components/Providers';
 import { Lexend, Roboto_Mono } from 'next/font/google';
 import { cn } from '~/lib/utils';
+
+const LazyInterviewTheme = lazy(() => import('./InterviewTheme'));
 
 const lexend = Lexend({
   weight: 'variable',
@@ -125,6 +127,8 @@ const preview: Preview = {
         (context.parameters.forceTheme as string) ??
         (context.globals.visualTheme as string);
 
+      console.log('theme', theme);
+
       return (
         <div
           className={cn(
@@ -132,8 +136,10 @@ const preview: Preview = {
             `${lexend.variable} ${roboto_mono.variable}`,
           )}
         >
-          <InjectThemeVariables theme={theme} />
-          <Story />
+          <Suspense fallback="Loading...">
+            {theme === 'interview' && <LazyInterviewTheme />}
+            <Story />
+          </Suspense>
         </div>
       );
     },

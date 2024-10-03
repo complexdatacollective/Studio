@@ -2,11 +2,9 @@ import { z } from 'zod';
 import { VariableDefinitionSchema } from './variables';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
-export const NodeIcons = Object.keys(
-  dynamicIconImports,
-) as (keyof typeof dynamicIconImports)[];
+export type NodeIcon = keyof typeof dynamicIconImports;
 
-export type NodeIcon = (typeof NodeIcons)[number];
+export const NodeIcons = Object.keys(dynamicIconImports) as NodeIcon[];
 
 export const NodeColors = [
   'node-1',

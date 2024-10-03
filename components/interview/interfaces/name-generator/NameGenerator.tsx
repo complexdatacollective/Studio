@@ -11,6 +11,7 @@ import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
 import { type InterviewStage } from '../../ui/InterviewShell';
 import { type TNodeType } from '~/schemas/protocol/codebook/entities';
+import ActionButton from '../../ActionButton';
 
 const demoPrompts = [
   {
@@ -77,8 +78,8 @@ const demoNodes = [
 ];
 
 const demoNodeType = {
-  color: 'seq-node-1',
-  icon: 'school',
+  color: 'node-1',
+  icon: 'user-round',
 } as TNodeType;
 
 function NameGenerator(_props: InterviewStage) {
@@ -91,7 +92,7 @@ function NameGenerator(_props: InterviewStage) {
           <NodeList items={demoNodes} />
         </div>
       </div>
-      <QuickNodeForm nodeType={demoNodeType} />
+      {/* <QuickNodeForm nodeType={demoNodeType} /> */}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { type Meta, type StoryFn } from '@storybook/react';
 import ActionButton from '~/components/interview/ActionButton';
 import {
+  type NodeColor,
   NodeColors,
   type NodeIcon,
   NodeIcons,
@@ -40,12 +41,12 @@ export default {
 
 const Template: StoryFn<{
   iconName: NodeIcon;
-  className: string;
+  color: NodeColor;
   onClick: () => void;
 }> = (args) => <ActionButton {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   iconName: 'user-round',
-  className: 'ng-node-seq-1', // Example default background class
+  color: 'node-1',
 };

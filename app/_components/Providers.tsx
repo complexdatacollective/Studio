@@ -1,5 +1,3 @@
-'use client';
-
 import { type AbstractIntlMessages } from 'next-intl';
 import { type ReactNode } from 'react';
 import RadixDirectionProvider from './RadixDirectionProvider';
@@ -24,6 +22,7 @@ export default function Providers({
   };
   children: ReactNode;
 }) {
+  console.log('render');
   return (
     <ThemeProvider>
       <IntlProvider
