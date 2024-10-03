@@ -1,9 +1,9 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { type Meta, type StoryFn } from '@storybook/react';
 import ActionButton from '~/components/interview/ActionButton';
 import {
   NodeColors,
-  NodeIcon,
+  type NodeIcon,
   NodeIcons,
 } from '~/schemas/protocol/codebook/entities';
 
@@ -38,7 +38,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story<{
+const Template: StoryFn<{
   iconName: NodeIcon;
   className: string;
   onClick: () => void;

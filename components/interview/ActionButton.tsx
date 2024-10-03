@@ -21,7 +21,6 @@ export default function ActionButton({
     >
       <div
         className={cn(
-          // TODO: write helper function to generate this sort of thing
           color === 'node-1' && 'bg-node-1 text-node-1-foreground',
           color === 'node-2' && 'bg-node-2 text-node-2-foreground',
           color === 'node-3' && 'bg-node-3 text-node-3-foreground',
