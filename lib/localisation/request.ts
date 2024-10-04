@@ -27,7 +27,6 @@ export default getRequestConfig(async () => {
   if (!userLocale || !availableLocales.includes(userLocale)) {
     userLocale = await getBestLocale(availableLocales);
   }
-
   const messages = await getLocaleMessages(localeContext, userLocale);
 
   return {

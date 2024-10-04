@@ -132,7 +132,7 @@ export const devProtocol: Protocol = {
           },
         },
         color: 'seq-node-2',
-        icon: 'Backpack', // example of using lucide icon
+        icon: 'backpack', // example of using lucide icon
       },
     },
   },
@@ -159,6 +159,21 @@ export const devProtocol: Protocol = {
       prompts: [
         {
           id: '1',
+        },
+      ],
+    },
+    {
+      id: '2',
+      type: 'NameGenerator',
+      subject: {
+        entity: 'node',
+        id: 'school',
+      },
+      mode: 'quickAdd',
+      quickAddVariable: 'school',
+      prompts: [
+        {
+          id: '2',
         },
       ],
     },

@@ -1,6 +1,5 @@
 import { getInterviewById } from '~/server/queries/interviews';
 import InterviewShell from '~/components/interview/ui/InterviewShell';
-import { redirect } from 'next/navigation';
 
 export default async function Page({
   params: { interviewId },
@@ -9,13 +8,7 @@ export default async function Page({
   params: { interviewId: string };
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  let stage;
-  if (!searchParams.stage) {
-    stage = 0;
-    redirect(`/interview/${interviewId}?stage=0`);
-  } else {
-    stage = parseInt(searchParams.stage as string);
-  }
+  const stage = parseInt(searchParams.stage as string, 10) || 0;
 
   const interviewData = await getInterviewById({ interviewId });
   if (!interviewData) {

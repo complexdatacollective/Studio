@@ -125,6 +125,7 @@ export async function getLocaleMessages(
   };
 
   return deepmerge(mainMessages.default, protocolMessages);
+
 }
 
 export async function setUserLocale(locale: Locale) {

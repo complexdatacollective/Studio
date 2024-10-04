@@ -1,12 +1,11 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 'use client';
 
 import { useState } from 'react';
 import ActionButton from '~/components/interview/ActionButton';
 import Node from '~/components/Node';
+import type { TNodeType } from '~/schemas/protocol/codebook/entities';
 
-export default function QuickNodeForm() {
+export default function QuickNodeForm({ nodeType }: { nodeType: TNodeType }) {
   const [showForm, setShowForm] = useState(false);
 
   return (
@@ -18,16 +17,21 @@ export default function QuickNodeForm() {
               type="text"
               placeholder="Type a label and press enter..."
               className="font-semibold rounded-full bg-input px-6 py-4 text-lg text-input-foreground placeholder-input-foreground"
+              onBlur={() => setShowForm(false)}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
             />
           </form>
-          <div onClick={() => setShowForm(false)}>
-            <Node label="" />
-          </div>
+          <Node label="" onClick={() => setShowForm(false)} />
         </div>
       )}
       {!showForm && (
         <div className="mr-8" id="data-wizard-task-step-3">
-          <ActionButton onClick={() => setShowForm(true)} />
+          <ActionButton
+            onClick={() => setShowForm(true)}
+            color={nodeType.color}
+            iconName={nodeType.icon}
+          />
         </div>
       )}
     </div>

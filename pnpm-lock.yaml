@@ -119,8 +119,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@19.0.0-rc-e740d4b1-20240919(react@19.0.0-rc-e740d4b1-20240919))(react@19.0.0-rc-e740d4b1-20240919)
       nextjs-routes:
-        specifier: 2.2.2-rc.3
-        version: 2.2.2-rc.3(next@15.0.0-canary.160(@babel/core@7.25.2)(react-dom@19.0.0-rc-e740d4b1-20240919(react@19.0.0-rc-e740d4b1-20240919))(react@19.0.0-rc-e740d4b1-20240919)(sass@1.78.0))
+        specifier: 2.2.2-rc.4
+        version: 2.2.2-rc.4(next@15.0.0-canary.160(@babel/core@7.25.2)(react-dom@19.0.0-rc-e740d4b1-20240919(react@19.0.0-rc-e740d4b1-20240919))(react@19.0.0-rc-e740d4b1-20240919)(sass@1.78.0))
       ohash:
         specifier: ^1.1.4
         version: 1.1.4
@@ -4349,8 +4349,8 @@ packages:
       sass:
         optional: true
 
-  nextjs-routes@2.2.2-rc.3:
-    resolution: {integrity: sha512-Cie1mk/FLcq2QhT7FClMFQPnuenEFfNINQbOCFElnsNHsRDP1kj4HyeMrWnm4xA61SxCBoC9KrwHgBzAIS/0NA==}
+  nextjs-routes@2.2.2-rc.4:
+    resolution: {integrity: sha512-+rbLwZPflv883CogDQFajRtR7h7LKV+FrNJG+enS7NBvzXYWVo97fKLo4ecrjsqhphjty4NK8fcEYquNl8uQjw==}
     hasBin: true
     peerDependencies:
       next: '*'
@@ -10470,7 +10470,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  nextjs-routes@2.2.2-rc.3(next@15.0.0-canary.160(@babel/core@7.25.2)(react-dom@19.0.0-rc-e740d4b1-20240919(react@19.0.0-rc-e740d4b1-20240919))(react@19.0.0-rc-e740d4b1-20240919)(sass@1.78.0)):
+  nextjs-routes@2.2.2-rc.4(next@15.0.0-canary.160(@babel/core@7.25.2)(react-dom@19.0.0-rc-e740d4b1-20240919(react@19.0.0-rc-e740d4b1-20240919))(react@19.0.0-rc-e740d4b1-20240919)(sass@1.78.0)):
     dependencies:
       chokidar: 4.0.0
       next: 15.0.0-canary.160(@babel/core@7.25.2)(react-dom@19.0.0-rc-e740d4b1-20240919(react@19.0.0-rc-e740d4b1-20240919))(react@19.0.0-rc-e740d4b1-20240919)(sass@1.78.0)

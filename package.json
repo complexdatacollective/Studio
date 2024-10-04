@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.6.0+sha256.dae0f7e822c56b20979bb5965e3b73b8bdabb6b8b8ef121da6d857508599ca35",
+  "packageManager": "pnpm@9.11.0+sha256.1c0e33f70e5df9eede84a357bdfa0b1f9dba6e58194628d48a1055756f553754",
   "scripts": {
     "dev": "./scripts/dev.sh",
     "build": "next build",
@@ -53,7 +53,7 @@
     "next": "15.0.0-canary.160",
     "next-intl": "^3.19.1",
     "next-themes": "^0.3.0",
-    "nextjs-routes": "2.2.2-rc.3",
+    "nextjs-routes": "2.2.2-rc.4",
     "ohash": "^1.1.4",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
