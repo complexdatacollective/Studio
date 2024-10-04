@@ -31,14 +31,14 @@ declare module 'lucia' {
   }
 }
 
-// interface DatabaseSessionAttributes {}
 interface DatabaseUserAttributes {
   username: string;
   hashedPassword: string;
 }
 
 export const getServerSession = cache(async () => {
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
+  const c = await cookies();
+  const sessionId = c.get(lucia.sessionCookieName)?.value ?? null;
   if (!sessionId)
     return {
       session: null,
@@ -48,19 +48,11 @@ export const getServerSession = cache(async () => {
   try {
     if (result.session?.fresh) {
       const sessionCookie = lucia.createSessionCookie(result.session.id);
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes,
-      );
+      c.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     }
     if (!result.session) {
       const sessionCookie = lucia.createBlankSessionCookie();
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes,
-      );
+      c.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     }
   } catch {
     // Next.js throws error when attempting to set cookies when rendering page

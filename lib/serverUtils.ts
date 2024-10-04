@@ -2,8 +2,9 @@
 
 import { headers } from 'next/headers';
 
-export function getCurrentPath(): string {
-  const path = headers().get('x-current-path');
+export async function getCurrentPath(): Promise<string> {
+  const h = await headers();
+  const path = h.get('x-current-path');
 
   if (!path) {
     throw new Error('No x-current-path found in headers');
