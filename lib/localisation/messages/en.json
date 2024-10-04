@@ -93,13 +93,31 @@
       "Next": "Next question",
       "Previous": "Previous question",
       "LanguageSwitcher": "Change interview language",
-      "Help": "Help menu",
-      "Progress": "You have completed {percent}% of the interview"
+      "HelpButton": {
+        "Tooltip": "Open help menu",
+        "Dialog": {
+          "Title": "Help",
+          "Description": "The cards below show the help options available based on the current page. Click on a card to view the help content.",
+          "Options": {
+            "General": {
+              "Title": "General Help",
+              "Description": "General help with the interview, including how to move between screens, and how to change the language."
+            },
+            "Task": {
+              "Title": "Help with this Task",
+              "Description": "Help with how to complete the current task."
+            },
+            "Contact": {
+              "Title": "Contact the study organiser",
+              "Description": "If you need a different kind of help, you can contact the study organiser."
+            }
+          }
+        }
+      },
+      "Progress": "Interview progress ({percent}% completed)"
     },
     "Wizards": {
-      "General": {
-        "Name": "General Interview Information",
-        "Description": "Help with the general interview process, including how to navigate the interview, and general tips to help you get started.",
+      "Onboard": {
         "Steps": {
           "Welcome": {
             "Title": "Welcome to the interview",
@@ -178,21 +196,13 @@
       "InputPlaceholder": "My New Study",
       "FormButton": "Create Study",
       "RoleSelectLabel": "Select a role",
-      "RoleSelectPlaceholder": "Roles..."
+      "RoleSelectPlaceholder": "Roles"
     },
     "CreateProjectForm": {
       "FormTitle": "Create Project",
       "ProjectNameInputLabel": "Project Name",
       "ProjectNameInputPlaceholder": "Studio",
       "FormButton": "Create Project"
-    },
-    "ContextualHelp": {
-      "Title": "Help",
-      "Description": "The cards below show the help options available based on the current page. Click on a card to view the help content.",
-      "ContactCard": {
-        "Title": "Contact the study organiser",
-        "Description": "Click here if you would like to contact the organiser of this study."
-      }
     }
   }
 }

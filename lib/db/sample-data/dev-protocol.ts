@@ -2,7 +2,8 @@ import type { Protocol } from '~/schemas/protocol/protocol';
 
 export const devProtocol: Protocol = {
   name: 'Dev Protocol',
-  languages: ['en-GB', 'fr', 'es'],
+  // TODO: languages should be derived from the keys of localisedStrings
+  languages: ['en-GB', 'fr', 'es', 'ar'],
   localisedStrings: {
     'en-GB': {
       Protocol: {
