@@ -22,7 +22,6 @@ export default function Providers({
   };
   children: ReactNode;
 }) {
-  console.log('render');
   return (
     <ThemeProvider>
       <IntlProvider
