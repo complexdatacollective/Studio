@@ -11,7 +11,6 @@ export type InterviewStage = {
   configuration?: Record<string, unknown>;
 };
 
-// This is the shell for the interview. It contains the navigation and the current stage shell.
 export default async function InterviewShell({
   interview,
   currentStage,
@@ -25,9 +24,6 @@ export default async function InterviewShell({
     stageId: currentStage,
     protocolRevisionId: interview.protocolRevisionId,
   });
-
-  // eslint-disable-next-line no-console
-  // console.log('stage', stage, currentStage, interview.protocolRevisionId);
 
   const stageCount = await getStageCount({
     protocolRevisionId: interview.protocolRevisionId,
