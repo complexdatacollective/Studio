@@ -1,0 +1,37 @@
+@layer theme {
+  :root {
+    --base-hue: 281;
+
+    --background: var(--navy-taupe);
+    --foreground: var(--white);
+
+    --primary: var(--slate-blue);
+    --primary-foreground: var(--white);
+
+    /* Surfaces */
+    --surface-0: var(--white);
+    --surface-0-foreground: var(--charcoal);
+
+    --surface-1: 31% 0.09 var(--base-hue);
+    --surface-1-foreground: var(--foreground);
+    --surface-2: 34% 0.09 var(--base-hue);
+    --surface-2-foreground: var(--foreground);
+    --surface-3: 37% 0.09 var(--base-hue);
+    --surface-3-foreground: var(--foreground);
+    --surface-4: 40% 0.09 var(--base-hue);
+    --surface-4-foreground: var(--foreground);
+
+    --input: var(--white);
+    --input-foreground: var(--charcoal);
+
+    --accent: var(--neon-coral);
+
+    --success: var(--sea-green);
+    --success-foreground: var(--white);
+
+    --muted: var(--platinum);
+    --muted-foreground: var(--charcoal);
+
+    --border-radius: 1.25rem;
+  }
+}

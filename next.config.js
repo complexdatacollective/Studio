@@ -10,9 +10,14 @@ const withNextIntl = createNextIntlPlugin('./lib/localisation/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  // experimental: {
-  //   typedRoutes: true,
-  // }
+  // Handled by CI so not needed during builds
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  transpilePackages: ['lucide-react'] // enables dynamic imports
 };
 
 export default withRoutes(withNextIntl(nextConfig));

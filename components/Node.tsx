@@ -6,7 +6,7 @@ export default function Node({
 }: {
   label: string;
   size?: 'sm' | 'lg';
-}) {
+} & React.HTMLAttributes<HTMLButtonElement>) {
   const labelWithEllipsis =
     label.length < 22 ? label : `${label.substring(0, 18)}\u{AD}...`; // Add ellipsis for really long labels
 
@@ -19,16 +19,15 @@ export default function Node({
   const nodeSizeClasses = size === 'sm' ? 'h-24 w-24' : 'h-36 w-36';
 
   return (
-    <div
-      role="button"
+    <button
       className={cn(
-        'text-node-1-foreground inline-flex items-center justify-center rounded-full bg-node-1',
+        'inline-flex items-center justify-center rounded-full bg-node-1 text-node-1-foreground',
         'bg-[repeating-linear-gradient(145deg,transparent,transparent_50%,rgba(0,0,0,0.1)_50%,rgba(0,0,0,0.1)_100%)]',
         nodeSizeClasses,
       )}
       aria-label={label}
     >
       <span className={labelClasses}>{labelWithEllipsis}</span>
-    </div>
+    </button>
   );
 }

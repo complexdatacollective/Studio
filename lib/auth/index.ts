@@ -6,7 +6,6 @@ import { env } from '~/env';
 import { cache } from 'react';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { getCurrentPath } from '../serverUtils';
 import 'server-only';
 
 const adapter = new PrismaAdapter(db.session, db.user);
@@ -69,19 +68,10 @@ export const getServerSession = cache(async () => {
   return result;
 });
 
-export async function requirePageAuth({
-  returnToCurrentPath = true,
-}: {
-  returnToCurrentPath?: boolean;
-} = {}) {
+export async function requirePageAuth() {
   const { session } = await getServerSession();
 
   if (!session) {
-    if (returnToCurrentPath) {
-      const redirectPath = getCurrentPath();
-      redirect('/signin?callbackUrl=' + encodeURIComponent(redirectPath));
-    }
-
     redirect('/signin');
   }
 }
