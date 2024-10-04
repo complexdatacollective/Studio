@@ -19,7 +19,7 @@ export default function ActionButton({
       {...rest}
       aria-label="Add a person"
       className={cn(
-        'group relative mt-2 flex h-40 w-40 rounded-full',
+        'group relative mr-4 mt-2 flex h-40 w-40 rounded-full',
         className,
       )}
     >

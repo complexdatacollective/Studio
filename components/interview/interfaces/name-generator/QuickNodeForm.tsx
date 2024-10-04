@@ -17,17 +17,23 @@ export default function QuickNodeForm({ nodeType }: { nodeType: TNodeType }) {
               type="text"
               placeholder="Type a label and press enter..."
               className="font-semibold rounded-full bg-input px-6 py-4 text-lg text-input-foreground placeholder-input-foreground"
+              onBlur={() => setShowForm(false)}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
             />
           </form>
           <Node label="" onClick={() => setShowForm(false)} />
         </div>
       )}
-      {!showForm && <div className="mr-8" id="data-wizard-task-step-3"></div>}
-      <ActionButton
-        onClick={() => setShowForm(true)}
-        color={nodeType.color}
-        iconName={nodeType.icon}
-      />
+      {!showForm && (
+        <div className="mr-8" id="data-wizard-task-step-3">
+          <ActionButton
+            onClick={() => setShowForm(true)}
+            color={nodeType.color}
+            iconName={nodeType.icon}
+          />
+        </div>
+      )}
     </div>
   );
 }
