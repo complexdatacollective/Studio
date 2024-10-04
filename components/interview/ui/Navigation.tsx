@@ -100,54 +100,46 @@ const Navigation = ({
   );
 };
 
-export default withOnboardingWizard(Navigation, {
-  id: 'general-interview-information',
-  name: {
-    en: 'General Interview Information',
-  },
-  priority: 'Navigation',
-  description: {
-    en: [
+export default withOnboardingWizard(Navigation, () => {
+  const t = useTranslations('Interview.Wizards.General');
+
+  return {
+    id: 'general-interview-information',
+    name: t('Name'),
+    priority: 'Navigation',
+    description: [
       {
         type: 'paragraph',
         children: [
           {
-            text: 'Help with the general interview process, including how to navigate the interview, and general tips to help you get started.',
+            text: t('Description'),
           },
         ],
       },
     ],
-  },
-  steps: [
-    {
-      title: {
-        en: 'Welcome to the Interview!',
-      },
-      content: {
-        en: [
+    steps: [
+      {
+        title: t('Steps.Welcome.Title'),
+        content: [
           {
             type: 'paragraph',
             children: [
               {
-                text: 'Before you begin, here are some general tips to help you navigate the interview process.',
+                text: t('Steps.Welcome.Text'),
               },
             ],
           },
         ],
       },
-    },
-    {
-      targetElementId: 'navigation-bar',
-      title: {
-        en: 'Navigation Bar',
-      },
-      content: {
-        en: [
+      {
+        targetElementId: 'navigation-bar',
+        title: t('Steps.NavigationBar.Title'),
+        content: [
           {
             type: 'paragraph',
             children: [
               {
-                text: 'The navigation bar helps you move through the interview process, and get help if you need it.',
+                text: t('Steps.NavigationBar.Text'),
               },
             ],
           },
@@ -161,24 +153,20 @@ export default withOnboardingWizard(Navigation, {
           },
         ],
       },
-    },
-    {
-      targetElementId: 'interview-movement',
-      title: {
-        en: 'Navigating the Interview',
-      },
-      content: {
-        en: [
+      {
+        targetElementId: 'interview-movement',
+        title: t('Steps.InterviewMovement.Title'),
+        content: [
           {
             type: 'paragraph',
             children: [
               {
-                text: 'Use the back and forward buttons to move through the interview, and track your progress using the progress bar.',
+                text: t('Steps.InterviewMovement.Text'),
               },
             ],
           },
         ],
       },
-    },
-  ],
+    ],
+  };
 });

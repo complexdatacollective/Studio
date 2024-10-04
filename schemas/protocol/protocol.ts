@@ -12,6 +12,19 @@ export const ProtocolMessagesSchema = z.object({
       z.string(),
       z.object({
         Label: z.string(),
+        Wizard: z
+          .object({
+            Name: z.string(),
+            Description: z.string(),
+            Steps: z.record(
+              z.string(),
+              z.object({
+                Title: z.string(),
+                Text: z.string(),
+              }),
+            ),
+          })
+          .optional(), // Stage-specific overrides are optional
       }),
     ),
     Panels: z
@@ -24,6 +37,36 @@ export const ProtocolMessagesSchema = z.object({
       .optional(),
     Prompts: z.record(z.string(), z.string()).optional(),
   }),
+  Interview: z
+    .object({
+      Wizards: z.object({
+        General: z.object({
+          Name: z.string().optional(),
+          Description: z.string().optional(),
+          Steps: z.object({
+            Welcome: z
+              .object({
+                Title: z.string(),
+                Text: z.string(),
+              })
+              .optional(),
+            Overview: z
+              .object({
+                Title: z.string(),
+                Text: z.string(),
+              })
+              .optional(),
+            Summary: z
+              .object({
+                Title: z.string(),
+                Text: z.string(),
+              })
+              .optional(),
+          }),
+        }),
+      }),
+    })
+    .optional(),
 });
 
 const LocalisedStringsSchema = z.record(

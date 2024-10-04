@@ -51,6 +51,28 @@ export const devProtocol: Protocol = {
         Stages: {
           '1': {
             Label: 'Générateur de noms',
+            Wizard: {
+              Name: 'French wizard stage specific override',
+              Description: 'Description!',
+              Steps: {
+                Welcome: {
+                  Title: 'Title - Welcome override',
+                  Text: 'Stage specific override',
+                },
+                Prompts: {
+                  Title: 'Title - Prompts override',
+                  Text: 'Stage specific override',
+                },
+                SidePanels: {
+                  Title: 'Title - Side Panels override',
+                  Text: 'Stage specific override',
+                },
+                AddPerson: {
+                  Title: 'Title - Add Person override',
+                  Text: 'Stage specific override',
+                },
+              },
+            },
           },
         },
         Prompts: {
@@ -63,6 +85,20 @@ export const devProtocol: Protocol = {
           },
           '2': {
             Title: 'Personnes de votre dernière interview',
+          },
+        },
+      },
+      Interview: {
+        Wizards: {
+          General: {
+            Name: "Informations générales sur l'entretien",
+            Description: "Description de l'étape",
+            Steps: {
+              Welcome: {
+                Title: 'Bienvenue',
+                Text: "Bienvenue dans l'entretien",
+              },
+            },
           },
         },
       },

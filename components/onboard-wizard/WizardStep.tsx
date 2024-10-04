@@ -2,19 +2,15 @@ import Popover from '~/components/ui/Popover';
 import { Button } from '../ui/Button';
 import { useWizardController } from './useWizardController';
 import RenderRichText from '../RenderRichText';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useElementPosition } from '~/lib/onboarding-wizard/utils';
 import { type Step } from '~/lib/onboarding-wizard/store';
-import { getLocalisedValue } from '~/lib/localisation/utils';
 import Form from '../ui/form/Form';
 import { generatePublicId } from '~/lib/generatePublicId';
 import { ControlledDialog } from '~/lib/dialogs/ControlledDialog';
 
 export default function WizardStep({ step }: { step: Step }) {
   const { title, content, targetElementId } = step;
-  const locale = useLocale();
-  const localisedStepContent = getLocalisedValue(content, locale);
-  const localisedStepTitle = getLocalisedValue(title, locale);
 
   const {
     closeWizard,
@@ -30,7 +26,7 @@ export default function WizardStep({ step }: { step: Step }) {
 
   const renderContent = () => (
     <>
-      <RenderRichText value={localisedStepContent} />
+      <RenderRichText value={content} />
       <Form.Footer
         primaryAction={
           hasNextStep ? (
@@ -60,7 +56,7 @@ export default function WizardStep({ step }: { step: Step }) {
   if (position) {
     return (
       <Popover
-        title={localisedStepTitle}
+        title={title}
         content={renderContent()}
         modal
         isOpen
@@ -85,7 +81,7 @@ export default function WizardStep({ step }: { step: Step }) {
     <ControlledDialog
       id={generatePublicId()}
       open
-      title={localisedStepTitle}
+      title={title}
       closeDialog={closeWizard}
     >
       {renderContent()}

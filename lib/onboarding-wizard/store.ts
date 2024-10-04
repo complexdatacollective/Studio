@@ -1,5 +1,5 @@
 import { createStore } from 'zustand';
-import type { LocalisedString, LocalisedRecord } from '~/schemas/shared';
+import type { JSONRichText } from '~/schemas/shared';
 import { type LocalStorageState } from '~/lib/createLocalStorageStore';
 
 const Priorities = {
@@ -14,14 +14,14 @@ type Priority = keyof typeof Priorities;
 
 export type Step = {
   targetElementId?: string;
-  title: LocalisedString;
-  content: LocalisedRecord;
+  title: string;
+  content: JSONRichText;
 };
 
 export type Wizard = {
   id: string;
-  name: LocalisedString;
-  description: LocalisedRecord;
+  name: string;
+  description: JSONRichText;
   steps: Step[];
   priority: Priority;
 };
