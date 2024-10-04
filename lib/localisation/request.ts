@@ -9,7 +9,7 @@ import { getLocaleContext, getMessageFallback } from './utils';
 import { getCurrentPath, getInterviewId } from '../serverUtils';
 
 export default getRequestConfig(async () => {
-  const currentPath = getCurrentPath();
+  const currentPath = await getCurrentPath();
   const localeContext = getLocaleContext(currentPath);
 
   const interviewId = getInterviewId(currentPath);

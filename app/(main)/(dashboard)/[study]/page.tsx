@@ -12,7 +12,7 @@ export default async function StudyPage({
   };
 }) {
   const t = await getTranslations('Pages.Study');
-  const serverPath = getCurrentPath();
+  const serverPath = await getCurrentPath();
   const { study } = params;
   const studyData = await getStudyData(study);
 

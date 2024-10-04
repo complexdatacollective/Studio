@@ -41,7 +41,8 @@ async function getProtocolLocales(interviewId: string): Promise<Locale[]> {
  * interview.
  */
 export async function getUserLocale(context: LocaleCookieName) {
-  return (cookies().get(LOCALE_COOKIES[context])?.value as Locale) ?? undefined;
+  const c = await cookies();
+  return (c.get(LOCALE_COOKIES[context])?.value as Locale) ?? undefined;
 }
 
 /**
@@ -67,9 +68,10 @@ export async function getAvailableLocales(
 }
 
 export async function getBestLocale(availableLocales: Locale[]) {
+  const h = await headers();
   const userAcceptedLocales = new Negotiator({
     headers: {
-      'accept-language': headers().get('accept-language') ?? undefined,
+      'accept-language': h.get('accept-language') ?? undefined,
     },
   }).languages();
 
@@ -105,7 +107,7 @@ export async function getLocaleMessages(
   // For protocol contexts we have to get the messages from the protocol, and
   // merge with the main messages for the locale (if available) or the best
   // match of the main locale translations if not.
-  const currentPath = getCurrentPath();
+  const currentPath = await getCurrentPath();
   const interviewId = getInterviewId(currentPath)!;
 
   const protocolMessages = (await fetchProtocolMessages(
@@ -131,5 +133,6 @@ export async function getLocaleMessages(
 export async function setUserLocale(locale: Locale) {
   const currentPath = getCurrentPath();
   const context = getLocaleContext(currentPath);
-  cookies().set(LOCALE_COOKIES[context], locale);
+  const c = await cookies();
+  c.set(LOCALE_COOKIES[context], locale);
 }
