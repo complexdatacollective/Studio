@@ -204,33 +204,7 @@ export const SupportedLocaleSchema = z.enum([
  */
 export const ProtocolMessagesSchema = z.object({
   Protocol: z.object({
-    Stages: z.record(
-      z.string(),
-      z.object({
-        Label: z.string(),
-        Wizard: z
-          .object({
-            Name: z.string(),
-            Description: z.string(),
-            Steps: z.record(
-              z.string(),
-              z.object({
-                Title: z.string(),
-                Text: z.string(),
-              }),
-            ),
-          })
-          .optional(), // Stage-specific overrides are optional
-      }),
-    ),
-    Panels: z
-      .record(
-        z.string(),
-        z.object({
-          Title: z.string(),
-        }),
-      )
-      .optional(),
+    Panels: z.record(z.string()).optional(),
     Prompts: z.record(z.string(), z.string()).optional(),
   }),
   Interview: z
@@ -265,7 +239,7 @@ export const ProtocolMessagesSchema = z.object({
     .optional(),
 });
 
-export const LocalisedStringsSchema = z.record(
+export const LocalisedMessagesWithDefaultsSchema = z.record(
   SupportedLocaleSchema,
   ProtocolMessagesSchema,
 );

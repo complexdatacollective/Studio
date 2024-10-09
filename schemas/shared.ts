@@ -44,7 +44,7 @@ const BlockNodeSchema = z.object({
 
 export type BlockNode = z.infer<typeof BlockNodeSchema>;
 
-const JSONRichTextSchema = z.array(BlockNodeSchema);
+export const JSONRichTextSchema = z.array(BlockNodeSchema);
 
 export type JSONRichText = z.infer<typeof JSONRichTextSchema>;
 

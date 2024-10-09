@@ -1,7 +1,10 @@
 import { z } from 'zod';
 import { StageSchema } from './interfaces/stages';
 import { CodebookSchema } from './codebook/codebook';
-import { LocalisedStringsSchema, SupportedLocaleSchema } from './i18n';
+import {
+  LocalisedMessagesWithDefaultsSchema,
+  SupportedLocaleSchema,
+} from './i18n';
 
 export const AssetManifest = z.object({});
 
@@ -11,7 +14,7 @@ const ProtocolSchema = z
     description: z.string().optional(),
     // Hack to work around this: https://github.com/colinhacks/zod/issues/2376
     languages: z.array(SupportedLocaleSchema),
-    // localisedStrings: LocalisedStringsSchema,
+    // localisedStrings: LocalisedStringsWithDefaultsSchema,
     stages: z.array(StageSchema.or(z.array(StageSchema))),
     codebook: CodebookSchema,
   })

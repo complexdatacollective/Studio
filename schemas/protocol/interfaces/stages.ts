@@ -13,6 +13,8 @@ import { DyadCensusSchema } from './dyad-census';
 import { OneToManyCensusSchema } from './one-to-many-census';
 import { TieStrengthCensusSchema } from './tie-strength-census';
 import { LocalisedStringSchema } from '~/schemas/shared';
+import { SupportedLocaleSchema } from '../i18n';
+import { StepSchema } from '../shared/wizards';
 
 export const StageTypeSchema = z.enum([
   'NameGenerator',
@@ -34,6 +36,7 @@ const BaseStageSchema = z.object({
   label: LocalisedStringSchema,
   interviewScript: z.string().optional(),
   skipLogic: SkipDefinitionSchema.optional(),
+  wizard: z.record(SupportedLocaleSchema, z.array(StepSchema)).optional(),
 });
 
 export const StageSchema = z

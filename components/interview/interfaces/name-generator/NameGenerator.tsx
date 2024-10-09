@@ -11,8 +11,6 @@ import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
 import { type InterviewStage } from '../../ui/InterviewShell';
 import { useTranslations } from 'next-intl';
-import { type Panel } from '~/schemas/protocol/interfaces/name-generator';
-import { type NodeType } from '~/schemas/protocol/codebook/entities';
 import devProtocol from '~/lib/db/sample-data/dev-protocol';
 
 const demoNodes = [
@@ -44,7 +42,7 @@ function NameGenerator(_props: InterviewStage) {
   return (
     <>
       <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
-        <Prompts prompts={config.prompts} currentPromptId="1" />
+        <Prompts prompts={config.prompts} />
         <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
           <NodePanels panels={config.panels} id="data-wizard-task-step-2" />
           <div className="flex-basis-auto flex h-full flex-shrink flex-grow">

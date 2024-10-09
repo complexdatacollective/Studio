@@ -22,8 +22,4 @@ export const PromptSchema = z.object({
   // createEdge: z.string().optional(),
 });
 
-export type TPrompt = z.infer<typeof PromptSchema>;
-
-export const PromptsSchema = z.array(PromptSchema);
-
-export type TPrompts = z.infer<typeof PromptsSchema>;
+export type Prompt = z.infer<typeof PromptSchema>;
