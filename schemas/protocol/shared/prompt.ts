@@ -1,7 +1,9 @@
 import { z } from 'zod';
+import { LocalisedStringSchema } from '~/schemas/shared';
 
 export const PromptSchema = z.object({
   id: z.string(),
+  text: LocalisedStringSchema, // TODO: update to support rich text via LocalisedRecordSchema
   // Todo:
   // additionalAttributes: z.any().optional(),
   // variable: z.string().optional(),

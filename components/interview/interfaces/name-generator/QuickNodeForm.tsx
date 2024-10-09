@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import ActionButton from '~/components/interview/ActionButton';
 import Node from '~/components/Node';
-import type { TNodeType } from '~/schemas/protocol/codebook/entities';
+import type { NodeType } from '~/schemas/protocol/codebook/entities';
 
-export default function QuickNodeForm({ nodeType }: { nodeType: TNodeType }) {
+export default function QuickNodeForm({ nodeType }: { nodeType: NodeType }) {
   const [showForm, setShowForm] = useState(false);
 
   return (

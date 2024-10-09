@@ -38,14 +38,14 @@ export const EntityTypeSchema = z.object({
   variables: z.record(z.string(), VariableDefinitionSchema).optional(),
 });
 
-export type TEntityType = z.infer<typeof EntityTypeSchema>;
+export type EntityType = z.infer<typeof EntityTypeSchema>;
 
 export const NodeTypeSchema = EntityTypeSchema.extend({
   color: z.enum(NodeColors),
   icon: z.enum([NodeIcons[0]!, ...NodeIcons.slice(0)]),
 });
 
-export type TNodeType = z.infer<typeof NodeTypeSchema>;
+export type NodeType = z.infer<typeof NodeTypeSchema>;
 
 export const EdgeConnectionSchema = z.object({
   from: z.string(), // source node types
@@ -58,4 +58,4 @@ export const EdgeTypeSchema = EntityTypeSchema.extend({
   connections: EdgeConnectionSchema,
 });
 
-export type TEdgeType = z.infer<typeof EdgeTypeSchema>;
+export type EdgeType = z.infer<typeof EdgeTypeSchema>;

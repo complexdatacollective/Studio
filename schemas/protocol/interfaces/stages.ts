@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { SkipDefinitionSchema } from '../shared/filter';
-import { NameGeneratorSchema } from './name-generator';
+import { NameGeneratorInterfaceSchema } from './name-generator';
 import { SociogramSchema } from './sociogram';
 import { InformationSchema } from './information';
 import { OrdinalBinSchema } from './ordinal-bin';
@@ -12,6 +12,7 @@ import { AlterEdgeFormSchema } from './alter-edge-form';
 import { DyadCensusSchema } from './dyad-census';
 import { OneToManyCensusSchema } from './one-to-many-census';
 import { TieStrengthCensusSchema } from './tie-strength-census';
+import { LocalisedStringSchema } from '~/schemas/shared';
 
 export const StageTypeSchema = z.enum([
   'NameGenerator',
@@ -30,13 +31,14 @@ export const StageTypeSchema = z.enum([
 
 const BaseStageSchema = z.object({
   id: z.string(),
+  label: LocalisedStringSchema,
   interviewScript: z.string().optional(),
   skipLogic: SkipDefinitionSchema.optional(),
 });
 
 export const StageSchema = z
   .union([
-    NameGeneratorSchema,
+    NameGeneratorInterfaceSchema,
     SociogramSchema,
     InformationSchema,
     OrdinalBinSchema,

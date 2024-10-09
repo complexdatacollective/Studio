@@ -1,26 +1,26 @@
 'use client';
 
-import type { Node } from '~/components/interview/NodeList';
 import * as Accordion from '@radix-ui/react-accordion';
 import { useState } from 'react';
 import NodeList from '~/components/interview/NodeList';
 import NodePanel from './NodePanel';
-
-// TODO: Remove once connected to state
-type Panel = {
-  id: string;
-  title: string;
-  nodes: Node[];
-};
+import { type Panel } from '~/schemas/protocol/interfaces/name-generator';
+import { useLocale } from 'next-intl';
+import { type Locale } from '~/schemas/protocol/i18n';
+import { type TNode } from '~/schemas/network/network';
 
 type NodePanels = {
   panels: Panel[];
 } & React.ComponentProps<'div'>;
 
 export default function NodePanels({ panels, ...rest }: NodePanels) {
+  const locale = useLocale() as Locale;
   const [values, setValues] = useState<string[]>(
     panels.map((panel) => panel.id),
   );
+
+  // TODO: fetch nodes based on panel.source
+  const [nodes] = useState<TNode[]>([]);
 
   return (
     <Accordion.Root
@@ -34,10 +34,10 @@ export default function NodePanels({ panels, ...rest }: NodePanels) {
           <NodePanel
             key={panel.id}
             id={panel.id}
-            title={panel.title}
+            title={panel.title[locale]!}
             expanded={values.includes(panel.id)}
           >
-            <NodeList items={panel.nodes} nodeSize="sm" />
+            <NodeList items={nodes} nodeSize="sm" />
           </NodePanel>
         ))}
       </div>

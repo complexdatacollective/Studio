@@ -11,89 +11,49 @@ import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
 import { type InterviewStage } from '../../ui/InterviewShell';
 import { useTranslations } from 'next-intl';
-import { type TNodeType } from '~/schemas/protocol/codebook/entities';
-
-const demoPrompts = [
-  {
-    id: '1',
-    text: {
-      en: 'Within the past 6 months, who have you felt close to, or discussed important personal matters with?',
-      fr: 'French prompt',
-    },
-  },
-  {
-    id: '2',
-    text: 'Who do you feel most comfortable with?',
-  },
-];
-
-const demoPanels = [
-  {
-    id: '1',
-    title: 'People you have already mentioned',
-    nodes: [
-      {
-        id: '1',
-        label: 'John',
-      },
-      {
-        id: '2',
-        label: 'Jeff',
-      },
-    ],
-  },
-  {
-    id: '2',
-    title: 'Classmates you have mentioned',
-    nodes: [
-      {
-        id: '3',
-        label: 'Tim',
-      },
-      {
-        id: '4',
-        label: 'Blake',
-      },
-    ],
-  },
-];
+import { type Panel } from '~/schemas/protocol/interfaces/name-generator';
+import { type NodeType } from '~/schemas/protocol/codebook/entities';
+import devProtocol from '~/lib/db/sample-data/dev-protocol';
 
 const demoNodes = [
   {
     id: '5',
-    label: 'Matt',
+    type: 'Person',
+    attributes: { label: 'Matt' },
   },
   {
     id: '6',
-    label: 'Taylor',
+    type: 'Person',
+    attributes: { label: 'Taylor' },
   },
   {
     id: '7',
-    label: 'Maggie',
+    type: 'Person',
+    attributes: { label: 'Maggie' },
   },
   {
     id: '8',
-    label: 'Emma',
+    type: 'Person',
+    attributes: { label: 'Emma' },
   },
 ];
 
-const demoNodeType = {
-  color: 'node-1',
-  icon: 'user-round',
-} as TNodeType;
-
 function NameGenerator(_props: InterviewStage) {
+  const config = devProtocol.stages[0];
+  const stageNodeType = devProtocol.codebook.nodes.person;
   return (
-    <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
-      <Prompts prompts={demoPrompts} currentPromptId="1" />
-      <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
-        <NodePanels panels={demoPanels} id="data-wizard-task-step-2" />
-        <div className="flex-basis-auto flex h-full flex-shrink flex-grow">
-          <NodeList items={demoNodes} />
+    <>
+      <div className={cn(interfaceWrapperClasses, 'flex grow flex-col gap-4')}>
+        <Prompts prompts={config.prompts} currentPromptId="1" />
+        <div className="relative flex h-full min-h-0 flex-1 items-start justify-center gap-4">
+          <NodePanels panels={config.panels} id="data-wizard-task-step-2" />
+          <div className="flex-basis-auto flex h-full flex-shrink flex-grow">
+            <NodeList items={demoNodes} />
+          </div>
         </div>
+        <QuickNodeForm nodeType={stageNodeType} />
       </div>
-      <QuickNodeForm nodeType={demoNodeType} />
-    </div>
+    </>
   );
 }
 
@@ -126,7 +86,6 @@ export default withOnboardingWizard(NameGenerator, (_props) => {
     steps: [
       {
         title: t('Steps.Welcome.Title'),
-
         content: [
           {
             type: 'paragraph',

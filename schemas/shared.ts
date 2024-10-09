@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { FALLBACK_LOCALE } from '~/lib/localisation/config';
+import { SupportedLocaleSchema } from './protocol/i18n';
 
 /**
  * This is a placeholder for whatever we end up using for an AST for storing
@@ -47,12 +48,12 @@ const JSONRichTextSchema = z.array(BlockNodeSchema);
 
 export type JSONRichText = z.infer<typeof JSONRichTextSchema>;
 
-// Utility for protocol keys that must support localisation.
-// TODO: figure out how to make the required key (which represents the default)
-// locale) definable in the protocol
+/**
+ * **backend** Utilities for protocol keys that must support localisation.
+ */
 const LocalisedRecordSchema = z
   .object({
-    [FALLBACK_LOCALE]: JSONRichTextSchema,
+    // [FALLBACK_LOCALE]: JSONRichTextSchema,
   })
   .and(z.record(JSONRichTextSchema));
 
@@ -60,8 +61,8 @@ export type LocalisedRecord = z.infer<typeof LocalisedRecordSchema>;
 
 export const LocalisedStringSchema = z
   .object({
-    [FALLBACK_LOCALE]: z.string(),
+    // [FALLBACK_LOCALE]: z.string(),
   })
-  .and(z.record(z.string()));
+  .and(z.record(SupportedLocaleSchema, z.string()));
 
 export type LocalisedString = z.infer<typeof LocalisedStringSchema>;
