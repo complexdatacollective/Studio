@@ -2,7 +2,7 @@ import type { Protocol } from '~/schemas/protocol/protocol';
 
 export const devProtocol: Protocol = {
   name: 'Dev Protocol',
-  languages: ['en-GB', 'ar'],
+  languages: ['en-GB', 'es', 'ar'],
   codebook: {
     ego: {
       variables: {
@@ -41,7 +41,7 @@ export const devProtocol: Protocol = {
       label: {
         en: 'My Family',
         es: 'Mi Familia',
-        fr: 'Ma Famille',
+        ar: 'عائلتي',
       },
       type: 'NameGenerator',
       subject: {
@@ -56,7 +56,7 @@ export const devProtocol: Protocol = {
           text: {
             en: 'Please list all the family members that you live with',
             es: 'Por favor, enumere todos los miembros de la familia con los que vive',
-            fr: 'Veuillez lister tous les membres de la famille avec lesquels vous vivez',
+            ar: 'الرجاء سرد جميع أفراد العائلة الذين تعيش معهم',
           },
         },
         {
@@ -64,7 +64,7 @@ export const devProtocol: Protocol = {
           text: {
             en: 'Please list all of your other family members',
             es: 'Por favor, enumere a todos sus otros familiares',
-            fr: 'Veuillez lister tous vos autres membres de la famille',
+            ar: 'الرجاء سرد جميع أفراد عائلتك الآخرين',
           },
         },
       ],
@@ -74,7 +74,7 @@ export const devProtocol: Protocol = {
           title: {
             en: 'People from your last interview',
             es: 'Personas de tu última entrevista',
-            fr: 'Personnes de votre dernière interview',
+            ar: 'الأشخاص من آخر مقابلة لك',
           },
           source: 'previousVisit',
         },
@@ -96,51 +96,6 @@ export const devProtocol: Protocol = {
           },
         ],
       },
-    },
-    {
-      id: 'school-ng',
-      label: {
-        en: 'School',
-        es: 'Escuela',
-        fr: 'École',
-      },
-      type: 'NameGenerator',
-      subject: {
-        entity: 'node',
-        id: 'school',
-      },
-      mode: 'quickAdd',
-      quickAddVariable: 'school',
-      prompts: [
-        {
-          id: 'school-ng-prompt-1',
-          text: {
-            en: 'Who are your classmates at school?',
-            es: '¿Quiénes son tus compañeros de clase en school?',
-            fr: 'Qui sont vos camarades de classe à school?',
-          },
-        },
-      ],
-      panels: [
-        {
-          id: 'school-ng-panel-1',
-          title: {
-            en: 'People you have already mentioned',
-            es: 'Personas que ya has mencionado',
-            fr: 'Personnes que vous avez déjà mentionnées',
-          },
-          source: 'currentNetwork',
-        },
-        {
-          id: 'school-ng-panel-2',
-          title: {
-            en: 'People from your last interview',
-            es: 'Personas de tu última entrevista',
-            fr: 'Personnes de votre dernière interview',
-          },
-          source: 'previousVisit',
-        },
-      ],
     },
   ],
 };

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SkipDefinitionSchema } from '../shared/filter';
+import { SkipDefinitionWithTargetSchema } from '../shared/filter';
 import { NameGeneratorInterfaceSchema } from './name-generator';
 import { SociogramSchema } from './sociogram';
 import { InformationSchema } from './information';
@@ -35,7 +35,7 @@ const BaseStageSchema = z.object({
   id: z.string(),
   label: LocalisedStringSchema,
   interviewScript: z.string().optional(),
-  skipLogic: SkipDefinitionSchema.optional(),
+  skipLogic: SkipDefinitionWithTargetSchema.optional(),
   wizard: z.record(SupportedLocaleSchema, z.array(StepSchema)).optional(),
 });
 

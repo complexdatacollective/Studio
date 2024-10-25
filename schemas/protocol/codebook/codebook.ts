@@ -1,16 +1,10 @@
 import { z } from 'zod';
 import { EdgeTypeSchema, EntityTypeSchema, NodeTypeSchema } from './entities';
 
-const WaveEntitySchema = z.record(z.string(), NodeTypeSchema);
-
 export const CodebookSchema = z.object({
-  nodes: z
-    .record(z.string(), z.union([NodeTypeSchema, WaveEntitySchema]))
-    .optional(),
-  edges: z
-    .record(z.string(), z.union([EdgeTypeSchema, WaveEntitySchema]))
-    .optional(),
-  ego: z.union([EntityTypeSchema, WaveEntitySchema]).optional(),
+  nodes: z.record(z.string(), NodeTypeSchema).optional(),
+  edges: z.record(z.string(), EdgeTypeSchema).optional(),
+  ego: EntityTypeSchema.optional(),
 });
 
 export type Codebook = z.infer<typeof CodebookSchema>;
@@ -18,31 +12,20 @@ export type Codebook = z.infer<typeof CodebookSchema>;
 export const example: Codebook = {
   nodes: {
     person: {
-      '1': {
-        variables: {
-          name: { type: 'text' },
-          age: { type: 'number' },
-        },
-        color: 'seq-node-1',
-        icon: 'add-a-person',
+      variables: {
+        name: { type: 'text' },
+        age: { type: 'number' },
       },
-      '2': {
-        variables: {
-          name: { type: 'text' },
-          age: { type: 'number' },
-          school: { type: 'text' }, // new var in wave 2
-        },
-        color: 'seq-node-1',
-        icon: 'add-a-person',
-      },
+      color: 'node-1',
+      icon: 'user-round',
     },
     place: {
       variables: {
         name: { type: 'text' },
         population: { type: 'number' },
       },
-      color: 'seq-node-2',
-      icon: 'add-a-place',
+      color: 'node-2',
+      icon: 'building',
     },
   },
   edges: {
