@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { LocalisedStringSchema } from '~/schemas/shared';
-import { FormSchema } from '../shared/form';
-import { FilterSchema } from '../shared/logic';
-import { PromptSchema } from '../shared/prompt';
-import { SubjectSchema } from '../shared/subject';
+import { FormSchema } from '../form';
+import { FilterSchema } from '../logic';
+import { PromptSchema } from '../prompt';
+import { EncodableKeyString } from '../protocol';
 import { StageTypeSchema } from './stages';
 
 const PreviousVisitSchema = z.object({
@@ -41,7 +41,7 @@ export type Panel = z.infer<typeof PanelSchema>;
 
 const BaseSchema = z.object({
   type: StageTypeSchema.extract(['NameGenerator']),
-  subject: SubjectSchema,
+  subject: EncodableKeyString, // Reference to `entities` in protocol
   prompts: z.array(PromptSchema),
   panels: z.array(PanelSchema).optional(),
   panelWidth: z.enum(['1/5', '1/3', '1/2', '2/3', '3/4', '4/5']).optional(),

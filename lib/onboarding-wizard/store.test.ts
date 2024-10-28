@@ -1,6 +1,6 @@
-import { describe, expect, it, beforeEach, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { Priorities, type Wizard } from '~/schemas/protocol/wizards';
 import { createWizardStore } from './store';
-import { Priorities, type Wizard } from '~/schemas/protocol/shared/wizards';
 
 const mockGetItem = vi.fn();
 const mockSetItem = vi.fn();

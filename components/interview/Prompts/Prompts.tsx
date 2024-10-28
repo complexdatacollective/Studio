@@ -1,10 +1,10 @@
 'use client';
 
-import Prompt from './Prompt';
-import Pips from './Pips';
-import type { Prompt as PromptType } from '~/schemas/protocol/shared/prompt';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import type { Prompt as PromptType } from '~/schemas/protocol/prompt';
+import Pips from './Pips';
+import Prompt from './Prompt';
 
 export default function Prompts({
   prompts,

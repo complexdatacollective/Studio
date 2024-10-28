@@ -1,6 +1,6 @@
 import { createStore } from 'zustand';
 import { type LocalStorageState } from '~/lib/createLocalStorageStore';
-import { Priorities, type Wizard } from '~/schemas/protocol/shared/wizards';
+import { Priorities, type Wizard } from '~/schemas/protocol/wizards';
 
 type WizardState = {
   wizards: Record<Wizard['id'], Omit<Wizard, 'id'>>;
