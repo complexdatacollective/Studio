@@ -1,13 +1,40 @@
 import { z } from 'zod';
-import { StageTypeSchema } from './stages';
-import { SubjectSchema } from '../shared/subject';
-import { PromptSchema } from '../shared/prompt';
 import { LocalisedStringSchema } from '~/schemas/shared';
+import { FormSchema } from '../shared/form';
+import { FilterSchema } from '../shared/logic';
+import { PromptSchema } from '../shared/prompt';
+import { SubjectSchema } from '../shared/subject';
+import { StageTypeSchema } from './stages';
+
+const PreviousVisitSchema = z.object({
+  type: z.literal('previousVisit'),
+  visit: z.number(),
+});
+
+const URLSchema = z.object({
+  type: z.literal('URL'),
+  url: z.string().url(),
+});
+
+const FileSchema = z.object({
+  type: z.literal('dataFile'),
+  file: z.string(),
+});
+
+const CurrentNetworkSchema = z.object({
+  type: z.literal('currentNetwork'),
+});
 
 const PanelSchema = z.object({
   id: z.string(),
   title: LocalisedStringSchema,
-  source: z.enum(['currentNetwork', 'previousVisit', 'dataFile', 'URL']),
+  source: z.discriminatedUnion('type', [
+    PreviousVisitSchema,
+    URLSchema,
+    FileSchema,
+    CurrentNetworkSchema,
+  ]),
+  filter: FilterSchema.optional(),
 });
 
 export type Panel = z.infer<typeof PanelSchema>;
@@ -22,7 +49,7 @@ const BaseSchema = z.object({
 
 const WithFormSchema = BaseSchema.extend({
   mode: z.literal('form'),
-  form: z.string(),
+  form: FormSchema,
 });
 
 const WithQuickAddSchema = BaseSchema.extend({

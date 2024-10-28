@@ -1,23 +1,54 @@
 import { z } from 'zod';
 import { LocalisedStringSchema } from '~/schemas/shared';
-import { SkipDefinitionSchema } from './filter';
+import { Operators } from './logic';
 
-const FieldSchema = z.object({
-  condition: SkipDefinitionSchema.optional(), // TODO: skip/show isn't a good 'fit' for this. Is there a generic 'condition' type?
+const FieldRule = z.object({
+  field: z.string(),
+  operator: Operators,
+  value: z.union([z.boolean(), z.number(), z.string()]),
+});
+
+const BaseCondition = z.object({
+  action: z.enum(['SHOW', 'HIDE']),
+});
+
+const ConditionWithSingleRule = BaseCondition.extend({
+  rule: FieldRule,
+});
+
+type ConditionWithSingleRule = z.infer<typeof ConditionWithSingleRule>;
+
+const ConditionWithMultipleRules = BaseCondition.extend({
+  join: z.enum(['AND', 'OR']),
+  rules: z.array(FieldRule),
+});
+
+type ConditionWithMultipleRules = z.infer<typeof ConditionWithMultipleRules>;
+
+const SingleFieldSchema = z.object({
   variable: z.string(),
   label: LocalisedStringSchema,
 });
 
-export type Field = z.infer<typeof FieldSchema>;
+type SingleField = z.infer<typeof SingleFieldSchema>;
 
-/**
- * - Should we rework the concept of 'variables'? Write once, read many? Tied
- *   to context? For example, variable defined with its input control and
- *   validation in the form itself?
- * - Needs to support conditional fields
- */
-const FormSchema = z.object({
-  fields: z.array(FieldSchema.or(z.array(FieldSchema))),
+type FieldGroup = {
+  condition?: ConditionWithSingleRule | ConditionWithMultipleRules;
+  fields: Item[];
+};
+
+const FieldGroupSchema: z.ZodType<FieldGroup> = z.object({
+  condition: z
+    .union([ConditionWithSingleRule, ConditionWithMultipleRules])
+    .optional(),
+  fields: z.array(z.union([SingleFieldSchema, z.lazy(() => FieldGroupSchema)])),
 });
+
+export const FormSchema = z.object({
+  title: LocalisedStringSchema,
+  fields: z.array(z.union([SingleFieldSchema, FieldGroupSchema])),
+});
+
+type Item = SingleField | FieldGroup;
 
 export type Form = z.infer<typeof FormSchema>;

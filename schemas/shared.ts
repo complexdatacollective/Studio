@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { FALLBACK_LOCALE } from '~/lib/localisation/config';
-import { SupportedLocaleSchema } from './protocol/i18n';
+import { Locale, SupportedLocaleSchema } from './protocol/i18n';
 
 /**
  * This is a placeholder for whatever we end up using for an AST for storing
@@ -66,3 +66,27 @@ export const LocalisedStringSchema = z
   .and(z.record(SupportedLocaleSchema, z.string()));
 
 export type LocalisedString = z.infer<typeof LocalisedStringSchema>;
+
+export type ProtocolLocales = readonly Locale[];
+
+// It seems like at some point in the future we might want to be able to constrain
+// the locales that are allowed in a LocalisedString to the ones defined in
+// the protocol. Ideally we could infer the actual value in the protocol somehow,
+// but using a generic seems like a good starting point.
+export type FilteredLocalisedString<T extends ProtocolLocales> = {
+  [K in T[number]]: LocalisedString[K];
+};
+
+export const FilteredLocalisedStringSchema = <T extends Locale[]>(
+  locales: T,
+): z.ZodType<FilteredLocalisedString<T>> => {
+  return z.object(
+    locales.reduce(
+      (acc, locale) => {
+        acc[locale] = z.string();
+        return acc;
+      },
+      {} as Record<Locale, z.ZodType<string>>,
+    ),
+  );
+};

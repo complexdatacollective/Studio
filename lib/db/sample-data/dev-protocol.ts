@@ -3,6 +3,26 @@ import type { Protocol } from '~/schemas/protocol/protocol';
 export const devProtocol: Protocol = {
   name: 'Dev Protocol',
   languages: ['en-GB', 'es', 'ar'],
+  variables: {
+    name: {
+      type: 'text',
+      label: {
+        en: 'Name',
+        es: 'Nombre',
+        ar: 'الاسم',
+      },
+      validation: {
+        required: true,
+      },
+      formControl: 'textBox',
+    },
+  },
+  nodeTypes: {
+    person: {
+      icon: 'user-round',
+      color: 'node-1',
+    },
+  },
   codebook: {
     ego: {
       variables: {
@@ -48,8 +68,52 @@ export const devProtocol: Protocol = {
         entity: 'node',
         id: 'person',
       },
-      mode: 'quickAdd',
-      quickAddVariable: 'person',
+      mode: 'form',
+      form: {
+        title: {
+          en: 'Add a family member',
+          es: 'Agregar un miembro de la familia',
+          ar: 'أضف عضوًا في العائلة',
+        },
+        fields: [
+          {
+            variable: 'name',
+            label: {
+              en: 'Name',
+              es: 'Nombre',
+              ar: 'الاسم',
+            },
+          },
+          {
+            variable: 'age',
+            label: {
+              en: 'Age',
+              es: 'Edad',
+              ar: 'العمر',
+            },
+          },
+          {
+            condition: {
+              action: 'SHOW',
+              rule: {
+                field: 'age',
+                operator: 'GREATER_THAN_OR_EQUAL',
+                value: 18,
+              },
+            },
+            fields: [
+              {
+                variable: 'workplace',
+                label: {
+                  en: 'Workplace',
+                  es: 'Lugar de trabajo',
+                  ar: 'مكان العمل',
+                },
+              },
+            ],
+          },
+        ],
+      },
       prompts: [
         {
           id: 'family-ng-prompt-1',
@@ -76,7 +140,21 @@ export const devProtocol: Protocol = {
             es: 'Personas de tu última entrevista',
             ar: 'الأشخاص من آخر مقابلة لك',
           },
-          source: 'previousVisit',
+          source: {
+            type: 'previousVisit',
+            visit: 1,
+          },
+          filter: {
+            rules: [
+              {
+                type: 'node',
+                entity: 'person',
+                variable: 'type',
+                operator: 'EXACTLY',
+                value: 'family',
+              },
+            ],
+          },
         },
       ],
       wizard: {

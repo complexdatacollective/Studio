@@ -9,5 +9,9 @@
     "lib/localisation/messages",
     "app/api/interview/[interviewId]/languages",
     "app/api/interview/[interviewId]/messages"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.addMissingImports": "explicit",
+  },
 }

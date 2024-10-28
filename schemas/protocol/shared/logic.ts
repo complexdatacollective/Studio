@@ -15,26 +15,19 @@ export const Operators = z.enum([
   'OPTIONS_LESS_THAN',
   'OPTIONS_EQUALS',
   'OPTIONS_NOT_EQUALS',
-  'COUNT', // count of nodes or edges
 ]);
 
 export type Operator = z.infer<typeof Operators>;
 
-const BaseRuleSchema = z
-  .discriminatedUnion('type', [
-    z.object({
-      type: z.literal('ego'),
-    }),
-    z.object({
-      type: z.enum(['node', 'edge']),
-      entityId: z.string(),
-    }),
-  ])
-  .and(
-    z.object({
-      id: z.string(),
-    }),
-  );
+const BaseRuleSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('ego'),
+  }),
+  z.object({
+    type: z.enum(['node', 'edge']),
+    entity: z.string(),
+  }),
+]);
 
 const RuleSchema = z
   .discriminatedUnion('operator', [
@@ -42,33 +35,25 @@ const RuleSchema = z
       operator: Operators.extract(['EXISTS', 'NOT_EXISTS']),
     }),
     z.object({
-      operator: Operators.exclude(['EXISTS', 'NOT_EXISTS', 'COUNT']),
-      entityVariable: z.string(),
+      operator: Operators.exclude(['EXISTS', 'NOT_EXISTS']),
+      variable: z.string(),
       value: z.union([z.boolean(), z.number(), z.string()]),
-    }),
-    z.object({
-      operator: z.literal('COUNT'),
-      entityId: z.string(),
-      count: z.number(),
     }),
   ])
   .and(BaseRuleSchema);
 
-export type FilterRule = z.infer<typeof RuleSchema>;
+export type Rule = z.infer<typeof RuleSchema>;
 
-export const ConditionDefinitionSchema = z.object({
-  join: z.enum(['AND', 'OR']),
+export const FilterSchema = z.object({
+  join: z.enum(['AND', 'OR']).default('AND').optional(),
   rules: z.array(RuleSchema),
 });
 
-export type ConditionDefinition = {
-  join: 'AND' | 'OR';
-  rules: (FilterRule | ConditionDefinition)[];
-};
+export type Filter = z.infer<typeof FilterSchema>;
 
 export const SkipDefinitionSchema = z.object({
   action: z.enum(['SKIP', 'SHOW']),
-  filter: ConditionDefinitionSchema,
+  filter: FilterSchema,
 });
 
 export type SkipDefinition = z.infer<typeof SkipDefinitionSchema>;

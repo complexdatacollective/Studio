@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { SkipDefinitionWithTargetSchema } from '../shared/filter';
+import { SkipDefinitionWithTargetSchema } from '../shared/logic';
 import { NameGeneratorInterfaceSchema } from './name-generator';
 import { SociogramSchema } from './sociogram';
 import { InformationSchema } from './information';
@@ -57,3 +57,7 @@ export const StageSchema = z
   .and(BaseStageSchema);
 
 export type Stage = z.infer<typeof StageSchema>;
+
+export const StagesSchema = z.array(StageSchema.or(z.array(StageSchema)));
+
+export type Stages = z.infer<typeof StagesSchema>;
