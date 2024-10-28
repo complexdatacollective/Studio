@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import { FALLBACK_LOCALE } from '~/lib/localisation/config';
-import { Locale, SupportedLocaleSchema } from './protocol/i18n';
+import { type Locale, SupportedLocaleSchema } from './protocol/i18n';
 
 /**
  * This is a placeholder for whatever we end up using for an AST for storing
@@ -12,7 +11,9 @@ import { Locale, SupportedLocaleSchema } from './protocol/i18n';
  *
  * * rich text is more than just bold and italic text. It has to include things
  * like custom elements for videos, as well as using existing elements such as
- * headings and paragraphs in a sensible way.
+ * headings and paragraphs in a sensible way. An "AST" (abstract syntax tree) is
+ * a way of representing this data in a structured way that can then be rendered
+ * in a variety of ways.
  */
 const TextNodeSchema = z.object({
   text: z.string(),

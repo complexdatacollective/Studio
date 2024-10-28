@@ -12,47 +12,79 @@ export const devProtocol: Protocol = {
         ar: 'الاسم',
       },
       validation: {
+        // TODO: should validation go here, or with the form?
         required: true,
       },
-      formControl: 'textBox',
+    },
+    age: {
+      type: 'number',
+      label: {
+        en: 'Age',
+        es: 'Edad',
+        ar: 'العمر',
+      },
+      validation: {
+        required: true,
+      },
     },
   },
-  nodeTypes: {
+  forms: {
+    familyMember: [
+      {
+        variable: 'name',
+        label: {
+          en: 'Name',
+          es: 'Nombre',
+          ar: 'الاسم',
+        },
+        hint: {
+          en: 'Enter the name of the family member',
+          es: 'Ingrese el nombre del miembro de la familia',
+          ar: 'أدخل اسم أحد أفراد العائلة',
+        },
+      },
+      {
+        variable: 'age',
+        label: {
+          en: 'Age',
+          es: 'Edad',
+          ar: 'العمر',
+        },
+      },
+      {
+        condition: {
+          action: 'SHOW',
+          rule: {
+            field: 'age',
+            operator: 'GREATER_THAN_OR_EQUAL',
+            value: 18,
+          },
+        },
+        elements: [
+          {
+            variable: 'workplace',
+            label: {
+              en: 'Workplace',
+              es: 'Lugar de trabajo',
+              ar: 'مكان العمل',
+            },
+          },
+        ],
+      },
+    ],
+  },
+  entities: {
     person: {
+      label: 'Person',
+      type: 'node',
       icon: 'user-round',
       color: 'node-1',
     },
-  },
-  codebook: {
-    ego: {
-      variables: {
-        school: {
-          type: 'text',
-        },
-      },
-    },
-    nodes: {
-      person: {
-        variables: {
-          name: {
-            type: 'text',
-          },
-          age: {
-            type: 'number',
-          },
-        },
-        color: 'node-1',
-        icon: 'user-round',
-      },
-      school: {
-        variables: {
-          name: {
-            type: 'text',
-          },
-        },
-        color: 'node-2',
-        icon: 'backpack',
-      },
+    knows: {
+      label: 'Knows',
+      type: 'edge',
+      color: 'edge-1',
+      directed: false,
     },
   },
   stages: [
@@ -64,56 +96,9 @@ export const devProtocol: Protocol = {
         ar: 'عائلتي',
       },
       type: 'NameGenerator',
-      subject: {
-        entity: 'node',
-        id: 'person',
-      },
+      creates: 'person',
       mode: 'form',
-      form: {
-        title: {
-          en: 'Add a family member',
-          es: 'Agregar un miembro de la familia',
-          ar: 'أضف عضوًا في العائلة',
-        },
-        fields: [
-          {
-            variable: 'name',
-            label: {
-              en: 'Name',
-              es: 'Nombre',
-              ar: 'الاسم',
-            },
-          },
-          {
-            variable: 'age',
-            label: {
-              en: 'Age',
-              es: 'Edad',
-              ar: 'العمر',
-            },
-          },
-          {
-            condition: {
-              action: 'SHOW',
-              rule: {
-                field: 'age',
-                operator: 'GREATER_THAN_OR_EQUAL',
-                value: 18,
-              },
-            },
-            fields: [
-              {
-                variable: 'workplace',
-                label: {
-                  en: 'Workplace',
-                  es: 'Lugar de trabajo',
-                  ar: 'مكان العمل',
-                },
-              },
-            ],
-          },
-        ],
-      },
+      form: 'familyMember',
       prompts: [
         {
           id: 'family-ng-prompt-1',

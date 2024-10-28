@@ -1,9 +1,14 @@
 import { z } from 'zod';
-import { LocalisedStringSchema } from '~/schemas/shared';
+import {
+  type JSONRichText,
+  JSONRichTextSchema,
+  LocalisedStringSchema,
+} from '~/schemas/shared';
 import { Operators } from './logic';
+import { EncodableKeyString } from './protocol';
 
 const FieldRule = z.object({
-  field: z.string(),
+  field: EncodableKeyString,
   operator: Operators,
   value: z.union([z.boolean(), z.number(), z.string()]),
 });
@@ -12,43 +17,56 @@ const BaseCondition = z.object({
   action: z.enum(['SHOW', 'HIDE']),
 });
 
-const ConditionWithSingleRule = BaseCondition.extend({
+const ConditionWithRule = BaseCondition.extend({
   rule: FieldRule,
-});
+}).or(
+  BaseCondition.extend({
+    join: z.enum(['AND', 'OR']),
+    rules: z.array(FieldRule),
+  }),
+);
 
-type ConditionWithSingleRule = z.infer<typeof ConditionWithSingleRule>;
+type ConditionWithRule = z.infer<typeof ConditionWithRule>;
 
-const ConditionWithMultipleRules = BaseCondition.extend({
-  join: z.enum(['AND', 'OR']),
-  rules: z.array(FieldRule),
-});
-
-type ConditionWithMultipleRules = z.infer<typeof ConditionWithMultipleRules>;
-
-const SingleFieldSchema = z.object({
+const FieldSchema = z.object({
   variable: z.string(),
   label: LocalisedStringSchema,
+  hint: LocalisedStringSchema.optional(),
 });
 
-type SingleField = z.infer<typeof SingleFieldSchema>;
+type Field = z.infer<typeof FieldSchema>;
 
-type FieldGroup = {
-  condition?: ConditionWithSingleRule | ConditionWithMultipleRules;
-  fields: Item[];
-};
+type ElementGroup =
+  | {
+      condition: ConditionWithRule;
+      elements: Element[];
+    }
+  | Element[];
 
-const FieldGroupSchema: z.ZodType<FieldGroup> = z.object({
-  condition: z
-    .union([ConditionWithSingleRule, ConditionWithMultipleRules])
-    .optional(),
-  fields: z.array(z.union([SingleFieldSchema, z.lazy(() => FieldGroupSchema)])),
-});
+const FieldGroupSchema: z.ZodType<ElementGroup> = z.union([
+  z.object({
+    condition: ConditionWithRule,
+    elements: z.array(
+      z.union([
+        FieldSchema,
+        JSONRichTextSchema,
+        z.lazy(() => FieldGroupSchema),
+      ]),
+    ),
+  }),
+  z.array(z.union([FieldSchema, z.lazy(() => FieldGroupSchema)])),
+]);
 
-export const FormSchema = z.object({
-  title: LocalisedStringSchema,
-  fields: z.array(z.union([SingleFieldSchema, FieldGroupSchema])),
-});
+export const FormSchema = z.array(z.union([FieldSchema, FieldGroupSchema]));
 
-type Item = SingleField | FieldGroup;
+type Element = Field | JSONRichText | ElementGroup;
 
 export type Form = z.infer<typeof FormSchema>;
+
+export const FormsSchema = z.record(EncodableKeyString, FormSchema);
+
+export type Forms = z.infer<typeof FormsSchema>;
+
+/**
+ * Examples
+ */

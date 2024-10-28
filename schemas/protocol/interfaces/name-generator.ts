@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { LocalisedStringSchema } from '~/schemas/shared';
-import { FormSchema } from '../form';
 import { FilterSchema } from '../logic';
 import { PromptSchema } from '../prompt';
 import { EncodableKeyString } from '../protocol';
@@ -41,7 +40,7 @@ export type Panel = z.infer<typeof PanelSchema>;
 
 const BaseSchema = z.object({
   type: StageTypeSchema.extract(['NameGenerator']),
-  subject: EncodableKeyString, // Reference to `entities` in protocol
+  creates: EncodableKeyString, // Reference to `entities` in protocol
   prompts: z.array(PromptSchema),
   panels: z.array(PanelSchema).optional(),
   panelWidth: z.enum(['1/5', '1/3', '1/2', '2/3', '3/4', '4/5']).optional(),
@@ -49,12 +48,12 @@ const BaseSchema = z.object({
 
 const WithFormSchema = BaseSchema.extend({
   mode: z.literal('form'),
-  form: FormSchema,
+  form: EncodableKeyString, // Reference to `forms` in protocol
 });
 
 const WithQuickAddSchema = BaseSchema.extend({
   mode: z.literal('quickAdd'),
-  quickAddVariable: z.string(),
+  quickAddVariable: EncodableKeyString, // Reference to `variables` in protocol
 });
 
 export const NameGeneratorInterfaceSchema =

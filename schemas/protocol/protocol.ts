@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { EntityTypeSchema } from './entities';
+import { FormsSchema } from './form';
 import { SupportedLocaleSchema } from './i18n';
 import { StageGroupSchema } from './interfaces/stages';
 import { VariableDefinitionSchema } from './variables';
@@ -7,6 +8,7 @@ import { VariableDefinitionSchema } from './variables';
 // Schema to represent strings that can be safely encoded in CSV and graphML. Used as
 // keys in various places. Must comply with `NMTOKEN` in XML spec.
 export const EncodableKeyString = z.string().regex(/^[a-zA-Z0-9._:-]+$/);
+export type EncodableKeyString = z.infer<typeof EncodableKeyString>;
 
 const ProtocolSchema = z
   .object({
@@ -18,6 +20,7 @@ const ProtocolSchema = z
       .record(EncodableKeyString, VariableDefinitionSchema)
       .optional(),
     entities: z.record(EncodableKeyString, EntityTypeSchema).optional(),
+    forms: FormsSchema.optional(),
   })
   // May not need this - will throw error if extra fields are present
   // when parsing.

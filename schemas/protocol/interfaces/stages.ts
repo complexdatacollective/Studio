@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { LocalisedStringSchema } from '~/schemas/shared';
 import { SupportedLocaleSchema } from '../i18n';
 import { SkipDefinitionWithTargetSchema } from '../logic';
+import { EncodableKeyString } from '../protocol';
 import { StepSchema } from '../wizards';
 import { AlterEdgeFormSchema } from './alter-edge-form';
 import { AlterFormSchema } from './alter-form';
@@ -33,7 +34,7 @@ export const StageTypeSchema = z.enum([
 ]);
 
 const BaseStageSchema = z.object({
-  id: z.string(),
+  id: EncodableKeyString,
   label: LocalisedStringSchema,
   interviewScript: z.string().optional(),
   skipLogic: SkipDefinitionWithTargetSchema.optional(),
