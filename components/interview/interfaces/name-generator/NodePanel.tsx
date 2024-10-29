@@ -4,9 +4,7 @@ import { MotionSurface } from '~/components/layout/Surface';
 import Heading from '~/components/typography/Heading';
 import { cn } from '~/lib/utils';
 
-// incompatibility between framer-motion 12.x and new react types
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const MotionTrigger = motion(Accordion.Trigger);
+const MotionTrigger = motion.create(Accordion.Trigger);
 
 export default function Panel({
   id,

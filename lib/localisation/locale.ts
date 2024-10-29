@@ -131,7 +131,7 @@ export async function getLocaleMessages(
 }
 
 export async function setUserLocale(locale: Locale) {
-  const currentPath = getCurrentPath();
+  const currentPath = await getCurrentPath();
   const context = getLocaleContext(currentPath);
   const c = await cookies();
   c.set(LOCALE_COOKIES[context], locale);

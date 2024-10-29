@@ -1,15 +1,16 @@
 import Link from '~/components/Link';
 import { route } from 'nextjs-routes';
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     study: string;
-  };
+  }>;
 }) {
+  const { study } = await params;
   return (
     <>
       <div className="block border-t border-opacity-20 py-5">
@@ -26,7 +27,7 @@ export default function DashboardLayout({
               <Link
                 href={route({
                   pathname: '/[study]',
-                  query: { study: params.study },
+                  query: { study },
                 })}
               >
                 Dashboard
@@ -34,7 +35,7 @@ export default function DashboardLayout({
               <Link
                 href={route({
                   pathname: '/[study]/settings',
-                  query: { study: params.study },
+                  query: { study },
                 })}
               >
                 Settings

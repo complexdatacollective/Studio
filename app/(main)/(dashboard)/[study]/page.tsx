@@ -7,13 +7,13 @@ import { getStudyData } from '~/server/queries/studies';
 export default async function StudyPage({
   params,
 }: {
-  params: {
+  params: Promise<{
     study: string;
-  };
+  }>;
 }) {
   const t = await getTranslations('Pages.Study');
   const serverPath = await getCurrentPath();
-  const { study } = params;
+  const { study } = await params;
   const studyData = await getStudyData(study);
 
   if (!studyData) {
