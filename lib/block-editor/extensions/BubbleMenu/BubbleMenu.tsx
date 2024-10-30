@@ -1,13 +1,10 @@
 import { BubbleMenu as BaseBubbleMenu, type Editor } from '@tiptap/react';
-import { Bold, Italic, Link } from 'lucide-react';
-import { Button } from '~/components/Button';
+import { Bold, Italic, Link, Trash } from 'lucide-react';
+import { Button, type ButtonProps } from '~/components/Button';
 import Popover from '~/components/Popover';
+import { withTooltip } from '~/components/Tooltip';
 
-type BubbleMenuProps = {
-  editor: Editor | null;
-};
-
-export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
+export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
     return null;
   }
@@ -29,48 +26,83 @@ export const BubbleMenu = ({ editor }: BubbleMenuProps) => {
     }
   };
 
+  const handleLinkRemove = () => {
+    editor?.chain().focus().unsetLink().run();
+  };
+
   return (
     <>
       <BaseBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
         <div className="flex gap-1 rounded border bg-surface-0 px-2 py-1">
-          <Button
-            size="xs"
-            variant="text"
+          <MenuButtonWithTooltip
             onClick={() => editor.chain().focus().toggleBold().run()}
+            tooltipContent="Bold (Ctrl+B)"
+            variant={editor.isActive('bold') ? 'default' : 'text'}
           >
-            <Bold size={18} />
-          </Button>
-          <Button
-            size="xs"
-            variant="text"
+            <Bold />
+          </MenuButtonWithTooltip>
+          <MenuButtonWithTooltip
             onClick={() => editor.chain().focus().toggleItalic().run()}
+            tooltipContent="Italic (Ctrl+I)"
+            variant={editor.isActive('italic') ? 'default' : 'text'} // maybe should be passed as a 'selected' prop so that the variant can be standardized
           >
-            <Italic size={18} />
-          </Button>
+            <Italic />
+          </MenuButtonWithTooltip>
           <Popover
             content={
-              <form
-                className="flex flex-row gap-1 pr-8"
-                onSubmit={handleLinkSubmit}
-              >
-                <input
-                  type="text"
-                  placeholder="Enter URL"
-                  name="url"
-                  className="rounded border px-2 py-1"
-                />
-                <Button size="xs" type="submit">
-                  Set Link
-                </Button>
-              </form>
+              editor.getAttributes('link').href ? (
+                <div className="flex items-center gap-1 pr-8">
+                  <a href={editor.getAttributes('link').href as string}>
+                    {editor.getAttributes('link').href}
+                  </a>
+                  <Button variant="text" size="xs" onClick={handleLinkRemove}>
+                    <Trash />
+                  </Button>
+                </div>
+              ) : (
+                <form
+                  className="flex flex-row gap-1 pr-8"
+                  onSubmit={handleLinkSubmit}
+                >
+                  <input
+                    type="text"
+                    placeholder="Enter URL"
+                    name="url"
+                    className="rounded border px-2 py-1"
+                  />
+                  <Button size="xs" type="submit">
+                    Set Link
+                  </Button>
+                </form>
+              )
             }
           >
-            <Button size="xs" variant="text">
-              <Link size={18} />
-            </Button>
+            <MenuButtonWithTooltip
+              tooltipContent="Set Link"
+              variant={editor.getAttributes('link').href ? 'default' : 'text'}
+            >
+              <Link />
+            </MenuButtonWithTooltip>
           </Popover>
         </div>
       </BaseBubbleMenu>
     </>
   );
 };
+
+const MenuButton = (props: ButtonProps) => {
+  const { children, variant, ...rest } = props;
+
+  return (
+    <Button
+      size="xs"
+      variant={variant ?? 'text'}
+      onClick={props.onClick}
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
+};
+
+const MenuButtonWithTooltip = withTooltip(MenuButton);
