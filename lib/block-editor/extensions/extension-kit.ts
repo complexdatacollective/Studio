@@ -78,6 +78,8 @@ export const ExtensionKit = () => [
   HorizontalRule,
   Link.configure({
     openOnClick: false,
+    autolink: true,
+    defaultProtocol: 'https',
   }),
   Underline,
   ImageBlock,
