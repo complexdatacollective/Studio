@@ -7,7 +7,7 @@ import { getServerSession, lucia } from '~/lib/auth';
 import { redirect } from 'next/navigation';
 import { generateIdFromEntropySize } from 'lucia';
 import { revalidatePath } from 'next/cache';
-import { zfd } from 'zod-form-data';
+
 import {
   createUserFormDataSchema,
   loginFormDataSchema,
@@ -39,7 +39,9 @@ export async function signup(_: unknown, formData: FormData) {
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
 
-    cookies().set(
+    const cookieStore = await cookies();
+
+    cookieStore.set(
       sessionCookie.name,
       sessionCookie.value,
       sessionCookie.attributes,
@@ -95,7 +97,9 @@ export async function login(formData: FormData) {
 
   const session = await lucia.createSession(existingUser.id, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
-  cookies().set(
+
+  const cookieStore = await cookies();
+  cookieStore.set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes,
@@ -115,7 +119,8 @@ export async function logout() {
   await lucia.invalidateSession(session.id);
 
   const sessionCookie = lucia.createBlankSessionCookie();
-  cookies().set(
+  const cookieStore = await cookies();
+  cookieStore.set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes,

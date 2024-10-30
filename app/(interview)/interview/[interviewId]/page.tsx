@@ -2,13 +2,15 @@ import { getInterviewById } from '~/server/queries/interviews';
 import InterviewShell from '~/components/interview/ui/InterviewShell';
 
 export default async function Page({
-  params: { interviewId },
+  params,
   searchParams,
 }: {
-  params: { interviewId: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  params: Promise<{ interviewId: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const stage = parseInt(searchParams.stage as string, 10) || 0;
+  const paramsResult = await searchParams;
+  const stage = parseInt(paramsResult.stage as string, 10) || 0;
+  const { interviewId } = await params;
 
   const interviewData = await getInterviewById({ interviewId });
   if (!interviewData) {

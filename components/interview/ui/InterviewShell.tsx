@@ -30,7 +30,7 @@ export default async function InterviewShell({
   });
   const progress = ((currentStage / stageCount) * 100) as IntRange<0, 100>;
 
-  const currentPath = getCurrentPath();
+  const currentPath = await getCurrentPath();
   const interviewId = getInterviewId(currentPath);
   const availableLocales = await getAvailableLocales('INTERVIEW', interviewId);
   return (
