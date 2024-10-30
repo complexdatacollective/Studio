@@ -130,15 +130,11 @@ export const devProtocol: Protocol = {
             visit: 1,
           },
           filter: {
-            rules: [
-              {
-                type: 'node',
-                entity: 'person',
-                variable: 'type',
-                operator: 'EXACTLY',
-                value: 'family',
-              },
-            ],
+            type: 'node',
+            entity: 'person',
+            variable: 'type',
+            operator: 'EXACTLY',
+            value: 'family',
           },
         },
       ],

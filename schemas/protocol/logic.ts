@@ -44,10 +44,12 @@ const RuleSchema = z
 
 export type Rule = z.infer<typeof RuleSchema>;
 
-export const FilterSchema = z.object({
-  join: z.enum(['AND', 'OR']).default('AND').optional(),
-  rules: z.array(RuleSchema),
-});
+export const FilterSchema = z
+  .object({
+    join: z.enum(['AND', 'OR']).default('AND'),
+    rules: z.array(RuleSchema).min(2),
+  })
+  .or(RuleSchema);
 
 export type Filter = z.infer<typeof FilterSchema>;
 
