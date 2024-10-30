@@ -1,17 +1,14 @@
-import type { Preview } from '@storybook/react';
-import React, { lazy, Suspense, useEffect, useState } from 'react';
-import { type AbstractIntlMessages } from 'next-intl';
-import {
-  SUPPORTED_LOCALE_OBJECTS,
-  type Locale,
-} from '~/lib/localisation/config';
-import { getLangDir } from 'rtl-detect';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import type { Preview } from '@storybook/react';
+import { type AbstractIntlMessages } from 'next-intl';
+import { Lexend, Roboto_Mono } from 'next/font/google';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { getLangDir } from 'rtl-detect';
+import Providers from '~/app/_components/Providers';
+import { cn } from '~/lib/utils';
+import { type Locale, SUPPORTED_LOCALE_OBJECTS } from '~/schemas/protocol/i18n';
 import '~/styles/global.css';
 import '~/styles/themes/default.css';
-import Providers from '~/app/_components/Providers';
-import { Lexend, Roboto_Mono } from 'next/font/google';
-import { cn } from '~/lib/utils';
 
 const LazyInterviewTheme = lazy(() => import('./InterviewTheme'));
 
@@ -126,8 +123,6 @@ const preview: Preview = {
       const theme =
         (context.parameters.forceTheme as string) ??
         (context.globals.visualTheme as string);
-
-      console.log('theme', theme);
 
       return (
         <div
