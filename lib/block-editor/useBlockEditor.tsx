@@ -14,7 +14,7 @@ export const useBlockEditor = () => {
           autocomplete: 'off',
           autocorrect: 'off',
           autocapitalize: 'off',
-          class: 'min-h-full',
+          class: 'min-h-full focus:outline-none',
         },
       },
       content: `
@@ -28,8 +28,10 @@ export const useBlockEditor = () => {
           Another heading
         </h2>
         <p>
-          Hello, world!
+          Text following h2.
         </p>
+        <ul><li>Unordered list item</li><li>another item</li></ul>
+        </ul>
       `,
     },
     [], // Dependency array

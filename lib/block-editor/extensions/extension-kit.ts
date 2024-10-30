@@ -1,13 +1,43 @@
 import { mergeAttributes } from '@tiptap/core';
+import BulletList from '@tiptap/extension-bullet-list';
+import Document from '@tiptap/extension-document';
+import Dropcursor from '@tiptap/extension-dropcursor';
 import Heading from '@tiptap/extension-heading';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
+import Typography from '@tiptap/extension-typography';
+import StarterKit from '@tiptap/starter-kit';
+import { Underline } from 'lucide-react';
+import AutoJoiner from 'tiptap-extension-auto-joiner';
 import GlobalDragHandle from 'tiptap-extension-global-drag-handle';
 import { headingVariants } from '~/components/typography/Heading';
 import { paragraphVariants } from '~/components/typography/Paragraph';
-import { Document } from './Document';
+import { unorderedListClasses } from '~/components/typography/UnorderedList';
+import { HorizontalRule } from './HorizontalRule';
+import { ImageBlock } from './ImageBlock';
+import { Link } from './Link';
+import { Column, Columns } from './MultiColumn';
+import { Selection } from './Selection';
+import { SlashCommand } from './SlashCommand';
 
 export const ExtensionKit = () => [
+  StarterKit.configure({
+    document: false,
+    dropcursor: false,
+    heading: false,
+    paragraph: false,
+    text: false,
+    bulletList: false,
+    horizontalRule: false,
+    blockquote: false,
+    history: false,
+    codeBlock: false,
+  }),
+  BulletList.configure({
+    HTMLAttributes: {
+      class: unorderedListClasses,
+    },
+  }),
   Document,
   Heading.extend({
     levels: [1, 2, 3, 4],
@@ -41,66 +71,22 @@ export const ExtensionKit = () => [
   }),
   Text,
   GlobalDragHandle,
-  // Columns,
-  // TaskList,
-  // TaskItem.configure({
-  //   nested: true,
-  // }),
-  // Column,
-  // Selection,
-  // Heading.configure({
-  //   levels: [1, 2, 3, 4, 5, 6],
-  // }),
-  // HorizontalRule,
-  // StarterKit.configure({
-  //   document: false,
-  //   dropcursor: false,
-  //   heading: false,
-  //   horizontalRule: false,
-  //   blockquote: false,
-  //   history: false,
-  //   codeBlock: false,
-  // }),
-  // CodeBlock,
-  // TextStyle,
-  // FontSize,
-  // FontFamily,
-  // Color,
-  // TrailingNode,
-  // Link.configure({
-  //   openOnClick: false,
-  // }),
-  // Highlight.configure({ multicolor: true }),
-  // Underline,
-  // CharacterCount.configure({ limit: 50000 }),
-  // ImageBlock,
-  // TextAlign.extend({
-  //   addKeyboardShortcuts() {
-  //     return {};
-  //   },
-  // }).configure({
-  //   types: ['heading', 'paragraph'],
-  // }),
-  // Subscript,
-  // Superscript,
-  // Table,
-  // TableCell,
-  // TableHeader,
-  // TableRow,
-  // Typography,
-  // Placeholder.configure({
-  //   includeChildren: true,
-  //   showOnlyCurrent: false,
-  //   placeholder: () => '',
-  // }),
-  // SlashCommand,
-  // Focus,
-  // Figcaption,
-  // BlockquoteFigure,
-  // Dropcursor.configure({
-  //   width: 2,
-  //   class: 'ProseMirror-dropcursor border-black',
-  // }),
+  AutoJoiner,
+  Columns,
+  Column,
+  Selection,
+  HorizontalRule,
+  Link.configure({
+    openOnClick: false,
+  }),
+  Underline,
+  ImageBlock,
+  Typography,
+  SlashCommand,
+  Dropcursor.configure({
+    width: 2,
+    class: '',
+  }),
 ];
 
 export default ExtensionKit;

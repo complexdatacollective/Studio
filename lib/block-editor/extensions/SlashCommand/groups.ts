@@ -1,25 +1,17 @@
-import { Group } from './types'
+import { type Group } from './types';
 
 export const GROUPS: Group[] = [
   {
-    name: 'ai',
-    title: 'AI',
+    name: 'variables',
+    title: 'Variables',
     commands: [
       {
-        name: 'aiWriter',
-        label: 'AI Writer',
+        name: 'addVariable',
+        label: 'Add Variable',
         iconName: 'Sparkles',
-        description: 'Let AI finish your thoughts',
-        shouldBeHidden: editor => editor.isActive('columns'),
-        action: editor => editor.chain().focus().setAiWriter().run(),
-      },
-      {
-        name: 'aiImage',
-        label: 'AI Image',
-        iconName: 'Sparkles',
-        description: 'Generate an image from text',
-        shouldBeHidden: editor => editor.isActive('columns'),
-        action: editor => editor.chain().focus().setAiImage().run(),
+        description: 'Insert a variable',
+        shouldBeHidden: (editor) => editor.isActive('columns'),
+        action: (editor) => () => {},
       },
     ],
   },
@@ -33,8 +25,8 @@ export const GROUPS: Group[] = [
         iconName: 'Heading1',
         description: 'High priority section title',
         aliases: ['h1'],
-        action: editor => {
-          editor.chain().focus().setHeading({ level: 1 }).run()
+        action: (editor) => {
+          editor.chain().focus().setHeading({ level: 1 }).run();
         },
       },
       {
@@ -43,8 +35,8 @@ export const GROUPS: Group[] = [
         iconName: 'Heading2',
         description: 'Medium priority section title',
         aliases: ['h2'],
-        action: editor => {
-          editor.chain().focus().setHeading({ level: 2 }).run()
+        action: (editor) => {
+          editor.chain().focus().setHeading({ level: 2 }).run();
         },
       },
       {
@@ -53,8 +45,8 @@ export const GROUPS: Group[] = [
         iconName: 'Heading3',
         description: 'Low priority section title',
         aliases: ['h3'],
-        action: editor => {
-          editor.chain().focus().setHeading({ level: 3 }).run()
+        action: (editor) => {
+          editor.chain().focus().setHeading({ level: 3 }).run();
         },
       },
       {
@@ -63,8 +55,8 @@ export const GROUPS: Group[] = [
         iconName: 'List',
         description: 'Unordered list of items',
         aliases: ['ul'],
-        action: editor => {
-          editor.chain().focus().toggleBulletList().run()
+        action: (editor) => {
+          editor.chain().focus().toggleBulletList().run();
         },
       },
       {
@@ -73,8 +65,8 @@ export const GROUPS: Group[] = [
         iconName: 'ListOrdered',
         description: 'Ordered list of items',
         aliases: ['ol'],
-        action: editor => {
-          editor.chain().focus().toggleOrderedList().run()
+        action: (editor) => {
+          editor.chain().focus().toggleOrderedList().run();
         },
       },
       {
@@ -83,8 +75,8 @@ export const GROUPS: Group[] = [
         iconName: 'ListTodo',
         description: 'Task list with todo items',
         aliases: ['todo'],
-        action: editor => {
-          editor.chain().focus().toggleTaskList().run()
+        action: (editor) => {
+          editor.chain().focus().toggleTaskList().run();
         },
       },
       {
@@ -93,27 +85,8 @@ export const GROUPS: Group[] = [
         iconName: 'ListCollapse',
         description: 'Toggles can show and hide content',
         aliases: ['toggle'],
-        action: editor => {
-          editor.chain().focus().setDetails().run()
-        },
-      },
-      {
-        name: 'blockquote',
-        label: 'Blockquote',
-        iconName: 'Quote',
-        description: 'Element for quoting',
-        action: editor => {
-          editor.chain().focus().setBlockquote().run()
-        },
-      },
-      {
-        name: 'codeBlock',
-        label: 'Code Block',
-        iconName: 'SquareCode',
-        description: 'Code block with syntax highlighting',
-        shouldBeHidden: editor => editor.isActive('columns'),
-        action: editor => {
-          editor.chain().focus().setCodeBlock().run()
+        action: (editor) => {
+          editor.chain().focus().setDetails().run();
         },
       },
     ],
@@ -123,29 +96,19 @@ export const GROUPS: Group[] = [
     title: 'Insert',
     commands: [
       {
-        name: 'table',
-        label: 'Table',
-        iconName: 'Table',
-        description: 'Insert a table',
-        shouldBeHidden: editor => editor.isActive('columns'),
-        action: editor => {
-          editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: false }).run()
-        },
-      },
-      {
         name: 'columns',
         label: 'Columns',
         iconName: 'Columns2',
         description: 'Add two column content',
         aliases: ['cols'],
-        shouldBeHidden: editor => editor.isActive('columns'),
-        action: editor => {
+        shouldBeHidden: (editor) => editor.isActive('columns'),
+        action: (editor) => {
           editor
             .chain()
             .focus()
             .setColumns()
             .focus(editor.state.selection.head - 1)
-            .run()
+            .run();
         },
       },
       {
@@ -154,12 +117,12 @@ export const GROUPS: Group[] = [
         iconName: 'Minus',
         description: 'Insert a horizontal divider',
         aliases: ['hr'],
-        action: editor => {
-          editor.chain().focus().setHorizontalRule().run()
+        action: (editor) => {
+          editor.chain().focus().setHorizontalRule().run();
         },
       },
     ],
   },
-]
+];
 
-export default GROUPS
+export default GROUPS;
