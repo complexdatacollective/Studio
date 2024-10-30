@@ -1,9 +1,9 @@
-import { type PropsWithChildren } from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
+import { type PropsWithChildren } from 'react';
+import { MotionSurface } from '~/components/layout/Surface';
+import Heading from '~/components/typography/Heading';
 import { cn } from '~/lib/utils';
 import CloseButton from './CloseButton';
-import Heading from '../typography/Heading';
-import { MotionSurface } from '../layout/Surface';
 
 const Popover = ({
   children,

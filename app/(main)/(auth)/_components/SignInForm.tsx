@@ -1,9 +1,9 @@
-import { login } from '~/server/actions/auth';
-import { Input } from '~/components/ui/form/Input';
-import { SubmitButton } from '~/components/ui/form/SubmitButton';
-import Form from '~/components/ui/form/Form';
 import { getTranslations } from 'next-intl/server';
+import Form from '~/components/form/Form';
+import { Input } from '~/components/form/Input';
+import { SubmitButton } from '~/components/form/SubmitButton';
 import Link from '~/components/Link';
+import { login } from '~/server/actions/auth';
 
 export default async function SignInForm() {
   const t = await getTranslations('Auth');

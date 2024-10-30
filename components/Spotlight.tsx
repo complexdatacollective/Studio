@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 import * as motion from 'framer-motion/client';
-import PopoverBackdrop from './ui/PopoverBackdrop';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import PopoverBackdrop from '~/components/PopoverBackdrop';
 
 /**
  * Overlay that darkens the background and highlights a specific element.

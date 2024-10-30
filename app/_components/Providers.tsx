@@ -1,13 +1,13 @@
-import { type AbstractIntlMessages } from 'next-intl';
-import { type ReactNode } from 'react';
-import RadixDirectionProvider from './RadixDirectionProvider';
-import { TooltipProvider } from '~/components/ui/Tooltip';
-import { type Locale } from '~/lib/localisation/config';
-import IntlProvider from './IntlProvider';
-import { ThemeProvider } from 'next-themes';
-import { WizardProvider } from '~/lib/onboarding-wizard/Provider';
 import { MotionConfig } from 'framer-motion';
+import { type AbstractIntlMessages } from 'next-intl';
+import { ThemeProvider } from 'next-themes';
+import { type ReactNode } from 'react';
+import { TooltipProvider } from '~/components/Tooltip';
 import DialogProvider from '~/lib/dialogs/DialogProvider';
+import { WizardProvider } from '~/lib/onboarding-wizard/Provider';
+import { type Locale } from '~/schemas/protocol/i18n';
+import IntlProvider from './IntlProvider';
+import RadixDirectionProvider from './RadixDirectionProvider';
 
 export default function Providers({
   intlParams: { dir, messages, locale, now, timeZone },

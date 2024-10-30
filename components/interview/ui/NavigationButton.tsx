@@ -1,5 +1,5 @@
-import { Button, type ButtonProps } from '~/components/ui/Button';
-import { withTooltip } from '~/components/ui/Tooltip';
+import { Button, type ButtonProps } from '~/components/Button';
+import { withTooltip } from '~/components/Tooltip';
 import { cn } from '~/lib/utils';
 
 const NavigationButton = (props: ButtonProps) => {

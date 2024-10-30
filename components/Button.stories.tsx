@@ -1,12 +1,12 @@
 import type { Meta } from '@storybook/react';
 import { fn } from '@storybook/test';
+import Heading from '~/components/typography/Heading';
 import {
   Button,
   type ButtonProps,
   type ButtonVariants,
   buttonVariants,
 } from './Button';
-import Heading from '../typography/Heading';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

@@ -1,11 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { cn } from '~/lib/utils';
+import Divider from '~/components/layout/Divider';
+import Surface from '~/components/layout/Surface';
 import Heading from '~/components/typography/Heading';
-import Paragraph from '../typography/Paragraph';
-import Surface from '../layout/Surface';
-import Divider from '../layout/Divider';
+import Paragraph from '~/components/typography/Paragraph';
+import { cn } from '~/lib/utils';
 
 export type CardProps = {
   title: string;

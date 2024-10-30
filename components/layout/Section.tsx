@@ -1,8 +1,8 @@
 'use client';
 
-import Heading from '../typography/Heading';
-import { cn } from '~/lib/utils';
 import { useId } from 'react';
+import Heading from '~/components/typography/Heading';
+import { cn } from '~/lib/utils';
 import Surface, { type SurfaceVariants } from './Surface';
 
 const sectionClasses = 'rounded mb-10';

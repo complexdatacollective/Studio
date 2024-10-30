@@ -1,12 +1,12 @@
 import { SearchIcon } from 'lucide-react';
-import { Input } from '~/components/ui/form/Input';
 import Image from 'next/image';
-import StudySwitcher from './_components/StudySwitcher';
 import LanguageSwitcher from '~/app/_components/LocaleSwitcher';
-import SignOutBtn from './_components/SignOutBtn';
-import { requirePageAuth } from '~/lib/auth';
-import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
 import ThemeSwitcher from '~/app/_components/ThemeSwitcher';
+import { Input } from '~/components/form/Input';
+import ResponsiveContainer from '~/components/layout/ResponsiveContainer';
+import { requirePageAuth } from '~/lib/auth';
+import SignOutBtn from './_components/SignOutBtn';
+import StudySwitcher from './_components/StudySwitcher';
 
 export default async function DashboardLayout({
   children,

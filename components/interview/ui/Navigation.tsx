@@ -1,24 +1,23 @@
 'use client';
 
 import {
-  ChevronUp,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
-import { usePathname, useRouter } from 'next/navigation';
-import { cn } from '~/lib/utils';
-import { ProgressBarWithTooltip } from '../../ui/ProgressBar';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IntRange } from 'type-fest';
-import HelpButton from './HelpButton';
-import { NavButtonWithTooltip } from './NavigationButton';
+import { ProgressBarWithTooltip } from '~/components/ProgressBar';
 import Surface from '~/components/layout/Surface';
-import { type Locale } from '~/lib/localisation/config';
-import { useMediaQuery } from '~/hooks/useMediaQuery';
-import InterviewLocaleSwitcher from './InterviewLocaleSwitcher';
 import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
+import { useMediaQuery } from '~/hooks/useMediaQuery';
+import { cn } from '~/lib/utils';
+import { type Locale } from '~/schemas/protocol/i18n';
+import HelpButton from './HelpButton';
+import InterviewLocaleSwitcher from './InterviewLocaleSwitcher';
+import { NavButtonWithTooltip } from './NavigationButton';
 
 type NavigationProps = {
   pulseNext: boolean;

@@ -1,15 +1,14 @@
-import Popover from '~/components/ui/Popover';
-import { Button } from '../ui/Button';
-import { useWizardController } from './useWizardController';
-import RenderRichText from '../RenderRichText';
 import { useTranslations } from 'next-intl';
-import { useElementPosition } from '~/lib/onboarding-wizard/utils';
-import { type Step } from '~/lib/onboarding-wizard/store';
-import Form from '../ui/form/Form';
-import { generatePublicId } from '~/lib/generatePublicId';
+import { Button } from '~/components/Button';
+import Form from '~/components/form/Form';
+import Popover from '~/components/Popover';
 import { ControlledDialog } from '~/lib/dialogs/ControlledDialog';
+import { generatePublicId } from '~/lib/generatePublicId';
+import { useElementPosition } from '~/lib/onboarding-wizard/utils';
+import RenderRichText from '../RenderRichText';
+import { useWizardController } from './useWizardController';
 
-export default function WizardStep({ step }: { step: Step }) {
+export default function WizardStep({ step }: { step }) {
   const { title, content, targetElementId } = step;
 
   const {

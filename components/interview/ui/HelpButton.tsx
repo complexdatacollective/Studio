@@ -1,14 +1,14 @@
 import { HelpCircle } from 'lucide-react';
-import { NavButtonWithTooltip } from './NavigationButton';
 import { useTranslations } from 'next-intl';
+import { Button } from '~/components/Button';
+import { Card } from '~/components/Card';
+import Form from '~/components/form/Form';
 import { useWizardController } from '~/components/onboard-wizard/useWizardController';
-import { env } from '~/env';
-import { WIZARD_LOCAL_STORAGE_KEY } from '~/lib/onboarding-wizard/Provider';
 import { renderLocalisedValue } from '~/components/RenderRichText';
+import { env } from '~/env';
 import { useDialog } from '~/lib/dialogs/DialogProvider';
-import { Button } from '~/components/ui/Button';
-import { Card } from '~/components/ui/Card';
-import Form from '~/components/ui/form/Form';
+import { WIZARD_LOCAL_STORAGE_KEY } from '~/lib/onboarding-wizard/Provider';
+import { NavButtonWithTooltip } from './NavigationButton';
 /**
  * Button to be added to the main navigation, which triggers the help popover.
  * This popover allows the participant to trigger help wizards.
