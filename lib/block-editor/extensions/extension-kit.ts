@@ -33,11 +33,6 @@ export const ExtensionKit = () => [
     history: false,
     codeBlock: false,
   }),
-  BulletList.configure({
-    HTMLAttributes: {
-      class: unorderedListClasses,
-    },
-  }),
   Document,
   Heading.extend({
     levels: [1, 2, 3, 4],
@@ -70,8 +65,13 @@ export const ExtensionKit = () => [
     },
   }),
   Text,
+  BulletList.configure({
+    HTMLAttributes: {
+      class: unorderedListClasses,
+    },
+  }),
   GlobalDragHandle,
-  AutoJoiner,
+  AutoJoiner, // Recommended by GlobalDragHandle author. Allows merging nodes when dragging.
   Columns,
   Column,
   Selection,
@@ -84,6 +84,7 @@ export const ExtensionKit = () => [
   Typography,
   SlashCommand,
   Dropcursor.configure({
+    // Shows a placeholder for where dragged content will be inserted.
     width: 2,
     class: '',
   }),
