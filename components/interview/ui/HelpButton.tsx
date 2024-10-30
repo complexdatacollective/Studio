@@ -1,10 +1,9 @@
 import { HelpCircle } from 'lucide-react';
 import { NavButtonWithTooltip } from './NavigationButton';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useWizardController } from '~/components/onboard-wizard/useWizardController';
 import { env } from '~/env';
 import { WIZARD_LOCAL_STORAGE_KEY } from '~/lib/onboarding-wizard/Provider';
-import { getLocalisedValue } from '~/lib/localisation/utils';
 import { renderLocalisedValue } from '~/components/RenderRichText';
 import { useDialog } from '~/lib/dialogs/DialogProvider';
 import { Button } from '~/components/ui/Button';
@@ -17,20 +16,16 @@ import Form from '~/components/ui/form/Form';
 export default function HelpButton({ id }: { id?: string }) {
   const { openDialog } = useDialog();
   const { wizards, setActiveWizard } = useWizardController();
-  const locale = useLocale();
 
-  const t = useTranslations('Interview.Navigation');
-  const t2 = useTranslations('Components.ContextualHelp');
-  const t3 = useTranslations('Components.ContextualHelp.ContactCard');
+  const t = useTranslations('Interview.Navigation.HelpButton');
+  const genericT = useTranslations('Generic');
 
   const handleOpenDialog = async () => {
-    // Return type should be string | null
-
     const result = await openDialog<string>({
       type: 'custom',
       id: 'help-dialog',
-      title: t2('Title'),
-      description: t2('Description'),
+      title: t('Dialog.Title'),
+      description: t('Dialog.Description'),
       renderContent: (resolve) => (
         <>
           <div className="mt-4 flex flex-col gap-4">
@@ -40,17 +35,15 @@ export default function HelpButton({ id }: { id?: string }) {
                 .map((wizard) => (
                   <Card
                     key={wizard.id}
-                    title={getLocalisedValue(wizard.name, locale)}
+                    title={wizard.name}
                     onClick={() => resolve(wizard.id)}
                   >
-                    {renderLocalisedValue(
-                      getLocalisedValue(wizard.description, locale),
-                    )}
+                    {renderLocalisedValue(wizard.description)}
                   </Card>
                 ))}
               <Card
-                title={t3('Title')}
-                description={t3('Description')}
+                title={t('Dialog.Options.Contact.Title')}
+                description={t('Dialog.Options.Contact.Description')}
                 onClick={() => {
                   // eslint-disable-next-line no-console
                   console.log('TODO: Implement contact organiser feature');
@@ -62,7 +55,9 @@ export default function HelpButton({ id }: { id?: string }) {
             secondaryAction={
               env.NODE_ENV === 'development' && (
                 <>
-                  <Button onClick={() => resolve(null)}>Cancel</Button>
+                  <Button onClick={() => resolve(null)}>
+                    {genericT('Cancel')}
+                  </Button>
                   <Button
                     color="destructive"
                     onClick={() => {
@@ -88,7 +83,7 @@ export default function HelpButton({ id }: { id?: string }) {
     <>
       <NavButtonWithTooltip
         id={id}
-        tooltipContent={t('Help')}
+        tooltipContent={t('Tooltip')}
         onClick={handleOpenDialog}
       >
         <HelpCircle className="h-10 w-10 stroke-[2px]" />

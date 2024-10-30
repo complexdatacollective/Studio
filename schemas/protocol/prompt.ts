@@ -1,7 +1,9 @@
 import { z } from 'zod';
+import { LocalisedStringSchema } from '~/schemas/shared';
 
 export const PromptSchema = z.object({
   id: z.string(),
+  text: LocalisedStringSchema, // TODO: update to support rich text via LocalisedRecordSchema
   // Todo:
   // additionalAttributes: z.any().optional(),
   // variable: z.string().optional(),
@@ -20,8 +22,4 @@ export const PromptSchema = z.object({
   // createEdge: z.string().optional(),
 });
 
-export type TPrompt = z.infer<typeof PromptSchema>;
-
-export const PromptsSchema = z.array(PromptSchema);
-
-export type TPrompts = z.infer<typeof PromptsSchema>;
+export type Prompt = z.infer<typeof PromptSchema>;

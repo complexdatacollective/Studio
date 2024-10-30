@@ -1,7 +1,7 @@
-import type { NodeColor, NodeIcon } from '~/schemas/protocol/codebook/entities';
 import { PlusIcon } from 'lucide-react';
-import DynamicLucideIcon from '../DynamicLucideIcon';
 import { cn } from '~/lib/utils';
+import type { NodeColor, NodeIcon } from '~/schemas/protocol/entities';
+import DynamicLucideIcon from '../DynamicLucideIcon';
 
 type ActionButtonProps = React.ComponentProps<'button'> & {
   iconName: NodeIcon;

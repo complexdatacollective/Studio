@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { FALLBACK_LOCALE } from '~/lib/localisation/config';
+import { type Locale, SupportedLocaleSchema } from './protocol/i18n';
 
 /**
  * This is a placeholder for whatever we end up using for an AST for storing
@@ -11,7 +11,9 @@ import { FALLBACK_LOCALE } from '~/lib/localisation/config';
  *
  * * rich text is more than just bold and italic text. It has to include things
  * like custom elements for videos, as well as using existing elements such as
- * headings and paragraphs in a sensible way.
+ * headings and paragraphs in a sensible way. An "AST" (abstract syntax tree) is
+ * a way of representing this data in a structured way that can then be rendered
+ * in a variety of ways.
  */
 const TextNodeSchema = z.object({
   text: z.string(),
@@ -43,16 +45,16 @@ const BlockNodeSchema = z.object({
 
 export type BlockNode = z.infer<typeof BlockNodeSchema>;
 
-const JSONRichTextSchema = z.array(BlockNodeSchema);
+export const JSONRichTextSchema = z.array(BlockNodeSchema);
 
 export type JSONRichText = z.infer<typeof JSONRichTextSchema>;
 
-// Utility for protocol keys that must support localisation.
-// TODO: figure out how to make the required key (which represents the default)
-// locale) definable in the protocol
+/**
+ * **backend** Utilities for protocol keys that must support localisation.
+ */
 const LocalisedRecordSchema = z
   .object({
-    [FALLBACK_LOCALE]: JSONRichTextSchema,
+    // [FALLBACK_LOCALE]: JSONRichTextSchema,
   })
   .and(z.record(JSONRichTextSchema));
 
@@ -60,8 +62,32 @@ export type LocalisedRecord = z.infer<typeof LocalisedRecordSchema>;
 
 export const LocalisedStringSchema = z
   .object({
-    [FALLBACK_LOCALE]: z.string(),
+    // [FALLBACK_LOCALE]: z.string(),
   })
-  .and(z.record(z.string()));
+  .and(z.record(SupportedLocaleSchema, z.string()));
 
 export type LocalisedString = z.infer<typeof LocalisedStringSchema>;
+
+export type ProtocolLocales = readonly Locale[];
+
+// It seems like at some point in the future we might want to be able to constrain
+// the locales that are allowed in a LocalisedString to the ones defined in
+// the protocol. Ideally we could infer the actual value in the protocol somehow,
+// but using a generic seems like a good starting point.
+export type FilteredLocalisedString<T extends ProtocolLocales> = {
+  [K in T[number]]: LocalisedString[K];
+};
+
+export const FilteredLocalisedStringSchema = <T extends Locale[]>(
+  locales: T,
+): z.ZodType<FilteredLocalisedString<T>> => {
+  return z.object(
+    locales.reduce(
+      (acc, locale) => {
+        acc[locale] = z.string();
+        return acc;
+      },
+      {} as Record<Locale, z.ZodType<string>>,
+    ),
+  );
+};

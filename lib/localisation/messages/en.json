@@ -93,8 +93,72 @@
       "Next": "Next question",
       "Previous": "Previous question",
       "LanguageSwitcher": "Change interview language",
-      "Help": "Help menu",
-      "Progress": "You have completed {percent}% of the interview"
+      "HelpButton": {
+        "Tooltip": "Open help menu",
+        "Dialog": {
+          "Title": "Help",
+          "Description": "The cards below show the help options available based on the current page. Click on a card to view the help content.",
+          "Options": {
+            "General": {
+              "Title": "General Help",
+              "Description": "General help with the interview, including how to move between screens, and how to change the language."
+            },
+            "Task": {
+              "Title": "Help with this Task",
+              "Description": "Help with how to complete the current task."
+            },
+            "Contact": {
+              "Title": "Contact the study organiser",
+              "Description": "If you need a different kind of help, you can contact the study organiser."
+            }
+          }
+        }
+      },
+      "Progress": "Interview progress ({percent}% completed)"
+    },
+    "Wizards": {
+      "Onboard": {
+        "Steps": {
+          "Welcome": {
+            "Title": "Welcome to the interview",
+            "Text": "Before you begin, here are some general tips to help you navigate the interview process."
+          },
+          "NavigationBar": {
+            "Title": "Navigation Bar",
+            "Text": "The navigation bar helps you move through the interview process, and get help if you need it."
+          },
+          "InterviewMovement": {
+            "Title": "Navigating the Interview",
+            "Text": "This is the third step of the interview. Here you will be introduced to the interview process and given an overview of what to expect."
+          },
+          "Summary": {
+            "Title": "Summary",
+            "Text": "Use the back and forward buttons to move through the interview, and track your progress using the progress bar."
+          }
+        }
+      },
+      "NameGenerator": {
+        "Name": "Name Generator Help",
+        "Description": "Help with the current task, including how to add new people, how to delete people, and how to edit people.",
+        "Steps": {
+          "Welcome": {
+            "Title": "Welcome to the Name Generator",
+            "Text": "This is the name generator interface. This interface allows you to nominate people. First, read the prompt and think about the people who meet the criteria."
+          },
+          "Prompts": {
+            "Title": "Prompts",
+            "Text": "These are the prompts. They help you think about the people you want to nominate."
+          },
+          "SidePanels": {
+            "Title": "Side Panels",
+            "Text": "These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them."
+          },
+          "AddPerson": {
+            "Title": "Adding a person",
+            "Text": "Click this button to add a new person"
+          }
+        }
+      }
     }
   },
   "Generic": {
@@ -132,21 +196,13 @@
       "InputPlaceholder": "My New Study",
       "FormButton": "Create Study",
       "RoleSelectLabel": "Select a role",
-      "RoleSelectPlaceholder": "Roles..."
+      "RoleSelectPlaceholder": "Roles"
     },
     "CreateProjectForm": {
       "FormTitle": "Create Project",
       "ProjectNameInputLabel": "Project Name",
       "ProjectNameInputPlaceholder": "Studio",
       "FormButton": "Create Project"
-    },
-    "ContextualHelp": {
-      "Title": "Help",
-      "Description": "The cards below show the help options available based on the current page. Click on a card to view the help content.",
-      "ContactCard": {
-        "Title": "Contact the study organiser",
-        "Description": "Click here if you would like to contact the organiser of this study."
-      }
     }
   }
 }

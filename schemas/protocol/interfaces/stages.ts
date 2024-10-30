@@ -1,16 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { z } from 'zod';
-import { SkipDefinitionSchema } from '../shared/filter';
-import { NameGeneratorSchema } from './name-generator';
-import { SociogramSchema } from './sociogram';
-import { InformationSchema } from './information';
-import { OrdinalBinSchema } from './ordinal-bin';
-import { CategoricalBinSchema } from './categorical-bin';
-import { NarrativeSchema } from './narrative';
-import { AlterFormSchema } from './alter-form';
-import { EgoFormSchema } from './ego-form';
+import { LocalisedStringSchema } from '~/schemas/shared';
+import { SupportedLocaleSchema } from '../i18n';
+import { SkipDefinitionWithTargetSchema } from '../logic';
+import { EncodableKeyString } from '../protocol';
+import { StepSchema } from '../wizards';
 import { AlterEdgeFormSchema } from './alter-edge-form';
+import { AlterFormSchema } from './alter-form';
+import { CategoricalBinSchema } from './categorical-bin';
 import { DyadCensusSchema } from './dyad-census';
+import { EgoFormSchema } from './ego-form';
+import { InformationSchema } from './information';
+import { NameGeneratorInterfaceSchema } from './name-generator';
+import { NarrativeSchema } from './narrative';
 import { OneToManyCensusSchema } from './one-to-many-census';
+import { OrdinalBinSchema } from './ordinal-bin';
+import { SociogramSchema } from './sociogram';
 import { TieStrengthCensusSchema } from './tie-strength-census';
 
 export const StageTypeSchema = z.enum([
@@ -29,14 +34,16 @@ export const StageTypeSchema = z.enum([
 ]);
 
 const BaseStageSchema = z.object({
-  id: z.string(),
+  id: EncodableKeyString,
+  label: LocalisedStringSchema,
   interviewScript: z.string().optional(),
-  skipLogic: SkipDefinitionSchema.optional(),
+  skipLogic: SkipDefinitionWithTargetSchema.optional(),
+  wizard: z.record(SupportedLocaleSchema, z.array(StepSchema)).optional(),
 });
 
-export const StageSchema = z
+export const SingleStageSchema = z
   .union([
-    NameGeneratorSchema,
+    NameGeneratorInterfaceSchema,
     SociogramSchema,
     InformationSchema,
     OrdinalBinSchema,
@@ -51,4 +58,78 @@ export const StageSchema = z
   ])
   .and(BaseStageSchema);
 
-export type Stage = z.infer<typeof StageSchema>;
+export type SingleStage = z.infer<typeof SingleStageSchema>;
+
+type StageItem = SingleStage | Stages;
+
+export type Stages =
+  | {
+      label: string;
+      stages: StageItem[];
+    }
+  | StageItem[];
+
+export const StageGroupSchema: z.ZodType<StageItem> = z.union([
+  z.object({
+    label: z.string(),
+    stages: z.array(z.lazy(() => StageGroupSchema)),
+  }),
+  z.array(SingleStageSchema),
+]);
+
+/**
+ * Examples
+ */
+
+/**
+ * You
+ */
+const stages: Stages = [
+  {
+    id: '1',
+    label: { en: 'Example' },
+    type: 'Information',
+  },
+];
+
+/**
+ * Showing nesting of groups of stages
+ */
+
+const nestedStages: Stages = [
+  {
+    id: '1',
+    label: { en: 'Example' },
+    type: 'Information',
+  },
+  {
+    label: 'My Group of Stages',
+    stages: [
+      {
+        id: '2',
+        label: { en: 'Example' },
+        type: 'Information',
+      },
+      {
+        id: '3',
+        label: { en: 'Example' },
+        type: 'Information',
+      },
+      {
+        label: 'Another group',
+        stages: [
+          {
+            id: '4',
+            label: { en: 'Example' },
+            type: 'Information',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: '5',
+    label: { en: 'Example' },
+    type: 'Information',
+  },
+];

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+// TODO: not all validations apply to all variable types
 export const VariableValidationSchema = z
   .object({
     required: z.boolean(),

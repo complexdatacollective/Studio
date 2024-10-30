@@ -1,26 +1,64 @@
 import { z } from 'zod';
+import { LocalisedStringSchema } from '~/schemas/shared';
+import { FilterSchema } from '../logic';
+import { PromptSchema } from '../prompt';
+import { EncodableKeyString } from '../protocol';
 import { StageTypeSchema } from './stages';
-import { SubjectSchema } from '../shared/subject';
-import { PromptsSchema } from '../shared/prompt';
 
-const BaseNameGeneratorSchema = z.object({
+const PreviousVisitSchema = z.object({
+  type: z.literal('previousVisit'),
+  visit: z.number(),
+});
+
+const URLSchema = z.object({
+  type: z.literal('URL'),
+  url: z.string().url(),
+});
+
+const FileSchema = z.object({
+  type: z.literal('dataFile'),
+  file: z.string(),
+});
+
+const CurrentNetworkSchema = z.object({
+  type: z.literal('currentNetwork'),
+});
+
+const PanelSchema = z.object({
+  id: z.string(),
+  title: LocalisedStringSchema,
+  source: z.discriminatedUnion('type', [
+    PreviousVisitSchema,
+    URLSchema,
+    FileSchema,
+    CurrentNetworkSchema,
+  ]),
+  filter: FilterSchema.optional(),
+});
+
+export type Panel = z.infer<typeof PanelSchema>;
+
+const BaseSchema = z.object({
   type: StageTypeSchema.extract(['NameGenerator']),
-  subject: SubjectSchema,
-  prompts: PromptsSchema,
+  creates: EncodableKeyString, // Reference to `entities` in protocol
+  prompts: z.array(PromptSchema),
+  panels: z.array(PanelSchema).optional(),
+  panelWidth: z.enum(['1/5', '1/3', '1/2', '2/3', '3/4', '4/5']).optional(),
 });
 
-const NameGeneratorFormSchema = BaseNameGeneratorSchema.extend({
+const WithFormSchema = BaseSchema.extend({
   mode: z.literal('form'),
-  form: z.string(),
+  form: EncodableKeyString, // Reference to `forms` in protocol
 });
 
-const NameGeneratorQuickAddSchema = BaseNameGeneratorSchema.extend({
+const WithQuickAddSchema = BaseSchema.extend({
   mode: z.literal('quickAdd'),
-  quickAddVariable: z.string(),
+  quickAddVariable: EncodableKeyString, // Reference to `variables` in protocol
 });
 
-export const NameGeneratorSchema = NameGeneratorQuickAddSchema.or(
-  NameGeneratorFormSchema,
-);
+export const NameGeneratorInterfaceSchema =
+  WithQuickAddSchema.or(WithFormSchema);
 
-export type TNameGenerator = z.infer<typeof NameGeneratorSchema>;
+export type NameGeneratorInterface = z.infer<
+  typeof NameGeneratorInterfaceSchema
+>;

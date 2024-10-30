@@ -1,28 +1,28 @@
 import { z } from 'zod';
 
 export const EntitySchema = z.object({
-  _id: z.string().readonly(),
-  _attributes: z.record(z.string(), z.any()),
+  id: z.string().readonly(),
+  attributes: z.record(z.string(), z.unknown()),
 });
 
 export type TEntity = z.infer<typeof EntitySchema>;
 
 export const NodeSchema = EntitySchema.extend({
-  _type: z.string(),
-  _meta: z.object({
-    createdOn: z.string().optional(),
-    nominatedOn: z.array(z.string()).optional(),
-  }),
+  type: z.string(),
+  meta: z
+    .object({
+      createdOn: z.string().optional(),
+      nominatedOn: z.array(z.string()).optional(),
+    })
+    .optional(),
 });
 
 export type TNode = z.infer<typeof NodeSchema>;
 
 export const EdgeSchema = EntitySchema.extend({
-  _type: z.string(),
-  _source: z.string(),
-  _target: z.string(),
-  _sourceType: z.string(),
-  _targetType: z.string(),
+  type: z.string(),
+  source: z.string(),
+  target: z.string(),
 });
 
 export type TEdge = z.infer<typeof EdgeSchema>;

@@ -1,30 +1,6 @@
 import { createStore } from 'zustand';
-import type { LocalisedString, LocalisedRecord } from '~/schemas/shared';
 import { type LocalStorageState } from '~/lib/createLocalStorageStore';
-
-const Priorities = {
-  ShowFirst: Infinity,
-  UI: 100,
-  Navigation: 50,
-  Task: 10,
-  ShowLast: -Infinity,
-} as const;
-
-type Priority = keyof typeof Priorities;
-
-export type Step = {
-  targetElementId?: string;
-  title: LocalisedString;
-  content: LocalisedRecord;
-};
-
-export type Wizard = {
-  id: string;
-  name: LocalisedString;
-  description: LocalisedRecord;
-  steps: Step[];
-  priority: Priority;
-};
+import { Priorities, type Wizard } from '~/schemas/protocol/wizards';
 
 type WizardState = {
   wizards: Record<Wizard['id'], Omit<Wizard, 'id'>>;
@@ -208,7 +184,7 @@ export const createWizardStore = (
       if (previousWizard) {
         set((state) => ({
           ...state,
-          activeWizardName: previousWizard.name,
+          activeWizard: previousWizard.id,
           currentStep: previousWizard.steps.length - 1,
           progress: {
             current: previousWizard.steps.length,

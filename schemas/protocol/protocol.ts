@@ -1,48 +1,26 @@
 import { z } from 'zod';
-import { StageSchema } from './interfaces/stages';
-import { CodebookSchema } from './codebook/codebook';
-import { WaveSchema } from './wave';
-import { SupportedLocalesSchema } from '~/lib/localisation/config';
+import { EntityTypeSchema } from './entities';
+import { FormsSchema } from './form';
+import { SupportedLocaleSchema } from './i18n';
+import { StageGroupSchema } from './interfaces/stages';
+import { VariableDefinitionSchema } from './variables';
 
-export const AssetManifest = z.object({});
-
-export const ProtocolMessagesSchema = z.object({
-  Protocol: z.object({
-    Stages: z.record(
-      z.string(),
-      z.object({
-        Label: z.string(),
-      }),
-    ),
-    Panels: z
-      .record(
-        z.string(),
-        z.object({
-          Title: z.string(),
-        }),
-      )
-      .optional(),
-    Prompts: z.record(z.string(), z.string()).optional(),
-  }),
-});
-
-const LocalisedStringsSchema = z.record(
-  SupportedLocalesSchema,
-  ProtocolMessagesSchema,
-);
-
-export type ProtocolMessages = z.infer<typeof ProtocolMessagesSchema>;
+// Schema to represent strings that can be safely encoded in CSV and graphML. Used as
+// keys in various places. Must comply with `NMTOKEN` in XML spec.
+export const EncodableKeyString = z.string().regex(/^[a-zA-Z0-9._:-]+$/);
+export type EncodableKeyString = z.infer<typeof EncodableKeyString>;
 
 const ProtocolSchema = z
   .object({
     name: z.string(),
     description: z.string().optional(),
-    // Hack to work around this: https://github.com/colinhacks/zod/issues/2376
-    languages: z.array(SupportedLocalesSchema),
-    localisedStrings: LocalisedStringsSchema,
-    stages: z.array(StageSchema.or(z.array(StageSchema))),
-    codebook: CodebookSchema,
-    waves: z.array(WaveSchema).optional(),
+    languages: z.array(SupportedLocaleSchema),
+    stages: StageGroupSchema,
+    variables: z
+      .record(EncodableKeyString, VariableDefinitionSchema)
+      .optional(),
+    entities: z.record(EncodableKeyString, EntityTypeSchema).optional(),
+    forms: FormsSchema.optional(),
   })
   // May not need this - will throw error if extra fields are present
   // when parsing.

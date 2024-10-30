@@ -1,4 +1,3 @@
-import React from 'react';
 import { type Meta, type StoryFn } from '@storybook/react';
 import ActionButton from '~/components/interview/ActionButton';
 import {
@@ -6,7 +5,7 @@ import {
   NodeColors,
   type NodeIcon,
   NodeIcons,
-} from '~/schemas/protocol/codebook/entities';
+} from '~/schemas/protocol/entities';
 
 export default {
   title: 'Interview/ActionButton',

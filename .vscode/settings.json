@@ -4,5 +4,15 @@
     ".vscode/tailwind.json"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "i18n-ally.localesPaths": [
+    "lib/localisation/messages",
+    "app/api/interview/[interviewId]/languages",
+    "app/api/interview/[interviewId]/messages"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.addMissingImports": "explicit",
+    "source.fixAll": "explicit",
+  },
 }
