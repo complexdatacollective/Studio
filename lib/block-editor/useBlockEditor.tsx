@@ -1,4 +1,5 @@
 import { useEditor } from '@tiptap/react';
+import ExtensionKit from './extensions/extension-kit';
 
 export const useBlockEditor = () => {
   const editor = useEditor(
@@ -7,7 +8,7 @@ export const useBlockEditor = () => {
       shouldRerenderOnTransaction: false,
       autofocus: true,
       // onCreate: (ctx) => {},
-      extensions: [],
+      extensions: [...ExtensionKit()],
       editorProps: {
         attributes: {
           autocomplete: 'off',
@@ -17,6 +18,15 @@ export const useBlockEditor = () => {
         },
       },
       content: `
+        <h1>
+          Welcome to the Block Editor!
+        </h1>
+        <p>
+          This is a paragraph block.
+        </p>
+        <h2>
+          Another heading
+        </h2>
         <p>
           Hello, world!
         </p>
