@@ -19,6 +19,7 @@ import { Link } from './Link';
 import { Column, Columns } from './MultiColumn';
 import { Selection } from './Selection';
 import { SlashCommand } from './SlashCommand';
+import { VariableNode } from './Variable';
 
 export const ExtensionKit = () => [
   StarterKit.configure({
@@ -90,6 +91,7 @@ export const ExtensionKit = () => [
     width: 2,
     class: '',
   }),
+  VariableNode,
 ];
 
 export default ExtensionKit;

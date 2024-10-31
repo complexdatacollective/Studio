@@ -16,7 +16,47 @@ export const useBlockEditor = () => {
           autocapitalize: 'off',
           class: 'min-h-full focus:outline-none',
         },
+        handleDrop: function (view, event) {
+          if (
+            // check if the drop event is a form variable
+            event?.dataTransfer?.types.includes('application/x-form-variable')
+          ) {
+            try {
+              // Get the variable data
+              const jsonData = event.dataTransfer.getData('application/json');
+              const variable = JSON.parse(jsonData);
+
+              // Get the drop position
+              const coordinates = view.posAtCoords({
+                left: event.clientX,
+                top: event.clientY,
+              });
+
+              if (!coordinates) return false;
+
+              // Create and insert the new variable node
+              const variableNode = view.state.schema.nodes.variable.create({
+                type: variable.type,
+                name: variable.name,
+                id: variable.id,
+              });
+
+              const transaction = view.state.tr.insert(
+                coordinates.pos,
+                variableNode,
+              );
+              view.dispatch(transaction);
+
+              return true;
+            } catch (error) {
+              console.error('Error handling form variable drop:', error);
+              return false;
+            }
+          }
+          return false;
+        },
       },
+
       content: `
         <h1>
           Welcome to the Block Editor!
@@ -32,6 +72,10 @@ export const useBlockEditor = () => {
         </p>
         <ul><li>Unordered list item</li><li>another item</li></ul>
         </ul>
+        // bold
+        <p>
+          <strong>Bold text</strong>
+        </p>
       `,
     },
     [], // Dependency array
