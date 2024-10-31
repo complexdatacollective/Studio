@@ -72,10 +72,7 @@ export const useBlockEditor = () => {
         </p>
         <ul><li>Unordered list item</li><li>another item</li></ul>
         </ul>
-        // bold
-        <p>
-          <strong>Bold text</strong>
-        </p>
+
       `,
     },
     [], // Dependency array
