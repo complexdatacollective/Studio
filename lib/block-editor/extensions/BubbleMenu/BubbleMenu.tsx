@@ -7,6 +7,7 @@ import { Bold, Italic, Link, Trash } from 'lucide-react';
 import { Button, type ButtonProps } from '~/components/Button';
 import Popover from '~/components/Popover';
 import { withTooltip } from '~/components/Tooltip';
+import { VariableMenu } from '../Variable/EditVariable';
 
 export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
   const editorState = useEditorState({
@@ -17,6 +18,7 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
         isItalic: !!editor?.isActive('italic'),
         isLink: !!editor?.isActive('link'),
         activeLink: editor?.getAttributes('link').href,
+        isVariable: !!editor?.isActive('variable'),
       };
     },
   });
@@ -45,6 +47,14 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
   const handleLinkRemove = () => {
     editor?.chain().focus().unsetLink().run();
   };
+
+  if (editorState?.isVariable) {
+    return (
+      <BaseBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+        <VariableMenu editor={editor} />
+      </BaseBubbleMenu>
+    );
+  }
 
   return (
     <>
@@ -121,4 +131,4 @@ const MenuButton = (props: ButtonProps) => {
   );
 };
 
-const MenuButtonWithTooltip = withTooltip(MenuButton);
+export const MenuButtonWithTooltip = withTooltip(MenuButton);

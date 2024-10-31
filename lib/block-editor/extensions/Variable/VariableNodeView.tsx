@@ -1,7 +1,7 @@
 import { NodeViewWrapper, type NodeViewProps } from '@tiptap/react';
 
 export const VariableNodeView: React.FC<NodeViewProps> = ({ node }) => {
-  const { type, name, hint, label, id } = node.attrs;
+  const { type, name, hint, label, id, control } = node.attrs;
 
   return (
     <NodeViewWrapper>
@@ -12,6 +12,7 @@ export const VariableNodeView: React.FC<NodeViewProps> = ({ node }) => {
           <span>Label: {label}</span>
           <span>Hint: {hint}</span>
           <span>Type: {type}</span>
+          <span>Control: {control}</span>
         </div>
       </div>
     </NodeViewWrapper>

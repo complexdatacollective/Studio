@@ -13,7 +13,7 @@ export default function SidePanel() {
   const availableVariables = [
     { id: 'var1', type: 'text', name: 'Name' },
     { id: 'var2', type: 'number', name: 'Age' },
-    { id: 'var3', type: 'select', name: 'School' },
+    { id: 'var3', type: 'categorical', name: 'School' },
   ] as Variable[];
 
   const handleDragStart = (
