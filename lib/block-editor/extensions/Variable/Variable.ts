@@ -5,10 +5,8 @@ import { VariableNodeView } from './VariableNodeView';
 export const VariableNode = Node.create({
   name: 'variable',
 
-  group: 'inline',
-  inline: true,
-  selectable: true,
-  draggable: true,
+  content: 'block+',
+  group: 'block',
 
   addAttributes() {
     return {
@@ -36,15 +34,15 @@ export const VariableNode = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'span[data-type="form-variable"]',
+        tag: 'div[data-type="variable"]',
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
     return [
-      'span',
-      mergeAttributes({ 'data-type': 'form-variable' }, HTMLAttributes),
+      'div',
+      mergeAttributes({ 'data-type': 'variable' }, HTMLAttributes),
       0,
     ];
   },

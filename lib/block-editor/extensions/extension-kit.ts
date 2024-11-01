@@ -71,7 +71,9 @@ export const ExtensionKit = () => [
       class: unorderedListClasses,
     },
   }),
-  GlobalDragHandle,
+  GlobalDragHandle.configure({
+    customNodes: ['variable'], // customNodes is required for dragging custom nodes
+  }),
   AutoJoiner, // Recommended by GlobalDragHandle author. Allows merging nodes when dragging.
   Columns,
   Column,
