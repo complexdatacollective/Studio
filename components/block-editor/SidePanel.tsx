@@ -34,6 +34,20 @@ export default function SidePanel() {
       control: 'checkboxGroup',
       options: ['Northwestern', 'U Chicago'],
     },
+    {
+      id: 'var4',
+      type: 'categorical',
+      name: 'Color',
+      control: 'toggleGroup',
+      options: ['Red', 'Blue'],
+    },
+    {
+      id: 'var5',
+      type: 'text',
+      name: 'Address',
+      control: 'textArea',
+      hint: 'Add some text...',
+    },
   ] as Variable[];
 
   const handleDragStart = (

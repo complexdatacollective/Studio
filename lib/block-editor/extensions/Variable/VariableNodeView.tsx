@@ -54,15 +54,15 @@ export const VariableNodeView: React.FC<NodeViewProps> = ({
 
   return (
     <NodeViewWrapper>
-      <div className="flex flex-col space-y-4">
-        <Label
+      <div className="flex flex-col space-y-2 py-2">
+        <p
           contentEditable="true"
           onBlur={(e) =>
             updateAttributes({ label: e.currentTarget.textContent })
           }
         >
           {node.attrs.label || node.attrs.name}
-        </Label>
+        </p>
 
         <p
           className="text-xs"

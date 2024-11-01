@@ -6,7 +6,7 @@ export const VariableNode = Node.create({
   name: 'variable',
 
   group: 'block',
-  content: 'inline', // todo: this should be block+ but it needs to be inline* for the content to be editable
+  content: 'inline*', // todo: this should be block+ but it needs to be inline* for the content to be editable
   selectable: true,
   draggable: true,
 
