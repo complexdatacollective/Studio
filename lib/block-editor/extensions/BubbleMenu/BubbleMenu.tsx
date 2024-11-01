@@ -50,7 +50,11 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
 
   if (editorState?.isVariable) {
     return (
-      <BaseBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+      <BaseBubbleMenu
+        editor={editor}
+        tippyOptions={{ duration: 100 }}
+        className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
+      >
         <VariableMenu editor={editor} />
       </BaseBubbleMenu>
     );
@@ -58,59 +62,61 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
 
   return (
     <>
-      <BaseBubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-        <div className="flex gap-1 rounded border bg-surface-0 px-2 py-1">
+      <BaseBubbleMenu
+        editor={editor}
+        tippyOptions={{ duration: 100 }}
+        className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
+      >
+        <MenuButtonWithTooltip
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          tooltipContent="Bold (Ctrl+B)"
+          variant={editorState?.isBold ? 'default' : 'text'}
+        >
+          <Bold />
+        </MenuButtonWithTooltip>
+        <MenuButtonWithTooltip
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          tooltipContent="Italic (Ctrl+I)"
+          variant={editorState?.isItalic ? 'default' : 'text'} // maybe should be passed as a 'selected' prop so that the variant can be standardized
+        >
+          <Italic />
+        </MenuButtonWithTooltip>
+        <Popover
+          content={
+            editorState?.activeLink ? (
+              <div className="flex items-center gap-1 pr-8">
+                <a href={editorState.activeLink as string}>
+                  {editorState.activeLink}
+                </a>
+                <Button variant="text" size="xs" onClick={handleLinkRemove}>
+                  <Trash />
+                </Button>
+              </div>
+            ) : (
+              <form
+                className="flex flex-row gap-1 pr-8"
+                onSubmit={handleLinkSubmit}
+              >
+                <input
+                  type="text"
+                  placeholder="Enter URL"
+                  name="url"
+                  className="rounded border px-2 py-1"
+                />
+                <Button size="xs" type="submit">
+                  Set Link
+                </Button>
+              </form>
+            )
+          }
+        >
           <MenuButtonWithTooltip
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            tooltipContent="Bold (Ctrl+B)"
-            variant={editorState?.isBold ? 'default' : 'text'}
+            tooltipContent="Set Link"
+            variant={editorState?.isLink ? 'default' : 'text'}
           >
-            <Bold />
+            <Link />
           </MenuButtonWithTooltip>
-          <MenuButtonWithTooltip
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            tooltipContent="Italic (Ctrl+I)"
-            variant={editorState?.isItalic ? 'default' : 'text'} // maybe should be passed as a 'selected' prop so that the variant can be standardized
-          >
-            <Italic />
-          </MenuButtonWithTooltip>
-          <Popover
-            content={
-              editorState?.activeLink ? (
-                <div className="flex items-center gap-1 pr-8">
-                  <a href={editorState.activeLink as string}>
-                    {editorState.activeLink}
-                  </a>
-                  <Button variant="text" size="xs" onClick={handleLinkRemove}>
-                    <Trash />
-                  </Button>
-                </div>
-              ) : (
-                <form
-                  className="flex flex-row gap-1 pr-8"
-                  onSubmit={handleLinkSubmit}
-                >
-                  <input
-                    type="text"
-                    placeholder="Enter URL"
-                    name="url"
-                    className="rounded border px-2 py-1"
-                  />
-                  <Button size="xs" type="submit">
-                    Set Link
-                  </Button>
-                </form>
-              )
-            }
-          >
-            <MenuButtonWithTooltip
-              tooltipContent="Set Link"
-              variant={editorState?.isLink ? 'default' : 'text'}
-            >
-              <Link />
-            </MenuButtonWithTooltip>
-          </Popover>
-        </div>
+        </Popover>
       </BaseBubbleMenu>
     </>
   );

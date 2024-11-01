@@ -1,3 +1,4 @@
+import { CaseSensitive, Hash, SquareStack } from 'lucide-react';
 import { Card } from '../Card';
 
 // simplified version of the variable type
@@ -5,15 +6,34 @@ type Variable = {
   id: string;
   type: string;
   name: string;
-  // control: ReactNode;
+  control: string;
+  options?: string[];
 };
 
 export default function SidePanel() {
   // dummy data, will get from the protocol
   const availableVariables = [
-    { id: 'var1', type: 'text', name: 'Name' },
-    { id: 'var2', type: 'number', name: 'Age' },
-    { id: 'var3', type: 'categorical', name: 'School' },
+    {
+      id: 'var1',
+      type: 'text',
+      name: 'Name',
+      control: 'text',
+      hint: 'Add some text...',
+    },
+    {
+      id: 'var2',
+      type: 'number',
+      name: 'Age',
+      control: 'number',
+      hint: 'Add a number...',
+    },
+    {
+      id: 'var3',
+      type: 'categorical',
+      name: 'School',
+      control: 'checkboxGroup',
+      options: ['Northwestern', 'U Chicago'],
+    },
   ] as Variable[];
 
   const handleDragStart = (
@@ -32,9 +52,13 @@ export default function SidePanel() {
           key={index}
           draggable
           onDragStart={(e) => handleDragStart(e, variable)}
-          className="w-48 border p-2"
+          className="flex w-48 flex-row items-center justify-between border p-2"
         >
-          {variable.name} ({variable.type})
+          {variable.name}
+
+          {variable.type === 'text' && <CaseSensitive size={24} />}
+          {variable.type === 'number' && <Hash size={24} />}
+          {variable.type === 'categorical' && <SquareStack size={24} />}
         </div>
       ))}
     </Card>

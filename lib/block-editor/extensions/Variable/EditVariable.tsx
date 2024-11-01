@@ -9,7 +9,7 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
     selector: ({ editor }) => {
       return {
         isVariable: !!editor?.isActive('variable'),
-        variableType: editor?.getAttributes('variable').type,
+        variable: editor?.getAttributes('variable'),
       };
     },
   });
@@ -21,15 +21,12 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
   const handleLinkSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const label = formData.get('label') as string;
-    const hint = formData.get('hint') as string;
     const control = formData.get('control') as string;
 
     editor.commands.updateAttributes('variable', {
-      control,
-      label,
-      hint,
+      control: control,
     });
+    editor.commands.focus(); // Focus the editor after the update
   };
 
   return (
@@ -38,22 +35,19 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
         content={
           <form onSubmit={handleLinkSubmit}>
             <div className="flex flex-col gap-1">
-              <input
-                name="label"
-                type="text"
-                placeholder="Label"
-                className="input"
-              />
-              <input
-                name="hint"
-                type="text"
-                placeholder="Hint"
-                className="input"
-              />
-              {editorState.variableType === 'categorical' && (
+              {editorState.variable.type === 'categorical' && (
                 <select name="control">
-                  <option value="checkbox">Checkbox Group</option>
-                  <option value="toggle">Toggle Button Group</option>
+                  <option value="checkboxGroup">Checkbox Group</option>
+                  <option value="toggleGroup">Toggle Button Group</option>
+                </select>
+              )}
+              {editorState.variable.type === 'text' && (
+                <select
+                  name="control"
+                  defaultValue={editorState.variable.control}
+                >
+                  <option value="text">Text</option>
+                  <option value="textArea">Text Area</option>
                 </select>
               )}
 
@@ -64,7 +58,7 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
           </form>
         }
       >
-        <MenuButtonWithTooltip tooltipContent="Edit Variable" variant="default">
+        <MenuButtonWithTooltip tooltipContent="Edit Variable" variant="text">
           Edit Variable
         </MenuButtonWithTooltip>
       </Popover>

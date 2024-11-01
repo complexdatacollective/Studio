@@ -5,8 +5,10 @@ import { VariableNodeView } from './VariableNodeView';
 export const VariableNode = Node.create({
   name: 'variable',
 
-  content: 'block+',
   group: 'block',
+  content: 'inline', // todo: this should be block+ but it needs to be inline* for the content to be editable
+  selectable: true,
+  draggable: true,
 
   addAttributes() {
     return {
@@ -22,27 +24,30 @@ export const VariableNode = Node.create({
       control: {
         default: null,
       },
+      options: {
+        default: [],
+      },
       label: {
         default: '',
       },
       hint: {
         default: '',
       },
-    };
-  },
-
-  parseHTML() {
-    return [
-      {
-        tag: 'div[data-type="variable"]',
+      value: {
+        default: '',
       },
-    ];
+    };
   },
 
   renderHTML({ HTMLAttributes }) {
     return [
       'div',
-      mergeAttributes({ 'data-type': 'variable' }, HTMLAttributes),
+      mergeAttributes(
+        {
+          'data-type': 'variable',
+        },
+        HTMLAttributes,
+      ),
       0,
     ];
   },

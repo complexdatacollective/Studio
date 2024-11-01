@@ -39,6 +39,9 @@ export const useBlockEditor = () => {
                 type: variable.type,
                 name: variable.name,
                 id: variable.id,
+                control: variable.control,
+                options: variable.options,
+                hint: variable.hint,
               });
 
               const transaction = view.state.tr.insert(
