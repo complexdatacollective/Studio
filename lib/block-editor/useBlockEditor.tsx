@@ -41,18 +41,15 @@ export const useBlockEditor = () => {
               );
 
               // create the control node
-              const controlNode = view.state.schema.nodes.control.create(
-                {
-                  type: variable.type ?? 'text',
-                  control: variable.control,
-                  options: variable.options ?? [],
-                  value: variable.value ?? '',
-                  name: variable.name ?? '',
-                  id: variable.id,
-                  hint: variable.hint ?? '',
-                },
-                [view.state.schema.nodes.paragraph.create()],
-              );
+              const controlNode = view.state.schema.nodes.control.create({
+                type: variable.type ?? 'text',
+                control: variable.control,
+                options: variable.options ?? [],
+                value: variable.value ?? '',
+                name: variable.name ?? '',
+                id: variable.id,
+                hint: variable.hint ?? '',
+              });
 
               // Create the parent variable node with label and control
               const variableNode = view.state.schema.nodes.variable.create({}, [

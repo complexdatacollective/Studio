@@ -7,6 +7,7 @@ export const LabelNode = Node.create({
   name: 'label',
   group: 'block',
   content: 'inline*',
+  draggable: false,
 
   parseHTML() {
     return [
@@ -16,7 +17,7 @@ export const LabelNode = Node.create({
     ];
   },
   renderHTML({ HTMLAttributes }) {
-    return ['h4', mergeAttributes(HTMLAttributes)];
+    return ['label', mergeAttributes(HTMLAttributes)];
   },
   addNodeView() {
     return ReactNodeViewRenderer(LabelNodeView);

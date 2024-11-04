@@ -7,7 +7,8 @@ import {
 export const VariableNodeView: React.FC<NodeViewProps> = () => {
   return (
     <NodeViewWrapper>
-      <NodeViewContent className="py-2"></NodeViewContent>
+      {/* adding huge padding to make drag controls for label vs entire variable visually different. needs better solution */}
+      <NodeViewContent className="border py-20"></NodeViewContent>
     </NodeViewWrapper>
   );
 };
