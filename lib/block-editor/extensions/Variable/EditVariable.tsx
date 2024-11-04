@@ -10,6 +10,7 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
       return {
         isVariable: !!editor?.isActive('variable'),
         variable: editor?.getAttributes('variable'),
+        control: editor?.getAttributes('control'),
       };
     },
   });
@@ -18,7 +19,7 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
     return null;
   }
 
-  const handleLinkSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const control = formData.get('control') as string;
@@ -33,7 +34,7 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
     <>
       <Popover
         content={
-          <form onSubmit={handleLinkSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-1">
               {editorState.variable.type === 'categorical' && (
                 <select name="control">

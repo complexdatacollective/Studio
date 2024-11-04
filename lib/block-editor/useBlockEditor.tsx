@@ -34,15 +34,31 @@ export const useBlockEditor = () => {
 
               if (!coordinates) return false;
 
-              // Create and insert the new variable node
-              const variableNode = view.state.schema.nodes.variable.create({
-                type: variable.type,
-                name: variable.name,
-                id: variable.id,
-                control: variable.control,
-                options: variable.options,
-                hint: variable.hint,
-              });
+              // create the label node
+              const labelNode = view.state.schema.nodes.label.create(
+                {},
+                view.state.schema.text(variable.name ?? 'Label'),
+              );
+
+              // create the control node
+              const controlNode = view.state.schema.nodes.control.create(
+                {
+                  type: variable.type ?? 'text',
+                  control: variable.control,
+                  options: variable.options ?? [],
+                  value: variable.value ?? '',
+                  name: variable.name ?? '',
+                  id: variable.id,
+                  hint: variable.hint ?? '',
+                },
+                [view.state.schema.nodes.paragraph.create()],
+              );
+
+              // Create the parent variable node with label and control
+              const variableNode = view.state.schema.nodes.variable.create({}, [
+                labelNode,
+                controlNode,
+              ]);
 
               const transaction = view.state.tr.insert(
                 coordinates.pos,

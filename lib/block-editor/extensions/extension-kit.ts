@@ -20,6 +20,8 @@ import { Column, Columns } from './MultiColumn';
 import { Selection } from './Selection';
 import { SlashCommand } from './SlashCommand';
 import { VariableNode } from './Variable';
+import { ControlNode } from './Variable/Control/Control';
+import { LabelNode } from './Variable/Label/Label';
 
 export const ExtensionKit = () => [
   StarterKit.configure({
@@ -72,7 +74,7 @@ export const ExtensionKit = () => [
     },
   }),
   GlobalDragHandle.configure({
-    customNodes: ['variable'], // customNodes is required for dragging custom nodes
+    customNodes: ['variable', 'control', 'label'], // customNodes is required for dragging custom nodes
   }),
   AutoJoiner, // Recommended by GlobalDragHandle author. Allows merging nodes when dragging.
   Columns,
@@ -94,6 +96,8 @@ export const ExtensionKit = () => [
     class: '',
   }),
   VariableNode,
+  LabelNode,
+  ControlNode,
 ];
 
 export default ExtensionKit;

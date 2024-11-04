@@ -6,37 +6,14 @@ export const VariableNode = Node.create({
   name: 'variable',
 
   group: 'block',
-  content: 'inline*', // todo: this should be block+ but it needs to be inline* for the content to be editable
-  selectable: true,
-  draggable: true,
+  content: 'label control',
 
-  addAttributes() {
-    return {
-      type: {
-        default: 'text',
+  parseHTML() {
+    return [
+      {
+        tag: 'variable',
       },
-      name: {
-        default: '',
-      },
-      id: {
-        default: null,
-      },
-      control: {
-        default: null,
-      },
-      options: {
-        default: [],
-      },
-      label: {
-        default: '',
-      },
-      hint: {
-        default: '',
-      },
-      value: {
-        default: '',
-      },
-    };
+    ];
   },
 
   renderHTML({ HTMLAttributes }) {
