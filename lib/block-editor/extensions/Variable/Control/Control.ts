@@ -5,7 +5,7 @@ import { ControlNodeView } from './ControlNodeView';
 export const ControlNode = Node.create({
   name: 'control',
   group: 'block',
-  content: 'block+',
+  content: '', // should not have any nested content
 
   addAttributes() {
     return {
