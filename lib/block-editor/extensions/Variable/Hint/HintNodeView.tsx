@@ -4,10 +4,10 @@ import {
   NodeViewWrapper,
 } from '@tiptap/react';
 
-export const LabelNodeView: React.FC<NodeViewProps> = () => {
+export const HintNodeView: React.FC<NodeViewProps> = () => {
   return (
     <NodeViewWrapper>
-      <NodeViewContent as={'h4'} className="font-extrabold"></NodeViewContent>
+      <NodeViewContent as={'h4'} className="text-sm"></NodeViewContent>
     </NodeViewWrapper>
   );
 };

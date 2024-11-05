@@ -40,6 +40,12 @@ export const useBlockEditor = () => {
                 view.state.schema.text(variable.name ?? 'Label'),
               );
 
+              // create the hint node
+              const hintNode = view.state.schema.nodes.hint.create(
+                {},
+                view.state.schema.text(variable.hint ?? 'Hint'),
+              );
+
               // create the control node
               const controlNode = view.state.schema.nodes.control.create({
                 type: variable.type ?? 'text',
@@ -54,6 +60,7 @@ export const useBlockEditor = () => {
               // Create the parent variable node with label and control
               const variableNode = view.state.schema.nodes.variable.create({}, [
                 labelNode,
+                hintNode,
                 controlNode,
               ]);
 

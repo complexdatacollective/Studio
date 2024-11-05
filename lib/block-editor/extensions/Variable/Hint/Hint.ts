@@ -1,10 +1,10 @@
 // basically extends p tag to be an editable paragraph above the control
 import { Node, mergeAttributes } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
-import { LabelNodeView } from './LabelNodeView';
+import { HintNodeView } from './HintNodeView';
 
-export const LabelNode = Node.create({
-  name: 'label',
+export const HintNode = Node.create({
+  name: 'hint',
   group: 'variable',
   content: 'inline*',
   draggable: false,
@@ -12,14 +12,14 @@ export const LabelNode = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'label',
+        tag: 'hint',
       },
     ];
   },
   renderHTML({ HTMLAttributes }) {
-    return ['label', mergeAttributes(HTMLAttributes)];
+    return ['hint', mergeAttributes(HTMLAttributes)];
   },
   addNodeView() {
-    return ReactNodeViewRenderer(LabelNodeView);
+    return ReactNodeViewRenderer(HintNodeView);
   },
 });
