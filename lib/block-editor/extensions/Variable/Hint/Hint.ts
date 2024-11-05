@@ -1,4 +1,3 @@
-// basically extends p tag to be an editable paragraph above the control
 import { Node, mergeAttributes } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
 import { HintNodeView } from './HintNodeView';

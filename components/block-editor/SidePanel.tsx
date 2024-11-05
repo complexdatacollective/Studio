@@ -18,14 +18,12 @@ export default function SidePanel() {
       type: 'text',
       name: 'Name',
       control: 'text',
-      hint: 'Add some text...',
     },
     {
       id: 'var2',
       type: 'number',
       name: 'Age',
       control: 'number',
-      hint: 'Add a number...',
     },
     {
       id: 'var3',
@@ -46,7 +44,6 @@ export default function SidePanel() {
       type: 'text',
       name: 'Address',
       control: 'textArea',
-      hint: 'Add some text...',
     },
   ] as Variable[];
 

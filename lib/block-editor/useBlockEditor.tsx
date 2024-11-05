@@ -42,8 +42,7 @@ export const useBlockEditor = () => {
 
               // create the hint node
               const hintNode = view.state.schema.nodes.hint.create(
-                {},
-                view.state.schema.text(variable.hint ?? 'Hint'),
+                {}, // empty so that it will show the placeholder
               );
 
               // create the control node
