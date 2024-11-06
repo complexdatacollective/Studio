@@ -15,6 +15,7 @@ export const HintNode = Node.create({
       },
     ];
   },
+
   renderHTML({ HTMLAttributes }) {
     return ['hint', mergeAttributes(HTMLAttributes)];
   },

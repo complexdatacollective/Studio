@@ -4,7 +4,6 @@ import Document from '@tiptap/extension-document';
 import Dropcursor from '@tiptap/extension-dropcursor';
 import Heading from '@tiptap/extension-heading';
 import Paragraph from '@tiptap/extension-paragraph';
-import Placeholder from '@tiptap/extension-placeholder';
 import Text from '@tiptap/extension-text';
 import Typography from '@tiptap/extension-typography';
 import StarterKit from '@tiptap/starter-kit';
@@ -34,15 +33,6 @@ export const ExtensionKit = () => [
     blockquote: false,
     history: false,
     codeBlock: false,
-  }),
-  Placeholder.configure({
-    placeholder: ({ node }) => {
-      if (node.type.name === 'hint') {
-        return 'Enter a hint...';
-      }
-
-      return 'Enter some text...';
-    },
   }),
   Document,
   Heading.extend({
