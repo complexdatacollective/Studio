@@ -9,7 +9,7 @@ export const VariableNode = Node.create({
   name: 'variable',
 
   group: 'block',
-  content: 'label hint control',
+  content: 'label hint? control',
   draggable: true,
   selectable: true,
   isolating: true,
