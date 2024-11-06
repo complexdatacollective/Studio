@@ -9,11 +9,10 @@ export const LabelNodeView: React.FC<NodeViewProps> = ({ node }) => {
   const isEmpty = node.content.size === 0;
 
   return (
-    // pointerEvents: 'none' is used to prevent selecting the label individually
     // this prevents dragging the label node out of the variable
     <NodeViewWrapper
-      style={{ pointerEvents: 'none' }}
       className={cn(
+        'pointer-events-none', // used to prevent selecting the label individually
         isEmpty &&
           'relative font-extrabold before:absolute before:left-0 before:top-0 before:text-muted-foreground before:content-[attr(data-placeholder)]',
       )}

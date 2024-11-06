@@ -2,6 +2,7 @@ import { useEditorState, type Editor } from '@tiptap/react';
 import { Button } from '~/components/Button';
 import Popover from '~/components/Popover';
 import { MenuButtonWithTooltip } from '../BubbleMenu/BubbleMenu';
+import { type ControlNodeAttributes } from './Control/Control';
 
 export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
   const editorState = useEditorState({
@@ -10,7 +11,7 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
       return {
         isVariable: !!editor?.isActive('variable'),
         variable: editor?.getAttributes('variable'),
-        control: editor?.getAttributes('control'),
+        control: editor?.getAttributes('control') as ControlNodeAttributes,
       };
     },
   });
@@ -36,16 +37,21 @@ export const VariableMenu = ({ editor }: { editor: Editor | null }) => {
         content={
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-1">
-              {editorState.control.type === 'categorical' && (
-                <select name="control">
+              {editorState?.control?.type === 'categorical' && (
+                <select
+                  name="control"
+                  defaultValue={
+                    editorState?.control?.control ?? 'checkboxGroup'
+                  }
+                >
                   <option value="checkboxGroup">Checkbox Group</option>
                   <option value="toggleGroup">Toggle Button Group</option>
                 </select>
               )}
-              {editorState.control.type === 'text' && (
+              {editorState?.control?.type === 'text' && (
                 <select
                   name="control"
-                  defaultValue={editorState.control.control}
+                  defaultValue={editorState?.control?.control ?? 'text'}
                 >
                   <option value="text">Text</option>
                   <option value="textArea">Text Area</option>

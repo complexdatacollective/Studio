@@ -2,7 +2,17 @@ import { Node, mergeAttributes } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
 import { ControlNodeView } from './ControlNodeView';
 
-export const ControlNode = Node.create({
+export type ControlNodeAttributes = {
+  type: string;
+  control: string | null;
+  options: string[];
+  value: string;
+  name: string;
+  id: string | null;
+  hint: string;
+};
+
+export const ControlNode = Node.create<ControlNodeAttributes>({
   name: 'control',
   group: 'variable',
   content: '', // should not have any nested content

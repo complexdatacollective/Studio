@@ -10,8 +10,8 @@ export const HintNodeView: React.FC<NodeViewProps> = ({ node }) => {
 
   return (
     <NodeViewWrapper
-      style={{ pointerEvents: 'none' }}
       className={cn(
+        'pointer-events-none', // used to prevent selecting the label individually
         isEmpty &&
           'relative text-sm before:absolute before:left-0 before:top-0 before:text-muted-foreground before:content-[attr(data-placeholder)]',
       )}

@@ -1,9 +1,11 @@
 import { type NodeViewProps, NodeViewWrapper } from '@tiptap/react';
 import { Input } from '~/components/form/Input';
 import { Label } from '~/components/form/Label';
+import { type ControlNodeAttributes } from './Control';
 
 export const ControlNodeView: React.FC<NodeViewProps> = (props) => {
-  const { type, control, options = [], value, name } = props.node.attrs;
+  const { type, control, options, value, name } = props.node
+    .attrs as ControlNodeAttributes;
 
   const renderControl = () => {
     switch (type) {
