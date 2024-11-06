@@ -1,20 +1,14 @@
 import { type EditorView } from '@tiptap/pm/view';
-
-// simplified version of the variable type
-export type Variable = {
-  id: string;
-  type: string;
-  name: string;
-  control: string;
-  options?: string[];
-  hint?: string;
-};
+import type { TVariableDefinition } from '~/schemas/protocol/variables';
 
 export const handleVariableDrag = (
   event: React.DragEvent<HTMLDivElement>,
-  variable: Variable,
+  key: string,
+  variable: TVariableDefinition,
 ) => {
   event.dataTransfer.setData('application/json', JSON.stringify(variable));
+  event.dataTransfer.setData('application/x-variable-key', key);
+
   // this is used to identify the data as a form variable in handleDrop
   event.dataTransfer.setData('application/x-form-variable', 'true');
 };
@@ -23,7 +17,10 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
   // Get the variable data
   const jsonData = event.dataTransfer?.getData('application/json');
   if (!jsonData) return false;
-  const newVariable = JSON.parse(jsonData) as Variable;
+  const newVariable = JSON.parse(jsonData) as TVariableDefinition;
+  const key = event.dataTransfer?.getData('application/x-variable-key');
+
+  if (!key) return false;
 
   // Get the drop position
   const coordinates = view.posAtCoords({
@@ -38,7 +35,7 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
   // create the label node
   const labelNode = label?.create(
     {},
-    view.state.schema.text(newVariable?.name), // default to variable name
+    view.state.schema.text(newVariable.label.en ?? key), // todo: integrate with internationalization
   );
 
   // create the hint node
@@ -46,14 +43,19 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
     {}, // empty so that it will show the placeholder
   );
 
+  const optionsLabels =
+    newVariable.type === 'categorical'
+      ? (newVariable.options?.map(
+          (option: { label: string }) => option.label,
+        ) ?? [])
+      : [];
+
   // create the control node
   const controlNode = view?.state?.schema?.nodes?.control?.create({
-    type: newVariable.type ?? 'text',
+    type: newVariable.type,
+    options: optionsLabels,
+    name: key,
     control: newVariable.control,
-    options: newVariable.options ?? [],
-    name: newVariable.name ?? '',
-    id: newVariable.id,
-    hint: newVariable.hint ?? '',
   });
 
   // Create the parent variable node with label and control

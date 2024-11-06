@@ -4,7 +4,7 @@ import { Label } from '~/components/form/Label';
 import { type ControlNodeAttributes } from './Control';
 
 export const ControlNodeView: React.FC<NodeViewProps> = (props) => {
-  const { type, control, options, value, name } = props.node
+  const { type, control, options, name } = props.node
     .attrs as ControlNodeAttributes;
 
   const renderControl = () => {
@@ -24,11 +24,7 @@ export const ControlNodeView: React.FC<NodeViewProps> = (props) => {
           <div>
             {options.map((option: string) => (
               <div key={option} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id={option}
-                  checked={value?.includes(option)}
-                />
+                <input type="checkbox" id={option} />
                 <Label>{option}</Label>
               </div>
             ))}

@@ -43,6 +43,10 @@ export const useBlockEditor = () => {
         </p>
         <ul><li>Unordered list item</li><li>another item</li></ul>
         </ul>
+        <variable>
+        <label>Variable Label</label>
+        <control type="text" control="text" name="variable-name" id="variable-id" hint="Variable hint" />
+        </variable>
 
       `,
     },

@@ -4,12 +4,9 @@ import { ControlNodeView } from './ControlNodeView';
 
 export type ControlNodeAttributes = {
   type: string;
-  control: string | null;
+  control?: string;
   options: string[];
-  value: string;
   name: string;
-  id: string | null;
-  hint: string;
 };
 
 export const ControlNode = Node.create<ControlNodeAttributes>({
@@ -22,10 +19,7 @@ export const ControlNode = Node.create<ControlNodeAttributes>({
       type: { default: 'text' },
       control: { default: null },
       options: { default: [] },
-      value: { default: '' },
       name: { default: '' },
-      id: { default: null },
-      hint: { default: '' },
     };
   },
 
