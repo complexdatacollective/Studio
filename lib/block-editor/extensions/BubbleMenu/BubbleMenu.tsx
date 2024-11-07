@@ -7,7 +7,6 @@ import { Bold, Italic, Link, Trash } from 'lucide-react';
 import { Button, type ButtonProps } from '~/components/Button';
 import Popover from '~/components/Popover';
 import { withTooltip } from '~/components/Tooltip';
-import { VariableMenu } from '../Variable/EditVariable';
 
 export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
   const editorState = useEditorState({
@@ -18,7 +17,11 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
         isItalic: !!editor?.isActive('italic'),
         isLink: !!editor?.isActive('link'),
         activeLink: editor?.getAttributes('link').href,
-        isVariable: !!editor?.isActive('variable'),
+        isVariable:
+          !!editor?.isActive('variable') ||
+          !!editor?.isActive('control') ||
+          !!editor?.isActive('label') ||
+          !!editor?.isActive('hint'),
       };
     },
   });
@@ -47,18 +50,6 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
   const handleLinkRemove = () => {
     editor?.chain().focus().unsetLink().run();
   };
-
-  if (editorState?.isVariable) {
-    return (
-      <BaseBubbleMenu
-        editor={editor}
-        tippyOptions={{ duration: 100 }}
-        className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
-      >
-        <VariableMenu editor={editor} />
-      </BaseBubbleMenu>
-    );
-  }
 
   return (
     <>

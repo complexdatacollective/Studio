@@ -61,18 +61,18 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
         ) ?? [])
       : [];
 
-  // create the control node
-  const controlNode = view?.state?.schema?.nodes?.control?.create({
-    type: newVariable.type,
-    options: optionsLabels,
-    name: key,
-    control: newVariable.control,
-  });
-
   // Create the parent variable node with label and control
-  if (!variable || !labelNode || !hintNode || !controlNode) return false;
+  if (!variable || !labelNode || !hintNode) return false;
 
-  const variableNode = variable.create({}, [labelNode, hintNode, controlNode]);
+  const variableNode = variable.create(
+    {
+      type: newVariable.type,
+      options: optionsLabels,
+      name: key,
+      control: newVariable.control,
+    },
+    [labelNode, hintNode],
+  );
 
   const transaction = view.state.tr.insert(coordinates.pos, variableNode);
   view.dispatch(transaction);

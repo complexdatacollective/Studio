@@ -1,15 +1,21 @@
 import { Node, mergeAttributes } from '@tiptap/core';
 import { ReactNodeViewRenderer } from '@tiptap/react';
-import { ControlNode } from './Control/Control';
 import { HintNode } from './Hint/Hint';
 import { LabelNode } from './Label/Label';
 import { VariableNodeView } from './VariableNodeView';
+
+export type VariableNodeAttributes = {
+  type: string;
+  control?: string;
+  options: string[];
+  name: string;
+};
 
 export const VariableNode = Node.create({
   name: 'variable',
 
   group: 'block',
-  content: 'label hint? control',
+  content: 'label hint?',
   draggable: true,
   selectable: true,
   isolating: true,
@@ -22,9 +28,18 @@ export const VariableNode = Node.create({
     ];
   },
 
+  addAttributes() {
+    return {
+      type: { default: 'text' },
+      control: { default: null },
+      options: { default: [] },
+      name: { default: '' },
+    };
+  },
+
   addExtensions() {
     // adds nested label and control nodes
-    return [LabelNode, HintNode, ControlNode];
+    return [LabelNode, HintNode];
   },
 
   renderHTML({ HTMLAttributes }) {
