@@ -30,6 +30,17 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
 
   if (!coordinates) return false;
 
+  // check if the drop position is valid
+  const dropPos = coordinates.pos;
+  const resolvedDropPos = view.state.doc.resolve(dropPos);
+
+  if (
+    resolvedDropPos.parent.isTextblock || // Prevent dropping inside p, h1, h2, etc.
+    resolvedDropPos.parent.type.name === 'variable' // Prevent dropping inside other variables
+  ) {
+    return false;
+  }
+
   const { hint, variable, label } = view.state.schema.nodes;
 
   // create the label node
