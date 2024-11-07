@@ -2,7 +2,7 @@ import { type Editor } from '@tiptap/react';
 import { Pencil, X } from 'lucide-react';
 import { Button } from '~/components/Button';
 import Popover from '~/components/Popover';
-import { MenuButtonWithTooltip } from '../BubbleMenu';
+import { MenuButton } from '../BubbleMenu';
 import { type VariableNodeAttributes } from './Variable';
 
 export default function VariableHoverMenu({
@@ -36,15 +36,14 @@ export default function VariableHoverMenu({
   };
 
   return (
-    <div className="absolute left-0 top-[-40px] flex gap-1 rounded border bg-surface-0 px-2 py-1">
-      <MenuButtonWithTooltip
-        tooltipContent="Remove Variable"
+    <div className="flex gap-1">
+      <MenuButton
         onClick={() => {
           deleteNode();
         }}
       >
         <X />
-      </MenuButtonWithTooltip>
+      </MenuButton>
       <Popover
         content={
           <form onSubmit={handleSubmit}>
@@ -75,9 +74,9 @@ export default function VariableHoverMenu({
           </form>
         }
       >
-        <MenuButtonWithTooltip tooltipContent="Edit Variable Control Type">
+        <MenuButton>
           <Pencil />
-        </MenuButtonWithTooltip>
+        </MenuButton>
       </Popover>
     </div>
   );

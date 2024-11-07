@@ -5,7 +5,7 @@ import {
   NodeViewWrapper,
 } from '@tiptap/react';
 import { Input } from '~/components/form/Input';
-import Tooltip from '~/components/Tooltip';
+import Popover from '~/components/Popover';
 import { type VariableNodeAttributes } from './Variable';
 import VariableHoverMenu from './VariableHoverMenu';
 
@@ -58,8 +58,8 @@ export const VariableNodeView: React.FC<NodeViewProps> = ({
   };
 
   return (
-    <Tooltip
-      tooltip={
+    <Popover
+      content={
         <VariableHoverMenu
           deleteNode={deleteNode}
           editor={editor}
@@ -72,6 +72,6 @@ export const VariableNodeView: React.FC<NodeViewProps> = ({
         <NodeViewContent className="py-2" />
         {renderControl()}
       </NodeViewWrapper>
-    </Tooltip>
+    </Popover>
   );
 };

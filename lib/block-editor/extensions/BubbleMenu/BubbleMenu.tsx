@@ -113,7 +113,7 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
   );
 };
 
-const MenuButton = (props: ButtonProps) => {
+export const MenuButton = (props: ButtonProps) => {
   const { children, variant, ...rest } = props;
 
   return (
