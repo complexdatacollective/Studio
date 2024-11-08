@@ -9,6 +9,7 @@ export type VariableNodeAttributes = {
   control?: string;
   options: string[];
   name: string;
+  required: boolean;
 };
 
 export const VariableNode = Node.create({
@@ -34,6 +35,7 @@ export const VariableNode = Node.create({
       control: { default: null },
       options: { default: [] },
       name: { default: '' },
+      required: { default: false },
     };
   },
 

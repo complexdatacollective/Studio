@@ -1,10 +1,11 @@
+import * as Toolbar from '@radix-ui/react-toolbar';
 import {
   BubbleMenu as BaseBubbleMenu,
   useEditorState,
   type Editor,
 } from '@tiptap/react';
 import { Bold, Italic, Link, Trash } from 'lucide-react';
-import { Button, type ButtonProps } from '~/components/Button';
+import { Button } from '~/components/Button';
 import Popover from '~/components/Popover';
 import { withTooltip } from '~/components/Tooltip';
 
@@ -52,80 +53,67 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
   };
 
   return (
-    <>
+    <Toolbar.Root>
       <BaseBubbleMenu
         editor={editor}
         tippyOptions={{ duration: 100 }}
         className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
       >
-        <MenuButtonWithTooltip
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          tooltipContent="Bold (Ctrl+B)"
-          variant={editorState?.isBold ? 'default' : 'text'}
-        >
-          <Bold />
-        </MenuButtonWithTooltip>
-        <MenuButtonWithTooltip
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          tooltipContent="Italic (Ctrl+I)"
-          variant={editorState?.isItalic ? 'default' : 'text'} // maybe should be passed as a 'selected' prop so that the variant can be standardized
-        >
-          <Italic />
-        </MenuButtonWithTooltip>
-        <Popover
-          content={
-            editorState?.activeLink ? (
-              <div className="flex items-center gap-1 pr-8">
-                <a href={editorState.activeLink as string}>
-                  {editorState.activeLink}
-                </a>
-                <Button variant="text" size="xs" onClick={handleLinkRemove}>
-                  <Trash />
-                </Button>
-              </div>
-            ) : (
-              <form
-                className="flex flex-row gap-1 pr-8"
-                onSubmit={handleLinkSubmit}
-              >
-                <input
-                  type="text"
-                  placeholder="Enter URL"
-                  name="url"
-                  className="rounded border px-2 py-1"
-                />
-                <Button size="xs" type="submit">
-                  Set Link
-                </Button>
-              </form>
-            )
-          }
-        >
-          <MenuButtonWithTooltip
-            tooltipContent="Set Link"
-            variant={editorState?.isLink ? 'default' : 'text'}
+        <Toolbar.ToggleGroup type="multiple">
+          <ToolbarToggleItemWithTooltip
+            onClick={() => editor.chain().focus().toggleBold().run()}
+            tooltipContent="Bold (Ctrl+B)"
+            value="bold"
           >
-            <Link />
-          </MenuButtonWithTooltip>
-        </Popover>
+            <Bold />
+          </ToolbarToggleItemWithTooltip>
+          <ToolbarToggleItemWithTooltip
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+            tooltipContent="Italic (Ctrl+I)"
+            value="italic"
+          >
+            <Italic />
+          </ToolbarToggleItemWithTooltip>
+          <Popover
+            content={
+              editorState?.activeLink ? (
+                <div className="flex items-center gap-1 pr-8">
+                  <a href={editorState.activeLink as string}>
+                    {editorState.activeLink}
+                  </a>
+                  <Button variant="text" size="xs" onClick={handleLinkRemove}>
+                    <Trash />
+                  </Button>
+                </div>
+              ) : (
+                <form
+                  className="flex flex-row gap-1 pr-8"
+                  onSubmit={handleLinkSubmit}
+                >
+                  <input
+                    type="text"
+                    placeholder="Enter URL"
+                    name="url"
+                    className="rounded border px-2 py-1"
+                  />
+                  <Button size="xs" type="submit">
+                    Set Link
+                  </Button>
+                </form>
+              )
+            }
+          >
+            <ToolbarToggleItemWithTooltip
+              tooltipContent="Set Link"
+              value="link"
+            >
+              <Link />
+            </ToolbarToggleItemWithTooltip>
+          </Popover>
+        </Toolbar.ToggleGroup>
       </BaseBubbleMenu>
-    </>
+    </Toolbar.Root>
   );
 };
 
-export const MenuButton = (props: ButtonProps) => {
-  const { children, variant, ...rest } = props;
-
-  return (
-    <Button
-      size="xs"
-      variant={variant ?? 'text'}
-      onClick={props.onClick}
-      {...rest}
-    >
-      {children}
-    </Button>
-  );
-};
-
-export const MenuButtonWithTooltip = withTooltip(MenuButton);
+export const ToolbarToggleItemWithTooltip = withTooltip(Toolbar.ToggleItem);
