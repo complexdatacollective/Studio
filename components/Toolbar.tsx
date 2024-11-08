@@ -1,6 +1,6 @@
 import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
 import { type PropsWithChildren } from 'react';
-import { Button } from './Button';
+import { cn } from '~/lib/utils';
 
 const ToolbarRoot = ({ children }: PropsWithChildren) => (
   <ToolbarPrimitive.Root className="flex gap-2 bg-surface-0">
@@ -16,9 +16,9 @@ const ToolbarButton = ({
   onClick?: () => void;
 }) => (
   <ToolbarPrimitive.Button asChild onClick={onClick}>
-    <Button variant="text" size="sm">
+    <div className="rounded-small p-2 text-sm hover:cursor-pointer hover:bg-surface-1">
       {children}
-    </Button>
+    </div>
   </ToolbarPrimitive.Button>
 );
 
@@ -28,7 +28,7 @@ const ToolbarToggleGroup = ({
   onValueChange,
 }: PropsWithChildren<{
   type: 'single' | 'multiple';
-  onValueChange: (value?: string) => void;
+  onValueChange?: (value?: string) => void;
 }>) => (
   <ToolbarPrimitive.ToggleGroup
     type={type}
@@ -41,27 +41,30 @@ const ToolbarToggleGroup = ({
 
 const ToolbarToggleItem = ({
   value,
-  onChange,
   children,
   active,
+  onClick,
 }: {
   value: string;
-  onChange?: () => void;
   children: React.ReactNode;
   active?: boolean;
+  onClick?: () => void;
 }) => (
   <ToolbarPrimitive.ToggleItem
     value={value}
-    onChange={onChange}
     data-state={active}
+    onClick={onClick}
   >
-    <Button
-      variant={active ? 'default' : 'text'}
-      size="sm"
-      className="flex items-center gap-1"
+    <div
+      className={cn(
+        'flex items-center gap-1 rounded-small p-2 text-sm hover:cursor-pointer',
+        {
+          'bg-surface-1': active,
+        },
+      )}
     >
       {children}
-    </Button>
+    </div>
   </ToolbarPrimitive.ToggleItem>
 );
 
