@@ -1,7 +1,7 @@
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import * as Toolbar from '@radix-ui/react-toolbar';
 import { type Editor } from '@tiptap/react';
 import { ChevronDown, CircleAlert, Trash } from 'lucide-react';
+import DropdownMenu from '~/components/DropdownMenu';
 import { type VariableNodeAttributes } from './Variable';
 
 export default function VariableToolbar({
@@ -41,53 +41,54 @@ export default function VariableToolbar({
         <Trash className="h-4 w-4" />
       </Toolbar.Button>
       <DropdownMenu.Root>
-        <DropdownMenu.Portal>
-          <DropdownMenu.DropdownMenuContent className="bg-surface-0">
-            <DropdownMenu.RadioGroup>
-              {attributes?.type === 'categorical' && (
-                <>
-                  <DropdownMenu.Item
-                    className="hover:cursor-pointer"
-                    textValue="checkboxGroup"
-                    onSelect={() => updateAttribute('control', 'checkboxGroup')}
-                  >
-                    Checkbox Group
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item
-                    className="hover:cursor-pointer"
-                    textValue="toggleButtonGroup"
-                    onSelect={() =>
-                      updateAttribute('control', 'toggleButtonGroup')
-                    }
-                  >
-                    Toggle Button Group
-                  </DropdownMenu.Item>
-                </>
-              )}
-              {attributes?.type === 'text' && (
-                <>
-                  <DropdownMenu.Item
-                    className="hover:cursor-pointer"
-                    textValue="text"
-                    onSelect={() => updateAttribute('control', 'text')}
-                  >
-                    Text
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item
-                    className="hover:cursor-pointer"
-                    textValue="textArea"
-                    onSelect={() => updateAttribute('control', 'textArea')}
-                  >
-                    Text Area
-                  </DropdownMenu.Item>
-                </>
-              )}
-            </DropdownMenu.RadioGroup>
-          </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.Portal>
+        <DropdownMenu.DropdownMenuContent>
+          <DropdownMenu.RadioGroup>
+            <DropdownMenu.Label>Select an input control</DropdownMenu.Label>
+            {attributes?.type === 'categorical' && (
+              <>
+                <DropdownMenu.Item
+                  active={attributes?.control === 'checkboxGroup'}
+                  textValue="checkboxGroup"
+                  onSelect={() => updateAttribute('control', 'checkboxGroup')}
+                >
+                  Checkbox Group
+                </DropdownMenu.Item>
+                <DropdownMenu.Item
+                  active={attributes?.control === 'toggleButtonGroup'}
+                  textValue="toggleButtonGroup"
+                  onSelect={() =>
+                    updateAttribute('control', 'toggleButtonGroup')
+                  }
+                >
+                  Toggle Button Group
+                </DropdownMenu.Item>
+              </>
+            )}
+            {attributes?.type === 'text' && (
+              <>
+                <DropdownMenu.Item
+                  active={attributes?.control === 'text'}
+                  textValue="text"
+                  onSelect={() => updateAttribute('control', 'text')}
+                >
+                  Text
+                </DropdownMenu.Item>
+                <DropdownMenu.Item
+                  active={attributes?.control === 'textArea'}
+                  textValue="textArea"
+                  onSelect={() => updateAttribute('control', 'textArea')}
+                >
+                  Text Area
+                </DropdownMenu.Item>
+              </>
+            )}
+          </DropdownMenu.RadioGroup>
+        </DropdownMenu.DropdownMenuContent>
         <Toolbar.Button asChild>
-          <DropdownMenu.Trigger className="flex items-center gap-1">
-            {attributes?.control} <ChevronDown className="h-4 w-4" />
+          <DropdownMenu.Trigger>
+            <div className="flex items-center gap-1">
+              {attributes?.control} <ChevronDown className="h-4 w-4" />
+            </div>
           </DropdownMenu.Trigger>
         </Toolbar.Button>
       </DropdownMenu.Root>
