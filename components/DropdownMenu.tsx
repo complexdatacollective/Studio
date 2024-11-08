@@ -1,14 +1,11 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { type PropsWithChildren } from 'react';
 import { cn } from '~/lib/utils';
-import { Button } from './Button';
 import Heading from './typography/Heading';
 
 const DropdownTrigger = ({ children }: PropsWithChildren) => (
-  <DropdownMenuPrimitive.Trigger asChild className="">
-    <Button variant="text" size="sm">
-      {children}
-    </Button>
+  <DropdownMenuPrimitive.Trigger asChild>
+    {children}
   </DropdownMenuPrimitive.Trigger>
 );
 

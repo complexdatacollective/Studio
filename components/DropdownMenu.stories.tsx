@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { ChevronDown } from 'lucide-react';
+import { Button } from './Button';
 import DropdownMenu from './DropdownMenu';
 
 const meta: Meta = {
@@ -12,7 +12,9 @@ export default meta;
 export const Default: StoryFn = () => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger>
-      Choose an Option <ChevronDown className="h-4 w-4" />
+      <Button variant="text" color="primary">
+        Choose an Option
+      </Button>
     </DropdownMenu.Trigger>
     <DropdownMenu.DropdownMenuContent>
       <DropdownMenu.Label>Input Control</DropdownMenu.Label>

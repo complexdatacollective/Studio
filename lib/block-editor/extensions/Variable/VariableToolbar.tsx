@@ -1,7 +1,7 @@
-import * as Toolbar from '@radix-ui/react-toolbar';
 import { type Editor } from '@tiptap/react';
 import { ChevronDown, CircleAlert, Trash } from 'lucide-react';
 import DropdownMenu from '~/components/DropdownMenu';
+import Toolbar from '~/components/Toolbar';
 import { type VariableNodeAttributes } from './Variable';
 
 export default function VariableToolbar({
@@ -31,12 +31,11 @@ export default function VariableToolbar({
   };
 
   return (
-    <Toolbar.Root className="flex items-center gap-2 pr-8 text-sm">
+    <Toolbar.Root>
       <Toolbar.Button
         onClick={() => {
           deleteNode();
         }}
-        className="hover:text-destructive"
       >
         <Trash className="h-4 w-4" />
       </Toolbar.Button>
@@ -84,7 +83,7 @@ export default function VariableToolbar({
             )}
           </DropdownMenu.RadioGroup>
         </DropdownMenu.DropdownMenuContent>
-        <Toolbar.Button asChild>
+        <Toolbar.Button>
           <DropdownMenu.Trigger>
             <div className="flex items-center gap-1">
               {attributes?.control} <ChevronDown className="h-4 w-4" />
@@ -100,7 +99,7 @@ export default function VariableToolbar({
         <Toolbar.ToggleItem
           value="required"
           aria-label="required"
-          className="flex items-center gap-1"
+          active={attributes.required}
         >
           <CircleAlert className="h-4 w-4" /> Required
         </Toolbar.ToggleItem>
