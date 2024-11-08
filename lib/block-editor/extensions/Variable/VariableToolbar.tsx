@@ -19,17 +19,6 @@ export default function VariableToolbar({
     return null;
   }
 
-  const updateAttribute = <K extends keyof VariableNodeAttributes>(
-    attribute: K,
-    value: VariableNodeAttributes[K],
-  ) => {
-    updateAttributes({
-      [attribute]: value,
-    });
-
-    editor.commands.focus(); // Focus the editor after the update
-  };
-
   return (
     <Toolbar.Root>
       <Toolbar.Button
@@ -48,7 +37,9 @@ export default function VariableToolbar({
                 <DropdownMenu.Item
                   active={attributes?.control === 'checkboxGroup'}
                   textValue="checkboxGroup"
-                  onSelect={() => updateAttribute('control', 'checkboxGroup')}
+                  onSelect={() =>
+                    updateAttributes({ control: 'checkboxGroup' })
+                  }
                 >
                   Checkbox Group
                 </DropdownMenu.Item>
@@ -56,7 +47,7 @@ export default function VariableToolbar({
                   active={attributes?.control === 'toggleButtonGroup'}
                   textValue="toggleButtonGroup"
                   onSelect={() =>
-                    updateAttribute('control', 'toggleButtonGroup')
+                    updateAttributes({ control: 'toggleButtonGroup' })
                   }
                 >
                   Toggle Button Group
@@ -68,14 +59,14 @@ export default function VariableToolbar({
                 <DropdownMenu.Item
                   active={attributes?.control === 'text'}
                   textValue="text"
-                  onSelect={() => updateAttribute('control', 'text')}
+                  onSelect={() => updateAttributes({ control: 'text' })}
                 >
                   Text
                 </DropdownMenu.Item>
                 <DropdownMenu.Item
                   active={attributes?.control === 'textArea'}
                   textValue="textArea"
-                  onSelect={() => updateAttribute('control', 'textArea')}
+                  onSelect={() => updateAttributes({ control: 'textArea' })}
                 >
                   Text Area
                 </DropdownMenu.Item>
@@ -94,7 +85,9 @@ export default function VariableToolbar({
       {/* required toggle */}
       <Toolbar.ToggleGroup
         type="single"
-        onValueChange={() => updateAttribute('required', !attributes.required)}
+        onValueChange={() =>
+          updateAttributes({ required: !attributes.required })
+        }
       >
         <Toolbar.ToggleItem
           value="required"

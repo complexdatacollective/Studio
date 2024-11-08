@@ -4,10 +4,11 @@ import {
   type NodeViewProps,
   NodeViewWrapper,
 } from '@tiptap/react';
-import { AlertCircle, Pencil } from 'lucide-react';
-import { Button } from '~/components/Button';
+import { AlertCircle } from 'lucide-react';
+import { useState } from 'react';
 import { Input } from '~/components/form/Input';
 import Popover from '~/components/Popover';
+import { cn } from '~/lib/utils';
 import { type VariableNodeAttributes } from './Variable';
 import VariableToolbar from './VariableToolbar';
 
@@ -16,10 +17,11 @@ export const VariableNodeView: React.FC<NodeViewProps> = ({
   editor,
   deleteNode,
   updateAttributes,
-  selected,
 }) => {
   const { type, control, options, name, required } =
     node.attrs as VariableNodeAttributes;
+
+  const [selected, setSelected] = useState(false);
 
   const renderControl = () => {
     switch (type) {
@@ -62,34 +64,43 @@ export const VariableNodeView: React.FC<NodeViewProps> = ({
   };
 
   return (
-    <NodeViewWrapper className="group relative hover:rounded-small hover:border hover:bg-surface-1 hover:p-2">
-      <NodeViewContent className="py-2" />
-      <Popover
-        content={
-          <VariableToolbar
-            deleteNode={deleteNode}
-            editor={editor}
-            attributes={node.attrs as VariableNodeAttributes}
-            updateAttributes={updateAttributes}
-          />
+    <Popover
+      side="top"
+      isOpen={selected}
+      content={
+        <VariableToolbar
+          deleteNode={deleteNode}
+          editor={editor}
+          attributes={node.attrs as VariableNodeAttributes}
+          updateAttributes={updateAttributes}
+        />
+      }
+      onOpenChange={(open) => {
+        if (!open) {
+          // using this as an onClose event
+          setSelected(false);
         }
+      }}
+    >
+      <NodeViewWrapper
+        className={cn(
+          'group relative hover:rounded-small hover:border hover:p-2',
+          selected && 'rounded-small border bg-surface-1 p-2',
+        )}
+        onClick={() => {
+          setSelected(true);
+        }}
       >
-        <Button
-          size="icon"
-          variant="outline"
-          className="absolute right-1 top-1 opacity-0 group-hover:opacity-100"
-          color="primary"
-        >
-          <Pencil />
-        </Button>
-      </Popover>
-      {required && (
-        <div className="flex items-center gap-1 text-xs text-destructive">
-          <AlertCircle className="h-4 w-4" /> Required
-        </div>
-      )}
+        <NodeViewContent className="py-2" />
 
-      {renderControl()}
-    </NodeViewWrapper>
+        {required && (
+          <div className="flex items-center gap-1 text-xs text-destructive">
+            <AlertCircle className="h-4 w-4" /> Required
+          </div>
+        )}
+
+        {renderControl()}
+      </NodeViewWrapper>
+    </Popover>
   );
 };
