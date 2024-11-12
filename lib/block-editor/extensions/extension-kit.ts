@@ -1,7 +1,6 @@
 import { mergeAttributes } from '@tiptap/core';
 import BulletList from '@tiptap/extension-bullet-list';
 import Document from '@tiptap/extension-document';
-import Dropcursor from '@tiptap/extension-dropcursor';
 import Heading from '@tiptap/extension-heading';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
@@ -13,6 +12,7 @@ import GlobalDragHandle from 'tiptap-extension-global-drag-handle';
 import { headingVariants } from '~/components/typography/Heading';
 import { paragraphVariants } from '~/components/typography/Paragraph';
 import { unorderedListClasses } from '~/components/typography/UnorderedList';
+import { Dropcursor } from './Dropcursor';
 import { HorizontalRule } from './HorizontalRule';
 import { ImageBlock } from './ImageBlock';
 import { Link } from './Link';

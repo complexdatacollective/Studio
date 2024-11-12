@@ -20,6 +20,7 @@ export const VariableNode = Node.create({
   draggable: true,
   selectable: true,
   isolating: true,
+  disableDropCursor: true,
 
   parseHTML() {
     return [
