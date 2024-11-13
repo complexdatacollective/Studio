@@ -1,6 +1,34 @@
 import { type EditorView } from '@tiptap/pm/view';
 import type { TVariableDefinition } from '~/schemas/protocol/variables';
 
+export const isValidVariableDropPosition = (
+  view: EditorView,
+  event: DragEvent,
+) => {
+  // check if the drop position is valid
+
+  // Get the drop position
+  const coordinates = view.posAtCoords({
+    left: event.clientX,
+    top: event.clientY,
+  });
+
+  if (!coordinates) return false;
+
+  const dropPos = coordinates.pos;
+  const resolvedDropPos = view.state.doc.resolve(dropPos);
+
+  if (
+    resolvedDropPos.parent.isTextblock || // Prevent dropping inside p, h1, h2, etc.
+    resolvedDropPos.parent.type.name === 'variable' // Prevent dropping inside other variables
+  ) {
+    console.log('invalid!');
+    return false;
+  }
+  console.log('valid!');
+  return true;
+};
+
 export const handleVariableDrag = (
   event: React.DragEvent<HTMLDivElement>,
   key: string,
@@ -22,24 +50,8 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
 
   if (!key) return false;
 
-  // Get the drop position
-  const coordinates = view.posAtCoords({
-    left: event.clientX,
-    top: event.clientY,
-  });
-
-  if (!coordinates) return false;
-
-  // check if the drop position is valid
-  const dropPos = coordinates.pos;
-  const resolvedDropPos = view.state.doc.resolve(dropPos);
-
-  if (
-    resolvedDropPos.parent.isTextblock || // Prevent dropping inside p, h1, h2, etc.
-    resolvedDropPos.parent.type.name === 'variable' // Prevent dropping inside other variables
-  ) {
-    return false;
-  }
+  // Check drop position validity
+  if (!isValidVariableDropPosition(view, event)) return false;
 
   const { hint, variable, label } = view.state.schema.nodes;
 
@@ -73,6 +85,13 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
     },
     [labelNode, hintNode],
   );
+
+  const coordinates = view.posAtCoords({
+    left: event.clientX,
+    top: event.clientY,
+  });
+
+  if (!coordinates) return false;
 
   const transaction = view.state.tr.insert(coordinates.pos, variableNode);
   view.dispatch(transaction);
