@@ -1,4 +1,6 @@
 import { Node, mergeAttributes } from '@tiptap/core';
+import { ReactNodeViewRenderer } from '@tiptap/react';
+import { GroupNodeView } from './GroupNodeView';
 
 export const Group = Node.create({
   name: 'group',
@@ -12,19 +14,10 @@ export const Group = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const columnClasses = {
-      1: 'grid-cols-1',
-      2: 'grid-cols-2',
-      3: 'grid-cols-3',
-      4: 'grid-cols-4',
-    };
-
-    const columns = HTMLAttributes.columns ?? 2; // Default to 2 columns
     return [
-      'div',
+      'group',
       mergeAttributes(HTMLAttributes, {
         'data-type': 'group',
-        'class': `border border-dashed hover:border-accent p-4 rounded-small grid gap-4 ${columnClasses[columns]}`,
       }),
       0,
     ];
@@ -36,5 +29,9 @@ export const Group = Node.create({
         default: 2,
       },
     };
+  },
+
+  addNodeView() {
+    return ReactNodeViewRenderer(GroupNodeView);
   },
 });
