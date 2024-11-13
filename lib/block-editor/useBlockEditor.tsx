@@ -17,14 +17,6 @@ export const useBlockEditor = () => {
           autocapitalize: 'off',
           class: 'min-h-full focus:outline-none',
         },
-        handleDOMEvents: {
-          dragenter: function (view, event) {
-            console.log('dragenter trying to prevent dropcursor');
-            editor.commands.updateAttributes('dropcursor', {
-              width: 0,
-            });
-          },
-        },
         handleDrop: function (view, event) {
           if (
             // check if the drop event is a form variable
