@@ -18,14 +18,14 @@ export const isValidVariableDropPosition = (
   const dropPos = coordinates.pos;
   const resolvedDropPos = view.state.doc.resolve(dropPos);
 
+  //todo: generalize this to check for all invalid drop positions
   if (
     resolvedDropPos.parent.isTextblock || // Prevent dropping inside p, h1, h2, etc.
+    resolvedDropPos.parent.type.name === 'bulletList' || // Prevent dropping inside bullet lists
     resolvedDropPos.parent.type.name === 'variable' // Prevent dropping inside other variables
   ) {
-    console.log('invalid!');
     return false;
   }
-  console.log('valid!');
   return true;
 };
 

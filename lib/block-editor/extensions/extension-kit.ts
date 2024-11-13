@@ -13,6 +13,7 @@ import { headingVariants } from '~/components/typography/Heading';
 import { paragraphVariants } from '~/components/typography/Paragraph';
 import { unorderedListClasses } from '~/components/typography/UnorderedList';
 import { Dropcursor } from './Dropcursor';
+import { Group } from './Group';
 import { HorizontalRule } from './HorizontalRule';
 import { ImageBlock } from './ImageBlock';
 import { Link } from './Link';
@@ -94,6 +95,7 @@ export const ExtensionKit = () => [
     class: '',
   }),
   VariableNode,
+  Group,
 ];
 
 export default ExtensionKit;

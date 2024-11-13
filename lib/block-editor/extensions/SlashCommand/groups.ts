@@ -96,6 +96,25 @@ export const GROUPS: Group[] = [
     title: 'Insert',
     commands: [
       {
+        name: 'group',
+        label: 'Group',
+        iconName: 'Group',
+        description: 'Group content together in a grid',
+        aliases: ['grid'],
+        shouldBeHidden: (editor) => editor.isActive('group'),
+        action: (editor) => {
+          editor
+            .chain()
+            .focus()
+            .insertContent({
+              type: 'group',
+              attrs: { columns: 2 },
+              content: [],
+            })
+            .run();
+        },
+      },
+      {
         name: 'columns',
         label: 'Columns',
         iconName: 'Columns2',
