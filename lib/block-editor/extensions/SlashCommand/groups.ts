@@ -108,7 +108,7 @@ export const GROUPS: Group[] = [
             .focus()
             .insertContent({
               type: 'group',
-              attrs: { columns: 2 },
+              attrs: { columns: 1 },
               content: [],
             })
             .run();

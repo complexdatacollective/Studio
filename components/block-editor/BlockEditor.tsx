@@ -1,7 +1,8 @@
 'use client';
 
 import { EditorContent } from '@tiptap/react';
-import { BubbleMenu } from '~/lib/block-editor/extensions/BubbleMenu/BubbleMenu';
+import GroupMenu from '~/lib/block-editor/extensions/Group/GroupMenu';
+import { TextMenu } from '~/lib/block-editor/extensions/TextMenu';
 import { useBlockEditor } from '~/lib/block-editor/useBlockEditor';
 import SidePanel from './SidePanel';
 
@@ -12,7 +13,8 @@ const BlockEditor = () => {
     <div className="flex flex-row gap-4 rounded-small border p-10">
       <SidePanel />
       <EditorContent editor={editor} />
-      <BubbleMenu editor={editor} />
+      <TextMenu editor={editor} />
+      <GroupMenu editor={editor} />
     </div>
   );
 };

@@ -7,6 +7,7 @@ export const HintNode = Node.create({
   group: 'variable',
   content: 'inline*',
   draggable: false,
+  disableDropCursor: true,
 
   parseHTML() {
     return [

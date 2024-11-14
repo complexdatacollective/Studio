@@ -1,14 +1,11 @@
-import {
-  BubbleMenu as BaseBubbleMenu,
-  useEditorState,
-  type Editor,
-} from '@tiptap/react';
+import { useEditorState, type Editor } from '@tiptap/react';
 import { Bold, Italic, Link, Trash } from 'lucide-react';
+import BubbleMenu from '~/components/block-editor/BubbleMenu';
 import { Button } from '~/components/Button';
 import Popover from '~/components/Popover';
 import Toolbar from '~/components/Toolbar';
 
-export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
+export const TextMenu = ({ editor }: { editor: Editor | null }) => {
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
@@ -53,7 +50,7 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
 
   return (
     <Toolbar.Root>
-      <BaseBubbleMenu
+      <BubbleMenu
         editor={editor}
         tippyOptions={{ duration: 100 }}
         className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
@@ -112,7 +109,7 @@ export const BubbleMenu = ({ editor }: { editor: Editor | null }) => {
             </Popover>
           </Toolbar.ToggleItem>
         </Toolbar.ToggleGroup>
-      </BaseBubbleMenu>
+      </BubbleMenu>
     </Toolbar.Root>
   );
 };

@@ -1,15 +1,14 @@
 import { Node, mergeAttributes } from '@tiptap/core';
 
-export const Group = Node.create({
-  name: 'group',
+export const GroupItem = Node.create({
+  name: 'groupItem',
 
   group: 'block',
 
   content: 'block*',
-  disableDropCursor: true,
 
   parseHTML() {
-    return [{ tag: 'div[data-type="group"]' }];
+    return [{ tag: 'div[data-type="groupItem"]' }];
   },
 
   renderHTML({ HTMLAttributes }) {
@@ -26,7 +25,7 @@ export const Group = Node.create({
       'div',
       mergeAttributes(HTMLAttributes, {
         'data-type': 'group',
-        'class': `gap-4 rounded-small border border-dashed p-4 grid ${gridClasses[columns]} hover:border-accent`,
+        'class': `gap-4 rounded-small border border-dashed p-4 grid ${gridClasses[columns]}`,
       }),
       0,
     ];
@@ -37,9 +36,10 @@ export const Group = Node.create({
       columns: {
         default: 2,
       },
-      groupRequired: {
-        default: false,
-      },
     };
   },
+
+  // addNodeView() {
+  //   return ReactNodeViewRenderer(GroupNodeView);
+  // },
 });
