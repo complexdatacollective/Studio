@@ -5,12 +5,28 @@ import { sticky } from 'tippy.js';
 import DropdownMenu from '~/components/DropdownMenu';
 import Toolbar from '~/components/Toolbar';
 import BubbleMenu from '~/components/block-editor/BubbleMenu';
+import getRenderContainer from '../../utils';
 import { toggleGroupRequired } from './utils';
 
-export default function GroupMenu({ editor }: { editor: Editor | null }) {
+export default function GroupMenu({
+  editor,
+  appendTo,
+}: {
+  editor: Editor | null;
+  appendTo: React.RefObject<HTMLDivElement>;
+}) {
   const shouldShow = useCallback(() => {
     const isGroup = editor?.isActive('group');
     return !!isGroup;
+  }, [editor]);
+
+  const getReferenceClientRect = useCallback(() => {
+    const renderContainer = getRenderContainer(editor, 'group');
+    const rect =
+      renderContainer?.getBoundingClientRect() ||
+      new DOMRect(-1000, -1000, 0, 0);
+
+    return rect;
   }, [editor]);
 
   const { columns, groupRequired } = useEditorState({
@@ -28,11 +44,13 @@ export default function GroupMenu({ editor }: { editor: Editor | null }) {
       editor={editor}
       shouldShow={shouldShow}
       tippyOptions={{
-        offset: [0, 8],
+        offset: [0, 20],
         popperOptions: {
           modifiers: [{ name: 'flip', enabled: false }],
         },
         plugins: [sticky],
+        getReferenceClientRect,
+        appendTo: () => appendTo?.current,
       }}
       className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
     >
