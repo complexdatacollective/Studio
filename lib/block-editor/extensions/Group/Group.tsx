@@ -26,7 +26,7 @@ export const Group = Node.create({
       'div',
       mergeAttributes(HTMLAttributes, {
         'data-type': 'group',
-        'class': `gap-4 rounded-small border border-dashed p-4 grid ${gridClasses[columns]} hover:border-accent`,
+        'class': `gap-4 rounded-small p-4 grid ${gridClasses[columns]} border`,
       }),
       0,
     ];
