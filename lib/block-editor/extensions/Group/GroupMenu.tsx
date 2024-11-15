@@ -22,8 +22,10 @@ export default function GroupMenu({
 
   const getReferenceClientRect = useCallback(() => {
     const renderContainer = getRenderContainer(editor, 'group');
+
+    console.log('renderContainer', renderContainer);
     const rect =
-      renderContainer?.getBoundingClientRect() ||
+      renderContainer?.getBoundingClientRect() ??
       new DOMRect(-1000, -1000, 0, 0);
 
     return rect;
@@ -52,7 +54,6 @@ export default function GroupMenu({
         getReferenceClientRect,
         appendTo: () => appendTo?.current,
       }}
-      className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
     >
       <Toolbar.Root>
         <Toolbar.Button
