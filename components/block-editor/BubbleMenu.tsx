@@ -7,7 +7,7 @@ export default function BubbleMenu(props: BubbleMenuProps) {
   return (
     <BaseBubbleMenu
       {...props}
-      className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
+      className="flex w-fit items-center gap-1 rounded border bg-surface-0 px-2 py-1"
     />
   );
 }

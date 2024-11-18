@@ -1,11 +1,19 @@
 import { useEditorState, type Editor } from '@tiptap/react';
 import { Bold, Italic, Link, Trash } from 'lucide-react';
+import { useCallback } from 'react';
 import BubbleMenu from '~/components/block-editor/BubbleMenu';
 import { Button } from '~/components/Button';
 import Popover from '~/components/Popover';
 import Toolbar from '~/components/Toolbar';
+import VariableMenu from '../Variable/VariableMenu';
 
-export const TextMenu = ({ editor }: { editor: Editor | null }) => {
+export const NodeBubbleMenu = ({ editor }: { editor: Editor | null }) => {
+  const shouldShow = useCallback(() => {
+    const isVariable = editor?.isActive('variable');
+    const isText = editor?.isActive('paragraph') || editor?.isActive('heading');
+    return !!isVariable || !!isText;
+  }, [editor]);
+
   const editorState = useEditorState({
     editor,
     selector: ({ editor }) => {
@@ -49,12 +57,12 @@ export const TextMenu = ({ editor }: { editor: Editor | null }) => {
   };
 
   return (
-    <Toolbar.Root>
-      <BubbleMenu
-        editor={editor}
-        tippyOptions={{ duration: 100 }}
-        className="flex gap-1 rounded border bg-surface-0 px-2 py-1"
-      >
+    <BubbleMenu
+      editor={editor}
+      tippyOptions={{ duration: 100 }}
+      shouldShow={shouldShow}
+    >
+      <Toolbar.Root>
         <Toolbar.ToggleGroup type="multiple">
           <Toolbar.ToggleItem
             value="bold"
@@ -109,7 +117,8 @@ export const TextMenu = ({ editor }: { editor: Editor | null }) => {
             </Popover>
           </Toolbar.ToggleItem>
         </Toolbar.ToggleGroup>
-      </BubbleMenu>
-    </Toolbar.Root>
+        {editorState?.isVariable && <VariableMenu editor={editor} />}
+      </Toolbar.Root>
+    </BubbleMenu>
   );
 };
