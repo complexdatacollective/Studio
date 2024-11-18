@@ -8,6 +8,11 @@ import BubbleMenu from '~/components/block-editor/BubbleMenu';
 import getRenderContainer from '../../utils';
 import { toggleGroupRequired } from './utils';
 
+type GroupEditorState = {
+  columns: number;
+  groupRequired: boolean;
+};
+
 export default function GroupMenu({
   editor,
   appendTo,
@@ -21,9 +26,9 @@ export default function GroupMenu({
   }, [editor]);
 
   const getReferenceClientRect = useCallback(() => {
+    if (!editor) return new DOMRect(-1000, -1000, 0, 0);
     const renderContainer = getRenderContainer(editor, 'group');
 
-    console.log('renderContainer', renderContainer);
     const rect =
       renderContainer?.getBoundingClientRect() ??
       new DOMRect(-1000, -1000, 0, 0);
@@ -35,11 +40,16 @@ export default function GroupMenu({
     editor,
     selector: (ctx) => {
       return {
-        columns: ctx.editor?.getAttributes('group')?.columns,
-        groupRequired: ctx.editor?.getAttributes('group')?.groupRequired,
+        columns: ctx.editor?.getAttributes('group')?.columns as number,
+        groupRequired: ctx.editor?.getAttributes('group')
+          ?.groupRequired as boolean,
       };
     },
-  });
+  }) as GroupEditorState;
+
+  if (!editor) {
+    return null;
+  }
 
   return (
     <BubbleMenu
@@ -52,7 +62,7 @@ export default function GroupMenu({
         },
         plugins: [sticky],
         getReferenceClientRect,
-        appendTo: () => appendTo?.current,
+        appendTo: () => appendTo?.current ?? document.body,
       }}
     >
       <Toolbar.Root>

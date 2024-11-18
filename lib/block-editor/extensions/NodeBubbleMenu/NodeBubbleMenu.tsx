@@ -28,7 +28,7 @@ export const NodeBubbleMenu = ({ editor }: { editor: Editor | null }) => {
         isBold: !!editor?.isActive('bold'),
         isItalic: !!editor?.isActive('italic'),
         isLink: !!editor?.isActive('link'),
-        activeLink: editor?.getAttributes('link').href,
+        activeLink: editor?.getAttributes('link').href as string | null,
         isVariable:
           !!editor?.isActive('variable') ||
           !!editor?.isActive('control') ||
@@ -95,7 +95,7 @@ export const NodeBubbleMenu = ({ editor }: { editor: Editor | null }) => {
               content={
                 editorState?.activeLink ? (
                   <div className="flex items-center gap-1 pr-8">
-                    <a href={editorState.activeLink as string}>
+                    <a href={editorState.activeLink}>
                       {editorState.activeLink}
                     </a>
                     <Button variant="text" size="xs" onClick={handleLinkRemove}>

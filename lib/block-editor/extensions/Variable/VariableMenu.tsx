@@ -3,17 +3,31 @@ import { ChevronDown, CircleAlert, Trash } from 'lucide-react';
 import DropdownMenu from '~/components/DropdownMenu';
 import Toolbar from '~/components/Toolbar';
 
+type VariableEditorState = {
+  type: 'categorical' | 'text';
+  control: 'checkboxGroup' | 'toggleButtonGroup' | 'text' | 'textArea';
+  required: boolean;
+};
+
 export default function VariableMenu({ editor }: { editor: Editor | null }) {
   const { type, control, required } = useEditorState({
     editor,
     selector: (ctx) => {
       return {
-        type: ctx.editor?.getAttributes('variable')?.type,
-        control: ctx.editor?.getAttributes('variable')?.control,
-        required: ctx.editor?.getAttributes('variable')?.required,
+        type: ctx.editor?.getAttributes('variable')?.type as
+          | 'categorical'
+          | 'text'
+          | 'number'
+          | undefined,
+        control: ctx.editor?.getAttributes('variable')?.control as
+          | 'checkboxGroup'
+          | 'toggleButtonGroup'
+          | 'text'
+          | 'textArea',
+        required: ctx.editor?.getAttributes('variable')?.required as boolean,
       };
     },
-  });
+  }) as VariableEditorState;
 
   if (!editor) {
     return null;
