@@ -9,8 +9,15 @@ import VariableMenu from '../Variable/VariableMenu';
 
 export const NodeBubbleMenu = ({ editor }: { editor: Editor | null }) => {
   const shouldShow = useCallback(() => {
-    const isVariable = editor?.isActive('variable');
-    const isText = editor?.isActive('paragraph') || editor?.isActive('heading');
+    if (!editor) return false;
+    const isVariable = editor.isActive('variable');
+
+    if (isVariable) return true;
+
+    if (editor.view.state.selection.empty) return false;
+
+    const isText = editor.isActive('paragraph') || editor.isActive('heading');
+
     return !!isVariable || !!isText;
   }, [editor]);
 
