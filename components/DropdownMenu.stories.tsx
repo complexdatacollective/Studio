@@ -16,7 +16,7 @@ export const Default: StoryFn = () => (
         Choose an Option
       </Button>
     </DropdownMenu.Trigger>
-    <DropdownMenu.DropdownMenuContent>
+    <DropdownMenu.Content>
       <DropdownMenu.Label>Input Control</DropdownMenu.Label>
       <DropdownMenu.RadioGroup>
         <DropdownMenu.Item
@@ -36,6 +36,6 @@ export const Default: StoryFn = () => (
           Toggle Button Group
         </DropdownMenu.Item>
       </DropdownMenu.RadioGroup>
-    </DropdownMenu.DropdownMenuContent>
+    </DropdownMenu.Content>
   </DropdownMenu.Root>
 );

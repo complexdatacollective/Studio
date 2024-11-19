@@ -2,7 +2,6 @@
 
 import { EditorContent } from '@tiptap/react';
 import { useRef } from 'react';
-import GroupMenu from '~/lib/block-editor/extensions/Group/GroupMenu';
 import { NodeBubbleMenu } from '~/lib/block-editor/extensions/NodeBubbleMenu';
 import { useBlockEditor } from '~/lib/block-editor/useBlockEditor';
 import SidePanel from './SidePanel';
@@ -19,7 +18,6 @@ const BlockEditor = () => {
       <SidePanel />
       <EditorContent editor={editor} />
       <NodeBubbleMenu editor={editor} />
-      <GroupMenu editor={editor} appendTo={menuContainerRef} />
     </div>
   );
 };

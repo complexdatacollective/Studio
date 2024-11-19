@@ -36,7 +36,7 @@ export default function VariableMenu({ editor }: { editor: Editor | null }) {
   return (
     <>
       <DropdownMenu.Root>
-        <DropdownMenu.DropdownMenuContent>
+        <DropdownMenu.Content>
           <DropdownMenu.RadioGroup>
             <DropdownMenu.Label>Select an input control</DropdownMenu.Label>
             {type === 'categorical' && (
@@ -92,7 +92,7 @@ export default function VariableMenu({ editor }: { editor: Editor | null }) {
               </>
             )}
           </DropdownMenu.RadioGroup>
-        </DropdownMenu.DropdownMenuContent>
+        </DropdownMenu.Content>
         <Toolbar.Button>
           <DropdownMenu.Trigger>
             <div className="flex items-center gap-1">
@@ -123,7 +123,7 @@ export default function VariableMenu({ editor }: { editor: Editor | null }) {
           editor?.commands.deleteNode('variable');
         }}
       >
-        <Trash />
+        <Trash className="h-4 w-4" />
       </Toolbar.Button>
     </>
   );

@@ -73,6 +73,7 @@ const ToolbarMenu = {
   Button: ToolbarButton,
   ToggleGroup: ToolbarToggleGroup,
   ToggleItem: ToolbarToggleItem,
+  Separator: ToolbarPrimitive.Separator,
 };
 
 export default ToolbarMenu;

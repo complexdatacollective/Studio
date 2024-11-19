@@ -9,17 +9,21 @@ const DropdownTrigger = ({ children }: PropsWithChildren) => (
   </DropdownMenuPrimitive.Trigger>
 );
 
-const DropdownMenuContent = ({ children }: PropsWithChildren) => {
-  // defer getting portal container until the component mounts
+const DropdownMenuContent = ({
+  children,
+  side = 'bottom',
+}: PropsWithChildren<{ side?: 'top' | 'right' | 'bottom' | 'left' }>) => {
   const portalContainer =
     typeof window !== 'undefined'
       ? document.getElementById('dialog-portal')
       : null;
+
   return (
     <DropdownMenuPrimitive.Portal container={portalContainer}>
       <DropdownMenuPrimitive.Content
+        side={side} // Pass the side prop to the content
         sideOffset={5}
-        className="z-50 rounded-small border bg-surface-0 p-2"
+        className="rounded-small border bg-surface-0 p-2"
       >
         {children}
       </DropdownMenuPrimitive.Content>
@@ -59,7 +63,7 @@ const DropdownMenu = {
   Root: DropdownMenuPrimitive.Root,
   RadioGroup: DropdownMenuPrimitive.RadioGroup,
   Trigger: DropdownTrigger,
-  DropdownMenuContent: DropdownMenuContent,
+  Content: DropdownMenuContent,
   Label: DropdownLabel,
   Item: DropdownItem,
 };

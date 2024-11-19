@@ -5,6 +5,7 @@ import BubbleMenu from '~/components/block-editor/BubbleMenu';
 import { Button } from '~/components/Button';
 import Popover from '~/components/Popover';
 import Toolbar from '~/components/Toolbar';
+import GroupMenu from '../Group/GroupMenu';
 import VariableMenu from '../Variable/VariableMenu';
 
 export const NodeBubbleMenu = ({ editor }: { editor: Editor | null }) => {
@@ -34,6 +35,7 @@ export const NodeBubbleMenu = ({ editor }: { editor: Editor | null }) => {
           !!editor?.isActive('control') ||
           !!editor?.isActive('label') ||
           !!editor?.isActive('hint'),
+        isGroup: !!editor?.isActive('group'),
       };
     },
   });
@@ -125,6 +127,12 @@ export const NodeBubbleMenu = ({ editor }: { editor: Editor | null }) => {
           </Toolbar.ToggleItem>
         </Toolbar.ToggleGroup>
         {editorState?.isVariable && <VariableMenu editor={editor} />}
+        {editorState?.isGroup && (
+          <>
+            <Toolbar.Separator className="mx-2.5 w-px bg-muted" />
+            <GroupMenu editor={editor} />
+          </>
+        )}
       </Toolbar.Root>
     </BubbleMenu>
   );
