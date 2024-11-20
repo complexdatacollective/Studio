@@ -69,8 +69,8 @@ export const VariableNodeView: React.FC<NodeViewProps> = ({ node, editor }) => {
   return (
     <NodeViewWrapper
       className={cn(
-        'group relative hover:rounded-small hover:border hover:p-2',
-        selected && 'rounded-small border bg-surface-1 p-2',
+        'group relative rounded-small border p-2 hover:bg-surface-1',
+        selected && 'bg-surface-1',
       )}
     >
       <NodeViewContent className="py-2" />

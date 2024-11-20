@@ -1,4 +1,4 @@
-import { Node, mergeAttributes } from '@tiptap/core';
+import { Node, mergeAttributes } from '@tiptap/react';
 
 export const Group = Node.create({
   name: 'group',
@@ -6,7 +6,6 @@ export const Group = Node.create({
   group: 'block',
 
   content: 'block*',
-  disableDropCursor: true,
 
   parseHTML() {
     return [{ tag: 'div[data-type="group"]' }];
@@ -26,7 +25,7 @@ export const Group = Node.create({
       'div',
       mergeAttributes(HTMLAttributes, {
         'data-type': 'group',
-        'class': `gap-4 rounded-small p-4 grid ${gridClasses[columns]} border`,
+        'class': `gap-4 p-4 grid rounded-small ${gridClasses[columns]} border hover:border-accent`,
       }),
       0,
     ];

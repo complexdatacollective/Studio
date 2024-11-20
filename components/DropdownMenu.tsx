@@ -12,18 +12,24 @@ const DropdownTrigger = ({ children }: PropsWithChildren) => (
 const DropdownMenuContent = ({
   children,
   side = 'bottom',
-}: PropsWithChildren<{ side?: 'top' | 'right' | 'bottom' | 'left' }>) => {
-  const portalContainer =
-    typeof window !== 'undefined'
+  container,
+}: PropsWithChildren<{
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  container?: React.RefObject<HTMLDivElement>;
+}>) => {
+  // Use the portal prop if provided, otherwise fallback to the 'dialog-portal' element
+  const portalContainer = container?.current
+    ? container.current
+    : typeof window !== 'undefined'
       ? document.getElementById('dialog-portal')
       : null;
 
   return (
     <DropdownMenuPrimitive.Portal container={portalContainer}>
       <DropdownMenuPrimitive.Content
-        side={side} // Pass the side prop to the content
+        side={side}
         sideOffset={5}
-        className="rounded-small border bg-surface-0 p-2"
+        className="z-50 rounded-small border bg-surface-0 p-2"
       >
         {children}
       </DropdownMenuPrimitive.Content>
