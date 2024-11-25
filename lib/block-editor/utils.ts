@@ -1,4 +1,5 @@
 import { type Editor } from '@tiptap/react';
+import { type EditorView } from 'prosemirror-view';
 
 export const getRenderContainer = (editor: Editor, nodeType: string) => {
   const {
@@ -42,4 +43,61 @@ export const getRenderContainer = (editor: Editor, nodeType: string) => {
   return container;
 };
 
-export default getRenderContainer;
+export const handleDrag = (
+  event: React.DragEvent<HTMLDivElement>,
+  type: 'paragraph' | 'h1' | 'h2' | 'h3' | 'h4' | 'bulletList',
+) => {
+  event.dataTransfer.setData('application/x-content-type', type);
+};
+
+export const handleDrop = (
+  view: EditorView,
+  event: React.DragEvent,
+  editor: Editor,
+) => {
+  const type = event.dataTransfer.getData('application/x-content-type');
+  const pos = view.posAtCoords({
+    left: event.clientX,
+    top: event.clientY,
+  });
+
+  if (pos && editor) {
+    const contentMap = {
+      paragraph: { type: 'paragraph' },
+      h1: {
+        type: 'heading',
+        attrs: { level: 1 },
+      },
+      h2: {
+        type: 'heading',
+        attrs: { level: 2 },
+      },
+      h3: {
+        type: 'heading',
+        attrs: { level: 3 },
+      },
+      h4: {
+        type: 'heading',
+        attrs: { level: 4 },
+      },
+      bulletList: {
+        type: 'bulletList',
+        content: [
+          {
+            type: 'listItem',
+            content: [
+              {
+                type: 'paragraph',
+                content: [{ type: 'text', text: ' ' }], // TODO: handle adding empty text without space
+              },
+            ],
+          },
+        ],
+      },
+    };
+
+    editor.chain().focus().insertContentAt(pos.pos, contentMap[type]).run();
+
+    return true;
+  }
+};

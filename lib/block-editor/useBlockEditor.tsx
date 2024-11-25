@@ -1,6 +1,7 @@
 import { useEditor } from '@tiptap/react';
 import ExtensionKit from './extensions/extension-kit';
 import { handleVariableDrop } from './extensions/Variable/utils';
+import { handleDrop } from './utils';
 
 export const useBlockEditor = () => {
   const editor = useEditor(
@@ -24,6 +25,12 @@ export const useBlockEditor = () => {
           ) {
             handleVariableDrop(view, event);
           }
+          if (
+            event?.dataTransfer?.types.includes('application/x-content-type')
+          ) {
+            handleDrop(view, event, editor);
+          }
+
           return false;
         },
       },

@@ -5,7 +5,7 @@ import { sticky } from 'tippy.js';
 import DropdownMenu from '~/components/DropdownMenu';
 import Toolbar from '~/components/Toolbar';
 import BubbleMenu from '~/components/block-editor/BubbleMenu';
-import getRenderContainer from '../../utils';
+import { getRenderContainer } from '../../utils';
 import { toggleGroupRequired } from './utils';
 
 type GroupEditorState = {
