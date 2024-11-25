@@ -1,5 +1,7 @@
 import { type Editor } from '@tiptap/react';
 import { type EditorView } from 'prosemirror-view';
+import type { TVariableDefinition } from '~/schemas/protocol/variables';
+import { handleVariableDrop } from './extensions/Variable/utils';
 
 export const getRenderContainer = (editor: Editor, nodeType: string) => {
   const {
@@ -45,9 +47,25 @@ export const getRenderContainer = (editor: Editor, nodeType: string) => {
 
 export const handleDrag = (
   event: React.DragEvent<HTMLDivElement>,
-  type: 'paragraph' | 'h1' | 'h2' | 'h3' | 'h4' | 'bulletList',
+  type:
+    | 'paragraph'
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'bulletList'
+    | 'group'
+    | 'variable',
+  data?: TVariableDefinition | null,
+  key?: string,
 ) => {
   event.dataTransfer.setData('application/x-content-type', type);
+
+  // If it's a variable, add key and data
+  if (type === 'variable' && data && key) {
+    event.dataTransfer.setData('application/json', JSON.stringify(data));
+    event.dataTransfer.setData('application/x-variable-key', key);
+  }
 };
 
 export const handleDrop = (
@@ -88,15 +106,22 @@ export const handleDrop = (
             content: [
               {
                 type: 'paragraph',
-                content: [{ type: 'text', text: ' ' }], // TODO: handle adding empty text without space
               },
             ],
           },
         ],
       },
+      group: {
+        type: 'group',
+        attrs: { columns: 1 },
+        content: [],
+      },
     };
 
-    editor.chain().focus().insertContentAt(pos.pos, contentMap[type]).run();
+    if (type === 'variable') {
+      handleVariableDrop(view, event);
+    } else
+      editor.chain().focus().insertContentAt(pos.pos, contentMap[type]).run();
 
     return true;
   }

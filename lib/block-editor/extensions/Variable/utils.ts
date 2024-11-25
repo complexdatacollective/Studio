@@ -29,18 +29,6 @@ export const isValidVariableDropPosition = (
   return true;
 };
 
-export const handleVariableDrag = (
-  event: React.DragEvent<HTMLDivElement>,
-  key: string,
-  variable: TVariableDefinition,
-) => {
-  event.dataTransfer.setData('application/json', JSON.stringify(variable));
-  event.dataTransfer.setData('application/x-variable-key', key);
-
-  // this is used to identify the data as a form variable in handleDrop
-  event.dataTransfer.setData('application/x-form-variable', 'true');
-};
-
 export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
   // Get the variable data
   const jsonData = event.dataTransfer?.getData('application/json');

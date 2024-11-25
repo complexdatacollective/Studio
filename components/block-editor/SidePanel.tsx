@@ -1,13 +1,18 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { CaseSensitive, Hash, SquareStack } from 'lucide-react';
+import {
+  CaseSensitive,
+  Hash,
+  type LucideIcon,
+  SquareStack,
+} from 'lucide-react';
+import React from 'react';
 import Heading from '~/components/typography/Heading';
-import { handleVariableDrag } from '~/lib/block-editor/extensions/Variable/utils';
 import { handleDrag } from '~/lib/block-editor/utils';
 import devProtocol from '~/lib/db/sample-data/dev-protocol';
 import { cn } from '~/lib/utils';
 import { Card } from '../Card';
 
-const VARIABLE_ICONS = {
+const VARIABLE_ICONS: Record<string, LucideIcon> = {
   text: CaseSensitive,
   number: Hash,
   categorical: SquareStack,
@@ -20,6 +25,7 @@ const FORMATS = [
   { name: 'H3', type: 'h3' },
   { name: 'H4', type: 'h4' },
   { name: 'Bullet List', type: 'bulletList' },
+  { name: 'Group', type: 'group' },
 ];
 
 export default function SidePanel() {
@@ -30,16 +36,17 @@ export default function SidePanel() {
   const renderDraggableItem = (
     label: string,
     onDragStart: (e: React.DragEvent) => void,
+    Icon?: LucideIcon,
   ) => (
     <div
       draggable
       onDragStart={onDragStart}
       className={cn(
-        'flex w-48 flex-row items-center justify-between border p-2',
-        'cursor-pointer',
+        'flex w-48 cursor-pointer flex-row items-center justify-between border p-2',
       )}
     >
       {label}
+      {Icon && <Icon size={24} />}
     </div>
   );
 
@@ -48,19 +55,10 @@ export default function SidePanel() {
       <Heading variant="h4">Variables</Heading>
       {Object.entries(variables).map(([key, variable]) => {
         const Icon = VARIABLE_ICONS[variable.type];
-        return (
-          <div
-            key={key}
-            draggable
-            onDragStart={(e) => handleVariableDrag(e, key, variable)}
-            className={cn(
-              'flex w-48 flex-row items-center justify-between border p-2',
-              'cursor-pointer',
-            )}
-          >
-            {variable.label.en}
-            {Icon && <Icon size={24} />}
-          </div>
+        return renderDraggableItem(
+          variable.label.en,
+          (e) => handleDrag(e, 'variable', variable, key),
+          Icon,
         );
       })}
 

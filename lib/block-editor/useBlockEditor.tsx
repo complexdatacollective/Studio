@@ -1,6 +1,5 @@
 import { useEditor } from '@tiptap/react';
 import ExtensionKit from './extensions/extension-kit';
-import { handleVariableDrop } from './extensions/Variable/utils';
 import { handleDrop } from './utils';
 
 export const useBlockEditor = () => {
@@ -19,12 +18,6 @@ export const useBlockEditor = () => {
           class: 'min-h-full focus:outline-none',
         },
         handleDrop: function (view, event) {
-          if (
-            // check if the drop event is a form variable
-            event?.dataTransfer?.types.includes('application/x-form-variable')
-          ) {
-            handleVariableDrop(view, event);
-          }
           if (
             event?.dataTransfer?.types.includes('application/x-content-type')
           ) {
