@@ -79,6 +79,8 @@ export const handleDrop = (
     top: event.clientY,
   });
 
+  if (!isValidDropPosition(view, event)) return false;
+
   if (pos && editor) {
     const contentMap = {
       paragraph: { type: 'paragraph' },
@@ -125,4 +127,24 @@ export const handleDrop = (
 
     return true;
   }
+};
+
+export const isValidDropPosition = (view: EditorView, event: DragEvent) => {
+  // Get the drop position
+  const coordinates = view.posAtCoords({
+    left: event.clientX,
+    top: event.clientY,
+  });
+
+  if (!coordinates) return false;
+
+  const dropPos = coordinates.pos;
+  const resolvedDropPos = view.state.doc.resolve(dropPos);
+
+  // Drop is valid if it's between nodes or the parent is the document
+  const isBetweenNodes =
+    resolvedDropPos.nodeBefore === null || // node start
+    resolvedDropPos.nodeAfter === null; // node end
+
+  return isBetweenNodes || resolvedDropPos.parent.type.name === 'doc';
 };

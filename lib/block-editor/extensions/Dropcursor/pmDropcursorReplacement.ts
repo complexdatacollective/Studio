@@ -4,7 +4,7 @@
 import { Plugin, type EditorState } from 'prosemirror-state';
 import { dropPoint } from 'prosemirror-transform';
 import { type EditorView } from 'prosemirror-view';
-import { isValidVariableDropPosition } from '../Variable/utils';
+import { isValidDropPosition } from '~/lib/block-editor/utils';
 
 type DropCursorOptions = {
   /// The color of the cursor. Defaults to `black`. Use `false` to apply no color and rely only on class.
@@ -184,10 +184,10 @@ class DropCursorView {
 
     // if variable is being dragged to an invalid position, prevent dropcursor from being displayed
     if (event.dataTransfer) {
-      const isVariable = event.dataTransfer.types.includes(
-        'application/x-variable-key',
+      const isSidePanelDrop = event.dataTransfer.types.includes(
+        'application/x-content-type',
       );
-      if (isVariable && !isValidVariableDropPosition(this.editorView, event)) {
+      if (isSidePanelDrop && !isValidDropPosition(this.editorView, event)) {
         return;
       }
     }

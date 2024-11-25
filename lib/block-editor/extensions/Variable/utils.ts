@@ -1,34 +1,6 @@
 import { type EditorView } from '@tiptap/pm/view';
 import type { TVariableDefinition } from '~/schemas/protocol/variables';
 
-export const isValidVariableDropPosition = (
-  view: EditorView,
-  event: DragEvent,
-) => {
-  // check if the drop position is valid
-
-  // Get the drop position
-  const coordinates = view.posAtCoords({
-    left: event.clientX,
-    top: event.clientY,
-  });
-
-  if (!coordinates) return false;
-
-  const dropPos = coordinates.pos;
-  const resolvedDropPos = view.state.doc.resolve(dropPos);
-
-  //todo: generalize this to check for all invalid drop positions
-  if (
-    resolvedDropPos.parent.isTextblock || // Prevent dropping inside p, h1, h2, etc.
-    resolvedDropPos.parent.type.name === 'bulletList' || // Prevent dropping inside bullet lists
-    resolvedDropPos.parent.type.name === 'variable' // Prevent dropping inside other variables
-  ) {
-    return false;
-  }
-  return true;
-};
-
 export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
   // Get the variable data
   const jsonData = event.dataTransfer?.getData('application/json');
@@ -37,9 +9,6 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
   const key = event.dataTransfer?.getData('application/x-variable-key');
 
   if (!key) return false;
-
-  // Check drop position validity
-  if (!isValidVariableDropPosition(view, event)) return false;
 
   const { hint, variable, label } = view.state.schema.nodes;
 
