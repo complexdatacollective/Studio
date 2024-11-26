@@ -63,7 +63,7 @@ export default function SidePanel() {
         );
       })}
 
-      <Heading variant="h4">Format</Heading>
+      <Heading variant="h4">Content</Heading>
       {FORMATS.map(({ name, type }) =>
         renderDraggableItem(name, (e) => handleDrag(e, type)),
       )}

@@ -1,17 +1,16 @@
 import { type EditorView } from '@tiptap/pm/view';
 import type { TVariableDefinition } from '~/schemas/protocol/variables';
 
-export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
-  // Get the variable data
-  const jsonData = event.dataTransfer?.getData('application/json');
-  if (!jsonData) return false;
-  const newVariable = JSON.parse(jsonData) as TVariableDefinition;
-  const key = event.dataTransfer?.getData('application/x-variable-key');
-
-  if (!key) return false;
-
-  const { hint, variable, label } = view.state.schema.nodes;
-
+export const createVariableNode = ({
+  newVariable,
+  view,
+  key,
+}: {
+  newVariable: TVariableDefinition;
+  view: EditorView;
+  key: string;
+}) => {
+  const { label, hint, variable } = view.state.schema.nodes;
   // create the label node
   const labelNode = label?.create(
     {},
@@ -42,6 +41,24 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
     },
     [labelNode, hintNode],
   );
+
+  return variableNode;
+};
+
+export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
+  // Get the variable data
+  const jsonData = event.dataTransfer?.getData('application/json');
+  if (!jsonData) return false;
+  const newVariable = JSON.parse(jsonData) as TVariableDefinition;
+  const key = event.dataTransfer?.getData('application/x-variable-key');
+
+  if (!key) return false;
+
+  const variableNode = createVariableNode({
+    newVariable,
+    view,
+    key,
+  });
 
   const coordinates = view.posAtCoords({
     left: event.clientX,

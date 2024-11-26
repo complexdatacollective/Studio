@@ -1,15 +1,14 @@
 export type TiptapContent =
-  | 'paragraph'
   | 'h1'
   | 'h2'
   | 'h3'
   | 'h4'
+  | 'paragraph'
   | 'bulletList'
   | 'group'
   | 'variable';
 
 export const contentMap = {
-  paragraph: { type: 'paragraph' },
   h1: {
     type: 'heading',
     attrs: { level: 1 },
@@ -26,6 +25,7 @@ export const contentMap = {
     type: 'heading',
     attrs: { level: 4 },
   },
+  paragraph: { type: 'paragraph' },
   bulletList: {
     type: 'bulletList',
     content: [

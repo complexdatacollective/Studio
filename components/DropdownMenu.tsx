@@ -65,6 +65,10 @@ const DropdownLabel = ({ children }: PropsWithChildren) => (
   </DropdownMenuPrimitive.Label>
 );
 
+const DropdownSeparator = () => (
+  <DropdownMenuPrimitive.Separator className="border-t border-surface-2" />
+);
+
 const DropdownMenu = {
   Root: DropdownMenuPrimitive.Root,
   RadioGroup: DropdownMenuPrimitive.RadioGroup,
@@ -72,6 +76,7 @@ const DropdownMenu = {
   Content: DropdownMenuContent,
   Label: DropdownLabel,
   Item: DropdownItem,
+  Separator: DropdownSeparator,
 };
 
 export default DropdownMenu;
