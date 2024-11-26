@@ -18,7 +18,7 @@ const VARIABLE_ICONS: Record<string, LucideIcon> = {
   categorical: SquareStack,
 };
 
-const FORMATS = [
+export const FORMATS = [
   { name: 'Paragraph', type: 'paragraph' },
   { name: 'H1', type: 'h1' },
   { name: 'H2', type: 'h2' },

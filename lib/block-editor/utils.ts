@@ -2,6 +2,7 @@ import { type Editor } from '@tiptap/react';
 import { type EditorView } from 'prosemirror-view';
 import type { TVariableDefinition } from '~/schemas/protocol/variables';
 import { handleVariableDrop } from './extensions/Variable/utils';
+import { contentMap, type TiptapContent } from './types';
 
 export const getRenderContainer = (editor: Editor, nodeType: string) => {
   const {
@@ -47,15 +48,7 @@ export const getRenderContainer = (editor: Editor, nodeType: string) => {
 
 export const handleDrag = (
   event: React.DragEvent<HTMLDivElement>,
-  type:
-    | 'paragraph'
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'bulletList'
-    | 'group'
-    | 'variable',
+  type: TiptapContent,
   data?: TVariableDefinition | null,
   key?: string,
 ) => {
@@ -82,44 +75,6 @@ export const handleDrop = (
   if (!isValidDropPosition(view, event)) return false;
 
   if (pos && editor) {
-    const contentMap = {
-      paragraph: { type: 'paragraph' },
-      h1: {
-        type: 'heading',
-        attrs: { level: 1 },
-      },
-      h2: {
-        type: 'heading',
-        attrs: { level: 2 },
-      },
-      h3: {
-        type: 'heading',
-        attrs: { level: 3 },
-      },
-      h4: {
-        type: 'heading',
-        attrs: { level: 4 },
-      },
-      bulletList: {
-        type: 'bulletList',
-        content: [
-          {
-            type: 'listItem',
-            content: [
-              {
-                type: 'paragraph',
-              },
-            ],
-          },
-        ],
-      },
-      group: {
-        type: 'group',
-        attrs: { columns: 1 },
-        content: [],
-      },
-    };
-
     if (type === 'variable') {
       handleVariableDrop(view, event);
     } else
