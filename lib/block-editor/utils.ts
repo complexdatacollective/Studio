@@ -146,5 +146,13 @@ export const isValidDropPosition = (view: EditorView, event: DragEvent) => {
     resolvedDropPos.nodeBefore === null || // node start
     resolvedDropPos.nodeAfter === null; // node end
 
+  if (
+    resolvedDropPos.parent.isTextblock || // Prevent dropping inside p, h1, h2, etc.
+    resolvedDropPos.parent.type.name === 'bulletList' || // Prevent dropping inside bullet lists
+    resolvedDropPos.parent.type.name === 'variable' // Prevent dropping inside other variables
+  ) {
+    return false;
+  }
+
   return isBetweenNodes || resolvedDropPos.parent.type.name === 'doc';
 };

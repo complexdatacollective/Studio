@@ -44,6 +44,7 @@ export default function SidePanel() {
       className={cn(
         'flex w-48 cursor-pointer flex-row items-center justify-between border p-2',
       )}
+      key={label}
     >
       {label}
       {Icon && <Icon size={24} />}
