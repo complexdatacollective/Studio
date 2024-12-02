@@ -10,6 +10,7 @@ import { cn } from '~/lib/utils';
 import { interfaceWrapperClasses } from '../../ui/SimpleShell';
 import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
 import { type InterviewStage } from '../../ui/InterviewShell';
+import { useTranslations } from 'next-intl';
 import { type TNodeType } from '~/schemas/protocol/codebook/entities';
 
 const demoPrompts = [
@@ -96,36 +97,42 @@ function NameGenerator(_props: InterviewStage) {
   );
 }
 
-export default withOnboardingWizard(NameGenerator, {
-  id: 'name-generator',
-  name: {
-    en: 'Name Generator Help',
-  },
-  priority: 'Task',
-  description: {
-    en: [
+export default withOnboardingWizard(NameGenerator, (_props) => {
+  // TODO: get the stage id from the props
+  const stageId = '1';
+
+  let t = useTranslations(`Protocol.Stages.${stageId}.Wizard`);
+
+  // hacky way to check if the translation exists. This tells us if there are stage-level translations for the wizard
+  if (t('Name').includes(`Protocol.Stages.${stageId}.Wizard.Name`)) {
+    // use the default stage type wizard steps. will either be user-supplied or our defaults
+    t = useTranslations('Interview.Wizards.NameGenerator');
+  }
+
+  return {
+    id: 'name-generator',
+    name: t('Name'),
+    priority: 'Task',
+    description: [
       {
         type: 'paragraph',
         children: [
           {
-            text: 'Help with the current task, including how to add new people, how to delete people, and how to edit people.',
+            text: t('Description'),
           },
         ],
       },
     ],
-  },
-  steps: [
-    {
-      title: {
-        en: 'Welcome to the Name Generator',
-      },
-      content: {
-        en: [
+    steps: [
+      {
+        title: t('Steps.Welcome.Title'),
+
+        content: [
           {
             type: 'paragraph',
             children: [
               {
-                text: 'This is the name generator interface. This interface allows you to nominate people. First, read the prompt and think about the people who meet the criteria.',
+                text: t('Steps.Welcome.Text'),
               },
             ],
           },
@@ -139,60 +146,48 @@ export default withOnboardingWizard(NameGenerator, {
           },
         ],
       },
-    },
-    {
-      targetElementId: 'data-wizard-prompts',
-      title: {
-        en: 'Prompts',
-      },
-      content: {
-        en: [
+      {
+        targetElementId: 'data-wizard-prompts',
+        title: t('Steps.Prompts.Title'),
+        content: [
           {
             type: 'paragraph',
             children: [
               {
-                text: 'These are the prompts. They help you think about the people you want to nominate.',
+                text: t('Steps.Prompts.Text'),
               },
             ],
           },
         ],
       },
-    },
-    {
-      targetElementId: 'data-wizard-task-step-2',
-      title: {
-        en: 'Side Panels',
-      },
-      content: {
-        en: [
+      {
+        targetElementId: 'data-wizard-task-step-2',
+        title: t('Steps.SidePanels.Title'),
+        content: [
           {
             type: 'paragraph',
             children: [
               {
-                text: 'These are side panels. They show the people you have already mentioned. You can drag and drop a person into the main area to nominate them.',
+                text: t('Steps.SidePanels.Text'),
               },
             ],
           },
         ],
       },
-    },
-    {
-      targetElementId: 'data-wizard-task-step-3',
-      title: {
-        en: 'Adding a person',
-      },
-      content: {
-        en: [
+      {
+        targetElementId: 'data-wizard-task-step-3',
+        title: t('Steps.AddPerson.Title'),
+        content: [
           {
             type: 'paragraph',
             children: [
               {
-                text: 'Click this button to add a new person',
+                text: t('Steps.AddPerson.Text'),
               },
             ],
           },
         ],
       },
-    },
-  ],
+    ],
+  };
 });
