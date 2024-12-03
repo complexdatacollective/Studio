@@ -1,8 +1,8 @@
 import { type Editor } from '@tiptap/react';
 import { type EditorView } from 'prosemirror-view';
 import type { TVariableDefinition } from '~/schemas/protocol/variables';
+import { contentMap, type TiptapContent } from './contentTypes';
 import { handleVariableDrop } from './extensions/Variable/utils';
-import { contentMap, type TiptapContent } from './types';
 
 export const getRenderContainer = (editor: Editor, nodeType: string) => {
   const {

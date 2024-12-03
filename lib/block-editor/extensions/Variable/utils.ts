@@ -65,7 +65,7 @@ export const handleVariableDrop = (view: EditorView, event: DragEvent) => {
     top: event.clientY,
   });
 
-  if (!coordinates) return false;
+  if (!coordinates || !variableNode) return false;
 
   const transaction = view.state.tr.insert(coordinates.pos, variableNode);
   view.dispatch(transaction);

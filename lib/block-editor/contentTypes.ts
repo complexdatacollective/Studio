@@ -1,3 +1,5 @@
+import type { Content } from '@tiptap/react';
+
 export type TiptapContent =
   | 'h1'
   | 'h2'
@@ -8,7 +10,7 @@ export type TiptapContent =
   | 'group'
   | 'variable';
 
-export const contentMap = {
+export const contentMap: Record<string, Content> = {
   h1: {
     type: 'heading',
     attrs: { level: 1 },

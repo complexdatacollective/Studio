@@ -1,8 +1,11 @@
 import { type Editor } from '@tiptap/react';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
+import {
+  type TiptapContent,
+  contentMap,
+} from '~/lib/block-editor/contentTypes';
 import { createVariableNode } from '~/lib/block-editor/extensions/Variable/utils';
-import { type TiptapContent, contentMap } from '~/lib/block-editor/types';
 import devProtocol from '~/lib/db/sample-data/dev-protocol';
 import { type TVariableDefinition } from '~/schemas/protocol/variables';
 import { Button } from '../Button';
@@ -16,10 +19,12 @@ export default function PlusMenu({ editor }: { editor: Editor | null }) {
 
   const handleCommand = (type: TiptapContent) => () => {
     const endPos = editor.state.doc.content.size;
+    const value = contentMap[type];
+    if (!value) return;
     editor
       .chain()
       .focus()
-      .insertContentAt(endPos, contentMap[type], {
+      .insertContentAt(endPos, value, {
         updateSelection: true,
       })
       .run();
@@ -32,8 +37,10 @@ export default function PlusMenu({ editor }: { editor: Editor | null }) {
     const variableNode = createVariableNode({
       newVariable: variable,
       view: editor.view,
-      key: variable.label.en,
+      key: variable.label.en ?? '', //TODO: better integration with translations
     });
+
+    if (!variableNode) return;
     const transaction = editor.view.state.tr.insert(endPos, variableNode);
     editor.view.dispatch(transaction);
     setIsOpen(false);
@@ -72,7 +79,7 @@ export default function PlusMenu({ editor }: { editor: Editor | null }) {
               onSelect={() => {
                 addVariable(variable);
               }}
-              textValue={variable.label.en}
+              textValue={variable.label.en ?? ''}
             >
               {variable.label.en}
             </DropdownMenu.Item>

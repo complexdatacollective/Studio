@@ -1,4 +1,4 @@
-import type { Editor } from '@tiptap/react';
+import type { Editor, Node } from '@tiptap/react';
 
 export function toggleGroupRequired(editor: Editor) {
   if (!editor) return;
@@ -6,10 +6,10 @@ export function toggleGroupRequired(editor: Editor) {
   // find the current group node
   const { from, to } = editor.state.selection;
   let groupPos: number | null = null;
-  let groupNode = null;
+  let groupNode: Node | null = null;
 
   editor.state.doc.nodesBetween(from, to, (node, pos) => {
-    if (node.type.name === 'group' && !groupNode) {
+    if (node.type.name === 'group') {
       groupPos = pos;
       groupNode = node;
       return false;

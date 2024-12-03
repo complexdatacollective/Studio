@@ -1,5 +1,12 @@
 import { Node, mergeAttributes } from '@tiptap/react';
 
+const gridClasses: Record<number, string> = {
+  1: 'grid-cols-1',
+  2: 'grid-cols-2',
+  3: 'grid-cols-3',
+  4: 'grid-cols-4',
+};
+
 export const Group = Node.create({
   name: 'group',
 
@@ -12,20 +19,15 @@ export const Group = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    const { columns } = HTMLAttributes;
+    const { columns } = HTMLAttributes as { columns: number };
 
-    const gridClasses = {
-      1: 'grid-cols-1',
-      2: 'grid-cols-2',
-      3: 'grid-cols-3',
-      4: 'grid-cols-4',
-    };
+    const gridClass = gridClasses[columns];
 
     return [
       'div',
       mergeAttributes(HTMLAttributes, {
         'data-type': 'group',
-        'class': `gap-4 p-4 grid rounded-small ${gridClasses[columns]} border hover:border-accent`,
+        'class': `gap-4 p-4 grid rounded-small ${gridClass} border hover:border-accent`,
       }),
       0,
     ];
