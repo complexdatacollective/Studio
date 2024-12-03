@@ -1,11 +1,11 @@
 'use client';
 
-import { useFormState } from 'react-dom';
-import { signup } from '~/server/actions/auth';
-import { Input } from '~/components/ui/form/Input';
 import { useTranslations } from 'next-intl';
-import { SubmitButton } from '~/components/ui/form/SubmitButton';
-import Form from '~/components/ui/form/Form';
+import { useFormState } from 'react-dom';
+import Form from '~/components/form/Form';
+import { Input } from '~/components/form/Input';
+import { SubmitButton } from '~/components/form/SubmitButton';
+import { signup } from '~/server/actions/auth';
 
 export default function SignUpForm() {
   const [formState, formAction] = useFormState(signup, {

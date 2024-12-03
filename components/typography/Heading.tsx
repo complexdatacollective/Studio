@@ -1,21 +1,21 @@
 'use client';
 
-import { tv, type VariantProps } from 'tailwind-variants';
-import React from 'react';
-import { cn } from '~/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
+import React from 'react';
+import { tv, type VariantProps } from 'tailwind-variants';
+import { cn } from '~/lib/utils';
 
 export const headingVariants = tv({
-  base: 'text-balance font-heading font-bold [&:has(+.lead)]:mb-2 max-w-[55ch]',
+  base: 'font-heading max-w-[55ch] text-balance font-bold [&:has(+.lead)]:mb-2',
   variants: {
     variant: {
-      'h1': 'scroll-m-20 text-2xl tracking-tight mb-6',
-      'h2': 'scroll-m-20 text-xl tracking-tight mb-4',
-      'h3': 'scroll-m-20 text-lg mb-3',
-      'h4': 'scroll-m-20 text-base mb-2 leading-6 font-[460]',
-      'h4-all-caps': 'scroll-m-20 text-base tracking-widest uppercase',
+      'h1': 'mb-6 scroll-m-20 text-2xl tracking-tight',
+      'h2': 'mb-4 scroll-m-20 text-xl tracking-tight',
+      'h3': 'mb-3 scroll-m-20 text-lg',
+      'h4': 'mb-2 scroll-m-20 text-base font-[460] leading-6',
+      'h4-all-caps': 'scroll-m-20 text-base uppercase tracking-widest',
       'label':
-        'scroll-m-20 text-sm tracking-normal peer-disabled:opacity-70 peer-disabled:cursor-not-allowed font-extrabold',
+        'scroll-m-20 text-sm font-extrabold tracking-normal peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
     },
   },
   defaultVariants: {

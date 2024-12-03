@@ -1,9 +1,9 @@
-import Surface from '~/components/layout/Surface';
-import { cn } from '../utils';
-import Paragraph from '~/components/typography/Paragraph';
-import CloseButton from '~/components/ui/CloseButton';
-import Heading from '~/components/typography/Heading';
 import React, { useId } from 'react';
+import CloseButton from '~/components/CloseButton';
+import Surface from '~/components/layout/Surface';
+import Heading from '~/components/typography/Heading';
+import Paragraph from '~/components/typography/Paragraph';
+import { cn } from '../utils';
 
 export type DialogProps = {
   title: string;

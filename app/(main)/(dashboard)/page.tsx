@@ -1,15 +1,15 @@
-import { getUserStudies } from '~/server/queries/studies';
 import { getTranslations } from 'next-intl/server';
-import Link from '~/components/Link';
-import UnorderedList from '~/components/typography/UnorderedList';
-import Section from '~/components/layout/Section';
-import PageHeader from '~/components/typography/PageHeader';
-import { getInterviews } from '~/server/queries/interviews';
-import CreateStudyForm from './_components/CreateStudyForm';
-import { requirePageAuth } from '~/lib/auth';
-import { Button } from '~/components/ui/Button';
-import Paragraph from '~/components/typography/Paragraph';
 import { route } from 'nextjs-routes';
+import { Button } from '~/components/Button';
+import Section from '~/components/layout/Section';
+import Link from '~/components/Link';
+import PageHeader from '~/components/typography/PageHeader';
+import Paragraph from '~/components/typography/Paragraph';
+import UnorderedList from '~/components/typography/UnorderedList';
+import { requirePageAuth } from '~/lib/auth';
+import { getInterviews } from '~/server/queries/interviews';
+import { getUserStudies } from '~/server/queries/studies';
+import CreateStudyForm from './_components/CreateStudyForm';
 
 export default async function Dashboard() {
   await requirePageAuth();

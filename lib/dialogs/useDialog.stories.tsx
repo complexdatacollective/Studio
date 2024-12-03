@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import type { StoryObj } from '@storybook/react';
-import { Button } from '~/components/ui/Button';
-import { useDialog } from './DialogProvider';
-import Form from '~/components/ui/form/Form';
 import { fn } from '@storybook/test';
+import { Button } from '~/components/Button';
+import Form from '~/components/form/Form';
+import { useDialog } from './DialogProvider';
 
 const meta = {
   title: 'Systems/Dialogs/useDialog',

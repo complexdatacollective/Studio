@@ -1,11 +1,11 @@
+import type * as SelectPrimitive from '@radix-ui/react-select';
 import {
   Select,
   SelectContent,
-  SelectValue,
-  SelectTrigger,
   SelectItem,
-} from '~/components/ui/select';
-import type * as SelectPrimitive from '@radix-ui/react-select';
+  SelectTrigger,
+  SelectValue,
+} from '~/components/select';
 
 type SimpleSelectProps = {
   options: { label: string; value: string }[];

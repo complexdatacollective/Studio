@@ -64,6 +64,7 @@ export type TVariableType = z.infer<typeof VariableTypes>;
 const BaseVariableDefinitionSchema = z.object({
   label: LocalisedStringSchema,
   validation: VariableValidationSchema.optional(),
+  control: z.string().optional(), // todo: make this a union of valid control types
 });
 
 const NormalVariableDefinitionSchema = BaseVariableDefinitionSchema.extend({

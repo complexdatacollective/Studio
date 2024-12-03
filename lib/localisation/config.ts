@@ -1,6 +1,6 @@
 import { type Locale } from '~/schemas/protocol/i18n';
 
-export const FALLBACK_LOCALE = 'en' as const;
+export const FALLBACK_LOCALE = 'en';
 
 // Locales we provide for our backend. For now, english, spanish, and arabic
 // for testing RTL support.

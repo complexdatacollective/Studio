@@ -1,14 +1,14 @@
 'use client';
 
+import { useTransition } from 'react';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '~/components/ui/select';
+} from '~/components/select';
 import { type Locale } from '~/lib/localisation/config';
-import { useTransition } from 'react';
 import { setUserLocale } from '~/lib/localisation/locale';
 import { getLocaleRecordsFromCodes } from '~/lib/localisation/utils';
 

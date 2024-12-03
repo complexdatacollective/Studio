@@ -1,12 +1,12 @@
 import { SelectTrigger } from '@radix-ui/react-select';
+import { Globe } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTransition } from 'react';
-import { Select, SelectContent, SelectItem } from '~/components/ui/select';
+import { Select, SelectContent, SelectItem } from '~/components/select';
 import { type Locale } from '~/lib/localisation/config';
 import { setUserLocale } from '~/lib/localisation/locale';
 import { getLocaleRecordsFromCodes } from '~/lib/localisation/utils';
 import { NavButtonWithTooltip } from './NavigationButton';
-import { Globe } from 'lucide-react';
 
 export default function InterviewLocaleSwitcher({
   codes,

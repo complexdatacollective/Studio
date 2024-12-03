@@ -1,17 +1,17 @@
-import { createStudy } from '~/server/actions/study';
+import { Role } from '@prisma/client';
 import { getTranslations } from 'next-intl/server';
-import { SubmitButton } from '~/components/ui/form/SubmitButton';
-import { Input } from '~/components/ui/form/Input';
+import Form from '~/components/form/Form';
+import { Input } from '~/components/form/Input';
+import { SubmitButton } from '~/components/form/SubmitButton';
 import Section from '~/components/layout/Section';
 import {
   Select,
   SelectContent,
-  SelectValue,
-  SelectTrigger,
   SelectItem,
-} from '~/components/ui/select';
-import { Role } from '@prisma/client';
-import Form from '~/components/ui/form/Form';
+  SelectTrigger,
+  SelectValue,
+} from '~/components/select';
+import { createStudy } from '~/server/actions/study';
 
 export default async function CreateStudyForm() {
   const t = await getTranslations('Components.CreateStudyForm');

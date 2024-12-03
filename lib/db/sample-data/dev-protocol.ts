@@ -15,6 +15,7 @@ export const devProtocol: Protocol = {
         // TODO: should validation go here, or with the form?
         required: true,
       },
+      control: 'text',
     },
     age: {
       type: 'number',
@@ -26,6 +27,19 @@ export const devProtocol: Protocol = {
       validation: {
         required: true,
       },
+    },
+    school: {
+      type: 'categorical',
+      label: {
+        en: 'School',
+        es: 'Escuela',
+        ar: 'المدرسة',
+      },
+      options: [
+        { value: 'Northwestern', label: 'Northwestern' },
+        { value: 'U Chicago', label: 'U Chicago' },
+      ],
+      control: 'checkboxGroup',
     },
   },
   forms: {

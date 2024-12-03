@@ -1,20 +1,22 @@
-import { type PropsWithChildren } from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
+import { type PropsWithChildren } from 'react';
+import { MotionSurface } from '~/components/layout/Surface';
+import Heading from '~/components/typography/Heading';
 import { cn } from '~/lib/utils';
 import CloseButton from './CloseButton';
-import Heading from '../typography/Heading';
-import { MotionSurface } from '../layout/Surface';
 
 const Popover = ({
   children,
   title,
   content,
   modal,
+  side,
   isOpen,
   onOpenChange,
 }: PropsWithChildren<{
   title?: string;
   content: string | React.ReactNode;
+  side?: 'top' | 'right' | 'bottom' | 'left';
   modal?: boolean;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -50,6 +52,7 @@ const Popover = ({
           // floating-ui prop exposed in @radix-ui/react-popper patch
           // see https://floating-ui.com/docs/flip#fallbackaxissidedirection
           fallbackAxisSideDirection="start"
+          side={side}
         >
           <MotionSurface
             level={0}

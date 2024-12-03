@@ -3,13 +3,13 @@ import {
   type IntlError,
   IntlErrorCode,
 } from 'next-intl';
-import type { LocalisedRecord, LocalisedString } from '../../schemas/shared';
 import {
   type Locale,
-  type LocaleCookieName,
   type LocaleObject,
   SUPPORTED_LOCALE_OBJECTS,
-} from './config';
+} from '~/schemas/protocol/i18n';
+import type { LocalisedRecord, LocalisedString } from '../../schemas/shared';
+import { type LocaleCookieName } from './config';
 
 export const customErrorLogger = (error: IntlError) => {
   if (error.code === IntlErrorCode.MISSING_MESSAGE) {

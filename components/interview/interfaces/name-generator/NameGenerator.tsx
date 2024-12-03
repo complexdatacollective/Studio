@@ -2,17 +2,15 @@
  * Building blocks for NameGenerator interface
  */
 
-import Prompts from '~/components/interview/Prompts/Prompts';
-import NodePanels from './NodePanels';
 import NodeList from '~/components/interview/NodeList';
-import QuickNodeForm from './QuickNodeForm';
-import { cn } from '~/lib/utils';
-import { interfaceWrapperClasses } from '../../ui/SimpleShell';
-import { withOnboardingWizard } from '~/components/onboard-wizard/withOnboardingWizard';
-import { type InterviewStage } from '../../ui/InterviewShell';
-import { useTranslations } from 'next-intl';
+import Prompts from '~/components/interview/Prompts/Prompts';
+import { type InterviewStage } from '~/components/interview/ui/InterviewShell';
+import { interfaceWrapperClasses } from '~/components/interview/ui/SimpleShell';
 import devProtocol from '~/lib/db/sample-data/dev-protocol';
+import { cn } from '~/lib/utils';
 import { type NameGeneratorInterface } from '~/schemas/protocol/interfaces/name-generator';
+import NodePanels from './NodePanels';
+import QuickNodeForm from './QuickNodeForm';
 
 const demoNodes = [
   {

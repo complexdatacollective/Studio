@@ -1,9 +1,8 @@
 // Card.stories.tsx
 
-import React from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
+import Paragraph from '~/components/typography/Paragraph';
 import { Card, type CardProps } from './Card';
-import Paragraph from '../typography/Paragraph';
 
 // Meta configuration for Storybook
 const meta: Meta = {

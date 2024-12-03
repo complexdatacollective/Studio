@@ -1,11 +1,11 @@
 'use client';
 
-import * as React from 'react';
 import * as LabelPrimitive from '@radix-ui/react-label';
+import * as React from 'react';
 import { type VariantProps } from 'tailwind-variants';
 
+import { headingVariants } from '~/components/typography/Heading';
 import { cn } from '~/lib/utils';
-import { headingVariants } from '../../typography/Heading';
 
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
