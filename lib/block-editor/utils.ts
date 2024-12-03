@@ -1,5 +1,5 @@
+import { type EditorView } from '@tiptap/pm/view';
 import { type Editor } from '@tiptap/react';
-import { type EditorView } from 'prosemirror-view';
 import type { TVariableDefinition } from '~/schemas/protocol/variables';
 import { contentMap, type TiptapContent } from './contentTypes';
 import { handleVariableDrop } from './extensions/Variable/utils';
@@ -63,10 +63,10 @@ export const handleDrag = (
 
 export const handleDrop = (
   view: EditorView,
-  event: React.DragEvent,
+  event: DragEvent,
   editor: Editor,
 ) => {
-  const type = event.dataTransfer.getData('application/x-content-type');
+  const type = event?.dataTransfer?.getData('application/x-content-type');
   const pos = view.posAtCoords({
     left: event.clientX,
     top: event.clientY,
@@ -75,6 +75,7 @@ export const handleDrop = (
   if (!isValidDropPosition(view, event)) return false;
 
   if (pos && editor) {
+    if (!type || !contentMap[type]) return;
     if (type === 'variable') {
       handleVariableDrop(view, event);
     } else

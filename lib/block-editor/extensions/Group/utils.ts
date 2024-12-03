@@ -1,4 +1,5 @@
-import type { Editor, Node } from '@tiptap/react';
+import { type Node } from '@tiptap/pm/model';
+import type { Editor } from '@tiptap/react';
 
 export function toggleGroupRequired(editor: Editor) {
   if (!editor) return;

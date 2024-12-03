@@ -1,9 +1,9 @@
 // adapted from prosemirror-dropcursor
 // https://github.com/ProseMirror/prosemirror-dropcursor
 
-import { Plugin, type EditorState } from 'prosemirror-state';
-import { dropPoint } from 'prosemirror-transform';
-import { type EditorView } from 'prosemirror-view';
+import { Plugin, type EditorState } from '@tiptap/pm/state';
+import { dropPoint } from '@tiptap/pm/transform';
+import { type EditorView } from '@tiptap/pm/view';
 import { isValidDropPosition } from '~/lib/block-editor/utils';
 
 type DropCursorOptions = {
