@@ -75,12 +75,13 @@ export const handleDrop = (
   if (!isValidDropPosition(view, event)) return false;
 
   if (pos && editor) {
-    if (!type || !contentMap[type]) return;
+    if (!type) return;
     if (type === 'variable') {
       handleVariableDrop(view, event);
-    } else
+    } else {
+      if (!contentMap[type]) return;
       editor.chain().focus().insertContentAt(pos.pos, contentMap[type]).run();
-
+    }
     return true;
   }
 };
