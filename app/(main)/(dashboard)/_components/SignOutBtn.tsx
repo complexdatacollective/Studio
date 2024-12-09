@@ -1,9 +1,8 @@
 'use client';
 
-import React from 'react';
-import { logout } from '~/server/actions/auth';
 import { useTranslations } from 'next-intl';
-import { SubmitButton } from '~/components/ui/form/SubmitButton';
+import { SubmitButton } from '~/components/form/SubmitButton';
+import { logout } from '~/server/actions/auth';
 
 export default function SignOutBtn() {
   const t = useTranslations('Auth.SignOut');

@@ -1,9 +1,9 @@
 // src/components/Surface.stories.tsx
 
-import React, { type ElementType } from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
+import { type ElementType } from 'react';
+import { Button } from '~/components/Button';
 import Surface, { MotionSurface, type SurfaceVariants } from './Surface';
-import { Button } from '../ui/Button';
 
 // Define the metadata for the Storybook
 const meta: Meta<typeof Surface> = {

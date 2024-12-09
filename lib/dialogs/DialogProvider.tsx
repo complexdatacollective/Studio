@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import React, {
   createContext,
   useCallback,
@@ -7,12 +8,11 @@ import React, {
   useState,
   type RefObject,
 } from 'react';
-import { generatePublicId } from '../generatePublicId';
 import { flushSync } from 'react-dom';
+import { Button } from '~/components/Button';
+import Form from '~/components/form/Form';
+import { generatePublicId } from '../generatePublicId';
 import { Dialog } from './Dialog';
-import { useTranslations } from 'next-intl';
-import Form from '~/components/ui/form/Form';
-import { Button } from '~/components/ui/Button';
 
 type ConfirmDialog = {
   type: 'confirm';

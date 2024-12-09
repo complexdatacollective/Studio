@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Dialog, type DialogProps } from './Dialog';
 import { fn } from '@storybook/test';
-import Form from '~/components/ui/form/Form';
-import { Button } from '~/components/ui/Button';
+import { Button } from '~/components/Button';
+import Form from '~/components/form/Form';
+import { Dialog, type DialogProps } from './Dialog';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Systems/Dialogs/Dialog',
